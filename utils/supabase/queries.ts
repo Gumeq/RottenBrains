@@ -2,12 +2,11 @@ import { IMedia, IPost } from "@/types";
 import { createClient } from "@supabase/supabase-js";
 import { createClient as CreateClientServer } from "@/utils/supabase/server";
 
-const supabase = createClient(
-	process.env.NEXT_PUBLIC_SUPABASE_URL!,
-	process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
-
 export async function addToDB(movie: IMedia) {
+	const supabase = createClient(
+		process.env.NEXT_PUBLIC_SUPABASE_URL!,
+		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+	);
 	const {
 		id,
 		created_at,
@@ -41,6 +40,10 @@ export async function addUserToDB(
 	username: string,
 	name: string
 ) {
+	const supabase = createClient(
+		process.env.NEXT_PUBLIC_SUPABASE_URL!,
+		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+	);
 	const { data, error } = await supabase
 		.from("users")
 		.insert([
@@ -56,6 +59,10 @@ export async function addUserToDB(
 }
 
 export async function getUserFromDB(id: string) {
+	const supabase = createClient(
+		process.env.NEXT_PUBLIC_SUPABASE_URL!,
+		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+	);
 	let { data: user, error } = await supabase
 		.from("users")
 		.select()
@@ -71,6 +78,10 @@ export async function getUserFromDB(id: string) {
 }
 
 export async function getCurrentUser() {
+	const supabase = createClient(
+		process.env.NEXT_PUBLIC_SUPABASE_URL!,
+		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+	);
 	try {
 		const supabase = CreateClientServer();
 		const {
@@ -89,6 +100,10 @@ export async function getCurrentUser() {
 }
 
 export async function addPostToDB(post: IPost) {
+	const supabase = createClient(
+		process.env.NEXT_PUBLIC_SUPABASE_URL!,
+		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+	);
 	const { data, error } = await supabase
 		.from("Posts")
 		.insert([
@@ -105,6 +120,10 @@ export async function addPostToDB(post: IPost) {
 }
 
 export const getSavedPosts = async (userId: string) => {
+	const supabase = createClient(
+		process.env.NEXT_PUBLIC_SUPABASE_URL!,
+		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+	);
 	const { data, error } = await supabase
 		.from("saves")
 		.select(`post_id(*)`) // Type assertion to any
@@ -120,6 +139,10 @@ export const getSavedPosts = async (userId: string) => {
 };
 
 export const getPostsOfMedia = async (mediaid: number, media_type: string) => {
+	const supabase = createClient(
+		process.env.NEXT_PUBLIC_SUPABASE_URL!,
+		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+	);
 	const { data, error } = await supabase
 		.from("posts")
 		.select("*") // Type assertion to any
