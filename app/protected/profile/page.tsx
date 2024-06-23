@@ -1,9 +1,10 @@
 import HomePostCard from "@/components/HomePostCard";
 import { getCurrentUser, getSavedPosts } from "@/utils/supabase/queries";
+import { NextPage } from "next";
 import Image from "next/image";
 import React from "react";
 
-export async function ProfilePage() {
+const ProfilePage: NextPage = async () => {
 	const user = await getCurrentUser();
 
 	const dateString = user?.user.created_at;
@@ -56,6 +57,6 @@ export async function ProfilePage() {
 			</div>
 		</div>
 	);
-}
+};
 
 export default ProfilePage;
