@@ -2,9 +2,8 @@ import HomePostCard from "@/components/HomePostCard";
 import { IPost } from "@/types";
 import { createClient } from "@/utils/supabase/server";
 
-const supabaseServerClient = createClient();
-
 const fetchPosts = async (): Promise<IPost[] | null> => {
+	const supabaseServerClient = createClient();
 	let { data: posts, error } = await supabaseServerClient
 		.from("posts")
 		.select("*")
