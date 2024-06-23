@@ -3,7 +3,7 @@ import { getCurrentUser, getSavedPosts } from "@/utils/supabase/queries";
 import Image from "next/image";
 import React from "react";
 
-export async function page() {
+export async function ProfilePage() {
 	const user = await getCurrentUser();
 
 	const dateString = user?.user.created_at;
@@ -58,4 +58,4 @@ export async function page() {
 	);
 }
 
-export default page;
+export default ProfilePage;
