@@ -4,7 +4,7 @@ import { NextPage } from "next";
 import Image from "next/image";
 import React from "react";
 
-const ProfilePage: NextPage = async () => {
+const ProfilePage = async () => {
 	const user = await getCurrentUser();
 
 	const dateString = user?.user.created_at;
