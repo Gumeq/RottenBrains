@@ -1,14 +1,17 @@
 import ExploreTab from "@/components/ExploreTab";
+import SearchBar from "@/components/SearchBar";
+import Image from "next/image";
 import React from "react";
 
 const page = () => {
 	return (
-		<div className=" mx-auto max-w-7xl px-4">
-			<div>
-				<h1 className="font-bold text-2xl pt-8">
-					New Movies and TV-Shows
-				</h1>
+		<div className=" mx-auto max-w-7xl px-4 w-full h-full ">
+			<div className=" px-0 py-4 flex flex-row gap-2">
+				<div className="w-5/6 md:w-full">
+					<SearchBar link={true}></SearchBar>
+				</div>
 			</div>
+
 			<h1 className="text-xl pt-8 font-bold">Now in cinemas</h1>
 			<ExploreTab action="Now_in_cinemas"></ExploreTab>
 			<h1 className="text-xl pt-8 font-bold">Trending TV-Shows</h1>

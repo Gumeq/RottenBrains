@@ -20,6 +20,9 @@ export default async function Page({
 		mediaData = null;
 	}
 	const media = mediaData;
+	if (!media) {
+		return <h1>No Media Found</h1>;
+	}
 
 	const postsOfMedia = await getPostsOfMedia(media_id, media_type);
 	console.table(postsOfMedia);
@@ -44,6 +47,7 @@ export default async function Page({
 							{media.release_date || media.first_air_date}
 						</p>
 					</div>
+
 					<div className="flex flex-row gap-4 flex-wrap">
 						{media?.genres.map((genre: any) => (
 							<div
@@ -54,6 +58,7 @@ export default async function Page({
 							</div>
 						))}
 					</div>
+
 					<div>
 						<p className="italic text-foreground/70 text-lg">
 							{media.tagline}

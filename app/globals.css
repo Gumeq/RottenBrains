@@ -94,3 +94,7 @@
 .desaturate {
 	filter: grayscale(100%);
 }
+
+.invisible-scroll::-webkit-scrollbar {
+	display: none;
+}

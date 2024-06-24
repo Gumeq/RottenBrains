@@ -22,7 +22,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
 
 	// State to manage input values
 	const [formValues, setFormValues] = useState({
-		review_user: "Λοιπον είδα το " + (media?.title || media?.name || ""),
+		review_user: "Λοιπον είδα το ",
 		vote_user: 0,
 	});
 

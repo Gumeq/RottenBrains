@@ -52,3 +52,9 @@ export type MediaPageProps = {
 	media_type: "movie" | "tv" | string;
 	media_id: number;
 };
+
+declare global {
+	interface Window {
+		handleCredentialResponse: (response: any) => void;
+	}
+}

@@ -3,6 +3,8 @@ import { headers } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { SubmitButton } from "./submit-button";
+import { Auth } from "@supabase/auth-ui-react";
+import { OAuthButton } from "@/components/OAuthSignIn";
 
 export default function Login({
 	searchParams,
@@ -11,10 +13,9 @@ export default function Login({
 }) {
 	const signIn = async (formData: FormData) => {
 		"use server";
-
+		const supabase = createClient();
 		const email = formData.get("email") as string;
 		const password = formData.get("password") as string;
-		const supabase = createClient();
 
 		const { error } = await supabase.auth.signInWithPassword({
 			email,
@@ -28,8 +29,21 @@ export default function Login({
 		return redirect("/protected/home");
 	};
 
+	const signInWithOAuth = async () => {
+		"use server";
+		const supabase = createClient();
+		const { data, error } = await supabase.auth.signInWithOAuth({
+			provider: "google",
+		});
+
+		if (error) {
+			return redirect("/login?message=Could not authenticate user");
+		}
+	};
+
 	return (
 		<div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2 mx-auto h-screen">
+			<script src="https://accounts.google.com/gsi/client" async></script>
 			<Link
 				href="/"
 				className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover flex items-center group text-sm"
@@ -78,6 +92,7 @@ export default function Login({
 				>
 					Sign In
 				</SubmitButton>
+				<OAuthButton></OAuthButton>
 				{searchParams?.message && (
 					<p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
 						{searchParams.message}

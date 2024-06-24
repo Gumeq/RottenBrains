@@ -14,6 +14,8 @@ import clsx from "clsx";
 import { useState, ChangeEvent, useEffect } from "react";
 import SearchCard from "./SearchCard";
 import Link from "next/link";
+import { Divide } from "lucide-react";
+import Image from "next/image";
 
 // Define the type for the person object
 interface Person {
@@ -30,7 +32,7 @@ const people: Person[] = [
 	{ id: 5, name: "Devon Webb" },
 ];
 
-const SearchMovies = ({ media, setMedia }: any) => {
+const SearchMovies = ({ media, setMedia, link }: any) => {
 	// State types
 	const [query, setQuery] = useState<string>("");
 	const [selected, setSelected] = useState<Person>(people[1]);
@@ -67,7 +69,13 @@ const SearchMovies = ({ media, setMedia }: any) => {
 						}
 					/>
 					<ComboboxButton className="group absolute inset-y-0 right-0 px-2.5">
-						<ChevronDownIcon className="size-4 fill-white/60 group-data-[hover]:fill-white" />
+						<Image
+							src={"/assets/icons/magnifying-glass-solid.svg"}
+							alt={""}
+							width={20}
+							height={20}
+							className="invert-on-dark opacity-70"
+						></Image>
 					</ComboboxButton>
 				</div>
 				<Transition
@@ -82,15 +90,35 @@ const SearchMovies = ({ media, setMedia }: any) => {
 					>
 						{data &&
 							data.results.slice(0, 4).map((media: any) => (
-								<ComboboxOption
-									key={media.id}
-									value={media}
-									className="group flex cursor-default items-center gap-4 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10"
-								>
-									<div className="text-sm/6 text-white">
-										<SearchCard media={media} />
-									</div>
-								</ComboboxOption>
+								<div>
+									{link ? (
+										<Link
+											href={`/protected/media/${media.media_type}/${media.id}`}
+										>
+											<ComboboxOption
+												key={media.id}
+												value={media}
+												className="group flex cursor-default items-center gap-4 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10"
+											>
+												<div className="text-sm/6 text-white">
+													<SearchCard media={media} />
+												</div>
+											</ComboboxOption>
+										</Link>
+									) : (
+										<div>
+											<ComboboxOption
+												key={media.id}
+												value={media}
+												className="group flex cursor-default items-center gap-4 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10"
+											>
+												<div className="text-sm/6 text-white">
+													<SearchCard media={media} />
+												</div>
+											</ComboboxOption>
+										</div>
+									)}
+								</div>
 							))}
 					</ComboboxOptions>
 				</Transition>

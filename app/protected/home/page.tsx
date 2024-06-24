@@ -1,12 +1,15 @@
 import HomePostCard from "@/components/HomePostCard";
 import { IPost } from "@/types";
+import { getCurrentUser } from "@/utils/supabase/queries";
 import { createClient } from "@/utils/supabase/server";
 
 const fetchPosts = async (): Promise<IPost[] | null> => {
 	const supabaseServerClient = createClient();
+	const user = await getCurrentUser();
 	let { data: posts, error } = await supabaseServerClient
 		.from("posts")
 		.select("*")
+		.not("creatorid", "eq", user?.user.id)
 		.order("created_at", { ascending: false });
 
 	if (error) {

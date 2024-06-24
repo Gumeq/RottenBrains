@@ -14,6 +14,11 @@ module.exports = {
 				hostname: "ui-avatars.com",
 				pathname: "**/*", // Allows all paths
 			},
+			{
+				protocol: "https",
+				hostname: "lh3.googleusercontent.com",
+				pathname: "**/*", // Allows all paths
+			},
 		],
 		dangerouslyAllowSVG: true, // Enable SVG support
 	},

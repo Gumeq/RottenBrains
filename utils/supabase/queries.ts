@@ -2,43 +2,11 @@ import { IMedia, IPost } from "@/types";
 import { createClient } from "@supabase/supabase-js";
 import { createClient as CreateClientServer } from "@/utils/supabase/server";
 
-export async function addToDB(movie: IMedia) {
-	const supabase = createClient(
-		process.env.NEXT_PUBLIC_SUPABASE_URL!,
-		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-	);
-	const {
-		id,
-		created_at,
-		creator,
-		rating,
-		title,
-		vote_average,
-		poster_path,
-		overview,
-		release_date,
-	} = movie;
-	const { data, error } = await supabase
-		.from("Posts")
-		.insert([
-			{
-				creator: creator,
-				rating: rating,
-				title: title,
-				poster_path: poster_path,
-				overview: overview,
-				release_date: release_date,
-			},
-		])
-		.select();
-	console.log("Created");
-	return;
-}
-
 export async function addUserToDB(
 	email: string,
 	username: string,
-	name: string
+	name: string,
+	imageURL: string
 ) {
 	const supabase = createClient(
 		process.env.NEXT_PUBLIC_SUPABASE_URL!,
