@@ -76,6 +76,7 @@
 	width: 5px;
 	height: 5px;
 	border-radius: 2px;
+	display: block;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
