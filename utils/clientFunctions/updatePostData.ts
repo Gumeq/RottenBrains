@@ -69,6 +69,14 @@ export const likePost = async (userId: string, postId: string) => {
 		console.log("Post saved:", data);
 	}
 
+	const { error: postError } = await supabase.rpc("increment_likes", {
+		post_id: postId,
+	});
+
+	if (postError) {
+		console.log("Error adding likes");
+	}
+
 	return { data, error };
 };
 
@@ -83,6 +91,14 @@ export const removeLike = async (userId: string, postId: string) => {
 		console.error("Error removing save:", error.message);
 	} else {
 		console.log("Save removed:");
+	}
+
+	const { error: postError } = await supabase.rpc("decrement_likes", {
+		post_id: postId,
+	});
+
+	if (postError) {
+		console.log("Error adding likes");
 	}
 
 	return { data, error };

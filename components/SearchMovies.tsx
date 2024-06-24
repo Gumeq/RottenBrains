@@ -44,6 +44,7 @@ const SearchMovies = ({ media, setMedia, link }: any) => {
 			try {
 				const result = await searchMovies(query);
 				setData(result);
+				console.log(data);
 			} catch (err) {
 				console.error("Failed to fetch data", err);
 			} finally {
@@ -88,7 +89,7 @@ const SearchMovies = ({ media, setMedia, link }: any) => {
 						anchor="bottom"
 						className="w-[var(--input-width)] rounded-xl border border-white/5 bg-background p-1 [--anchor-gap:var(--spacing-1)] empty:hidden"
 					>
-						{data &&
+						{!loading &&
 							data.results.slice(0, 4).map((media: any) => (
 								<div>
 									{link ? (

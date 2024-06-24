@@ -31,7 +31,6 @@ export default async function Page({
 	const mediaVideos = await getVideos(media_type, media_id);
 	const mediaRecommendations = await getRecommendations(media_type, media_id);
 	const mediaReviews = await getReviews(media_type, media_id);
-	console.log(mediaReviews);
 
 	return (
 		<div className="flex flex-col mx-auto max-w-7xl w-[1500px]">
