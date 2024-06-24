@@ -4,7 +4,7 @@ import LeftSidebar from "@/components/LeftSidebar";
 import Head from "next/head";
 
 const defaultUrl = process.env.VERCEL_URL
-	? `https://${process.env.VERCEL_URL}`
+	? `${process.env.VERCEL_URL}`
 	: "http://localhost:3000";
 
 export const metadata = {
@@ -20,13 +20,6 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en" className={GeistSans.className}>
-			<Head>
-				<script
-					src="https://accounts.google.com/gsi/client"
-					async
-					defer
-				></script>
-			</Head>
 			<body className="bg-background text-foreground overflow-x-hidden">
 				<main className="">{children}</main>
 			</body>
