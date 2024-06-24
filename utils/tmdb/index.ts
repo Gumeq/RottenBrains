@@ -162,3 +162,60 @@ export async function getTVDetails(tvId: number) {
 		console.error(error);
 	}
 }
+
+export async function getVideos(media_type: string, media_id: number) {
+	const url = `https://api.themoviedb.org/3/${media_type}/${media_id}}/videos?language=en-US`;
+	const options = {
+		method: "GET",
+		headers: {
+			accept: "application/json",
+			Authorization:
+				"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmMDE4NDhhYTU5NTlhYjQzMGQ2NGZmZmNiMTg0YzRkMyIsInN1YiI6IjY1ZTEyYTBiNTFmOTlhMDE4NTU3ZTdkZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.sqsiazpQMK-1z-Vjn5IGu3qy4qbIvkituqVCL5vfMs4",
+		},
+	};
+	try {
+		const response = await fetch(url, options);
+		const result = await response.json();
+		return result;
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+export async function getRecommendations(media_type: string, media_id: number) {
+	const url = `https://api.themoviedb.org/3/${media_type}/${media_id}}/recommendations?language=en-US`;
+	const options = {
+		method: "GET",
+		headers: {
+			accept: "application/json",
+			Authorization:
+				"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmMDE4NDhhYTU5NTlhYjQzMGQ2NGZmZmNiMTg0YzRkMyIsInN1YiI6IjY1ZTEyYTBiNTFmOTlhMDE4NTU3ZTdkZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.sqsiazpQMK-1z-Vjn5IGu3qy4qbIvkituqVCL5vfMs4",
+		},
+	};
+	try {
+		const response = await fetch(url, options);
+		const result = await response.json();
+		return result;
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+export async function getReviews(media_type: string, media_id: number) {
+	const url = `https://api.themoviedb.org/3/${media_type}/${media_id}}/reviews?language=en-US&page=1`;
+	const options = {
+		method: "GET",
+		headers: {
+			accept: "application/json",
+			Authorization:
+				"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmMDE4NDhhYTU5NTlhYjQzMGQ2NGZmZmNiMTg0YzRkMyIsInN1YiI6IjY1ZTEyYTBiNTFmOTlhMDE4NTU3ZTdkZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.sqsiazpQMK-1z-Vjn5IGu3qy4qbIvkituqVCL5vfMs4",
+		},
+	};
+	try {
+		const response = await fetch(url, options);
+		const result = await response.json();
+		return result;
+	} catch (error) {
+		console.error(error);
+	}
+}

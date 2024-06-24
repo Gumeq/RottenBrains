@@ -72,30 +72,58 @@
 	@apply z-50 flex-between w-full bottom-0  bg-background px-2 py-2 md:hidden;
 }
 
+/* Dark-themed scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
-	width: 5px;
-	height: 5px;
-	border-radius: 2px;
-	display: block;
+	width: 12px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-	@apply bg-gray-900;
+	background: #1e1e1e; /* Dark track color */
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-	@apply bg-gray-600;
-	border-radius: 50px;
+	background: #555; /* Dark thumb color */
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-	@apply bg-accent;
+	background: #888; /* Slightly lighter on hover */
+}
+
+/* For Firefox */
+.custom-scrollbar {
+	scrollbar-width: thin;
+	scrollbar-color: #555 #1e1e1e; /* thumb color, track color */
+}
+
+@media (max-width: 600px) {
+	.custom-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
+
+	.custom-scrollbar {
+		scrollbar-width: none; /* For Firefox */
+	}
 }
 
 .desaturate {
 	filter: grayscale(100%);
 }
 
-.invisible-scroll::-webkit-scrollbar {
-	display: none;
+.youtube-container {
+	position: relative;
+
+	height: 0;
+	overflow: hidden;
+	width: 384px;
+	height: 216px;
+	background: #000;
+}
+
+.youtube-container iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 384px;
+	height: 216px;
+	border: 0;
 }

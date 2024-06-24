@@ -1,7 +1,10 @@
+import ExploreCard from "@/components/ExploreCard";
 import HomePostCard from "@/components/HomePostCard";
+import YouTubeEmbed from "@/components/YoutubeEmbed";
 import { getExploreData, getMediaData } from "@/utils/clientFunctions";
 import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
 import { getPostsOfMedia } from "@/utils/supabase/queries";
+import { getRecommendations, getReviews, getVideos } from "@/utils/tmdb";
 import Image from "next/image";
 
 export default async function Page({
@@ -25,10 +28,13 @@ export default async function Page({
 	}
 
 	const postsOfMedia = await getPostsOfMedia(media_id, media_type);
-	console.table(postsOfMedia);
+	const mediaVideos = await getVideos(media_type, media_id);
+	const mediaRecommendations = await getRecommendations(media_type, media_id);
+	const mediaReviews = await getReviews(media_type, media_id);
+	console.log(mediaReviews);
 
 	return (
-		<div className="flex flex-col mx-auto max-w-screen w-[1500px]">
+		<div className="flex flex-col mx-auto max-w-7xl w-[1500px]">
 			<div className="flex flex-col md:flex-row gap-8  p-4 md:p-8 rounded-[20px] ">
 				<div className="w-[300px] h-[450px] bg-foreground/10 rounded-[12px] overflow-hidden mx-auto">
 					<Image
@@ -38,7 +44,7 @@ export default async function Page({
 						height={450}
 					></Image>
 				</div>
-				<div className=" flex flex-col justify-center gap-8">
+				<div className=" flex flex-col gap-8 max-w-3xl">
 					<div>
 						<h1 className="text-4xl font-bold py-2">
 							{media.title || media.name}
@@ -72,21 +78,75 @@ export default async function Page({
 					</div>
 				</div>
 			</div>
-			<div className="flex flex-row gap-8 mx-auto">
+			{/* <div className="flex flex-row gap-8 mx-auto">
 				<div className="mt-8 flex bg-foreground/10 w-32 px-6 py-3 rounded-full ">
 					<h2 className="text-xl m-auto">Posts</h2>
 				</div>
 				<div className="mt-8 flex bg-foreground/10 w-32 px-6 py-3 rounded-full ">
 					<h2 className="text-xl m-auto">Videos</h2>
 				</div>
-			</div>
-			<div className="flex flex-row flex-wrap gap-4 pt-4">
-				{postsOfMedia &&
-					postsOfMedia.map((post) => (
+			</div> */}
+			<div className="">
+				<h2 className="text-xl font-bold pt-4 pl-4">Videos</h2>
+				<div className="flex flex-col md:flex-row gap-4 pt-4 items-center justify-center">
+					{mediaVideos &&
+						mediaVideos.results
+							.slice(0, 3)
+							.map((video: any) => (
+								<YouTubeEmbed
+									videoId={video.key}
+								></YouTubeEmbed>
+							))}
+				</div>
+				<div className="flex flex-row flex-wrap gap-4 pt-4 ">
+					{postsOfMedia && (
 						<div>
-							<HomePostCard post={post}></HomePostCard>
+							{postsOfMedia.length > 0 && (
+								<h2 className="text-xl font-bold pt-4 pl-4">
+									User Posts
+								</h2>
+							)}
+							{postsOfMedia?.slice(0, 9).map((post) => (
+								<div>
+									<HomePostCard post={post}></HomePostCard>
+								</div>
+							))}
 						</div>
-					))}
+					)}
+				</div>
+				<h2 className="text-xl font-bold pt-4 pl-4">Reviews</h2>
+				<div className="max-w-7xl w-screen">
+					<div className="flex  flex-col gap-2 invisible-scroll custom-scrollbar">
+						{mediaReviews &&
+							mediaReviews.results
+								.slice(0, 2)
+								.map((review: any) => (
+									<div>
+										<div className="max-h-[200px]  p-2 overflow-y-auto custom-scrollbar">
+											<h3 className="font-bold text-lg py-2">
+												{review.author}
+											</h3>
+											<p>"{review.content}"</p>
+										</div>
+									</div>
+								))}
+					</div>
+				</div>
+				<h2 className="text-xl font-bold pt-4 pl-4">Recommended</h2>
+				<div className="max-w-7xl w-screen">
+					<div className="flex flex-row overflow-x-auto gap-2 invisible-scroll custom-scrollbar pl-4">
+						{mediaRecommendations &&
+							mediaRecommendations.results
+								.slice(0, 20)
+								.map((media: any) => (
+									<div>
+										<ExploreCard
+											media={media}
+										></ExploreCard>
+									</div>
+								))}
+					</div>
+				</div>
 			</div>
 
 			<div className=" h-[500px]"></div>
