@@ -73,7 +73,7 @@ export async function HomePostCard({ post }: any) {
 							<div className="">
 								{media && (
 									<div>
-										<div className=" pr-2">
+										<div className=" pr-2 ">
 											<Link
 												href={`/protected/media/${media_type}/${media_id}`}
 											>
@@ -82,7 +82,7 @@ export async function HomePostCard({ post }: any) {
 													alt={""}
 													width={200}
 													height={200}
-													className="rounded-lg overflow-hidden"
+													className="rounded-lg overflow-hidden min-w-[200px]"
 												></Image>
 											</Link>
 										</div>
@@ -90,16 +90,16 @@ export async function HomePostCard({ post }: any) {
 								)}
 							</div>
 							<div className="">
-								<div className="flex flex-row gap-2 items-center">
-									<Link
-										href={`/protected/media/${media_type}/${media_id}`}
-									>
-										{media && (
-											<p className="font-bold text-lg truncate">
+								<div className="flex flex-row gap-2 items-center text-ellipsis">
+									{media && (
+										<Link
+											href={`/protected/media/${media_type}/${media_id}`}
+										>
+											<p className="font-bold text-lg  ">
 												{media.title || media.name}
 											</p>
-										)}
-									</Link>
+										</Link>
+									)}
 								</div>
 								{media && (
 									<div className="flex flex-col gap-1">
