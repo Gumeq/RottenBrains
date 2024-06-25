@@ -126,7 +126,7 @@ export async function HomePostCard({ post }: any) {
 												Avg rating:
 											</p>
 											<p className="text-xl font-bold">
-												{media.vote_average.toFixed(1)}{" "}
+												{media.vote_average?.toFixed(1)}{" "}
 												<span className="text-xs">
 													/10
 												</span>
@@ -137,7 +137,7 @@ export async function HomePostCard({ post }: any) {
 												User rating:
 											</p>
 											<p className="text-5xl font-bold text-foreground">
-												{post.vote_user.toFixed(0)}
+												{post.vote_user?.toFixed(0)}
 												<span className="text-xs text-foreground">
 													/10
 												</span>
