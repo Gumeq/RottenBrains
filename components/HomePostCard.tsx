@@ -32,9 +32,9 @@ export async function HomePostCard({ post }: any) {
 	}
 
 	return (
-		<div>
+		<div className="pb-4">
 			<div className="w-screen md:w-[350px]  flex flex-col">
-				<div className="w-full h-[50px] flex items-center align-center px-2">
+				<div className="w-full h-[50px] flex items-center align-center px-2 bg-background">
 					<div className="flex flex-row gap-2 items-center">
 						{creator && (
 							<div className="">
@@ -147,7 +147,7 @@ export async function HomePostCard({ post }: any) {
 					</div>
 				</div>
 				<div className="w-full h-[50px] ">
-					<div className="flex flex-row gap-4 align-center w-full h-full px-4 justify-between">
+					<div className="flex flex-row gap-4 align-center w-full h-full px-4 justify-between bg-background">
 						{/* <HomePostCardStats post={post}></HomePostCardStats> */}
 						<LikeButton postId={post.id}></LikeButton>
 						<SaveButton postId={post.id}></SaveButton>

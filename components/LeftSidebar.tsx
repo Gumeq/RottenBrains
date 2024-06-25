@@ -22,12 +22,12 @@ export async function LeftSidebar() {
 					</div>
 					<div className=" px-0 py-4 flex flex-row gap-2 w-[400px]">
 						<div className=" h-full md:w-full">
-							<SearchBar link={true}></SearchBar>
+							<SearchBar link={true} user={true}></SearchBar>
 						</div>
 					</div>
 					<AuthButton></AuthButton>
 				</div>
-				<ul className="flex flex-row gap-6 p-2">
+				<ul className="flex flex-row p-2 justify-between max-w-5xl w-screen">
 					{sidebarLinks.map((link: INavLink) => {
 						return (
 							<Link

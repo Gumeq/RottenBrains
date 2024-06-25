@@ -86,7 +86,7 @@ export default async function mediaPage({
 				</div>
 			</div> */}
 			<div className="">
-				<h2 className="text-xl font-bold pt-4 pl-4">Videos</h2>
+				<h2 className="text-xl font-bold pt-4">Videos</h2>
 				<div className="flex flex-col md:flex-row gap-4 pt-4 items-center justify-center">
 					{mediaVideos &&
 						mediaVideos.results
@@ -97,7 +97,7 @@ export default async function mediaPage({
 								></YouTubeEmbed>
 							))}
 				</div>
-				<div className="flex flex-row flex-wrap gap-4 pt-4 ">
+				<div className="flex flex-row flex-wrap gap-4 py-4">
 					{postsOfMedia && (
 						<div>
 							{postsOfMedia.length > 0 && (
@@ -113,7 +113,7 @@ export default async function mediaPage({
 						</div>
 					)}
 				</div>
-				<h2 className="text-xl font-bold pt-4 pl-4">Reviews</h2>
+				<h2 className="text-xl font-bold pt-4">Reviews</h2>
 				<div className="max-w-7xl w-screen">
 					<div className="flex  flex-col gap-2 invisible-scroll custom-scrollbar">
 						{mediaReviews &&

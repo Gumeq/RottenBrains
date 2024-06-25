@@ -40,7 +40,7 @@ export default async function userProfile({
 								className="rounded-full"
 							></Image>
 						</div>
-						<div className="flex flex-col">
+						<div className="flex flex-col items-center">
 							<p className="text-4xl font-bold">
 								{user.user.username}
 							</p>

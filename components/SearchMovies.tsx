@@ -16,39 +16,41 @@ import SearchCard from "./SearchCard";
 import Link from "next/link";
 import { Divide } from "lucide-react";
 import Image from "next/image";
+import { searchUsers } from "@/utils/clientFunctions/searchUsers";
+import SearchUserCard from "./SearchUserCard";
 
-// Define the type for the person object
-interface Person {
-	id: number;
-	name: string;
-}
-
-// Sample data
-const people: Person[] = [
-	{ id: 1, name: "Tom Cook" },
-	{ id: 2, name: "Wade Cooper" },
-	{ id: 3, name: "Tanya Fox" },
-	{ id: 4, name: "Arlene Mccoy" },
-	{ id: 5, name: "Devon Webb" },
-];
-
-const SearchMovies = ({ media, setMedia, link }: any) => {
+const SearchMovies = ({ media, setMedia, link, user }: any) => {
 	// State types
 	const [query, setQuery] = useState<string>("");
-	const [selected, setSelected] = useState<Person>(people[1]);
 	const [data, setData] = useState<any>(null);
 	const [loading, setLoading] = useState<boolean>(true);
+	const [dataUsers, setDataUsers] = useState<any>(null);
+	const [loadingUsers, setLoadingUsers] = useState<boolean>(true);
 
 	useEffect(() => {
 		const getData = async (query: string) => {
-			try {
-				const result = await searchMovies(query);
-				setData(result);
-				console.log(data);
-			} catch (err) {
-				console.error("Failed to fetch data", err);
-			} finally {
-				setLoading(false);
+			if (query.startsWith("@")) {
+				try {
+					const userQuery = query.slice(1);
+					const result = await searchUsers(userQuery);
+					setDataUsers(result);
+				} catch (err) {
+					console.error("Failed to fetch data", err);
+				} finally {
+					setLoadingUsers(false);
+				}
+			} else {
+				setDataUsers(null);
+				setLoadingUsers(false);
+				try {
+					const result = await searchMovies(query);
+					setData(result);
+					console.log(data);
+				} catch (err) {
+					console.error("Failed to fetch data", err);
+				} finally {
+					setLoading(false);
+				}
 			}
 		};
 
@@ -89,6 +91,29 @@ const SearchMovies = ({ media, setMedia, link }: any) => {
 						anchor="bottom"
 						className="w-[var(--input-width)] z-40 rounded-xl border border-white/5 bg-background p-1 [--anchor-gap:var(--spacing-1)] empty:hidden"
 					>
+						{!loadingUsers && (
+							<div>
+								{dataUsers && (
+									<div className="">
+										{dataUsers
+											.slice(0, 4)
+											.map((user: any) => (
+												<ComboboxOption
+													key={user.id}
+													value={user}
+													className="group flex items-center gap-4 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10"
+												>
+													<div className="text-sm/6 text-white">
+														<SearchUserCard
+															user={user}
+														/>
+													</div>
+												</ComboboxOption>
+											))}
+									</div>
+								)}
+							</div>
+						)}
 						{!loading &&
 							data.results.slice(0, 4).map((media: any) => (
 								<div>
@@ -99,7 +124,7 @@ const SearchMovies = ({ media, setMedia, link }: any) => {
 											<ComboboxOption
 												key={media.id}
 												value={media}
-												className="group flex cursor-default items-center gap-4 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10"
+												className="group flex items-center gap-4 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10"
 											>
 												<div className="text-sm/6 text-white">
 													<SearchCard media={media} />
