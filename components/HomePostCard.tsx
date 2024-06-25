@@ -95,7 +95,7 @@ export async function HomePostCard({ post }: any) {
 										<Link
 											href={`/protected/media/${media_type}/${media_id}`}
 										>
-											<p className="font-bold text-lg  ">
+											<p className="font-bold text-lg hover:underline">
 												{media.title || media.name}
 											</p>
 										</Link>
