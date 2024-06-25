@@ -2,6 +2,7 @@ import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import LeftSidebar from "@/components/LeftSidebar";
 import Head from "next/head";
+import { useState } from "react";
 
 const defaultUrl = process.env.VERCEL_URL
 	? `https://${process.env.VERCEL_URL}`
@@ -18,6 +19,7 @@ export default function RootLayout({
 }: {
 	children: React.ReactNode;
 }) {
+	const [loading, setLoading] = useState(false);
 	return (
 		<html lang="en" className={GeistSans.className}>
 			<body className="bg-background text-foreground overflow-x-hidden">

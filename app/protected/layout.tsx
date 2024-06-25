@@ -1,6 +1,7 @@
 import AuthButton from "@/components/AuthButton";
 import Bottombar from "@/components/Bottombar";
 import LeftSidebar from "@/components/LeftSidebar";
+import MobileTopNav from "@/components/MobileTopNav";
 import Topbar from "@/components/Topbar";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
@@ -21,8 +22,10 @@ export default async function ProtectedLayout({
 	}
 	return (
 		<div>
+			<div className="w-full h-[100px] "> </div>
 			<div className="bg-background text-foreground w-full md:flex overflow-x-hidden">
 				<LeftSidebar />
+				<MobileTopNav></MobileTopNav>
 				<div className="flex flex-1 ">{children}</div>
 				<Bottombar />
 			</div>

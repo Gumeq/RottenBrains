@@ -87,7 +87,7 @@ const SearchMovies = ({ media, setMedia, link }: any) => {
 				>
 					<ComboboxOptions
 						anchor="bottom"
-						className="w-[var(--input-width)] rounded-xl border border-white/5 bg-background p-1 [--anchor-gap:var(--spacing-1)] empty:hidden"
+						className="w-[var(--input-width)] z-40 rounded-xl border border-white/5 bg-background p-1 [--anchor-gap:var(--spacing-1)] empty:hidden"
 					>
 						{!loading &&
 							data.results.slice(0, 4).map((media: any) => (

@@ -7,23 +7,6 @@ import {
 } from "@/utils/supabase/queries";
 import { createClient } from "@/utils/supabase/server";
 
-const fetchPosts = async (): Promise<IPost[] | null> => {
-	const supabaseServerClient = createClient();
-	const user = await getCurrentUser();
-	let { data: posts, error } = await supabaseServerClient
-		.from("posts")
-		.select("*")
-		.not("creatorid", "eq", user?.user.id)
-		.order("created_at", { ascending: false });
-
-	if (error) {
-		console.error("Error fetching posts:", error.message);
-		return null;
-	}
-
-	return posts;
-};
-
 // Server component fetching and displaying posts
 const PostsPage = async () => {
 	const user = await getCurrentUser();
@@ -36,10 +19,10 @@ const PostsPage = async () => {
 	}
 
 	return (
-		<div className="max-w-6xl mx-auto">
-			<h1 className="text-2xl font-bold my-4">Home</h1>
+		<div className="max-w-6xl w-screen mx-auto">
+			<h1 className="text-2xl font-bold my-4"></h1>
 			{posts && posts.length > 0 ? (
-				<div className="flex flex-col md:flex-row gap-4 flex-wrap">
+				<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center ">
 					{posts.map((post: IPost) => (
 						<div>
 							<HomePostCard post={post} />
