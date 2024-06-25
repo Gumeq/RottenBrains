@@ -11,6 +11,7 @@ export async function addNotification(
 	const { error: notifError } = await supabase
 		.from("notifications")
 		.select("user_id,post_id,type")
+		.eq("from_user_id", from_userId)
 		.eq("user_id", userId)
 		.eq("post_id", postId)
 		.eq("type", "like")
