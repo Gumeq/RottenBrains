@@ -1,3 +1,4 @@
+import FollowButton from "@/components/FollowButton";
 import HomePostCard from "@/components/HomePostCard";
 import { getUserFromDB, getUserPosts } from "@/utils/supabase/queries";
 import Image from "next/image";
@@ -30,7 +31,7 @@ export default async function userProfile({
 		<div className="max-w-6xl mx-auto ">
 			{user && (
 				<div>
-					<div className="flex flex-row gap-4 items-center p-8">
+					<div className="flex flex-col gap-4 items-center p-8">
 						<div>
 							<Image
 								src={user.user.imageURL}
@@ -47,6 +48,11 @@ export default async function userProfile({
 							<p className="text-lg text-foreground/50">
 								Member since {formattedDate}
 							</p>
+						</div>
+						<div className="pt-4">
+							<FollowButton
+								user_to_follow_id={user.user.id}
+							></FollowButton>
 						</div>
 					</div>
 				</div>

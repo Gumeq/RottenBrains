@@ -4,11 +4,6 @@ import { IPost, IUser } from "@/types";
 import { createClient } from "../supabase/client";
 import { useState } from "react";
 
-type savePostToUserProps = {
-	userId: string;
-	postId: string;
-};
-
 const supabase = createClient();
 
 export const savePost = async (userId: string, postId: string) => {
