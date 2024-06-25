@@ -180,3 +180,24 @@ export const getPostsFromFollowedUsers = async (userId: string) => {
 		return null;
 	}
 };
+
+export const getUserNotifications = async (userId: string) => {
+	const supabase = createClient(
+		process.env.NEXT_PUBLIC_SUPABASE_URL!,
+		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+	);
+	const { data, error } = await supabase
+		.from("notifications")
+		.select("*") // Type assertion to any
+		.eq("user_id", userId)
+		.eq("read", false)
+		.order("created_at", { ascending: false })
+		.limit(5);
+
+	if (error) {
+		console.error("Error fetching saved posts:", error.message);
+		return null;
+	}
+
+	return data;
+};

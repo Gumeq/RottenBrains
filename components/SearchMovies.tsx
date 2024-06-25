@@ -45,7 +45,6 @@ const SearchMovies = ({ media, setMedia, link, user }: any) => {
 				try {
 					const result = await searchMovies(query);
 					setData(result);
-					console.log(data);
 				} catch (err) {
 					console.error("Failed to fetch data", err);
 				} finally {

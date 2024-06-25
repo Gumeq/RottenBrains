@@ -16,7 +16,7 @@ export const sidebarLinks = [
 	},
 	{
 		imgURL: "/assets/icons/bell-solid.svg",
-		route: "/notifications",
+		route: "/protected/notifications",
 		label: "Notifications",
 	},
 	{

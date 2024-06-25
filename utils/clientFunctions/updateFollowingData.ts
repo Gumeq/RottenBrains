@@ -1,6 +1,7 @@
 "use client";
 
 import { createClient } from "../supabase/client";
+import { addNotification } from "./notificationsData";
 
 const supabase = createClient();
 
@@ -11,8 +12,10 @@ export const followUser = async (userId: string, user_to_follow_id: string) => {
 
 	if (error) {
 		console.error("Error saving post:", error.message);
+		return;
 	} else {
 		console.log("Post saved:", data);
+		await addNotification(userId, user_to_follow_id, "follow");
 	}
 
 	return { data, error };

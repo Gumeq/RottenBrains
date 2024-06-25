@@ -3,6 +3,7 @@
 import { IPost, IUser } from "@/types";
 import { createClient } from "../supabase/client";
 import { useState } from "react";
+import { addNotification } from "./notificationsData";
 
 const supabase = createClient();
 
@@ -61,7 +62,7 @@ export const likePost = async (userId: string, postId: string) => {
 	if (error) {
 		console.error("Error saving post:", error.message);
 	} else {
-		console.log("Post saved:", data);
+		console.log("Post liked:", data);
 	}
 
 	const { error: postError } = await supabase.rpc("increment_likes", {
@@ -70,6 +71,18 @@ export const likePost = async (userId: string, postId: string) => {
 
 	if (postError) {
 		console.log("Error adding likes");
+	}
+
+	const { data: dataCreator, error: errorCreator } = await supabase
+		.from("posts")
+		.select("*")
+		.eq("id", postId)
+		.single();
+
+	if (errorCreator) {
+		console.log("error getting creator: ", errorCreator.message);
+	} else {
+		await addNotification(userId, dataCreator.creatorid, "like", postId);
 	}
 
 	return { data, error };
@@ -83,9 +96,9 @@ export const removeLike = async (userId: string, postId: string) => {
 		.eq("post_id", postId);
 
 	if (error) {
-		console.error("Error removing save:", error.message);
+		console.error("Error removing like:", error.message);
 	} else {
-		console.log("Save removed:");
+		console.log("Like removed:");
 	}
 
 	const { error: postError } = await supabase.rpc("decrement_likes", {
