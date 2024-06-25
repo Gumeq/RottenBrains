@@ -7,7 +7,7 @@ import { getPostsOfMedia } from "@/utils/supabase/queries";
 import { getRecommendations, getReviews, getVideos } from "@/utils/tmdb";
 import Image from "next/image";
 
-export default async function Page({
+export default async function mediaPage({
 	params,
 }: {
 	params: { media_type: string; media_id: any };

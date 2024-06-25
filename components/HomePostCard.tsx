@@ -8,6 +8,7 @@ import SaveButton from "./SaveButton";
 import LikeButton from "./LikeButton";
 import Link from "next/link";
 import UserReviewText from "./UserReviewText";
+import ProfilePicture from "./ProfilePicture";
 
 export async function HomePostCard({ post }: any) {
 	const media_id = post.mediaid;
@@ -37,13 +38,9 @@ export async function HomePostCard({ post }: any) {
 					<div className="flex flex-row gap-2 items-center">
 						{creator && (
 							<div className="">
-								<Image
-									src={creator.user.imageURL}
-									alt={""}
-									width={35}
-									height={35}
-									className="rounded-full overflow-hidden"
-								></Image>
+								<ProfilePicture
+									userId={creator?.user.id}
+								></ProfilePicture>
 							</div>
 						)}
 						<div>

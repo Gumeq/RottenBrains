@@ -125,3 +125,22 @@ export const getPostsOfMedia = async (mediaid: number, media_type: string) => {
 
 	return data;
 };
+
+export const getUserPosts = async (userId: string) => {
+	const supabase = createClient(
+		process.env.NEXT_PUBLIC_SUPABASE_URL!,
+		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+	);
+	const { data, error } = await supabase
+		.from("posts")
+		.select("*") // Type assertion to any
+		.eq("creatorid", userId)
+		.order("created_at", { ascending: false });
+
+	if (error) {
+		console.error("Error fetching saved posts:", error.message);
+		return null;
+	}
+
+	return data;
+};
