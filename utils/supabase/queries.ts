@@ -144,3 +144,39 @@ export const getUserPosts = async (userId: string) => {
 
 	return data;
 };
+
+export const getPostsFromFollowedUsers = async (userId: string) => {
+	const supabase = createClient(
+		process.env.NEXT_PUBLIC_SUPABASE_URL!,
+		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+	);
+	try {
+		const { data: followedUsers, error } = await supabase
+			.from("follows")
+			.select("following_id")
+			.eq("user_id", userId);
+
+		if (error) {
+			throw new Error(`Error fetching followed users: ${error.message}`);
+		}
+
+		// Get followed user IDs
+		const followedUserIds = followedUsers.map((user) => user.following_id);
+
+		// Fetch posts from followed users
+		const { data: postsData, error: postsError } = await supabase
+			.from("posts")
+			.select("*")
+			.in("creatorid", followedUserIds)
+			.order("created_at", { ascending: false });
+
+		if (postsError) {
+			throw new Error(`Error fetching posts: ${postsError.message}`);
+		}
+
+		return postsData;
+	} catch (error) {
+		console.error("Error in getPostsFromFollowedUsers:", error);
+		return null;
+	}
+};

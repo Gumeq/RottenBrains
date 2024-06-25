@@ -46,11 +46,11 @@ const FollowButton: React.FC<SaveButtonProps> = ({ user_to_follow_id }) => {
 	useEffect(() => {
 		const fetchData = async () => {
 			if (user) {
-				const isPostSaved = await getFollowStatus(
+				const isUserFollowed = await getFollowStatus(
 					user.id,
 					user_to_follow_id
 				); // Assuming getSavedStatus is asynchronous
-				setFollowed(isPostSaved);
+				setFollowed(isUserFollowed);
 			}
 		};
 
