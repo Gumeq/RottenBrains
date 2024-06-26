@@ -7,8 +7,9 @@ import Image from "next/image";
 
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import ProfilePicture from "../ProfilePicture";
-import AuthButton from "../auth/AuthButton";
+
 import SearchBar from "../searchBar/SearchBar";
+import AuthButton from "../auth/AuthButton";
 
 export async function LeftSidebar() {
 	const currentUser = await getCurrentUser();

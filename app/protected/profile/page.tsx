@@ -1,4 +1,4 @@
-import HomePostCard from "@/components/HomePostCard";
+import HomePostCard from "@/components/post/HomePostCard";
 import { getUserPosts } from "@/utils/supabase/queries";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import { NextPage } from "next";

@@ -1,0 +1,48 @@
+.imageContainer {
+	display: flex;
+	width: 200%; /* Ensure the container is wide enough to fit two images side by side */
+	height: 100vh; /* Each image set takes up the full viewport height */
+	position: relative;
+	overflow: hidden;
+}
+
+.imageWrapper {
+	flex: 0 0 50%; /* Each image takes up half the container width */
+	position: relative;
+	height: 100%;
+}
+
+.scrollRight {
+	animation: scrollRight 80s linear infinite alternate;
+}
+
+.scrollLeft {
+	animation: scrollLeft 80s linear infinite alternate;
+}
+
+@keyframes scrollRight {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-50%);
+	}
+}
+
+@keyframes scrollLeft {
+	0% {
+		transform: translateX(-50%);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+
+.radialBlurOverlay {
+	position: absolute;
+	inset: 0;
+	z-index: 5;
+	pointer-events: none;
+	backdrop-filter: blur(10px);
+	mask-image: radial-gradient(circle, transparent, black);
+}

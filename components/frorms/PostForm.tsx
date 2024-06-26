@@ -2,12 +2,12 @@
 
 import { IMedia, IPost } from "@/types";
 import React, { useState } from "react";
-import SearchBar from "../SearchBar";
 import Image from "next/image";
 import fetchUserData from "@/utils/clientFunctions/fetchUserData";
 import { createClient } from "@/utils/supabase/client";
 import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
+import SearchBar from "../searchBar/SearchBar";
 
 type PostFormProps = {
 	post?: IPost;

@@ -10,7 +10,7 @@
 		--btn-background: 200 10% 91%;
 		--btn-background-hover: 200 10% 89%;
 		--foreground: 200 50% 3%;
-		--accent: 210 77% 57%;
+		--accent: 251 65% 61%;
 	}
 
 	@media (prefers-color-scheme: dark) {
@@ -19,7 +19,7 @@
 			--btn-background: 192 82% 9%;
 			--btn-background-hover: 192 82% 12%;
 			--foreground: 200 20% 96%;
-			--accent: 210 77% 57%;
+			--accent: 251 65% 61%;
 		}
 		.invert-on-dark {
 			filter: invert(1);
@@ -126,4 +126,30 @@
 	width: 384px;
 	height: 216px;
 	border: 0;
+}
+
+@keyframes downUp {
+	0% {
+		transform: translateY(0);
+	}
+	30% {
+		transform: translateY(20px);
+	}
+	100% {
+		transform: translateY(0);
+	}
+}
+
+.downUpAnimation {
+	animation: downUp 2s infinite;
+	animation-timing-function: cubic-bezier(
+		0.8,
+		0,
+		0.2,
+		1
+	); /* Fast down, slow up */
+}
+
+.downUpAnimation:hover {
+	animation-play-state: paused;
 }
