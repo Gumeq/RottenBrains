@@ -9,6 +9,7 @@ import LikeButton from "./LikeButton";
 import Link from "next/link";
 import UserReviewText from "./UserReviewText";
 import ProfilePicture from "./ProfilePicture";
+import PostLikedNumber from "./PostLikedNumber";
 
 export async function HomePostCard({ post }: any) {
 	const media_id = post.mediaid;
@@ -155,7 +156,9 @@ export async function HomePostCard({ post }: any) {
 				</div>
 			</div>
 			<div className="px-4 w-screen md:w-[350px] ">
-				<p className="font-bold">{post.total_likes || 0} likes</p>
+				<p className="font-bold">
+					<PostLikedNumber postId={post.id}></PostLikedNumber> likes
+				</p>
 				<UserReviewText
 					post_review={post.review_user || "no review"}
 					creator_name={creator?.user.username || "no user"}

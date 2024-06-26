@@ -19,7 +19,6 @@ const ProfilePage = async () => {
 	let userPosts;
 	if (user) {
 		userPosts = await getUserPosts(user.user.id);
-		console.table(userPosts);
 	}
 
 	return (
