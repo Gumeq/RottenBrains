@@ -7,8 +7,7 @@ import {
 	removeLike,
 } from "@/utils/clientFunctions/updatePostData";
 import Image from "next/image";
-// SaveButton.tsx
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface SaveButtonProps {
 	postId: string;
@@ -16,61 +15,57 @@ interface SaveButtonProps {
 
 const LikeButton: React.FC<SaveButtonProps> = ({ postId }) => {
 	const [liked, setLiked] = useState(false);
-
 	const user = fetchUserData();
-	let userId: string;
-	if (user) {
-		userId = user.id;
-	}
+	const userId = user?.id;
 
-	const handleSave = async () => {
+	const handleLike = useCallback(async () => {
 		if (userId) {
+			setLiked((prevLiked) => !prevLiked); // Optimistic update
 			try {
 				if (liked) {
-					await removeLike(userId!, postId); // Assuming userId is defined when saved is true
+					await removeLike(userId, postId);
 				} else {
-					await likePost(userId!, postId); // Assuming userId is defined when saved is false
+					await likePost(userId, postId);
 				}
-				setLiked(!liked); // Toggle saved state
 			} catch (error) {
-				console.error("Error saving or removing save:", error);
+				setLiked((prevLiked) => !prevLiked); // Revert if there's an error
+				console.error("Error toggling like:", error);
 			}
 		}
-	};
+	}, [userId, postId, liked]);
 
 	useEffect(() => {
-		const fetchData = async () => {
-			if (user) {
-				const isPostSaved = await getLikedStatus(user.id, postId); // Assuming getSavedStatus is asynchronous
-				setLiked(isPostSaved);
-			}
-		};
+		if (userId) {
+			const fetchData = async () => {
+				const isPostLiked = await getLikedStatus(userId, postId);
+				setLiked(isPostLiked);
+			};
+			fetchData();
+		}
+	}, [userId, postId]);
 
-		fetchData();
-	}, [postId, handleSave]);
-
-	if (userId! === null) {
-		return null; // Return null or a loading indicator until user data is fetched
+	if (!userId) {
+		return null; // Return null if user ID isn't available
 	}
 
 	return (
-		<button onClick={handleSave}>
+		<button onClick={handleLike}>
 			{liked ? (
 				<Image
 					src={"/assets/icons/heart-solid.svg"}
-					alt=""
+					alt="Liked"
 					width={30}
 					height={30}
 					className="invert-on-dark"
-				></Image>
+				/>
 			) : (
 				<Image
 					src={"/assets/icons/heart-regular.svg"}
-					alt=""
+					alt="Not Liked"
 					width={30}
 					height={30}
 					className="invert-on-dark"
-				></Image>
+				/>
 			)}
 		</button>
 	);

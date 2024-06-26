@@ -4,9 +4,9 @@ import Link from "next/link";
 import { sidebarLinks } from "@/constants";
 import { INavLink } from "@/types";
 import Image from "next/image";
-import { getCurrentUser } from "@/utils/supabase/queries";
 import SearchBar from "./SearchBar";
 import ProfilePicture from "./ProfilePicture";
+import { getCurrentUser } from "@/utils/supabase/serverQueries";
 
 export async function LeftSidebar() {
 	const currentUser = await getCurrentUser();

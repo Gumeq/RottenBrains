@@ -23,7 +23,7 @@ export async function fetchExploreData(action: string) {
 	try {
 		return await fetchFunction();
 	} catch (err) {
-		console.error("Failed to fetch data", err);
+		console.error(`Failed to fetch data for action: ${action}`, err);
 		throw err;
 	}
 }

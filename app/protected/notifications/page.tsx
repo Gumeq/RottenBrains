@@ -1,5 +1,6 @@
 import NotificationCard from "@/components/NotificationCard";
-import { getCurrentUser, getUserNotifications } from "@/utils/supabase/queries";
+import { getUserNotifications } from "@/utils/supabase/queries";
+import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import React from "react";
 
 const NotificationPage = async () => {
@@ -10,7 +11,7 @@ const NotificationPage = async () => {
 		<div className="md:max-w-lg w-screen h-full mx-auto">
 			{notifications && (
 				<div className="flex flex-col gap-2">
-					{notifications.map((notification) => (
+					{notifications.map((notification: any) => (
 						<div>
 							<NotificationCard
 								notification={notification}

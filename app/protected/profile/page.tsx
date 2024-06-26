@@ -1,5 +1,6 @@
 import HomePostCard from "@/components/HomePostCard";
-import { getCurrentUser, getUserPosts } from "@/utils/supabase/queries";
+import { getUserPosts } from "@/utils/supabase/queries";
+import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import { NextPage } from "next";
 import Image from "next/image";
 import React from "react";
@@ -25,7 +26,7 @@ const ProfilePage = async () => {
 		<div className="max-w-6xl mx-auto ">
 			{user && (
 				<div>
-					<div className="flex flex-row gap-4 items-center p-8">
+					<div className="flex flex-col gap-4 items-center p-8">
 						<div>
 							<Image
 								src={user.user.imageURL}
@@ -35,7 +36,7 @@ const ProfilePage = async () => {
 								className="rounded-full"
 							></Image>
 						</div>
-						<div className="flex flex-col">
+						<div className="flex flex-col items-center justify-center">
 							<p className="text-4xl font-bold">
 								{user.user.username}
 							</p>

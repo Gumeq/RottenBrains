@@ -79,42 +79,45 @@ const PostForm = ({ post, action }: PostFormProps) => {
 	return (
 		<div className="w-full max-w-4xl mx-auto mt-10 flex flex-col text-foreground">
 			<div className="py-4 self-center md:w-[500px] w-[300px]">
-				<p className="py-2">Search for Movie or TV</p>
+				<p className="py-2 text-lg font-semibold text-center">
+					Search for a Movie or TV Show
+				</p>
 				<SearchBar media={media} setMedia={setMedia}></SearchBar>
 			</div>
-			<div className="flex flex-col md:flex-row">
-				<div className="w-[300px] h-[450px] bg-foreground/10 rounded-xl m-auto overflow-hidden">
+			<div className="flex flex-col md:flex-row items-center">
+				<div className="w-[300px] h-[450px] bg-foreground/10 rounded-xl m-auto overflow-hidden shadow-lg">
 					{media?.poster_path && (
 						<Image
 							src={`https://image.tmdb.org/t/p/w500${media?.poster_path}`}
-							alt={""}
+							alt={"Poster"}
 							width={300}
 							height={450}
-						></Image>
+							className="object-cover"
+						/>
 					)}
 				</div>
-				<div className="md:w-1/2 px-4 w-full">
+				<div className="md:w-1/2 px-4 w-full mt-6 md:mt-0">
 					<form
 						onSubmit={handleSubmit}
-						className="flex flex-col gap-4"
+						className="flex flex-col gap-6 bg-background p-6 rounded-lg shadow-md"
 					>
 						{/* Description */}
 						<div className="flex flex-col">
-							<label className="text-gray-700 font-medium mb-1">
+							<label className="text-foreground/30 font-medium mb-2">
 								Review
 							</label>
 							<textarea
 								name="review_user"
 								value={formValues.review_user}
 								onChange={handleInputChange}
-								placeholder="Enter value for field 3"
-								className="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-foreground bg-background h-40"
+								placeholder="Write your review here..."
+								className="border p-3 rounded focus:outline-none focus:ring-2 focus:ring-accent text-foreground bg-background h-40 resize-none"
 								maxLength={200}
 							/>
 						</div>
 						{/* Rating */}
 						<div className="flex flex-col">
-							<label className="text-gray-700 font-medium mb-1">
+							<label className="text-foreground/30 font-medium mb-2">
 								Rating
 							</label>
 							<input
@@ -122,8 +125,8 @@ const PostForm = ({ post, action }: PostFormProps) => {
 								name="vote_user"
 								value={formValues.vote_user}
 								onChange={handleInputChange}
-								placeholder="6/9"
-								className="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-foreground bg-background "
+								placeholder="Rate from 0 to 10"
+								className="border p-3 rounded focus:outline-none focus:ring-2 focus:ring-accent text-foreground bg-background"
 								max={10}
 								min={0}
 							/>
@@ -132,7 +135,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
 						{/* Submit Button */}
 						<button
 							type="submit"
-							className="bg-accent/90 text-white font-bold py-2 rounded mt-4 hover:bg-accent"
+							className="bg-accent/90 text-foreground font-bold py-3 rounded hover:bg-accent transition duration-300"
 						>
 							Submit
 						</button>

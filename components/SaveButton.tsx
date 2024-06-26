@@ -1,5 +1,4 @@
 "use client";
-
 import fetchUserData from "@/utils/clientFunctions/fetchUserData";
 import {
 	getSavedStatus,
@@ -7,8 +6,7 @@ import {
 	savePost,
 } from "@/utils/clientFunctions/updatePostData";
 import Image from "next/image";
-// SaveButton.tsx
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface SaveButtonProps {
 	postId: string;
@@ -16,41 +14,37 @@ interface SaveButtonProps {
 
 const SaveButton: React.FC<SaveButtonProps> = ({ postId }) => {
 	const [saved, setSaved] = useState(false);
-
 	const user = fetchUserData();
-	let userId: string;
-	if (user) {
-		userId = user.id;
-	}
+	const userId = user?.id;
 
-	const handleSave = async () => {
-		if (user) {
+	const handleSave = useCallback(async () => {
+		if (userId) {
+			setSaved((prevSaved) => !prevSaved); // Optimistic update
 			try {
 				if (saved) {
-					await removeSave(userId!, postId); // Assuming userId is defined when saved is true
+					await removeSave(userId, postId);
 				} else {
-					await savePost(userId!, postId); // Assuming userId is defined when saved is false
+					await savePost(userId, postId);
 				}
-				setSaved(!saved); // Toggle saved state
 			} catch (error) {
+				setSaved((prevSaved) => !prevSaved); // Revert if there's an error
 				console.error("Error saving or removing save:", error);
 			}
 		}
-	};
+	}, [userId, postId, saved]);
 
 	useEffect(() => {
-		const fetchData = async () => {
-			if (user) {
-				const isPostSaved = await getSavedStatus(user.id, postId); // Assuming getSavedStatus is asynchronous
+		if (userId) {
+			const fetchData = async () => {
+				const isPostSaved = await getSavedStatus(userId, postId);
 				setSaved(isPostSaved);
-			}
-		};
+			};
+			fetchData();
+		}
+	}, [userId, postId]);
 
-		fetchData();
-	}, [postId, handleSave]);
-
-	if (userId! === null) {
-		return null; // Return null or a loading indicator until user data is fetched
+	if (!userId) {
+		return null; // Return null if user ID isn't available
 	}
 
 	return (
@@ -58,19 +52,19 @@ const SaveButton: React.FC<SaveButtonProps> = ({ postId }) => {
 			{saved ? (
 				<Image
 					src={"/assets/icons/bookmark-solid.svg"}
-					alt=""
+					alt="Saved"
 					width={20}
 					height={20}
 					className="invert-on-dark"
-				></Image>
+				/>
 			) : (
 				<Image
 					src={"/assets/icons/bookmark-regular.svg"}
-					alt=""
+					alt="Not Saved"
 					width={20}
 					height={20}
 					className="invert-on-dark"
-				></Image>
+				/>
 			)}
 		</button>
 	);

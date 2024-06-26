@@ -11,25 +11,25 @@ import {
 } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import clsx from "clsx";
-import { useState, ChangeEvent, useEffect } from "react";
+import { useState, ChangeEvent, useEffect, useCallback, useMemo } from "react";
 import SearchCard from "./SearchCard";
 import Link from "next/link";
-import { Divide } from "lucide-react";
 import Image from "next/image";
 import { searchUsers } from "@/utils/clientFunctions/searchUsers";
 import SearchUserCard from "./SearchUserCard";
+import { debounce } from "lodash";
 
 const SearchMovies = ({ media, setMedia, link, user }: any) => {
-	// State types
 	const [query, setQuery] = useState<string>("");
 	const [data, setData] = useState<any>(null);
-	const [loading, setLoading] = useState<boolean>(true);
+	const [loading, setLoading] = useState<boolean>(false);
 	const [dataUsers, setDataUsers] = useState<any>(null);
-	const [loadingUsers, setLoadingUsers] = useState<boolean>(true);
+	const [loadingUsers, setLoadingUsers] = useState<boolean>(false);
 
-	useEffect(() => {
-		const getData = async (query: string) => {
+	const debouncedSearch = useCallback(
+		debounce(async (query: string) => {
 			if (query.startsWith("@")) {
+				setLoadingUsers(true);
 				try {
 					const userQuery = query.slice(1);
 					const result = await searchUsers(userQuery);
@@ -40,8 +40,7 @@ const SearchMovies = ({ media, setMedia, link, user }: any) => {
 					setLoadingUsers(false);
 				}
 			} else {
-				setDataUsers(null);
-				setLoadingUsers(false);
+				setLoading(true);
 				try {
 					const result = await searchMovies(query);
 					setData(result);
@@ -51,13 +50,68 @@ const SearchMovies = ({ media, setMedia, link, user }: any) => {
 					setLoading(false);
 				}
 			}
-		};
+		}, 300),
+		[]
+	);
 
-		getData(query);
-	}, [query]);
+	useEffect(() => {
+		if (query) {
+			debouncedSearch(query);
+		} else {
+			setData(null);
+			setDataUsers(null);
+		}
+	}, [query, debouncedSearch]);
+
+	const handleQueryChange = (event: ChangeEvent<HTMLInputElement>) => {
+		setQuery(event.target.value);
+	};
+
+	const renderOptions = useCallback(() => {
+		if (loadingUsers && query.startsWith("@")) {
+			return <div className="text-sm/6 text-white">Loading users...</div>;
+		}
+		if (loading) {
+			return (
+				<div className="text-sm/6 text-white">Loading movies...</div>
+			);
+		}
+		if (dataUsers) {
+			return dataUsers.slice(0, 4).map((user: any) => (
+				<ComboboxOption
+					key={user.id}
+					value={user}
+					className="group flex items-center gap-4 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10"
+				>
+					<div className="text-sm/6 text-white">
+						<SearchUserCard user={user} />
+					</div>
+				</ComboboxOption>
+			));
+		}
+		return data?.results.slice(0, 4).map((media: any) => (
+			<ComboboxOption
+				key={media.id}
+				value={media}
+				className="group flex items-center gap-4 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10"
+			>
+				<div className="text-sm/6 text-white">
+					{link ? (
+						<Link
+							href={`/protected/media/${media.media_type}/${media.id}`}
+						>
+							<SearchCard media={media} />
+						</Link>
+					) : (
+						<SearchCard media={media} />
+					)}
+				</div>
+			</ComboboxOption>
+		));
+	}, [data, dataUsers, loading, loadingUsers, query, link]);
 
 	return (
-		<div className="w-full ">
+		<div className="w-full">
 			<Combobox value={media} onChange={setMedia}>
 				<div className="relative">
 					<ComboboxInput
@@ -66,9 +120,7 @@ const SearchMovies = ({ media, setMedia, link, user }: any) => {
 							"focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-foreground/25"
 						)}
 						displayValue={(media: any) => media?.title}
-						onChange={(event: ChangeEvent<HTMLInputElement>) =>
-							setQuery(event.target.value)
-						}
+						onChange={handleQueryChange}
 					/>
 					<ComboboxButton className="group absolute inset-y-0 right-0 px-2.5">
 						<Image
@@ -77,7 +129,7 @@ const SearchMovies = ({ media, setMedia, link, user }: any) => {
 							width={20}
 							height={20}
 							className="invert-on-dark opacity-70"
-						></Image>
+						/>
 					</ComboboxButton>
 				</div>
 				<Transition
@@ -90,61 +142,7 @@ const SearchMovies = ({ media, setMedia, link, user }: any) => {
 						anchor="bottom"
 						className="w-[var(--input-width)] z-40 rounded-xl border border-white/5 bg-background p-1 [--anchor-gap:var(--spacing-1)] empty:hidden"
 					>
-						{!loadingUsers && (
-							<div>
-								{dataUsers && (
-									<div className="">
-										{dataUsers
-											.slice(0, 4)
-											.map((user: any) => (
-												<ComboboxOption
-													key={user.id}
-													value={user}
-													className="group flex items-center gap-4 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10"
-												>
-													<div className="text-sm/6 text-white">
-														<SearchUserCard
-															user={user}
-														/>
-													</div>
-												</ComboboxOption>
-											))}
-									</div>
-								)}
-							</div>
-						)}
-						{!loading &&
-							data.results.slice(0, 4).map((media: any) => (
-								<div>
-									{link ? (
-										<Link
-											href={`/protected/media/${media.media_type}/${media.id}`}
-										>
-											<ComboboxOption
-												key={media.id}
-												value={media}
-												className="group flex items-center gap-4 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10"
-											>
-												<div className="text-sm/6 text-white">
-													<SearchCard media={media} />
-												</div>
-											</ComboboxOption>
-										</Link>
-									) : (
-										<div>
-											<ComboboxOption
-												key={media.id}
-												value={media}
-												className="group flex cursor-default items-center gap-4 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10"
-											>
-												<div className="text-sm/6 text-white">
-													<SearchCard media={media} />
-												</div>
-											</ComboboxOption>
-										</div>
-									)}
-								</div>
-							))}
+						{renderOptions()}
 					</ComboboxOptions>
 				</Transition>
 			</Combobox>

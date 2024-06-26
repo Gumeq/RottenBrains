@@ -1,11 +1,12 @@
 import HomePostCard from "@/components/HomePostCard";
 import { IPost } from "@/types";
 import fetchUserData from "@/utils/clientFunctions/fetchUserData";
+import {} from "@/utils/supabase/queries";
+import { createClient } from "@/utils/supabase/server";
 import {
 	getCurrentUser,
 	getPostsFromFollowedUsers,
-} from "@/utils/supabase/queries";
-import { createClient } from "@/utils/supabase/server";
+} from "@/utils/supabase/serverQueries";
 
 // Server component fetching and displaying posts
 const PostsPage = async () => {

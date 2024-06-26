@@ -1,130 +1,147 @@
 "use client";
 
-import { IPost, IUser } from "@/types";
 import { createClient } from "../supabase/client";
-import { useState } from "react";
 import { addNotification } from "./notificationsData";
+import { PostgrestSingleResponse } from "@supabase/supabase-js";
 
 const supabase = createClient();
 
-export const savePost = async (userId: string, postId: string) => {
-	const { data, error } = await supabase
-		.from("saves")
-		.insert([{ user_id: userId, post_id: postId }]);
+const handleError = (operation: string, error: any) => {
+	console.error(`Error during ${operation}:`, error.message);
+};
 
-	if (error) {
-		console.error("Error saving post:", error.message);
-	} else {
+export const savePost = async (
+	userId: string,
+	postId: string
+): Promise<{ data: any; error: any }> => {
+	try {
+		const { data, error } = await supabase
+			.from("saves")
+			.insert([{ user_id: userId, post_id: postId }]);
+		if (error) throw error;
 		console.log("Post saved:", data);
+		return { data, error: null };
+	} catch (error) {
+		handleError("savePost", error);
+		return { data: null, error };
 	}
-
-	return { data, error };
 };
 
-export const removeSave = async (userId: string, postId: string) => {
-	const { data, error } = await supabase
-		.from("saves")
-		.delete()
-		.eq("user_id", userId)
-		.eq("post_id", postId);
-
-	if (error) {
-		console.error("Error removing save:", error.message);
-	} else {
-		console.log("Save removed:");
+export const removeSave = async (
+	userId: string,
+	postId: string
+): Promise<{ data: any; error: any }> => {
+	try {
+		const { data, error } = await supabase
+			.from("saves")
+			.delete()
+			.eq("user_id", userId)
+			.eq("post_id", postId);
+		if (error) throw error;
+		console.log("Save removed");
+		return { data, error: null };
+	} catch (error) {
+		handleError("removeSave", error);
+		return { data: null, error };
 	}
-
-	return { data, error };
 };
 
-// Example implementation of getSavedStatus function
-export const getSavedStatus = async (userId: string, postId: string) => {
-	const { data, error } = await supabase
-		.from("saves")
-		.select("id")
-		.eq("user_id", userId)
-		.eq("post_id", postId)
-		.single();
-
-	if (error) {
-		console.error("Error fetching saved status:", error.message);
+export const getSavedStatus = async (
+	userId: string,
+	postId: string
+): Promise<boolean> => {
+	try {
+		const { data, error }: PostgrestSingleResponse<any> = await supabase
+			.from("saves")
+			.select("id")
+			.eq("user_id", userId)
+			.eq("post_id", postId)
+			.single();
+		if (error) throw error;
+		return data !== null;
+	} catch (error) {
+		handleError("getSavedStatus", error);
 		return false;
 	}
-
-	return data !== null; // Return true if there's a record (post is saved), false otherwise
 };
 
-export const likePost = async (userId: string, postId: string) => {
-	const { data, error } = await supabase
-		.from("likes")
-		.insert([{ user_id: userId, post_id: postId }]);
-
-	if (error) {
-		console.error("Error saving post:", error.message);
-	} else {
+export const likePost = async (
+	userId: string,
+	postId: string
+): Promise<{ data: any; error: any }> => {
+	try {
+		const { data, error } = await supabase
+			.from("likes")
+			.insert([{ user_id: userId, post_id: postId }]);
+		if (error) throw error;
 		console.log("Post liked:", data);
+
+		const { error: incrementError } = await supabase.rpc(
+			"increment_likes",
+			{ post_id: postId }
+		);
+		if (incrementError) throw incrementError;
+
+		const {
+			data: postData,
+			error: postError,
+		}: PostgrestSingleResponse<any> = await supabase
+			.from("posts")
+			.select("*")
+			.eq("id", postId)
+			.single();
+		if (postError) throw postError;
+
+		await addNotification(userId, postData.creatorid, "like", postId);
+
+		return { data, error: null };
+	} catch (error) {
+		handleError("likePost", error);
+		return { data: null, error };
 	}
-
-	const { error: postError } = await supabase.rpc("increment_likes", {
-		post_id: postId,
-	});
-
-	if (postError) {
-		console.log("Error adding likes");
-	}
-
-	const { data: dataCreator, error: errorCreator } = await supabase
-		.from("posts")
-		.select("*")
-		.eq("id", postId)
-		.single();
-
-	if (errorCreator) {
-		console.log("error getting creator: ", errorCreator.message);
-	} else {
-		await addNotification(userId, dataCreator.creatorid, "like", postId);
-	}
-
-	return { data, error };
 };
 
-export const removeLike = async (userId: string, postId: string) => {
-	const { data, error } = await supabase
-		.from("likes")
-		.delete()
-		.eq("user_id", userId)
-		.eq("post_id", postId);
+export const removeLike = async (
+	userId: string,
+	postId: string
+): Promise<{ data: any; error: any }> => {
+	try {
+		const { data, error } = await supabase
+			.from("likes")
+			.delete()
+			.eq("user_id", userId)
+			.eq("post_id", postId);
+		if (error) throw error;
+		console.log("Like removed");
 
-	if (error) {
-		console.error("Error removing like:", error.message);
-	} else {
-		console.log("Like removed:");
+		const { error: decrementError } = await supabase.rpc(
+			"decrement_likes",
+			{ post_id: postId }
+		);
+		if (decrementError) throw decrementError;
+
+		return { data, error: null };
+	} catch (error) {
+		handleError("removeLike", error);
+		return { data: null, error };
 	}
-
-	const { error: postError } = await supabase.rpc("decrement_likes", {
-		post_id: postId,
-	});
-
-	if (postError) {
-		console.log("Error adding likes");
-	}
-
-	return { data, error };
 };
 
-// Example implementation of getSavedStatus function
-export const getLikedStatus = async (userId: string, postId: string) => {
-	const { data, error } = await supabase
-		.from("likes")
-		.select("id")
-		.eq("user_id", userId)
-		.eq("post_id", postId)
-		.single();
-
-	if (error) {
-		console.error("Error fetching saved status:", error.message);
+export const getLikedStatus = async (
+	userId: string,
+	postId: string
+): Promise<boolean> => {
+	try {
+		const { data, error }: PostgrestSingleResponse<any> = await supabase
+			.from("likes")
+			.select("id")
+			.eq("user_id", userId)
+			.eq("post_id", postId)
+			.single();
+		if (error) throw error;
+		return data !== null;
+	} catch (error) {
+		handleError("getLikedStatus", error);
 		return false;
 	}
-
-	return data !== null; // Return true if there's a record (post is saved), false otherwise
 };

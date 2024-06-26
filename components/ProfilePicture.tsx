@@ -1,4 +1,4 @@
-import { getCurrentUser, getUserFromDB } from "@/utils/supabase/queries";
+import { getUserFromDB } from "@/utils/supabase/queries";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
