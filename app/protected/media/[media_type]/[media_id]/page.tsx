@@ -105,7 +105,7 @@ export default async function mediaPage({
 									User Posts
 								</h2>
 							)}
-							{postsOfMedia?.slice(0, 9).map((post) => (
+							{postsOfMedia?.slice(0, 9).map((post: any) => (
 								<div>
 									<HomePostCard post={post}></HomePostCard>
 								</div>
