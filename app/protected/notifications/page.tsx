@@ -6,7 +6,6 @@ import React from "react";
 const NotificationPage = async () => {
 	const user = await getCurrentUser();
 	const notifications = await getUserNotifications(user?.user.id);
-	console.log(notifications);
 	return (
 		<div className="md:max-w-lg w-screen h-full mx-auto">
 			{notifications && (
