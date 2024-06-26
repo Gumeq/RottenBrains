@@ -7,9 +7,9 @@ import React from "react";
 import SaveButton from "./SaveButton";
 import LikeButton from "./LikeButton";
 import Link from "next/link";
-import UserReviewText from "./UserReviewText";
-import ProfilePicture from "./ProfilePicture";
+import ProfilePicture from "../ProfilePicture";
 import PostLikedNumber from "./PostLikedNumber";
+import UserReviewText from "./UserReviewText";
 
 export async function HomePostCard({ post }: any) {
 	const media_id = post.mediaid;

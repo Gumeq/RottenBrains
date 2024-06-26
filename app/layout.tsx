@@ -1,6 +1,5 @@
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
-import LeftSidebar from "@/components/LeftSidebar";
 import Head from "next/head";
 
 const defaultUrl = process.env.VERCEL_URL

@@ -1,4 +1,4 @@
-import AuthButton from "../components/AuthButton";
+import AuthButton from "../components/auth/AuthButton";
 import { createClient } from "@/utils/supabase/server";
 import { useState } from "react";
 

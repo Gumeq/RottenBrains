@@ -1,4 +1,4 @@
-import HomePostCard from "@/components/HomePostCard";
+import HomePostCard from "@/components/post/HomePostCard";
 import { IPost } from "@/types";
 import fetchUserData from "@/utils/clientFunctions/fetchUserData";
 import {} from "@/utils/supabase/queries";

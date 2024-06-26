@@ -4,7 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { SubmitButton } from "./submit-button";
 import { Auth } from "@supabase/auth-ui-react";
-import { OAuthButton } from "@/components/OAuthSignIn";
+import { OAuthButton } from "@/components/auth/OAuthSignIn";
 
 export default function Login({
 	searchParams,

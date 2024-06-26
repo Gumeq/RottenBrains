@@ -1,5 +1,5 @@
-import FollowButton from "@/components/FollowButton";
-import HomePostCard from "@/components/HomePostCard";
+import FollowButton from "@/components/post/FollowButton";
+import HomePostCard from "@/components/post/HomePostCard";
 import { getUserFromDB, getUserPosts } from "@/utils/supabase/queries";
 import Image from "next/image";
 import React from "react";

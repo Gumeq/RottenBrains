@@ -1,8 +1,9 @@
 import React from "react";
-import ProfilePicture from "./ProfilePicture";
-import SearchBar from "./SearchBar";
-import AuthButton from "./AuthButton";
+
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
+import ProfilePicture from "../ProfilePicture";
+import AuthButton from "../auth/AuthButton";
+import SearchBar from "../searchBar/SearchBar";
 
 const MobileTopNav = async () => {
 	const currentUser = await getCurrentUser();

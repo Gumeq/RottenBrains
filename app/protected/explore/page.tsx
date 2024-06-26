@@ -1,6 +1,4 @@
-import ExploreTab from "@/components/ExploreTab";
-import SearchBar from "@/components/SearchBar";
-import Image from "next/image";
+import ExploreTab from "@/components/explore/ExploreTab";
 import React from "react";
 
 const page = () => {

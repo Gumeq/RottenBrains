@@ -1,5 +1,5 @@
-import ExploreCard from "@/components/ExploreCard";
-import HomePostCard from "@/components/HomePostCard";
+import ExploreCard from "@/components/explore/ExploreCard";
+import HomePostCard from "@/components/post/HomePostCard";
 import YouTubeEmbed from "@/components/YoutubeEmbed";
 import { getExploreData, getMediaData } from "@/utils/clientFunctions";
 import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";

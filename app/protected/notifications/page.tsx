@@ -1,4 +1,4 @@
-import NotificationCard from "@/components/NotificationCard";
+import NotificationCard from "@/components/notifications/NotificationCard";
 import { getUserNotifications } from "@/utils/supabase/queries";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import React from "react";

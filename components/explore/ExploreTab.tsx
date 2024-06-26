@@ -1,6 +1,6 @@
 import { ExploreTabProps, IMedia } from "@/types";
 import React, { useEffect, useState } from "react";
-import ExploreCard from "@/components/ExploreCard";
+import ExploreCard from "@/components/explore/ExploreCard";
 import { getExploreData } from "@/utils/clientFunctions";
 import { fetchExploreData } from "@/utils/clientFunctions/fetchExploreData";
 

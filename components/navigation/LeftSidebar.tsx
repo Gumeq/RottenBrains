@@ -1,12 +1,14 @@
 import React from "react";
-import AuthButton from "./AuthButton";
+
 import Link from "next/link";
 import { sidebarLinks } from "@/constants";
 import { INavLink } from "@/types";
 import Image from "next/image";
-import SearchBar from "./SearchBar";
-import ProfilePicture from "./ProfilePicture";
+
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
+import ProfilePicture from "../ProfilePicture";
+import AuthButton from "../auth/AuthButton";
+import SearchBar from "../searchBar/SearchBar";
 
 export async function LeftSidebar() {
 	const currentUser = await getCurrentUser();

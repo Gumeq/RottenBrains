@@ -1,11 +1,9 @@
-import AuthButton from "@/components/AuthButton";
-import Bottombar from "@/components/Bottombar";
-import LeftSidebar from "@/components/LeftSidebar";
-import MobileTopNav from "@/components/MobileTopNav";
-import Topbar from "@/components/Topbar";
+import Bottombar from "@/components/navigation/Bottombar";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import React from "react";
+import LeftSidebar from "@/components/navigation/LeftSidebar";
+import MobileTopNav from "@/components/navigation/MobileTopNav";
 
 export default async function ProtectedLayout({
 	children,
