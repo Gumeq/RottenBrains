@@ -119,11 +119,38 @@ export const getUserNotifications = async (
 			.eq("user_id", userId)
 			.eq("read", false)
 			.order("created_at", { ascending: false })
-			.limit(5);
+			.limit(25);
 		if (error) throw error;
 		return data;
 	} catch (error) {
 		handleError("getUserNotifications", error);
+		return null;
+	}
+};
+
+export const markAllAsRead = async (userId: string): Promise<any | null> => {
+	const { error } = await supabase
+		.from("notifications")
+		.update({ read: true })
+		.eq("user_id", userId)
+		.eq("read", false);
+	if (error) {
+		console.error("Error marking notifications as read:", error);
+	}
+};
+
+export const getPostComments = async (postId: string): Promise<any | null> => {
+	try {
+		const { data, error } = await supabase
+			.from("comments")
+			.select("*")
+			.eq("post_id", postId)
+			.order("created_at", { ascending: false })
+			.limit(10);
+		if (error) throw error;
+		return data;
+	} catch (error) {
+		handleError("getPostComments", error);
 		return null;
 	}
 };

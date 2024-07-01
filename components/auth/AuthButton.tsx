@@ -14,7 +14,7 @@ export default async function AuthButton() {
 		"use server";
 		const supabase = createClient();
 		await supabase.auth.signOut();
-		return redirect("/register");
+		return redirect("/login");
 	};
 
 	return user ? (

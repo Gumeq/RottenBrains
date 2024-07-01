@@ -15,12 +15,14 @@ interface SaveButtonProps {
 
 const LikeButton: React.FC<SaveButtonProps> = ({ postId }) => {
 	const [liked, setLiked] = useState(false);
+	const [animate, setAnimate] = useState(false); // State to handle animation class
 	const user = fetchUserData();
 	const userId = user?.id;
 
 	const handleLike = useCallback(async () => {
 		if (userId) {
 			setLiked((prevLiked) => !prevLiked); // Optimistic update
+			setAnimate(true); // Trigger the animation
 			try {
 				if (liked) {
 					await removeLike(userId, postId);
@@ -44,19 +46,26 @@ const LikeButton: React.FC<SaveButtonProps> = ({ postId }) => {
 		}
 	}, [userId, postId]);
 
+	useEffect(() => {
+		if (animate) {
+			const timer = setTimeout(() => setAnimate(false), 300); // Remove the animation class after animation
+			return () => clearTimeout(timer);
+		}
+	}, [animate]);
+
 	if (!userId) {
 		return null; // Return null if user ID isn't available
 	}
 
 	return (
-		<button onClick={handleLike}>
+		<button onClick={handleLike} className={animate ? "pop" : ""}>
 			{liked ? (
 				<Image
 					src={"/assets/icons/heart-solid.svg"}
 					alt="Liked"
 					width={30}
 					height={30}
-					className="invert-on-dark"
+					className={`heart-icon ${animate ? "pop" : ""}`}
 				/>
 			) : (
 				<Image
@@ -64,7 +73,7 @@ const LikeButton: React.FC<SaveButtonProps> = ({ postId }) => {
 					alt="Not Liked"
 					width={30}
 					height={30}
-					className="invert-on-dark"
+					className={`heart-icon ${animate ? "pop" : ""}`}
 				/>
 			)}
 		</button>

@@ -2,6 +2,7 @@ import {
 	getAiringToday,
 	getNowPlayingMovies,
 	getPopular,
+	getTrendingMovies,
 	getTrendingTV,
 } from "../tmdb";
 
@@ -11,6 +12,7 @@ export async function fetchExploreData(action: string) {
 	} = {
 		Now_in_cinemas: getNowPlayingMovies,
 		Trending_TV: getTrendingTV,
+		Trending_Movies: getTrendingMovies,
 		Popular_Today: getPopular,
 		Airing_Today: getAiringToday,
 	};

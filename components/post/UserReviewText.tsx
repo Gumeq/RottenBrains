@@ -39,7 +39,7 @@ const UserReviewText = ({
 	);
 
 	return (
-		<div className="overflow-hidden">
+		<div className="overflow-hidden w-full">
 			<div ref={textRef} className={`${expanded ? "" : "line-clamp-1"}`}>
 				{initialText}
 			</div>

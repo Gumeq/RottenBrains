@@ -22,6 +22,10 @@ export const getTrendingTV = async () => {
 	return fetchFromApi("trending/tv/week?language=en-US");
 };
 
+export const getTrendingMovies = async () => {
+	return fetchFromApi("trending/movie/week?language=en-US");
+};
+
 export const getPopular = async () => {
 	return fetchFromApi("trending/all/week?language=en-US");
 };
@@ -48,6 +52,12 @@ export const getRecommendations = async (
 ) => {
 	return fetchFromApi(
 		`${media_type}/${media_id}/recommendations?language=en-US`
+	);
+};
+
+export const getSimilar = async (media_type: string, media_id: number) => {
+	return fetchFromApi(
+		`${media_type}/${media_id}/similar?language=en-US&page=1`
 	);
 };
 

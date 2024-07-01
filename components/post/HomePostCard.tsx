@@ -10,6 +10,8 @@ import Link from "next/link";
 import ProfilePicture from "../ProfilePicture";
 import PostLikedNumber from "./PostLikedNumber";
 import UserReviewText from "./UserReviewText";
+import { timeAgo } from "./TimeAgo";
+import ViewComments from "./ViewComments";
 
 export async function HomePostCard({ post }: any) {
 	const media_id = post.mediaid;
@@ -33,57 +35,68 @@ export async function HomePostCard({ post }: any) {
 	}
 
 	return (
-		<div className="pb-4">
-			<div className="w-screen md:w-[350px]  flex flex-col">
-				<div className="w-full h-[50px] flex items-center align-center px-2 bg-background">
-					<div className="flex flex-row gap-2 items-center">
-						{creator && (
-							<div className="">
-								<ProfilePicture
-									userId={creator?.user.id}
-								></ProfilePicture>
+		<div className="relative rounded-xl overflow-hidden border border-foreground/30 ">
+			<div className="absolute inset-0 bg-cover bg-center bg-opacity-50 blur-sm ">
+				{/* Use next/image for the background image */}
+				{media && (
+					<Image
+						src={`https://image.tmdb.org/t/p/w500${media.backdrop_path}`}
+						alt="Background Image"
+						layout="fill"
+						objectFit="cover"
+						objectPosition="center"
+					/>
+				)}
+			</div>
+			<div className="absolute inset-0 bg-background opacity-80"></div>
+			<div className="w-screen md:w-[350px]  max-w-[calc(100vw-20px)] flex flex-col bg-foreground/5 py-2 relative">
+				<div className="w-full h-[50px] flex items-center align-center px-4 border-b border-foreground/30">
+					<div className="flex flex-row items-center justify-between w-full">
+						<div className="flex flex-row gap-2 items-center">
+							{creator && (
+								<div className="">
+									<ProfilePicture
+										userId={creator?.user.id}
+									></ProfilePicture>
+								</div>
+							)}
+							<div>
+								<p className="font-bold text-md truncate">
+									{creator?.user.username}
+								</p>
+								<p className="text-sm text-foreground/50">
+									{timeAgo(post.created_at)}
+								</p>
 							</div>
-						)}
+						</div>
 						<div>
-							<p className="font-bold text-md truncate">
-								{creator?.user.username}
-							</p>
+							<Image
+								src={"/assets/icons/ellipsis-solid.svg"}
+								alt={""}
+								width={20}
+								height={20}
+								className="invert-on-dark"
+							></Image>
 						</div>
 					</div>
 				</div>
-				<div className=" p-2 flex flex-col relative overflow-hidden">
-					<div className="absolute inset-0 bg-cover bg-center bg-opacity-50 blur-sm ">
-						{/* Use next/image for the background image */}
-						{media && (
-							<Image
-								src={`https://image.tmdb.org/t/p/w500${media.backdrop_path}`}
-								alt="Background Image"
-								layout="fill"
-								objectFit="cover"
-								objectPosition="center"
-								className=""
-							/>
-						)}
-					</div>
-					<div className="absolute inset-0 bg-background opacity-80"></div>
-					<div className="relative my-auto">
-						<div className="flex flex-row z-10">
-							<div className="">
+				<div className="flex flex-col relative overflow-hidden rounded-xl m-2">
+					<div className="relative my-auto flex flex-col gap-4 p-2">
+						<div className="flex flex-row z-10 gap-2">
+							<div className=" w-[200px] h-[300px] ">
 								{media && (
-									<div>
-										<div className=" pr-2 ">
-											<Link
-												href={`/protected/media/${media_type}/${media_id}`}
-											>
-												<Image
-													src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
-													alt={""}
-													width={200}
-													height={200}
-													className="rounded-lg overflow-hidden min-w-[200px]"
-												></Image>
-											</Link>
-										</div>
+									<div className="rounded-xl  overflow-hidden">
+										<Link
+											href={`/protected/media/${media_type}/${media_id}`}
+										>
+											<Image
+												src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
+												alt={""}
+												width={200}
+												height={300}
+												className="min-h-[300px] min-w-[200px]"
+											></Image>
+										</Link>
 									</div>
 								)}
 							</div>
@@ -102,16 +115,6 @@ export async function HomePostCard({ post }: any) {
 								{media && (
 									<div className="flex flex-col gap-1">
 										<div className="flex flex-row items-center gap-2 pb-2">
-											<p className="text-xs text-foreground/70 ">
-												{media.release_date?.slice(
-													0,
-													4
-												) ||
-													media.first_air_date?.slice(
-														0,
-														4
-													)}
-											</p>
 											{media.number_of_seasons && (
 												<p className="text-sm text-foreground/70">
 													({media.number_of_seasons}{" "}
@@ -147,22 +150,31 @@ export async function HomePostCard({ post }: any) {
 						</div>
 					</div>
 				</div>
-				<div className="w-full h-[50px] ">
-					<div className="flex flex-row gap-4 align-center w-full h-full px-4 justify-between bg-background">
-						{/* <HomePostCardStats post={post}></HomePostCardStats> */}
-						<LikeButton postId={post.id}></LikeButton>
+				<div className="w-11/12 px-4 pb-2">
+					<UserReviewText
+						post_review={post.review_user || "no review"}
+						creator_name={creator?.user.username || "no user"}
+					></UserReviewText>
+				</div>
+				<div className="relative">
+					<ViewComments postId={post.id}></ViewComments>
+				</div>
+				<div className="w-full h-[50px] px-4 border-t border-foreground/30">
+					<div className="flex flex-row gap-4 align-center w-full h-full justify-between ">
+						<div className="flex flex-row items-center gap-4">
+							<LikeButton postId={post.id}></LikeButton>
+							<p className="font-bold text-xl text-foreground/50">
+								<PostLikedNumber
+									postId={post.id}
+								></PostLikedNumber>{" "}
+								<span className=" font-base text-base">
+									likes
+								</span>
+							</p>
+						</div>
 						<SaveButton postId={post.id}></SaveButton>
 					</div>
 				</div>
-			</div>
-			<div className="px-4 w-screen md:w-[350px] ">
-				<p className="font-bold">
-					<PostLikedNumber postId={post.id}></PostLikedNumber> likes
-				</p>
-				<UserReviewText
-					post_review={post.review_user || "no review"}
-					creator_name={creator?.user.username || "no user"}
-				></UserReviewText>
 			</div>
 		</div>
 	);

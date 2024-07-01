@@ -25,6 +25,10 @@ const ExploreCard = (media: any) => {
 						></Image>
 					</div>
 					<div className="p-2 flex flex-col gap-2">
+						<p className="font-bold truncate text-lg">
+							{media.title || media.name}
+						</p>
+
 						<div className="flex flex-row gap-1 items-center align-center">
 							<Image
 								src={"/assets/icons/star-solid.svg"}
@@ -35,9 +39,6 @@ const ExploreCard = (media: any) => {
 							></Image>
 							<p>{media.vote_average?.toFixed(1)}</p>
 						</div>
-						<p className="font-bold truncate text-lg">
-							{media.title || media.name}
-						</p>
 
 						<p className="text-gray-400 text-sm">
 							{media.release_date || media.first_air_date}

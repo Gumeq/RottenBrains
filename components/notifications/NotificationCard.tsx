@@ -1,9 +1,34 @@
+"use client";
+
 import { getUserFromDB } from "@/utils/supabase/queries";
 import Image from "next/image";
-import React from "react";
+import { useEffect, useState } from "react";
 
-const NotificationCard = async ({ notification }: any) => {
-	const from_user = await getUserFromDB(notification.from_user_id);
+type Notification = {
+	id: string;
+	user_id: string;
+	from_user_id: string;
+	type: string;
+	post_id?: string;
+	read: boolean;
+	created_at: string;
+};
+
+const NotificationCard = ({ notification }: { notification: Notification }) => {
+	const [fromUser, setFromUser] = useState<any>(null);
+
+	useEffect(() => {
+		const fetchFromUser = async () => {
+			const user = await getUserFromDB(notification.from_user_id);
+			setFromUser(user);
+		};
+
+		fetchFromUser();
+	}, [notification.from_user_id]);
+
+	if (!fromUser) {
+		return null; // or a loading spinner
+	}
 
 	const action = notification.type === "like" ? "liked" : "followed";
 
@@ -11,28 +36,18 @@ const NotificationCard = async ({ notification }: any) => {
 		<div className="rounded-xl bg-foreground/5 p-4 flex flex-row justify-between">
 			<div className="flex flex-row items-center gap-4">
 				<Image
-					src={from_user?.user.imageURL}
-					alt={""}
+					src={fromUser.user.imageURL}
+					alt=""
 					width={40}
 					height={40}
 					className="rounded-full overflow-hidden"
-				></Image>
-				{action === "liked" && (
-					<p>
-						<span className="font-bold">
-							{from_user?.user.username}
-						</span>{" "}
-						{action} your post
-					</p>
-				)}
-				{action === "followed" && (
-					<p>
-						<span className="font-bold">
-							{from_user?.user.username}
-						</span>{" "}
-						started following you
-					</p>
-				)}
+				/>
+				<p>
+					<span className="font-bold">{fromUser.user.username}</span>{" "}
+					{action === "liked"
+						? "liked your post"
+						: "started following you"}
+				</p>
 			</div>
 		</div>
 	);

@@ -46,7 +46,12 @@ export type INavLink = {
 	label: string;
 };
 export type ExploreTabProps = {
-	action: "Now_in_cinemas" | "Trending_TV" | "Popular_Today" | "Airing_Today";
+	action:
+		| "Now_in_cinemas"
+		| "Trending_TV"
+		| "Popular_Today"
+		| "Airing_Today"
+		| "Trending_Movies";
 };
 export type MediaPageProps = {
 	media_type: "movie" | "tv" | string;

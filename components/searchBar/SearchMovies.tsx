@@ -9,15 +9,15 @@ import {
 	ComboboxOptions,
 	Transition,
 } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import clsx from "clsx";
-import { useState, ChangeEvent, useEffect, useCallback, useMemo } from "react";
+import { useState, ChangeEvent, useEffect, useCallback } from "react";
 import SearchCard from "./SearchCard";
 import Link from "next/link";
 import Image from "next/image";
 import { searchUsers } from "@/utils/clientFunctions/searchUsers";
 import SearchUserCard from "./SearchUserCard";
 import { debounce } from "lodash";
+import { useRouter } from "next/navigation";
 
 const SearchMovies = ({ media, setMedia, link, user }: any) => {
 	const [query, setQuery] = useState<string>("");
@@ -25,6 +25,7 @@ const SearchMovies = ({ media, setMedia, link, user }: any) => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [dataUsers, setDataUsers] = useState<any>(null);
 	const [loadingUsers, setLoadingUsers] = useState<boolean>(false);
+	const router = useRouter();
 
 	const debouncedSearch = useCallback(
 		debounce(async (query: string) => {
@@ -65,6 +66,24 @@ const SearchMovies = ({ media, setMedia, link, user }: any) => {
 
 	const handleQueryChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setQuery(event.target.value);
+	};
+
+	const handleSelect = (selected: any) => {
+		if (link) {
+			if (selected) {
+				if (selected.username) {
+					// Redirect to user profile
+					router.push(`/protected/user/${selected.id}`);
+				} else {
+					// Redirect to movie page
+					router.push(
+						`/protected/media/${selected.media_type}/${selected.id}`
+					);
+				}
+			}
+		} else {
+			setMedia(selected);
+		}
 	};
 
 	const renderOptions = useCallback(() => {
@@ -112,7 +131,7 @@ const SearchMovies = ({ media, setMedia, link, user }: any) => {
 
 	return (
 		<div className="w-full">
-			<Combobox value={media} onChange={setMedia}>
+			<Combobox value={media} onChange={handleSelect}>
 				<div className="relative">
 					<ComboboxInput
 						className={clsx(

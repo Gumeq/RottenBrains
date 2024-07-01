@@ -1,3 +1,4 @@
+import AuthButton from "@/components/auth/AuthButton";
 import HomePostCard from "@/components/post/HomePostCard";
 import { getUserPosts } from "@/utils/supabase/queries";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
@@ -43,6 +44,9 @@ const ProfilePage = async () => {
 							<p className="text-lg text-foreground/50">
 								Member since {formattedDate}
 							</p>
+							<div className="pt-4">
+								<AuthButton></AuthButton>
+							</div>
 						</div>
 					</div>
 				</div>

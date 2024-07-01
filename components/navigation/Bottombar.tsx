@@ -1,12 +1,18 @@
 import { sidebarLinks } from "@/constants";
 import { INavLink } from "@/types";
+import { fetchUserDataServer } from "@/utils/serverFunctions/fetchUserData";
+import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const Bottombar = () => {
+const Bottombar = async () => {
+	const user = await getCurrentUser();
+	console.log(user.user.id);
+	// const icon = user?.imageURL;
+
 	return (
-		<div className="fixed bottom-0">
+		<div className="fixed bottom-0 z-50 ">
 			<ul className="bottom-bar flex flex-row gap-6">
 				{sidebarLinks.map((link: INavLink) => {
 					return (
@@ -17,13 +23,24 @@ const Bottombar = () => {
 							<Image
 								src={link.imgURL}
 								alt={""}
-								width={30}
-								height={30}
+								width={20}
+								height={20}
 								className="invert-on-dark"
 							/>
 						</Link>
 					);
 				})}
+				<li>
+					<Link href={"/protected/profile"}>
+						<Image
+							src={user?.user.imageURL}
+							alt={""}
+							width={25}
+							height={25}
+							className="rounded-full overflow-hidden"
+						></Image>
+					</Link>
+				</li>
 			</ul>
 		</div>
 	);

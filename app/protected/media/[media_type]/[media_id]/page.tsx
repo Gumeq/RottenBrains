@@ -4,7 +4,13 @@ import YouTubeEmbed from "@/components/YoutubeEmbed";
 import { getExploreData, getMediaData } from "@/utils/clientFunctions";
 import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
 import { getPostsOfMedia } from "@/utils/supabase/queries";
-import { getRecommendations, getReviews, getVideos } from "@/utils/tmdb";
+import {
+	getRecommendations,
+	getReviews,
+	getSimilar,
+	getVideos,
+} from "@/utils/tmdb";
+import { divide } from "lodash";
 import Image from "next/image";
 
 export default async function mediaPage({
@@ -30,6 +36,7 @@ export default async function mediaPage({
 	const postsOfMedia = await getPostsOfMedia(media_id, media_type);
 	const mediaVideos = await getVideos(media_type, media_id);
 	const mediaRecommendations = await getRecommendations(media_type, media_id);
+	const mediaSimilar = await getSimilar(media_type, media_id);
 	const mediaReviews = await getReviews(media_type, media_id);
 
 	return (
@@ -44,13 +51,24 @@ export default async function mediaPage({
 					></Image>
 				</div>
 				<div className=" flex flex-col gap-8 max-w-3xl">
-					<div>
+					<div className="flex flex-col gap-2">
 						<h1 className="text-4xl font-bold py-2">
-							{media.title || media.name}
+							{media.title || media.name}{" "}
+							<span className="text-2xl text-foreground/50">
+								(
+								{(media.release_date &&
+									media.release_date.slice(0, 4)) ||
+									media.first_air_date.slice(0, 4)}
+								)
+							</span>
 						</h1>
-						<p className="text-foreground/50">
-							{media.release_date || media.first_air_date}
-						</p>
+						<div>
+							{media.number_of_seasons && (
+								<p className="text-2xl text-foreground/70">
+									{media.number_of_seasons} Seasons
+								</p>
+							)}
+						</div>
 					</div>
 
 					<div className="flex flex-row gap-4 flex-wrap">
@@ -63,7 +81,6 @@ export default async function mediaPage({
 							</div>
 						))}
 					</div>
-
 					<div>
 						<p className="italic text-foreground/70 text-lg">
 							{media.tagline}
@@ -75,19 +92,22 @@ export default async function mediaPage({
 							{media.overview}
 						</p>
 					</div>
+					<div>
+						{media.next_episode_to_air && (
+							<div>
+								<div className="flex flex-row gap-2 items-center text-xl font-bold py-4">
+									<h2 className="">Next Episode:</h2>
+									<p>{media.next_episode_to_air.air_date}</p>
+								</div>
+							</div>
+						)}
+					</div>
 				</div>
 			</div>
-			{/* <div className="flex flex-row gap-8 mx-auto">
-				<div className="mt-8 flex bg-foreground/10 w-32 px-6 py-3 rounded-full ">
-					<h2 className="text-xl m-auto">Posts</h2>
-				</div>
-				<div className="mt-8 flex bg-foreground/10 w-32 px-6 py-3 rounded-full ">
-					<h2 className="text-xl m-auto">Videos</h2>
-				</div>
-			</div> */}
+			<div></div>
 			<div className="">
 				<h2 className="text-xl font-bold pt-4">Videos</h2>
-				<div className="flex flex-col md:flex-row gap-4 pt-4 items-center justify-center">
+				<div className="flex flex-col md:flex-row gap-4 py-4 items-center justify-center">
 					{mediaVideos &&
 						mediaVideos.results
 							.slice(0, 3)
@@ -97,43 +117,29 @@ export default async function mediaPage({
 								></YouTubeEmbed>
 							))}
 				</div>
-				<div className="flex flex-row flex-wrap gap-4 py-4">
+				<div className=" py-4  ">
 					{postsOfMedia && (
 						<div>
 							{postsOfMedia.length > 0 && (
-								<h2 className="text-xl font-bold pt-4 pl-4">
+								<h2 className="text-xl font-bold py-4 ">
 									User Posts
 								</h2>
 							)}
-							{postsOfMedia?.slice(0, 9).map((post: any) => (
-								<div>
-									<HomePostCard post={post}></HomePostCard>
-								</div>
-							))}
+							<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center gap-4 p-2">
+								{postsOfMedia?.slice(0, 9).map((post: any) => (
+									<div>
+										<HomePostCard
+											post={post}
+										></HomePostCard>
+									</div>
+								))}
+							</div>
 						</div>
 					)}
 				</div>
-				<h2 className="text-xl font-bold pt-4">Reviews</h2>
+				<h2 className="text-xl font-bold pt-4">Recommended</h2>
 				<div className="max-w-7xl w-screen">
-					<div className="flex  flex-col gap-2 invisible-scroll custom-scrollbar">
-						{mediaReviews &&
-							mediaReviews.results
-								.slice(0, 2)
-								.map((review: any) => (
-									<div>
-										<div className="max-h-[200px]  p-2 overflow-y-auto custom-scrollbar">
-											<h3 className="font-bold text-lg py-2">
-												{review.author}
-											</h3>
-											<p>"{review.content}"</p>
-										</div>
-									</div>
-								))}
-					</div>
-				</div>
-				<h2 className="text-xl font-bold pt-4 pl-4">Recommended</h2>
-				<div className="max-w-7xl w-screen">
-					<div className="flex flex-row overflow-x-auto gap-2 invisible-scroll custom-scrollbar pl-4">
+					<div className="flex flex-row overflow-x-auto gap-2 invisible-scroll custom-scrollbar">
 						{mediaRecommendations &&
 							mediaRecommendations.results
 								.slice(0, 20)
@@ -144,6 +150,44 @@ export default async function mediaPage({
 										></ExploreCard>
 									</div>
 								))}
+					</div>
+				</div>
+				<h2 className="text-xl font-bold pt-4">You might like</h2>
+				<div className="max-w-7xl w-screen">
+					<div className="flex flex-row overflow-x-auto gap-2 invisible-scroll custom-scrollbar">
+						{mediaSimilar &&
+							mediaSimilar.results
+								.slice(0, 20)
+								.map((media: any) => (
+									<div>
+										<ExploreCard
+											media={media}
+										></ExploreCard>
+									</div>
+								))}
+					</div>
+				</div>
+				<div className="max-w-7xl w-screen">
+					<div className="flex  flex-col gap-2 invisible-scroll custom-scrollbar">
+						{mediaReviews && (
+							<div>
+								<h2 className="text-xl font-bold pt-4">
+									Reviews
+								</h2>
+								{mediaReviews.results
+									.slice(0, 2)
+									.map((review: any) => (
+										<div>
+											<div className="max-h-[200px]  p-2 overflow-y-auto custom-scrollbar">
+												<h3 className="font-bold text-lg py-2">
+													{review.author}
+												</h3>
+												<p>"{review.content}"</p>
+											</div>
+										</div>
+									))}
+							</div>
+						)}
 					</div>
 				</div>
 			</div>

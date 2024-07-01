@@ -2,7 +2,7 @@ import Bottombar from "@/components/navigation/Bottombar";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import React from "react";
-import LeftSidebar from "@/components/navigation/LeftSidebar";
+import TopNavbarDesktop from "@/components/navigation/TopNavDesktop";
 import MobileTopNav from "@/components/navigation/MobileTopNav";
 
 export default async function ProtectedLayout({
@@ -20,9 +20,9 @@ export default async function ProtectedLayout({
 	}
 	return (
 		<div>
-			<div className="w-full h-[150px] "> </div>
+			<div className="w-full md:h-[150px] h-[80px] "> </div>
 			<div className="bg-background text-foreground w-full md:flex overflow-x-hidden">
-				<LeftSidebar />
+				<TopNavbarDesktop />
 				<MobileTopNav></MobileTopNav>
 				<div className="flex flex-1 ">{children}</div>
 				<Bottombar />

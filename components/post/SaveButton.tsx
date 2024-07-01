@@ -55,7 +55,7 @@ const SaveButton: React.FC<SaveButtonProps> = ({ postId }) => {
 					alt="Saved"
 					width={20}
 					height={20}
-					className="invert-on-dark"
+					className="invert-on-dark opacity-50"
 				/>
 			) : (
 				<Image
@@ -63,7 +63,7 @@ const SaveButton: React.FC<SaveButtonProps> = ({ postId }) => {
 					alt="Not Saved"
 					width={20}
 					height={20}
-					className="invert-on-dark"
+					className="invert-on-dark opacity-50"
 				/>
 			)}
 		</button>
