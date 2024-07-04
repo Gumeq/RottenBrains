@@ -1,11 +1,10 @@
-import Image from "next/image";
 import React from "react";
 
 const SearchCard = (media: any) => {
 	media = media.media;
 	return (
 		<div className="flex flex-row">
-			<Image
+			<img
 				src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
 				alt="Movie Poster Not Available"
 				width={100} // Width in pixels

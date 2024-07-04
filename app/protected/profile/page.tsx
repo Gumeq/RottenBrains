@@ -3,7 +3,6 @@ import HomePostCard from "@/components/post/HomePostCard";
 import { getUserPosts } from "@/utils/supabase/queries";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import { NextPage } from "next";
-import Image from "next/image";
 import React from "react";
 
 const ProfilePage = async () => {
@@ -29,13 +28,13 @@ const ProfilePage = async () => {
 				<div>
 					<div className="flex flex-col gap-4 items-center p-8">
 						<div>
-							<Image
+							<img
 								src={user.user.imageURL}
 								alt={""}
 								width={150}
 								height={150}
 								className="rounded-full"
-							></Image>
+							></img>
 						</div>
 						<div className="flex flex-col items-center justify-center">
 							<p className="text-4xl font-bold">

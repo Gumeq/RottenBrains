@@ -2,7 +2,6 @@ import GetStartedButton from "@/components/LandingPage/GetStartedButton";
 import ScrollingBackground from "@/components/LandingPage/ScrollingBackground";
 import AuthButton from "@/components/auth/AuthButton";
 import { createClient } from "@/utils/supabase/server";
-import Image from "next/image";
 import { useState } from "react";
 
 export default async function Index() {
@@ -35,7 +34,7 @@ export default async function Index() {
 					<div className="z-10 w-full h-full p-4 flex items-center flex-col lg:flex-row-reverse lg:justify-evenly lg:h-3/4 ">
 						<div className="">
 							<div className="flex justify-center">
-								<Image
+								<img
 									src="/assets/images/iphone 15.png"
 									alt=""
 									width={500}

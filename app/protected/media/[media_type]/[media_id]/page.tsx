@@ -11,7 +11,6 @@ import {
 	getVideos,
 } from "@/utils/tmdb";
 import { divide } from "lodash";
-import Image from "next/image";
 
 export default async function mediaPage({
 	params,
@@ -43,12 +42,13 @@ export default async function mediaPage({
 		<div className="flex flex-col mx-auto max-w-7xl w-[1500px]">
 			<div className="flex flex-col md:flex-row gap-8  p-4 md:p-8 rounded-[20px] ">
 				<div className="w-[300px] h-[450px] bg-foreground/10 rounded-[12px] overflow-hidden mx-auto">
-					<Image
+					<img
 						src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
 						alt=""
-						width={300}
-						height={450}
-					></Image>
+						width="300"
+						height="450"
+						className=""
+					/>
 				</div>
 				<div className=" flex flex-col gap-8 max-w-3xl">
 					<div className="flex flex-col gap-2">

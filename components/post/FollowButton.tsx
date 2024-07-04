@@ -11,7 +11,6 @@ import {
 	likePost,
 	removeLike,
 } from "@/utils/clientFunctions/updatePostData";
-import Image from "next/image";
 // SaveButton.tsx
 import { useEffect, useState } from "react";
 

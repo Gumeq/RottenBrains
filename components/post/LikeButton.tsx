@@ -6,7 +6,6 @@ import {
 	likePost,
 	removeLike,
 } from "@/utils/clientFunctions/updatePostData";
-import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 
 interface SaveButtonProps {
@@ -60,7 +59,7 @@ const LikeButton: React.FC<SaveButtonProps> = ({ postId }) => {
 	return (
 		<button onClick={handleLike} className={animate ? "pop" : ""}>
 			{liked ? (
-				<Image
+				<img
 					src={"/assets/icons/heart-solid.svg"}
 					alt="Liked"
 					width={30}
@@ -68,7 +67,7 @@ const LikeButton: React.FC<SaveButtonProps> = ({ postId }) => {
 					className={`heart-icon ${animate ? "pop" : ""}`}
 				/>
 			) : (
-				<Image
+				<img
 					src={"/assets/icons/heart-regular.svg"}
 					alt="Not Liked"
 					width={30}

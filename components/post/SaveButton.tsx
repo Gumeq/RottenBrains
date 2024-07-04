@@ -5,7 +5,6 @@ import {
 	removeSave,
 	savePost,
 } from "@/utils/clientFunctions/updatePostData";
-import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 
 interface SaveButtonProps {
@@ -50,7 +49,7 @@ const SaveButton: React.FC<SaveButtonProps> = ({ postId }) => {
 	return (
 		<button onClick={handleSave}>
 			{saved ? (
-				<Image
+				<img
 					src={"/assets/icons/bookmark-solid.svg"}
 					alt="Saved"
 					width={20}
@@ -58,7 +57,7 @@ const SaveButton: React.FC<SaveButtonProps> = ({ postId }) => {
 					className="invert-on-dark opacity-50"
 				/>
 			) : (
-				<Image
+				<img
 					src={"/assets/icons/bookmark-regular.svg"}
 					alt="Not Saved"
 					width={20}

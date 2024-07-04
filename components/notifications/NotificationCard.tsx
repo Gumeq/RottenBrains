@@ -1,7 +1,6 @@
 "use client";
 
 import { getUserFromDB } from "@/utils/supabase/queries";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 type Notification = {
@@ -35,7 +34,7 @@ const NotificationCard = ({ notification }: { notification: Notification }) => {
 	return (
 		<div className="rounded-xl bg-foreground/5 p-4 flex flex-row justify-between">
 			<div className="flex flex-row items-center gap-4">
-				<Image
+				<img
 					src={fromUser.user.imageURL}
 					alt=""
 					width={40}

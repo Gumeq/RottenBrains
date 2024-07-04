@@ -3,7 +3,6 @@ import React from "react";
 import Link from "next/link";
 import { sidebarLinks } from "@/constants";
 import { INavLink } from "@/types";
-import Image from "next/image";
 
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import ProfilePicture from "../ProfilePicture";
@@ -21,13 +20,13 @@ export async function TopNavbarDesktop() {
 				<div className="flex flex-row gap-10 items-center justify-center">
 					<div className="flex items-center">
 						<Link href={"/protected/profile"}>
-							<Image
+							<img
 								src={user?.user.imageURL}
 								alt={""}
 								width={35}
 								height={35}
 								className="rounded-full overflow-hidden"
-							></Image>
+							></img>
 						</Link>
 					</div>
 					<div className=" px-0 py-4 flex flex-row gap-2 w-[400px]">
@@ -45,7 +44,7 @@ export async function TopNavbarDesktop() {
 								href={link.route}
 								className="flex gap-4 items-center p-2 leftsidebar-link"
 							>
-								<Image
+								<img
 									src={link.imgURL}
 									alt={""}
 									width={20}

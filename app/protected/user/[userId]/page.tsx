@@ -1,7 +1,6 @@
 import FollowButton from "@/components/post/FollowButton";
 import HomePostCard from "@/components/post/HomePostCard";
 import { getUserFromDB, getUserPosts } from "@/utils/supabase/queries";
-import Image from "next/image";
 import React from "react";
 
 export default async function userProfile({
@@ -32,13 +31,13 @@ export default async function userProfile({
 				<div>
 					<div className="flex flex-col gap-4 items-center p-8">
 						<div>
-							<Image
+							<img
 								src={user.user.imageURL}
 								alt={""}
 								width={150}
 								height={150}
 								className="rounded-full"
-							></Image>
+							></img>
 						</div>
 						<div className="flex flex-col items-center">
 							<p className="text-4xl font-bold">

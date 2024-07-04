@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 import fetchUserData from "@/utils/clientFunctions/fetchUserData";
-import Image from "next/image";
 
 type Notification = {
 	id: string;
@@ -69,13 +68,13 @@ const NotificationButton = () => {
 
 	return (
 		<button onClick={handleClick} className="pointer relative">
-			<Image
+			<img
 				src={"/assets/icons/bell-solid.svg"}
 				alt={""}
 				width={20}
 				height={20}
 				className="invert-on-dark"
-			></Image>
+			></img>
 			{hasUnread && (
 				<span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-accent"></span>
 			)}

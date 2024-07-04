@@ -13,7 +13,6 @@ import clsx from "clsx";
 import { useState, ChangeEvent, useEffect, useCallback } from "react";
 import SearchCard from "./SearchCard";
 import Link from "next/link";
-import Image from "next/image";
 import { searchUsers } from "@/utils/clientFunctions/searchUsers";
 import SearchUserCard from "./SearchUserCard";
 import { debounce } from "lodash";
@@ -142,7 +141,7 @@ const SearchMovies = ({ media, setMedia, link, user }: any) => {
 						onChange={handleQueryChange}
 					/>
 					<ComboboxButton className="group absolute inset-y-0 right-0 px-2.5">
-						<Image
+						<img
 							src={"/assets/icons/magnifying-glass-solid.svg"}
 							alt={""}
 							width={20}

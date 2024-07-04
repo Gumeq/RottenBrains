@@ -2,7 +2,6 @@ import { IPost } from "@/types";
 import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
 import { getUserFromDB } from "@/utils/supabase/queries";
 import { Divide } from "lucide-react";
-import Image from "next/image";
 import React from "react";
 import SaveButton from "./SaveButton";
 import LikeButton from "./LikeButton";
@@ -39,12 +38,18 @@ export async function HomePostCard({ post }: any) {
 			<div className="absolute inset-0 bg-cover bg-center bg-opacity-50 blur-sm ">
 				{/* Use next/image for the background image */}
 				{media && (
-					<Image
+					<img
 						src={`https://image.tmdb.org/t/p/w500${media.backdrop_path}`}
 						alt="Background Image"
-						layout="fill"
-						objectFit="cover"
-						objectPosition="center"
+						style={{
+							width: "100%",
+							height: "100%",
+							objectFit: "cover",
+							objectPosition: "center",
+							position: "absolute",
+							top: 0,
+							left: 0,
+						}}
 					/>
 				)}
 			</div>
@@ -70,13 +75,17 @@ export async function HomePostCard({ post }: any) {
 							</div>
 						</div>
 						<div>
-							<Image
-								src={"/assets/icons/ellipsis-solid.svg"}
-								alt={""}
+							<img
+								src="/assets/icons/ellipsis-solid.svg"
+								alt=""
 								width={20}
 								height={20}
 								className="invert-on-dark"
-							></Image>
+								style={{
+									width: "20px",
+									height: "20px",
+								}}
+							/>
 						</div>
 					</div>
 				</div>
@@ -89,13 +98,17 @@ export async function HomePostCard({ post }: any) {
 										<Link
 											href={`/protected/media/${media_type}/${media_id}`}
 										>
-											<Image
+											<img
 												src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
-												alt={""}
+												alt=""
 												width={200}
 												height={300}
 												className="min-h-[300px] min-w-[200px]"
-											></Image>
+												style={{
+													minHeight: "300px",
+													minWidth: "200px",
+												}}
+											/>
 										</Link>
 									</div>
 								)}

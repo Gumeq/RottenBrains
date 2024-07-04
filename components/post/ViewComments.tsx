@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import AddComment from "./AddComment";
 import { getPostComments } from "@/utils/supabase/queries";
 import { divide } from "lodash";
-import Image from "next/image";
 import CommentCard from "./CommentCard";
 
 interface ViewCommentsProps {

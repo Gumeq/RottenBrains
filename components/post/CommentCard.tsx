@@ -1,6 +1,5 @@
 "use client";
 import { getUserFromDB } from "@/utils/supabase/queries";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { timeAgo } from "./TimeAgo";
 
@@ -29,13 +28,13 @@ const CommentCard = ({ comment }: any) => {
 			{!loading && (
 				<div className="p-2 flex flex-row gap-4 w-11/12 ">
 					<div className="">
-						<Image
+						<img
 							src={creator.imageURL}
 							alt={" "}
 							width={30}
 							height={30}
 							className="rounded-full w-[30px] h-[30px]"
-						></Image>
+						></img>
 					</div>
 					<div className="flex flex-col w-10/12">
 						<div className="flex flex-row gap-2 items-center">

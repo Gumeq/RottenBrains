@@ -1,5 +1,5 @@
 import { getUserFromDB } from "@/utils/supabase/queries";
-import Image from "next/image";
+
 import Link from "next/link";
 import React from "react";
 
@@ -14,13 +14,13 @@ const ProfilePicture = async ({ userId }: ProfilePictureProps) => {
 			{user && (
 				<div>
 					<Link href={`/protected/user/${userId}`}>
-						<Image
+						<img
 							src={user.user.imageURL}
 							alt={""}
 							width={35}
 							height={35}
 							className="rounded-full overflow-hidden"
-						></Image>
+						></img>
 					</Link>
 				</div>
 			)}

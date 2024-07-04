@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useCallback } from "react";
 
 const ScrollButton: React.FC = () => {
@@ -16,13 +15,13 @@ const ScrollButton: React.FC = () => {
 			onClick={handleScrollDown}
 			className="mt-10 px-6 py-3 hover:bg-accent rounded-full  downUpAnimation"
 		>
-			<Image
+			<img
 				src={"/assets/icons/arrow-down-solid.svg"}
 				alt={"arrow-down"}
 				width={30}
 				height={30}
 				className="invert"
-			></Image>
+			></img>
 		</button>
 	);
 };

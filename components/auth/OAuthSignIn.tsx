@@ -1,7 +1,6 @@
 "use client";
 import { oAuthSignIn } from "@/app/login/actions";
 import { Provider } from "@supabase/supabase-js";
-import Image from "next/image";
 
 type OAuthProvider = {
 	name: Provider;
@@ -28,13 +27,13 @@ export function OAuthButton() {
 					}}
 				>
 					{provider.icon && (
-						<Image
+						<img
 							src={provider.icon}
 							alt={""}
 							width={15}
 							height={15}
 							className="invert-on-dark"
-						></Image>
+						></img>
 					)}
 
 					<p>Login with {provider.displayName}</p>

@@ -2,7 +2,6 @@
 
 import { IMedia, IPost } from "@/types";
 import React, { useState } from "react";
-import Image from "next/image";
 import fetchUserData from "@/utils/clientFunctions/fetchUserData";
 import { createClient } from "@/utils/supabase/client";
 import { redirect } from "next/navigation";
@@ -87,11 +86,11 @@ const PostForm = ({ post, action }: PostFormProps) => {
 			<div className="flex flex-col md:flex-row items-center">
 				<div className="w-[300px] h-[450px] bg-foreground/10 rounded-xl m-auto overflow-hidden shadow-lg">
 					{media?.poster_path && (
-						<Image
-							src={`https://image.tmdb.org/t/p/w500${media?.poster_path}`}
-							alt={"Poster"}
-							width={300}
-							height={450}
+						<img
+							src="https://image.tmdb.org/t/p/w500{{media?.poster_path}}"
+							alt="Poster"
+							width="300"
+							height="450"
 							className="object-cover"
 						/>
 					)}

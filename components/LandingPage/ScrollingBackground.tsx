@@ -1,4 +1,3 @@
-import Image from "next/image";
 import styles from "./ScrollingBackground.module.css";
 import ScrollButton from "./ScrollButton";
 
@@ -10,80 +9,88 @@ const ScrollingBackground = () => {
 					className={`${styles.imageContainer} ${styles.scrollRight}`}
 				>
 					<div className={styles.imageWrapper}>
-						<Image
-							src="/assets/images/bg-main (1).png"
-							alt="Image 1"
-							layout="fill"
-							objectFit="cover"
-						/>
+						<div className="relative w-full h-full">
+							<img
+								src="/assets/images/bg-main (4).png"
+								alt="Image 4"
+								className="object-cover w-full h-full absolute top-0 left-0"
+							/>
+						</div>
 					</div>
 					<div className={styles.imageWrapper}>
-						<Image
-							src="/assets/images/bg-main (1).png"
-							alt="Image 1"
-							layout="fill"
-							objectFit="cover"
-						/>
+						<div className="relative w-full h-full">
+							<img
+								src="/assets/images/bg-main (4).png"
+								alt="Image 4"
+								className="object-cover w-full h-full absolute top-0 left-0"
+							/>
+						</div>
 					</div>
 				</div>
 				<div
 					className={`${styles.imageContainer} ${styles.scrollLeft}`}
 				>
 					<div className={styles.imageWrapper}>
-						<Image
-							src="/assets/images/bg-main (2).png"
-							alt="Image 2"
-							layout="fill"
-							objectFit="cover"
-						/>
+						<div className="relative w-full h-full">
+							<img
+								src="/assets/images/bg-main (4).png"
+								alt="Image 4"
+								className="object-cover w-full h-full absolute top-0 left-0"
+							/>
+						</div>
 					</div>
 					<div className={styles.imageWrapper}>
-						<Image
-							src="/assets/images/bg-main (2).png"
-							alt="Image 2"
-							layout="fill"
-							objectFit="cover"
-						/>
+						<div className="relative w-full h-full">
+							<img
+								src="/assets/images/bg-main (4).png"
+								alt="Image 4"
+								className="object-cover w-full h-full absolute top-0 left-0"
+							/>
+						</div>
 					</div>
 				</div>
 				<div
 					className={`${styles.imageContainer} ${styles.scrollRight}`}
 				>
 					<div className={styles.imageWrapper}>
-						<Image
-							src="/assets/images/bg-main (3).png"
-							alt="Image 3"
-							layout="fill"
-							objectFit="cover"
-						/>
+						<div className="relative w-full h-full">
+							<img
+								src="/assets/images/bg-main (4).png"
+								alt="Image 4"
+								className="object-cover w-full h-full absolute top-0 left-0"
+							/>
+						</div>
 					</div>
 					<div className={styles.imageWrapper}>
-						<Image
-							src="/assets/images/bg-main (3).png"
-							alt="Image 3"
-							layout="fill"
-							objectFit="cover"
-						/>
+						<div className="relative w-full h-full">
+							<img
+								src="/assets/images/bg-main (4).png"
+								alt="Image 4"
+								className="object-cover w-full h-full absolute top-0 left-0"
+							/>
+						</div>
 					</div>
 				</div>
 				<div
 					className={`${styles.imageContainer} ${styles.scrollLeft}`}
 				>
 					<div className={styles.imageWrapper}>
-						<Image
-							src="/assets/images/bg-main (4).png"
-							alt="Image 4"
-							layout="fill"
-							objectFit="cover"
-						/>
+						<div className="relative w-full h-full">
+							<img
+								src="/assets/images/bg-main (4).png"
+								alt="Image 4"
+								className="object-cover w-full h-full absolute top-0 left-0"
+							/>
+						</div>
 					</div>
 					<div className={styles.imageWrapper}>
-						<Image
-							src="/assets/images/bg-main (4).png"
-							alt="Image 4"
-							layout="fill"
-							objectFit="cover"
-						/>
+						<div className="relative w-full h-full">
+							<img
+								src="/assets/images/bg-main (4).png"
+								alt="Image 4"
+								className="object-cover w-full h-full absolute top-0 left-0"
+							/>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -1,5 +1,4 @@
 import { IMedia } from "@/types";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -16,13 +15,13 @@ const ExploreCard = (media: any) => {
 			<Link href={`/protected/media/${media_type}/${media.id}`}>
 				<div>
 					<div className="aspect-w-2 aspect-h-3">
-						<Image
+						<img
 							src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
-							alt={""}
-							height={200}
-							width={200}
+							alt=""
+							height="200"
+							width="200"
 							className=""
-						></Image>
+						/>
 					</div>
 					<div className="p-2 flex flex-col gap-2">
 						<p className="font-bold truncate text-lg">
@@ -30,13 +29,13 @@ const ExploreCard = (media: any) => {
 						</p>
 
 						<div className="flex flex-row gap-1 items-center align-center">
-							<Image
-								src={"/assets/icons/star-solid.svg"}
-								alt={""}
-								width={15}
-								height={15}
+							<img
+								src="/assets/icons/star-solid.svg"
+								alt=""
+								width="15"
+								height="15"
 								className="invert-on-dark"
-							></Image>
+							/>
 							<p>{media.vote_average?.toFixed(1)}</p>
 						</div>
 
