@@ -1,4 +1,3 @@
-import VideoEmbed from "@/components/TestEmbed";
 import HomePostCard from "@/components/post/HomePostCard";
 import { IPost } from "@/types";
 import fetchUserData from "@/utils/clientFunctions/fetchUserData";
