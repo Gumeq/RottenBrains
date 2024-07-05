@@ -34,28 +34,28 @@ export async function TopNavbarDesktop() {
 							<SearchBar link={true} user={true}></SearchBar>
 						</div>
 					</div>
+					<ul className="flex flex-row p-2 justify-between gap-2">
+						{sidebarLinks.map((link: INavLink) => {
+							return (
+								<Link
+									href={link.route}
+									className="flex gap-4 items-center p-2 leftsidebar-link"
+								>
+									<img
+										src={link.imgURL}
+										alt={""}
+										width={20}
+										height={20}
+										className="invert"
+									/>
+									{link.label}
+								</Link>
+							);
+						})}
+					</ul>
 					<NotificationButton></NotificationButton>
 					<AuthButton></AuthButton>
 				</div>
-				<ul className="flex flex-row p-2 justify-between max-w-5xl w-screen">
-					{sidebarLinks.map((link: INavLink) => {
-						return (
-							<Link
-								href={link.route}
-								className="flex gap-4 items-center p-2 leftsidebar-link"
-							>
-								<img
-									src={link.imgURL}
-									alt={""}
-									width={20}
-									height={20}
-									className="invert"
-								/>
-								{link.label}
-							</Link>
-						);
-					})}
-				</ul>
 			</div>
 		</div>
 	);

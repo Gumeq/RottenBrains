@@ -22,7 +22,6 @@ const PostsPage = async () => {
 
 	return (
 		<div className="max-w-6xl w-full mx-auto px-2">
-			<VideoEmbed></VideoEmbed>
 			<h1 className="text-2xl font-bold my-4"></h1>
 			{posts && posts.length > 0 ? (
 				<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center gap-4 px-2">

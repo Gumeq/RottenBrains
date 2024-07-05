@@ -1,19 +1,27 @@
 import ExploreTab from "@/components/explore/ExploreTab";
+import MediaCarousel from "@/components/MediaCarousel";
+import { getPopular } from "@/utils/tmdb";
 import React from "react";
 
-const page = () => {
+const page = async () => {
+	const movies = await getPopular();
 	return (
-		<div className=" mx-auto max-w-7xl px-4 w-full h-full ">
-			<h1 className="text-xl pt-8 font-bold">Now in cinemas</h1>
-			<ExploreTab action="Now_in_cinemas"></ExploreTab>
-			<h1 className="text-xl pt-8 font-bold">Popular Today</h1>
-			<ExploreTab action="Popular_Today"></ExploreTab>
-			<h1 className="text-xl pt-8 font-bold">Trending TV-Shows</h1>
-			<ExploreTab action="Trending_TV"></ExploreTab>
-			<h1 className="text-xl pt-8 font-bold">Trending Movies</h1>
-			<ExploreTab action="Trending_Movies"></ExploreTab>
-			<h1 className="text-xl pt-8 font-bold">Airing Today</h1>
-			<ExploreTab action="Airing_Today"></ExploreTab>
+		<div className="w-full">
+			<div className="w-screen h-[50vh]">
+				<MediaCarousel movies={movies.results}></MediaCarousel>
+			</div>
+			<div className=" mx-auto max-w-7xl px-4">
+				<h1 className="text-xl pt-8 font-bold">Now in cinemas</h1>
+				<ExploreTab action="Now_in_cinemas"></ExploreTab>
+				<h1 className="text-xl pt-8 font-bold">Popular Today</h1>
+				<ExploreTab action="Popular_Today"></ExploreTab>
+				<h1 className="text-xl pt-8 font-bold">Trending TV-Shows</h1>
+				<ExploreTab action="Trending_TV"></ExploreTab>
+				<h1 className="text-xl pt-8 font-bold">Trending Movies</h1>
+				<ExploreTab action="Trending_Movies"></ExploreTab>
+				<h1 className="text-xl pt-8 font-bold">Airing Today</h1>
+				<ExploreTab action="Airing_Today"></ExploreTab>
+			</div>
 		</div>
 	);
 };

@@ -1,7 +1,6 @@
 import ExploreCard from "@/components/explore/ExploreCard";
 import HomePostCard from "@/components/post/HomePostCard";
 import YouTubeEmbed from "@/components/YoutubeEmbed";
-import { getExploreData, getMediaData } from "@/utils/clientFunctions";
 import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
 import { getPostsOfMedia } from "@/utils/supabase/queries";
 import {
@@ -10,7 +9,7 @@ import {
 	getSimilar,
 	getVideos,
 } from "@/utils/tmdb";
-import { divide } from "lodash";
+import Link from "next/link";
 
 export default async function mediaPage({
 	params,
@@ -104,7 +103,25 @@ export default async function mediaPage({
 					</div>
 				</div>
 			</div>
-			<div></div>
+			<div>
+				{media_type === "movie" ? (
+					<div>
+						<Link
+							href={`/protected/watch/${media_type}/${media_id}`}
+						>
+							Watch
+						</Link>
+					</div>
+				) : (
+					<div>
+						<Link
+							href={`/protected/watch/${media_type}/${media_id}/1/1`}
+						>
+							Watch
+						</Link>
+					</div>
+				)}
+			</div>
 			<div className="">
 				<h2 className="text-xl font-bold pt-4">Videos</h2>
 				<div className="flex flex-col md:flex-row gap-4 py-4 items-center justify-center">

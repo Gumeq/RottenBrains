@@ -11,7 +11,7 @@ const ExploreCard = (media: any) => {
 		media_type = "tv";
 	}
 	return (
-		<div className="w-[130px] bg-foreground/10 rounded-xl overflow-hidden my-2 md:w-[200px]">
+		<div className="w-[130px] bg-foreground/10 rounded-xl overflow-hidden my-2 md:w-[200px] hover:border-2 border-accent">
 			<Link href={`/protected/media/${media_type}/${media.id}`}>
 				<div>
 					<div className="aspect-w-2 aspect-h-3">
@@ -23,7 +23,7 @@ const ExploreCard = (media: any) => {
 							className=""
 						/>
 					</div>
-					<div className="p-2 flex flex-col gap-2">
+					{/* <div className="p-2 flex flex-col gap-2">
 						<p className="font-bold truncate text-lg">
 							{media.title || media.name}
 						</p>
@@ -42,7 +42,7 @@ const ExploreCard = (media: any) => {
 						<p className="text-gray-400 text-sm">
 							{media.release_date || media.first_air_date}
 						</p>
-					</div>
+					</div> */}
 				</div>
 			</Link>
 		</div>
