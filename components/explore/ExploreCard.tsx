@@ -11,10 +11,10 @@ const ExploreCard = (media: any) => {
 		media_type = "tv";
 	}
 	return (
-		<div className="w-[130px] bg-foreground/10 rounded-xl overflow-hidden my-2 md:w-[200px] hover:border-2 border-accent">
+		<div className="w-[130px] md:w-[200px] hover:border-2 border-accent">
 			<Link href={`/protected/media/${media_type}/${media.id}`}>
 				<div>
-					<div className="aspect-w-2 aspect-h-3">
+					<div className="aspect-w-2 aspect-h-3 rounded-xl overflow-hidden ">
 						<img
 							src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
 							alt=""
@@ -23,26 +23,14 @@ const ExploreCard = (media: any) => {
 							className=""
 						/>
 					</div>
-					{/* <div className="p-2 flex flex-col gap-2">
+					<div className="py-2 px-1 flex flex-row gap-2 justify-between w-[100%] h-auto items-center">
 						<p className="font-bold truncate text-lg">
 							{media.title || media.name}
 						</p>
-
-						<div className="flex flex-row gap-1 items-center align-center">
-							<img
-								src="/assets/icons/star-solid.svg"
-								alt=""
-								width="15"
-								height="15"
-								className="invert-on-dark"
-							/>
-							<p>{media.vote_average?.toFixed(1)}</p>
+						<div className="bg-foreground/5 px-2 py-1 rounded-lg font-bold text-sm">
+							{media_type === "movie" ? "Movie" : "Tv"}
 						</div>
-
-						<p className="text-gray-400 text-sm">
-							{media.release_date || media.first_air_date}
-						</p>
-					</div> */}
+					</div>
 				</div>
 			</Link>
 		</div>

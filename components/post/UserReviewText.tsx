@@ -32,33 +32,31 @@ const UserReviewText = ({
 		setExpanded(!expanded);
 	};
 
-	const initialText = (
-		<p>
-			<span className="font-bold">{creator_name}</span> {post_review}
-		</p>
-	);
+	const initialText = <p>{post_review}</p>;
 
 	return (
 		<div className="overflow-hidden w-full">
 			<div ref={textRef} className={`${expanded ? "" : "line-clamp-1"}`}>
 				{initialText}
 			</div>
-			{showMoreIndicator && !expanded && (
-				<button
-					className="text-foreground/50 hover:underline focus:outline-none"
-					onClick={toggleExpanded}
-				>
-					Show more
-				</button>
-			)}
-			{expanded && (
-				<button
-					className="text-foreground/50 hover:underline focus:outline-none"
-					onClick={toggleExpanded}
-				>
-					Show less
-				</button>
-			)}
+			<span>
+				{showMoreIndicator && !expanded && (
+					<button
+						className="text-foreground/50 hover:underline focus:outline-none"
+						onClick={toggleExpanded}
+					>
+						Show more
+					</button>
+				)}
+				{expanded && (
+					<button
+						className="text-foreground/50 hover:underline focus:outline-none"
+						onClick={toggleExpanded}
+					>
+						Show less
+					</button>
+				)}
+			</span>
 		</div>
 	);
 };

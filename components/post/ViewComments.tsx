@@ -21,7 +21,6 @@ const ViewComments: React.FC<ViewCommentsProps> = ({ postId }) => {
 			const comments = await getPostComments(postId);
 			setComments(comments);
 			setLoading(false);
-			console.log(comments);
 		};
 
 		fetchComments();

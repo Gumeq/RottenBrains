@@ -14,7 +14,7 @@ const TopMoviesCarousel = ({ movies }: any) => {
 		slidesToShow: 1,
 		slidesToScroll: 1,
 		autoplay: true,
-		autoplaySpeed: 10000,
+		autoplaySpeed: 5000,
 	};
 
 	return (
@@ -81,7 +81,9 @@ const TopMoviesCarousel = ({ movies }: any) => {
 													<p>Watch</p>
 												</div>
 											</Link>
-											<Link href={"/protected/media/"}>
+											<Link
+												href={`/protected/media/${media.media_type}/${media.id}`}
+											>
 												<div className="px-4 py-2 border-2 border-accent rounded-full">
 													<p>Info</p>
 												</div>

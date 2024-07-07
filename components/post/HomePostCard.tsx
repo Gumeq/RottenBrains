@@ -1,7 +1,6 @@
 import { IPost } from "@/types";
 import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
 import { getUserFromDB } from "@/utils/supabase/queries";
-import { Divide } from "lucide-react";
 import React from "react";
 import SaveButton from "./SaveButton";
 import LikeButton from "./LikeButton";
@@ -13,6 +12,7 @@ import { timeAgo } from "./TimeAgo";
 import ViewComments from "./ViewComments";
 
 export async function HomePostCard({ post }: any) {
+	console.log(post);
 	const media_id = post.mediaid;
 	const media_type = post.media_type;
 
@@ -34,9 +34,8 @@ export async function HomePostCard({ post }: any) {
 	}
 
 	return (
-		<div className="relative rounded-xl overflow-hidden border border-foreground/30 ">
-			<div className="absolute inset-0 bg-cover bg-center bg-opacity-50 blur-sm ">
-				{/* Use next/image for the background image */}
+		<div className="relative rounded-[20px] overflow-hidden border border-foreground/30 ">
+			{/* <div className="absolute inset-0 bg-cover bg-center bg-opacity-50 blur-sm ">
 				{media && (
 					<img
 						src={`https://image.tmdb.org/t/p/w500${media.backdrop_path}`}
@@ -53,27 +52,10 @@ export async function HomePostCard({ post }: any) {
 					/>
 				)}
 			</div>
-			<div className="absolute inset-0 bg-background opacity-80"></div>
-			<div className="w-screen md:w-[350px]  max-w-[calc(100vw-20px)] flex flex-col bg-foreground/5 py-2 relative">
-				<div className="w-full h-[50px] flex items-center align-center px-4 border-b border-foreground/30">
+			<div className="absolute inset-0 bg-background opacity-80"></div> */}
+			<div className="w-screen md:w-[350px]  max-w-[calc(100vw-20px)] flex flex-col bg-foreground/5 relative">
+				{/* <div className="w-full h-[50px] flex items-center align-center px-4 border-b border-foreground/30">
 					<div className="flex flex-row items-center justify-between w-full">
-						<div className="flex flex-row gap-2 items-center">
-							{creator && (
-								<div className="">
-									<ProfilePicture
-										userId={creator?.user.id}
-									></ProfilePicture>
-								</div>
-							)}
-							<div>
-								<p className="font-bold text-md truncate">
-									{creator?.user.username}
-								</p>
-								<p className="text-sm text-foreground/50">
-									{timeAgo(post.created_at)}
-								</p>
-							</div>
-						</div>
 						<div>
 							<img
 								src="/assets/icons/ellipsis-solid.svg"
@@ -88,33 +70,76 @@ export async function HomePostCard({ post }: any) {
 							/>
 						</div>
 					</div>
-				</div>
-				<div className="flex flex-col relative overflow-hidden rounded-xl m-2">
+				</div> */}
+				<div className="flex flex-col relative overflow-hidden rounded-xl p-2">
 					<div className="relative my-auto flex flex-col gap-4 p-2">
-						<div className="flex flex-row z-10 gap-2">
-							<div className=" w-[200px] h-[300px] ">
+						<div className="flex flex-col z-10 gap-2">
+							<div className=" w-[320px] h-[480px] mx-auto">
 								{media && (
-									<div className="rounded-xl  overflow-hidden">
+									<div className="rounded-[12px]  overflow-hidden">
 										<Link
 											href={`/protected/media/${media_type}/${media_id}`}
 										>
 											<img
 												src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
 												alt=""
-												width={200}
-												height={300}
-												className="min-h-[300px] min-w-[200px]"
-												style={{
-													minHeight: "300px",
-													minWidth: "200px",
-												}}
+												width={400}
+												height={600}
+												className="min-h-[300px] min-w-[200px] mx-auto"
 											/>
 										</Link>
 									</div>
 								)}
 							</div>
-							<div className="">
-								<div className="flex flex-row gap-2 items-center text-ellipsis">
+							<div className=" flex flex-row gap-4 items-center py-2">
+								<span className="min-w-[35px] min-h-[35px] ">
+									<ProfilePicture
+										userId={creator?.user.id}
+									></ProfilePicture>
+								</span>
+								<p className="">
+									<span className="font-bold text-lg">
+										{creator.user.username}
+									</span>{" "}
+									watched{" "}
+									<span className="text-lg font-bold hover:underline">
+										<Link
+											href={`/protected/media/${media_type}/${media_id}`}
+										>
+											{media.title || media.name}
+										</Link>
+									</span>
+								</p>
+								{/* <p>
+									<span className="flex flex-row gap-2 items-center">
+										{creator && (
+											<div className="">
+												<ProfilePicture
+													userId={creator?.user.id}
+												></ProfilePicture>
+											</div>
+										)}
+										<span>
+											<p className="font-bold text-lg">
+												{creator?.user.username}
+											</p>
+										</span>
+										watched
+									</span>
+								</p>
+								<div className="inline">
+									{media && (
+										<Link
+											href={`/protected/media/${media_type}/${media_id}`}
+										>
+											<p className="font-bold text-lg hover:underline ">
+												{media.title || media.name}
+											</p>
+										</Link>
+									)}
+								</div> */}
+
+								{/* <div className="flex flex-row gap-2 items-center text-ellipsis">
 									{media && (
 										<Link
 											href={`/protected/media/${media_type}/${media_id}`}
@@ -124,16 +149,19 @@ export async function HomePostCard({ post }: any) {
 											</p>
 										</Link>
 									)}
-								</div>
-								{media && (
-									<div className="flex flex-col gap-1">
-										<div className="flex flex-row items-center gap-2 pb-2">
-											{media.number_of_seasons && (
-												<p className="text-sm text-foreground/70">
-													({media.number_of_seasons}{" "}
-													Seasons)
-												</p>
-											)}
+								</div> */}
+								{/* {media && (
+									<div className="flex flex-row items-center gap-1">
+										<div className="pt-2">
+											<p className="text-xs">
+												User rating:
+											</p>
+											<p className="text-5xl font-bold text-foreground">
+												{post.vote_user?.toFixed(0)}
+												<span className="text-xs text-foreground">
+													/10
+												</span>
+											</p>
 										</div>
 										<div>
 											<p className="text-xs">
@@ -146,24 +174,13 @@ export async function HomePostCard({ post }: any) {
 												</span>
 											</p>
 										</div>
-										<div className="pt-2">
-											<p className="text-xs">
-												User rating:
-											</p>
-											<p className="text-5xl font-bold text-foreground">
-												{post.vote_user?.toFixed(0)}
-												<span className="text-xs text-foreground">
-													/10
-												</span>
-											</p>
-										</div>
 									</div>
-								)}
+								)} */}
 							</div>
 						</div>
 					</div>
 				</div>
-				<div className="w-11/12 px-4 pb-2">
+				<div className=" px-4 pb-2">
 					<UserReviewText
 						post_review={post.review_user || "no review"}
 						creator_name={creator?.user.username || "no user"}
