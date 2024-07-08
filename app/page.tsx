@@ -20,9 +20,9 @@ export default async function Index() {
 
 	return (
 		<div className="flex-1 w-full flex flex-col items-center">
-			<div className="w-screen">
+			{/* <div className="w-screen">
 				<ScrollingBackground />
-			</div>
+			</div> */}
 			<nav className="w-full flex justify-center bg-background h-16">
 				<div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
 					<div className="text-xl font-bold">BingeBuddy</div>

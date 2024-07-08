@@ -54,7 +54,6 @@ export async function TopNavbarDesktop() {
 						})}
 					</ul>
 					<NotificationButton></NotificationButton>
-					<AuthButton></AuthButton>
 				</div>
 			</div>
 		</div>

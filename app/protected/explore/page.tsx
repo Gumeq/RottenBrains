@@ -12,14 +12,19 @@ const page = async () => {
 			</div>
 			<div className=" mx-auto max-w-7xl px-4">
 				<h1 className="text-xl pt-8 font-bold">Now in cinemas</h1>
+				<div className="w-1/6 h-[5px] bg-accent rounded-full my-1"></div>
 				<ExploreTab action="Now_in_cinemas"></ExploreTab>
 				<h1 className="text-xl pt-8 font-bold">Popular Today</h1>
+				<div className="w-1/6 h-[5px] bg-accent rounded-full my-1"></div>
 				<ExploreTab action="Popular_Today"></ExploreTab>
 				<h1 className="text-xl pt-8 font-bold">Trending TV-Shows</h1>
+				<div className="w-1/6 h-[5px] bg-accent rounded-full my-1"></div>
 				<ExploreTab action="Trending_TV"></ExploreTab>
 				<h1 className="text-xl pt-8 font-bold">Trending Movies</h1>
+				<div className="w-1/6 h-[5px] bg-accent rounded-full my-1"></div>
 				<ExploreTab action="Trending_Movies"></ExploreTab>
 				<h1 className="text-xl pt-8 font-bold">Airing Today</h1>
+				<div className="w-1/6 h-[5px] bg-accent rounded-full my-1"></div>
 				<ExploreTab action="Airing_Today"></ExploreTab>
 			</div>
 		</div>

@@ -12,7 +12,6 @@ import { timeAgo } from "./TimeAgo";
 import ViewComments from "./ViewComments";
 
 export async function HomePostCard({ post }: any) {
-	console.log(post);
 	const media_id = post.mediaid;
 	const media_type = post.media_type;
 
@@ -34,7 +33,7 @@ export async function HomePostCard({ post }: any) {
 	}
 
 	return (
-		<div className="relative rounded-[20px] overflow-hidden border border-foreground/30 ">
+		<div className="relative rounded-[16px] overflow-hidden border border-foreground/30 ">
 			{/* <div className="absolute inset-0 bg-cover bg-center bg-opacity-50 blur-sm ">
 				{media && (
 					<img
@@ -71,12 +70,32 @@ export async function HomePostCard({ post }: any) {
 						</div>
 					</div>
 				</div> */}
-				<div className="flex flex-col relative overflow-hidden rounded-xl p-2">
+				<div className="flex flex-col relative overflow-hidden rounded-xl">
+					<div className=" flex flex-row gap-4 items-center  p-4 border-b border-foreground/30">
+						<span className="min-w-[35px] min-h-[35px] ">
+							<ProfilePicture
+								userId={creator?.user.id}
+							></ProfilePicture>
+						</span>
+						<p className="line-clamp-1">
+							<span className="font-bold text-lg">
+								{creator.user.username}
+							</span>{" "}
+							watched{" "}
+							<span className="text-lg font-bold hover:underline">
+								<Link
+									href={`/protected/media/${media_type}/${media_id}`}
+								>
+									{media.title || media.name}
+								</Link>
+							</span>
+						</p>
+					</div>
 					<div className="relative my-auto flex flex-col gap-4 p-2">
 						<div className="flex flex-col z-10 gap-2">
 							<div className=" w-[320px] h-[480px] mx-auto">
 								{media && (
-									<div className="rounded-[12px]  overflow-hidden">
+									<div className="rounded-[8px]  overflow-hidden">
 										<Link
 											href={`/protected/media/${media_type}/${media_id}`}
 										>
@@ -90,92 +109,6 @@ export async function HomePostCard({ post }: any) {
 										</Link>
 									</div>
 								)}
-							</div>
-							<div className=" flex flex-row gap-4 items-center py-2">
-								<span className="min-w-[35px] min-h-[35px] ">
-									<ProfilePicture
-										userId={creator?.user.id}
-									></ProfilePicture>
-								</span>
-								<p className="">
-									<span className="font-bold text-lg">
-										{creator.user.username}
-									</span>{" "}
-									watched{" "}
-									<span className="text-lg font-bold hover:underline">
-										<Link
-											href={`/protected/media/${media_type}/${media_id}`}
-										>
-											{media.title || media.name}
-										</Link>
-									</span>
-								</p>
-								{/* <p>
-									<span className="flex flex-row gap-2 items-center">
-										{creator && (
-											<div className="">
-												<ProfilePicture
-													userId={creator?.user.id}
-												></ProfilePicture>
-											</div>
-										)}
-										<span>
-											<p className="font-bold text-lg">
-												{creator?.user.username}
-											</p>
-										</span>
-										watched
-									</span>
-								</p>
-								<div className="inline">
-									{media && (
-										<Link
-											href={`/protected/media/${media_type}/${media_id}`}
-										>
-											<p className="font-bold text-lg hover:underline ">
-												{media.title || media.name}
-											</p>
-										</Link>
-									)}
-								</div> */}
-
-								{/* <div className="flex flex-row gap-2 items-center text-ellipsis">
-									{media && (
-										<Link
-											href={`/protected/media/${media_type}/${media_id}`}
-										>
-											<p className="font-bold text-lg hover:underline line-clamp-3">
-												{media.title || media.name}
-											</p>
-										</Link>
-									)}
-								</div> */}
-								{/* {media && (
-									<div className="flex flex-row items-center gap-1">
-										<div className="pt-2">
-											<p className="text-xs">
-												User rating:
-											</p>
-											<p className="text-5xl font-bold text-foreground">
-												{post.vote_user?.toFixed(0)}
-												<span className="text-xs text-foreground">
-													/10
-												</span>
-											</p>
-										</div>
-										<div>
-											<p className="text-xs">
-												Avg rating:
-											</p>
-											<p className="text-xl font-bold">
-												{media.vote_average?.toFixed(1)}{" "}
-												<span className="text-xs">
-													/10
-												</span>
-											</p>
-										</div>
-									</div>
-								)} */}
 							</div>
 						</div>
 					</div>

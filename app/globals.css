@@ -10,7 +10,7 @@
 		--btn-background: 200 10% 91%;
 		--btn-background-hover: 200 10% 89%;
 		--foreground: 200 50% 3%;
-		--accent: 251 65% 61%;
+		--accent: 348 83% 60%;
 	}
 
 	@media (prefers-color-scheme: dark) {
@@ -19,7 +19,7 @@
 			--btn-background: 192 82% 9%;
 			--btn-background-hover: 192 82% 12%;
 			--foreground: 200 20% 96%;
-			--accent: 251 65% 61%;
+			--accent: 348 83% 60%;
 		}
 		.invert-on-dark {
 			filter: invert(1);
@@ -169,7 +169,7 @@
 
 .heart-icon {
 	transition: transform 0.2s ease-in-out;
-	@apply invert-on-dark opacity-50;
+	@apply opacity-50;
 }
 
 .heart-icon.pop {
