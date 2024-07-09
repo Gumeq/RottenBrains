@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: any) {
 	}
 
 	return {
-		title: `${media.title || media.name} - BingeBuddy`,
+		title: `${media.title || media.name} - RottenBrains`,
 		description: `${media.overview}`,
 	};
 }
