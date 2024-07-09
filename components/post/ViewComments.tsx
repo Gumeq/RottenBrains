@@ -36,11 +36,17 @@ const ViewComments: React.FC<ViewCommentsProps> = ({ postId }) => {
 				onClick={togglePopup}
 				className="text-foreground opacity-50 px-4 py-2 rounded-md"
 			>
-				View Comments
+				<img
+					src="/assets/icons/comment-regular.svg"
+					alt=""
+					width={30}
+					height={30}
+					className="invert-on-dark"
+				/>
 			</button>
 			{isOpen && (
 				<div className="fixed inset-0 flex justify-center bg-black bg-opacity-50 z-50 ">
-					<div className="relative bg-background p-4 rounded-lg shadow-lg w-full w-screen md:max-w-4xl h-4/5 md:h-auto md:max-h-[80%]">
+					<div className="relative bg-background p-4 rounded-lg shadow-lg w-screen md:max-w-4xl h-4/5 md:h-auto md:max-h-[80%]">
 						<button
 							onClick={togglePopup}
 							className="absolute top-2 right-2 bg-red-500 text-white px-4 py-2 rounded-md"

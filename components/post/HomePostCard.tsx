@@ -1,3 +1,5 @@
+"use client";
+
 import { IPost } from "@/types";
 import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
 import { getUserFromDB } from "@/utils/supabase/queries";
@@ -10,30 +12,75 @@ import PostLikedNumber from "./PostLikedNumber";
 import UserReviewText from "./UserReviewText";
 import { timeAgo } from "./TimeAgo";
 import ViewComments from "./ViewComments";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
-export async function HomePostCard({ post }: any) {
+export function HomePostCard({ post, index }: any) {
 	const media_id = post.mediaid;
 	const media_type = post.media_type;
 
-	let mediaData;
-	try {
-		mediaData = await fetchMediaData(media_type, media_id);
-	} catch (error) {
-		console.error("Error fetching media data:", error);
-		mediaData = null;
-	}
-	const media = mediaData;
+	const [media, setMedia] = useState<any>(null);
+	const [creator, setCreator] = useState<any>(null);
+	const [loading, setLoading] = useState<boolean>(true);
+	const [error, setError] = useState<string | null>(null);
 
-	let creator;
-	try {
-		creator = await getUserFromDB(post.creatorid);
-	} catch (error) {
-		console.log(error);
-		creator = null;
+	useEffect(() => {
+		const fetchData = async () => {
+			setLoading(true);
+			setError(null);
+
+			try {
+				const fetchedMediaData = await fetchMediaData(
+					media_type,
+					media_id
+				);
+				setMedia(fetchedMediaData);
+			} catch (error) {
+				console.error("Error fetching media data:", error);
+				setError("Error fetching media data");
+				setMedia(null);
+			}
+
+			try {
+				const fetchedCreator = await getUserFromDB(post.creatorid);
+				setCreator(fetchedCreator);
+			} catch (error) {
+				console.log("Error fetching creator data:", error);
+				setError("Error fetching creator data");
+				setCreator(null);
+			}
+
+			setLoading(false);
+		};
+
+		fetchData();
+	}, [media_type, media_id, post.creatorid]);
+
+	const variants = {
+		hidden: { opacity: 0 },
+		visible: { opacity: 1 },
+	};
+
+	if (loading) {
+		return;
 	}
 
+	if (error) {
+		return;
+	}
 	return (
-		<div className="relative rounded-[16px] overflow-hidden border border-foreground/30 ">
+		<motion.div
+			className="relative rounded-[16px] overflow-hidden border border-foreground/30 "
+			variants={variants}
+			initial="hidden"
+			animate="visible"
+			transition={{
+				delay: index * 0.15,
+				ease: "easeInOut",
+				duration: 0.25,
+			}}
+			viewport={{ amount: 0 }}
+		>
 			{/* <div className="absolute inset-0 bg-cover bg-center bg-opacity-50 blur-sm ">
 				{media && (
 					<img
@@ -71,31 +118,47 @@ export async function HomePostCard({ post }: any) {
 					</div>
 				</div> */}
 				<div className="flex flex-col relative overflow-hidden rounded-xl">
-					<div className=" flex flex-row gap-4 items-center  p-4 border-b border-foreground/30">
+					<div className=" flex flex-row gap-4 items-center  p-2 px-4 ">
 						<span className="min-w-[35px] min-h-[35px] ">
 							<ProfilePicture
 								userId={creator?.user.id}
 							></ProfilePicture>
 						</span>
-						<p className="line-clamp-1">
-							<span className="font-bold text-lg">
-								{creator.user.username}
-							</span>{" "}
-							watched{" "}
-							<span className="text-lg font-bold hover:underline">
-								<Link
-									href={`/protected/media/${media_type}/${media_id}`}
-								>
-									{media.title || media.name}
-								</Link>
-							</span>
-						</p>
+						<div>
+							<p className="line-clamp-1">
+								<span className="font-bold text-lg">
+									{creator.user.username}
+								</span>{" "}
+								watched{" "}
+								<span className="text-lg font-bold hover:underline">
+									<Link
+										href={`/protected/media/${media_type}/${media_id}`}
+									>
+										{media && (media.title || media.name)}
+									</Link>
+								</span>
+							</p>
+							<p className="text-sm opacity-50">
+								{timeAgo(post.created_at)}
+							</p>
+						</div>
 					</div>
 					<div className="relative my-auto flex flex-col gap-4 p-2">
 						<div className="flex flex-col z-10 gap-2">
 							<div className=" w-[320px] h-[480px] mx-auto">
 								{media && (
 									<div className="rounded-[8px]  overflow-hidden">
+										<div className="absolute p-2 text-lg m-2 font-bold bg-background/50 flex flex-row gap-2 items-center justify-center rounded-[6px]">
+											<img
+												src="/assets/icons/star-solid.svg"
+												alt=""
+												width={20}
+												height={20}
+												className="invert-on-dark"
+												loading="lazy"
+											/>
+											<p>{post.vote_user}</p>
+										</div>
 										<Link
 											href={`/protected/media/${media_type}/${media_id}`}
 										>
@@ -113,33 +176,29 @@ export async function HomePostCard({ post }: any) {
 						</div>
 					</div>
 				</div>
-				<div className=" px-4 pb-2">
+				<div className=" mx-4 px-2 py-2  rounded-[8px]">
 					<UserReviewText
 						post_review={post.review_user || "no review"}
 						creator_name={creator?.user.username || "no user"}
 					></UserReviewText>
 				</div>
-				<div className="relative">
-					<ViewComments postId={post.id}></ViewComments>
-				</div>
-				<div className="w-full h-[50px] px-4 border-t border-foreground/30">
-					<div className="flex flex-row gap-4 align-center w-full h-full justify-between ">
-						<div className="flex flex-row items-center gap-4">
+				<div className="w-full h-[50px] px-4">
+					<div className="flex flex-row gap-2 align-center w-full h-full justify-between items-center">
+						<div className="flex flex-row items-center">
 							<LikeButton postId={post.id}></LikeButton>
-							<p className="font-bold text-xl text-foreground/50">
-								<PostLikedNumber
-									postId={post.id}
-								></PostLikedNumber>{" "}
-								<span className=" font-base text-base">
-									likes
-								</span>
-							</p>
+							<ViewComments postId={post.id}></ViewComments>
 						</div>
 						<SaveButton postId={post.id}></SaveButton>
 					</div>
 				</div>
+				<div className="px-4 pb-2">
+					<p className="font-bold text-xl text-foreground/50">
+						<PostLikedNumber postId={post.id}></PostLikedNumber>{" "}
+						<span className=" font-base text-base">likes</span>
+					</p>
+				</div>
 			</div>
-		</div>
+		</motion.div>
 	);
 }
 

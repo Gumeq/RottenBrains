@@ -1,3 +1,5 @@
+"use server";
+
 import { getUserFromDB } from "./queries";
 import { createClient } from "./server";
 import { IPost } from "@/types";
@@ -24,7 +26,8 @@ export async function getCurrentUser(): Promise<any | null> {
 }
 
 export const getPostsFromFollowedUsers = async (
-	userId: string
+	userId: string,
+	page: number
 ): Promise<any | null> => {
 	try {
 		const supabase = createClient();
@@ -42,7 +45,8 @@ export const getPostsFromFollowedUsers = async (
 			.from("posts")
 			.select("*")
 			.in("creatorid", followedUserIds)
-			.order("created_at", { ascending: false });
+			.order("created_at", { ascending: false })
+			.range(page * 6, page * 6 + 5);
 		if (postsError) throw postsError;
 
 		return postsData;

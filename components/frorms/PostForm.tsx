@@ -1,7 +1,7 @@
 "use client";
 
 import { IMedia, IPost } from "@/types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import fetchUserData from "@/utils/clientFunctions/fetchUserData";
 import { createClient } from "@/utils/supabase/client";
 import { redirect } from "next/navigation";
@@ -24,6 +24,16 @@ const PostForm = ({ post, action }: PostFormProps) => {
 		review_user: "Λοιπον είδα το ",
 		vote_user: 0,
 	});
+
+	// Use useEffect to update the review_user when media changes
+	useEffect(() => {
+		if (media) {
+			setFormValues((prevValues) => ({
+				...prevValues,
+				review_user: `Λοιπον είδα το ${media.title || media.name},`,
+			}));
+		}
+	}, [media]);
 
 	// Handle input change
 	const handleInputChange = (
@@ -87,7 +97,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
 				<div className="w-[300px] h-[450px] bg-foreground/10 rounded-xl m-auto overflow-hidden shadow-lg">
 					{media?.poster_path && (
 						<img
-							src="https://image.tmdb.org/t/p/w500{{media?.poster_path}}"
+							src={`https://image.tmdb.org/t/p/w500${media?.poster_path}`}
 							alt="Poster"
 							width="300"
 							height="450"

@@ -6,7 +6,7 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
 	metadataBase: new URL(defaultUrl),
-	title: "Discover & Share Your Passion for Movies and TV",
+	title: "BingeBuddy",
 	description:
 		"Connect with fellow enthusiasts and dive deep into your favorite media.",
 };

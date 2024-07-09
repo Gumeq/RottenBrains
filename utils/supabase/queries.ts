@@ -68,6 +68,7 @@ export const getSavedPosts = async (userId: string): Promise<any | null> => {
 			.eq("user_id", userId)
 			.order("created_at", { ascending: false });
 		if (error) throw error;
+		console.log(data);
 		return data;
 	} catch (error) {
 		handleError("getSavedPosts", error);

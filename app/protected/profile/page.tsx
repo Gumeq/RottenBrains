@@ -4,6 +4,7 @@ import { getUserPosts } from "@/utils/supabase/queries";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import { NextPage } from "next";
 import React from "react";
+import Tabs from "./tabs";
 
 const ProfilePage = async () => {
 	const user = await getCurrentUser();
@@ -17,10 +18,6 @@ const ProfilePage = async () => {
 	};
 	const formatter = new Intl.DateTimeFormat("en-US", options);
 	const formattedDate = formatter.format(date);
-	let userPosts;
-	if (user) {
-		userPosts = await getUserPosts(user.user.id);
-	}
 
 	return (
 		<div className="max-w-6xl mx-auto ">
@@ -50,14 +47,15 @@ const ProfilePage = async () => {
 					</div>
 				</div>
 			)}
-			<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center gap-4">
+			{/* <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center gap-4">
 				{userPosts &&
 					userPosts.map((post: any) => (
 						<div>
 							<HomePostCard post={post}></HomePostCard>
 						</div>
 					))}
-			</div>
+			</div> */}
+			<Tabs user={user}></Tabs>
 		</div>
 	);
 };

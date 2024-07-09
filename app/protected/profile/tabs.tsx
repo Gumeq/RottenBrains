@@ -1,0 +1,109 @@
+"use client";
+
+import HomePostCard from "@/components/post/HomePostCard";
+import { IPost } from "@/types";
+import { getSavedPosts, getUserPosts } from "@/utils/supabase/queries";
+import { useEffect, useState } from "react";
+
+const Tabs: React.FC<any> = ({ user }) => {
+	const [activeTab, setActiveTab] = useState("posts");
+	const [userPosts, setUserPosts] = useState<any[]>([]);
+	const [savedUserPosts, setSavedUserPosts] = useState<any[]>([]);
+	console.log(user);
+	user = user.user;
+
+	useEffect(() => {
+		const fetchUserPosts = async () => {
+			if (user) {
+				const posts = await getUserPosts(user.id);
+				setUserPosts(posts);
+			}
+		};
+
+		fetchUserPosts();
+	}, [user]);
+
+	useEffect(() => {
+		const fetchSavedUserPosts = async () => {
+			if (user) {
+				const posts = await getSavedPosts(user.id);
+				setSavedUserPosts(posts);
+			}
+		};
+
+		fetchSavedUserPosts();
+	}, [user, activeTab]);
+
+	const renderContent = () => {
+		switch (activeTab) {
+			case "posts":
+				return (
+					<div className="w-full">
+						{userPosts.length > 0 && (
+							<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center gap-4 px-2">
+								{userPosts.map((post: IPost) => (
+									<div className="">
+										<HomePostCard post={post} />
+									</div>
+								))}
+							</div>
+						)}
+					</div>
+				);
+			case "likes":
+				return <div>likes</div>;
+			case "saves":
+				return (
+					<div className="w-full bg-blue-500">
+						{/* <div className="w-full bg-green-500">
+							{savedUserPosts.length > 0 && (
+								<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center gap-4 px-2">
+									{savedUserPosts.map((post: IPost) => (
+										<div className="">
+											<HomePostCard post={post} />
+										</div>
+									))}
+								</div>
+							)}
+						</div> */}
+					</div>
+				);
+			default:
+				return null;
+		}
+	};
+
+	return (
+		<div className="w-screen max-w-7xl">
+			<div className="flex justify-around border-b">
+				<button
+					className={`py-2 px-4 w-full ${
+						activeTab === "posts" ? "border-b-2 border-accent " : ""
+					}`}
+					onClick={() => setActiveTab("posts")}
+				>
+					Posts
+				</button>
+				<button
+					className={`py-2 px-4 w-full ${
+						activeTab === "likes" ? "border-b-2 border-accent" : ""
+					}`}
+					onClick={() => setActiveTab("likes")}
+				>
+					Likes
+				</button>
+				<button
+					className={`py-2 px-4 w-full ${
+						activeTab === "saves" ? "border-b-2 border-accent" : ""
+					}`}
+					onClick={() => setActiveTab("saves")}
+				>
+					Saves
+				</button>
+			</div>
+			<div className="mt-4">{renderContent()}</div>
+		</div>
+	);
+};
+
+export default Tabs;
