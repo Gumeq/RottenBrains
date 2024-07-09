@@ -8,6 +8,7 @@ import {
 	getPostsFromFollowedUsers,
 } from "@/utils/supabase/serverQueries";
 import LoadMore from "./LoadMore";
+import Loader from "@/components/Loader";
 
 // Server component fetching and displaying posts
 const PostsPage = async () => {

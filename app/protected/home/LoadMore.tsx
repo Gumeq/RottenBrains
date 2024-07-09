@@ -1,4 +1,5 @@
 "use client";
+import Loader from "@/components/Loader";
 import HomePostCard from "@/components/post/HomePostCard";
 import { IPost } from "@/types";
 import { getPostsFromFollowedUsers } from "@/utils/supabase/serverQueries";
@@ -42,7 +43,7 @@ const LoadMore = ({ user }: any) => {
 	}, [inView, hasMore, loading, user?.user.id]);
 
 	return (
-		<div>
+		<div className="">
 			<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center gap-4 px-2">
 				{data.map((post: IPost, index: number) => (
 					<div className="" key={post.id}>
@@ -50,7 +51,7 @@ const LoadMore = ({ user }: any) => {
 					</div>
 				))}
 			</div>
-			{loading && <div>Loading...</div>}
+			{loading && <Loader></Loader>}
 			{!loading && hasMore && <div ref={ref}>Load More</div>}
 			{!hasMore && <div>No more posts to load.</div>}
 		</div>
