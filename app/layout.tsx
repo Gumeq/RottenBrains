@@ -23,9 +23,7 @@ export default function RootLayout({
 				<main className="">{children}</main>
 				<div className="w-full h-[200px] "> </div>
 			</body>
-			<GoogleAnalytics
-				gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || ""}
-			/>
+			<GoogleAnalytics gaId="G-06SFYC5DWK" />
 		</html>
 	);
 }
