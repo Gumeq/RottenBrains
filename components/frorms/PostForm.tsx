@@ -43,6 +43,33 @@ const PostForm = ({ post, action }: PostFormProps) => {
 		}
 	}, [media]);
 
+	// Function to update the review text based on the rating
+	const updateReviewText = (rating: number) => {
+		let reviewText = `Λοιπον είδα το ${media?.title || media?.name}, `;
+		if (rating >= 8) {
+			reviewText += ` καλή ${
+				media?.media_type === "movie" ? "ταινία" : "σειρα"
+			}`;
+		} else if (rating >= 4) {
+			reviewText += ` μέτρια ${
+				media?.media_type === "movie" ? "ταινία" : "σειρα"
+			}`;
+		} else {
+			reviewText += ` κακή ${
+				media?.media_type === "movie" ? "ταινία" : "σειρα"
+			}`;
+		}
+		setFormValues((prevValues) => ({
+			...prevValues,
+			review_user: reviewText,
+		}));
+	};
+
+	// Use useEffect to update review_user based on the rating
+	useEffect(() => {
+		updateReviewText(formValues.vote_user);
+	}, [formValues.vote_user]);
+
 	// Handle input change
 	const handleInputChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
