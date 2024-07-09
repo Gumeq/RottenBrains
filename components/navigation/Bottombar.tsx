@@ -7,7 +7,6 @@ import React from "react";
 
 const Bottombar = async () => {
 	const user = await getCurrentUser();
-	console.log(user.user.id);
 	// const icon = user?.imageURL;
 
 	return (

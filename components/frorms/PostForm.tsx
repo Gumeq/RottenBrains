@@ -27,11 +27,19 @@ const PostForm = ({ post, action }: PostFormProps) => {
 
 	// Use useEffect to update the review_user when media changes
 	useEffect(() => {
-		if (media) {
+		if (action === "Update" && post) {
 			setFormValues((prevValues) => ({
 				...prevValues,
-				review_user: `Λοιπον είδα το ${media.title || media.name},`,
+				review_user: post.review_user,
+				vote_user: post.vote_user,
 			}));
+		} else {
+			if (media) {
+				setFormValues((prevValues) => ({
+					...prevValues,
+					review_user: `Λοιπον είδα το ${media.title || media.name},`,
+				}));
+			}
 		}
 	}, [media]);
 
@@ -60,26 +68,51 @@ const PostForm = ({ post, action }: PostFormProps) => {
 
 		const supabase = createClient();
 
-		try {
-			// Insert a new row into the 'posts' table
-			const { data, error } = await supabase
-				.from("posts")
-				.insert([
-					{
-						mediaid: dbvalues.mediaId,
-						media_type: dbvalues.media_type,
-						creatorid: dbvalues.creatorId,
-						vote_user: dbvalues.vote_user,
-						review_user: dbvalues.review_user,
-					},
-				])
-				.select();
+		if (post && action === "Update") {
+			try {
+				// Insert a new row into the 'posts' table
+				const { data, error } = await supabase
+					.from("posts")
+					.update([
+						{
+							mediaid: dbvalues.mediaId,
+							media_type: dbvalues.media_type,
+							creatorid: dbvalues.creatorId,
+							vote_user: dbvalues.vote_user,
+							review_user: dbvalues.review_user,
+						},
+					])
+					.eq("id", post.id)
+					.select();
 
-			if (error) {
-				throw error;
+				if (error) {
+					throw error;
+				}
+			} catch (error) {
+				console.error("Error inserting data:", error);
 			}
-		} catch (error) {
-			console.error("Error inserting data:", error);
+		} else {
+			try {
+				// Insert a new row into the 'posts' table
+				const { data, error } = await supabase
+					.from("posts")
+					.insert([
+						{
+							mediaid: dbvalues.mediaId,
+							media_type: dbvalues.media_type,
+							creatorid: dbvalues.creatorId,
+							vote_user: dbvalues.vote_user,
+							review_user: dbvalues.review_user,
+						},
+					])
+					.select();
+
+				if (error) {
+					throw error;
+				}
+			} catch (error) {
+				console.error("Error inserting data:", error);
+			}
 		}
 		console.log("done");
 		router.push("/protected/home");
@@ -138,6 +171,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
 								className="border p-3 rounded focus:outline-none focus:ring-2 focus:ring-accent text-foreground bg-background"
 								max={10}
 								min={0}
+								step={0.1} // Allows decimal values
 							/>
 						</div>
 
@@ -146,7 +180,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
 							type="submit"
 							className="bg-accent/90 text-foreground font-bold py-3 rounded hover:bg-accent transition duration-300"
 						>
-							Submit
+							{action}
 						</button>
 					</form>
 				</div>

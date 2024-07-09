@@ -60,6 +60,20 @@ export async function addPostToDB(post: IPost): Promise<void> {
 	}
 }
 
+export const getPostById = async (post_id: string): Promise<any | null> => {
+	try {
+		const { data, error } = await supabase
+			.from("posts")
+			.select("*")
+			.eq("id", post_id)
+			.single();
+		if (error) throw error;
+		return data;
+	} catch (error) {
+		handleError("getPostById", error);
+	}
+};
+
 export const getSavedPosts = async (userId: string): Promise<any | null> => {
 	try {
 		const { data, error } = await supabase
@@ -153,5 +167,69 @@ export const getPostComments = async (postId: string): Promise<any | null> => {
 	} catch (error) {
 		handleError("getPostComments", error);
 		return null;
+	}
+};
+
+export const uploadProfilePicture = async (file: File) => {
+	let userId: string | null = null;
+
+	const getUser = async () => {
+		try {
+			const {
+				data: { user },
+				error,
+			} = await supabase.auth.getUser();
+			if (error) throw error;
+			userId = user ? user.id : null;
+		} catch (error) {
+			console.log("Error fetching user:", error);
+			userId = null;
+		}
+	};
+
+	await getUser();
+
+	if (!userId) {
+		console.error("User not found or not authenticated");
+		return false;
+	}
+
+	// Validate MIME type
+	const validMimeTypes = ["image/jpeg", "image/png", "image/gif"];
+	if (!validMimeTypes.includes(file.type)) {
+		console.error(`Unsupported MIME type: ${file.type}`);
+		return false;
+	}
+
+	try {
+		const fileName = `${userId}/${Date.now()}`;
+		const { data, error } = await supabase.storage
+			.from("profile_pictures")
+			.upload(fileName, file, {
+				cacheControl: "3600",
+				upsert: false,
+			});
+
+		if (error) {
+			throw error;
+		}
+
+		const { data: publicURL } = supabase.storage
+			.from("profile_pictures")
+			.getPublicUrl(fileName);
+
+		const { data: updateData, error: updateError } = await supabase
+			.from("users")
+			.update({ imageURL: publicURL.publicUrl })
+			.eq("id", userId);
+
+		if (updateError) {
+			throw updateError;
+		}
+
+		return true;
+	} catch (error) {
+		console.error("Error uploading profile picture:", error);
+		return false;
 	}
 };

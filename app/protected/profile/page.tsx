@@ -5,6 +5,7 @@ import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import { NextPage } from "next";
 import React from "react";
 import Tabs from "./tabs";
+import ProfilePicture from "./ProfilePictureChange";
 
 const ProfilePage = async () => {
 	const user = await getCurrentUser();
@@ -23,15 +24,16 @@ const ProfilePage = async () => {
 		<div className="max-w-6xl mx-auto ">
 			{user && (
 				<div>
-					<div className="flex flex-col gap-4 items-center p-8">
+					<div className="flex flex-col gap-4 items-center p-8 ">
 						<div>
-							<img
+							{/* <img
 								src={user.user.imageURL}
 								alt={""}
 								width={150}
 								height={150}
 								className="rounded-full"
-							></img>
+							></img> */}
+							<ProfilePicture user={user}></ProfilePicture>
 						</div>
 						<div className="flex flex-col items-center justify-center">
 							<p className="text-4xl font-bold">

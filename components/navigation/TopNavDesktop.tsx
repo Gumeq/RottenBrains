@@ -25,7 +25,7 @@ export async function TopNavbarDesktop() {
 								alt={""}
 								width={35}
 								height={35}
-								className="rounded-full overflow-hidden"
+								className="rounded-full overflow-hidden max-w-[35px] max-h-[35px]"
 							></img>
 						</Link>
 					</div>

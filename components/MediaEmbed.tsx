@@ -17,32 +17,38 @@ const VideoEmbed = ({
 	season_number,
 	episode_number,
 }: VideoEmbedProps) => {
-	let link = "";
-	if (media_type === "movie") {
-		link = `https://vidsrc.pro/embed/${media_type}/${media_id}`;
-	} else {
-		link = `https://vidsrc.pro/embed/${media_type}/${media_id}/${season_number}/${episode_number}`;
-	}
-
+	const [linkStart, setLinkStart] = useState<string>(
+		"https://vidsrc.pro/embed/"
+	);
 	const [media, setMedia] = useState<any>();
 	const [showVideo, setShowVideo] = useState(false);
 
-	useEffect(() => {
-		let mediaData;
+	const updateLinkStart = (newLinkStart: string) => {
+		setLinkStart(newLinkStart);
+		setShowVideo(false); // Reset the video display when changing the link
+	};
 
+	let link = "";
+	if (media_type === "movie") {
+		link = `${linkStart}${media_type}/${media_id}`;
+	} else {
+		link = `${linkStart}${media_type}/${media_id}/${season_number}/${episode_number}`;
+	}
+
+	useEffect(() => {
 		const fetchMediaDetails = async () => {
 			try {
-				mediaData = await getMediaDetails(media_type, media_id);
-				console.log(mediaData);
+				const mediaData = await getMediaDetails(media_type, media_id);
+				setMedia(mediaData);
 			} catch (error) {
 				console.error("Error fetching media data:", error);
-				mediaData = null;
+				setMedia(null);
 			}
-			setMedia(mediaData);
 		};
 
 		fetchMediaDetails();
-	}, []);
+	}, [media_type, media_id]);
+
 	const handleButtonClick = () => {
 		setShowVideo(true);
 	};
@@ -56,8 +62,6 @@ const VideoEmbed = ({
 			episodeNumber
 		).padStart(2, "0")}`;
 	};
-
-	console.log(media);
 
 	return (
 		<div>
@@ -93,6 +97,26 @@ const VideoEmbed = ({
 					style={{ display: "block", width: "100%", height: "100%" }}
 				></iframe>
 			)}
+			<div className="flex justify-center gap-4 my-4">
+				<button
+					onClick={() => updateLinkStart("https://vidsrc.pro/embed/")}
+					className="bg-foreground/10 hover:bg-foreground/20 text-foreground font-semibold py-2 px-4 rounded"
+				>
+					vidsrc.pro
+				</button>
+				<button
+					onClick={() => updateLinkStart("https://vidsrc.me/embed/")}
+					className="bg-foreground/10 hover:bg-foreground/20 text-foreground font-semibold py-2 px-4 rounded"
+				>
+					vidsrc.me
+				</button>
+				<button
+					onClick={() => updateLinkStart("https://vidsrc.to/embed/")}
+					className="bg-foreground/10 hover:bg-foreground/20 text-foreground font-semibold py-2 px-4 rounded"
+				>
+					vidsrc.to
+				</button>
+			</div>
 		</div>
 	);
 };

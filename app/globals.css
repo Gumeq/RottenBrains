@@ -169,7 +169,6 @@
 
 .heart-icon {
 	transition: transform 0.2s ease-in-out;
-	@apply opacity-50;
 }
 
 .heart-icon.pop {

@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { createClient } from "@/utils/supabase/client";
 
 export function HomePostCard({ post, index }: any) {
 	const media_id = post.mediaid;
@@ -23,6 +24,7 @@ export function HomePostCard({ post, index }: any) {
 
 	const [media, setMedia] = useState<any>(null);
 	const [creator, setCreator] = useState<any>(null);
+	const [userId, setUserId] = useState<string | null>(null);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 
@@ -58,6 +60,25 @@ export function HomePostCard({ post, index }: any) {
 		fetchData();
 	}, [media_type, media_id, post.creatorid]);
 
+	useEffect(() => {
+		const getUser = async () => {
+			const supabase = createClient();
+			try {
+				const {
+					data: { user },
+					error,
+				} = await supabase.auth.getUser();
+				if (error) throw error;
+				setUserId(user ? user.id : null);
+			} catch (error) {
+				console.log("Error fetching user:", error);
+				setUserId(null);
+			}
+		};
+
+		getUser();
+	}, []);
+
 	const variants = {
 		hidden: { opacity: 0 },
 		visible: { opacity: 1 },
@@ -85,18 +106,18 @@ export function HomePostCard({ post, index }: any) {
 								height={35}
 								width={35}
 								baseColor="#212121"
-								highlightColor="#e5e7eb"
+								highlightColor="#323232"
 							/>
 							<div>
 								<Skeleton
 									width={120}
 									baseColor="#212121"
-									highlightColor="#e5e7eb"
+									highlightColor="#323232"
 								/>
 								<Skeleton
 									width={80}
 									baseColor="#212121"
-									highlightColor="#e5e7eb"
+									highlightColor="#323232"
 								/>
 							</div>
 						</div>
@@ -106,7 +127,7 @@ export function HomePostCard({ post, index }: any) {
 									height={480}
 									width={320}
 									baseColor="#212121"
-									highlightColor="#e5e7eb"
+									highlightColor="#323232"
 								/>
 							</div>
 						</div>
@@ -115,7 +136,7 @@ export function HomePostCard({ post, index }: any) {
 						<Skeleton
 							count={3}
 							baseColor="#212121"
-							highlightColor="#e5e7eb"
+							highlightColor="#323232"
 						/>
 					</div>
 					<div className="w-full h-[50px] px-4">
@@ -124,13 +145,13 @@ export function HomePostCard({ post, index }: any) {
 								width={30}
 								height={30}
 								baseColor="#212121"
-								highlightColor="#e5e7eb"
+								highlightColor="#323232"
 							/>
 							<Skeleton
 								width={30}
 								height={30}
 								baseColor="#212121"
-								highlightColor="#e5e7eb"
+								highlightColor="#323232"
 							/>
 						</div>
 					</div>
@@ -138,7 +159,7 @@ export function HomePostCard({ post, index }: any) {
 						<Skeleton
 							width={60}
 							baseColor="#212121"
-							highlightColor="#e5e7eb"
+							highlightColor="#323232"
 						/>
 					</div>
 				</div>
@@ -232,17 +253,25 @@ export function HomePostCard({ post, index }: any) {
 				<div className="w-full h-[50px] px-4">
 					<div className="flex flex-row gap-2 align-center w-full h-full justify-between items-center">
 						<div className="flex flex-row items-center">
-							<LikeButton postId={post.id}></LikeButton>
+							<div className="flex flex-row gap-2">
+								<LikeButton postId={post.id}></LikeButton>
+								<p className="font-bold text-xl text-foreground/50">
+									<PostLikedNumber
+										postId={post.id}
+									></PostLikedNumber>{" "}
+									{/* <span className="font-base text-base">likes</span> */}
+								</p>
+							</div>
+
 							<ViewComments postId={post.id}></ViewComments>
 						</div>
+						{post.creatorid === userId && (
+							<Link href={`/protected/edit-post/${post.id}`}>
+								edit
+							</Link>
+						)}
 						<SaveButton postId={post.id}></SaveButton>
 					</div>
-				</div>
-				<div className="px-4 pb-2">
-					<p className="font-bold text-xl text-foreground/50">
-						<PostLikedNumber postId={post.id}></PostLikedNumber>{" "}
-						<span className="font-base text-base">likes</span>
-					</p>
 				</div>
 			</div>
 		</motion.div>
