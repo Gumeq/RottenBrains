@@ -25,6 +25,9 @@ const PostForm = ({ post, action }: PostFormProps) => {
 		vote_user: 0,
 	});
 
+	// State to manage loading
+	const [loading, setLoading] = useState(false);
+
 	// Use useEffect to update the review_user when media changes
 	useEffect(() => {
 		if (action === "Update" && post) {
@@ -84,6 +87,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
 	// Handle form submission
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		setLoading(true);
 
 		const dbvalues = {
 			...formValues,
@@ -142,6 +146,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
 			}
 		}
 		console.log("done");
+		setLoading(false);
 		router.push("/protected/home");
 	};
 
@@ -206,8 +211,9 @@ const PostForm = ({ post, action }: PostFormProps) => {
 						<button
 							type="submit"
 							className="bg-accent/90 text-foreground font-bold py-3 rounded hover:bg-accent transition duration-300"
+							disabled={loading}
 						>
-							{action}
+							{loading ? "Loading..." : action}
 						</button>
 					</form>
 				</div>
