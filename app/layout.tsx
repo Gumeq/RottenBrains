@@ -4,6 +4,8 @@ const defaultUrl = process.env.VERCEL_URL
 	? `https://${process.env.VERCEL_URL}`
 	: "http://localhost:3000";
 
+import { GoogleAnalytics } from "@next/third-parties/google";
+
 export const metadata = {
 	metadataBase: new URL(defaultUrl),
 	title: "RottenBrains",
@@ -21,6 +23,9 @@ export default function RootLayout({
 				<main className="">{children}</main>
 				<div className="w-full h-[200px] "> </div>
 			</body>
+			<GoogleAnalytics
+				gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || ""}
+			/>
 		</html>
 	);
 }
