@@ -19,6 +19,9 @@ export default async function mediaPage({
 	return (
 		<>
 			<div className=" max-w-7xl w-screen h-full mx-auto flex flex-col gap-4">
+				<div className="w-full h-10  bg-accent flex items-center justify-center font-bold rounded-xl">
+					For the best experience use an adBlocker!
+				</div>
 				<div className="">
 					<div className="aspect-w-16 aspect-h-9 w-full">
 						<VideoEmbed

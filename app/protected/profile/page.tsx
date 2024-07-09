@@ -55,7 +55,9 @@ const ProfilePage = async () => {
 						</div>
 					))}
 			</div> */}
-			<Tabs user={user}></Tabs>
+			<div className="flex items-center w-full">
+				<Tabs user={user}></Tabs>
+			</div>
 		</div>
 	);
 };
