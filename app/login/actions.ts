@@ -10,7 +10,7 @@ export async function oAuthSignIn(provider: Provider) {
 	}
 
 	const supabase = createClient();
-	const redirectUrl = "https://binge-buddy-pink.vercel.app/auth/callback";
+	const redirectUrl = "https://rotten-brains.vercel.app/auth/callback";
 	const { data, error } = await supabase.auth.signInWithOAuth({
 		provider: provider,
 		options: {
