@@ -6,9 +6,8 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
 	metadataBase: new URL(defaultUrl),
-	title: "BingeBuddy",
-	description:
-		"Connect with fellow enthusiasts and dive deep into your favorite media.",
+	title: "RottenBrains",
+	description: "Your Hub for Movie Reviews and Streaming!",
 };
 
 export default function RootLayout({

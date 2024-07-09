@@ -25,7 +25,15 @@ export default async function Index() {
 			</div> */}
 			<nav className="w-full flex justify-center bg-background h-16">
 				<div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
-					<div className="text-xl font-bold">BingeBuddy</div>
+					<div className="text-xl font-bold">
+						<img
+							src="assets/images/logo-text.png"
+							alt=""
+							width={80}
+							height={80}
+							className="invert-on-dark"
+						/>
+					</div>
 					{isSupabaseConnected && <AuthButton />}
 				</div>
 			</nav>
