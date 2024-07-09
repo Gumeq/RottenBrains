@@ -1,9 +1,10 @@
 "use client";
 
 import { getUserFromDB } from "@/utils/supabase/queries";
-
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 type ProfilePictureProps = {
 	userId: string;
@@ -35,18 +36,30 @@ const ProfilePicture = ({ userId }: ProfilePictureProps) => {
 
 	return (
 		<div>
-			{user && (
-				<div>
-					<Link href={`/protected/user/${userId}`}>
-						<img
-							src={user.user.imageURL}
-							alt={""}
-							width={35}
-							height={35}
-							className="rounded-full overflow-hidden"
-						></img>
-					</Link>
-				</div>
+			{loading ? (
+				<Skeleton
+					circle
+					height={35}
+					width={35}
+					baseColor="#d1d5db"
+					highlightColor="#e5e7eb"
+				/>
+			) : error ? (
+				<div>Error loading profile picture</div>
+			) : (
+				user && (
+					<div>
+						<Link href={`/protected/user/${userId}`}>
+							<img
+								src={user.user.imageURL}
+								alt={""}
+								width={35}
+								height={35}
+								className="rounded-full overflow-hidden"
+							></img>
+						</Link>
+					</div>
+				)
 			)}
 		</div>
 	);
