@@ -5,8 +5,6 @@ export const fetchFromApi = async (endpoint: string): Promise<any> => {
 	const url = `${BASE_URL}/${endpoint}&api_key=${API_KEY}`;
 
 	try {
-		console.log("Request URL:", url); // Debugging log
-
 		const response = await fetch(url);
 		if (!response.ok) {
 			throw new Error(`Error: ${response.status} ${response.statusText}`);
