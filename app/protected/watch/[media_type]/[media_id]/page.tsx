@@ -44,15 +44,15 @@ export default async function mediaPage({
 				<div className="w-full h-10  bg-accent flex items-center justify-center font-bold rounded-xl">
 					Warning: For the best experience use an adBlocker!
 				</div>
-				<div className="py-4">
-					<div className="aspect-w-16 aspect-h-9 w-full">
+				<div className="">
+					<div className="">
 						<VideoEmbed
 							media_type={media_type}
 							media_id={media_id}
 						></VideoEmbed>
 					</div>
 				</div>
-				<div className="w-">
+				<div className="">
 					<MediaInfoComponent
 						media_type={media_type}
 						media_id={media_id}

@@ -8,6 +8,8 @@
   "dependencies": {
     "@coreui/icons": "^3.0.1",
     "@coreui/react": "^5.1.0",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "@headlessui/react": "^2.0.4",
     "@heroicons/react": "^2.1.4",
     "@hookform/resolvers": "^3.6.0",
@@ -35,6 +37,7 @@
     "react-loading-skeleton": "^3.4.0",
     "react-rating-stars-component": "^2.2.0",
     "react-slick": "^0.30.2",
+    "react-spinners": "^0.14.1",
     "slick-carousel": "^1.8.1",
     "swiper": "^11.1.4",
     "tailwind-merge": "^2.3.0",

@@ -51,7 +51,7 @@ export default async function mediaPage({
 					Warning: For the best experience use an adBlocker!
 				</div>
 				<div className="">
-					<div className="aspect-w-16 aspect-h-9 w-full">
+					<div className="">
 						<VideoEmbed
 							media_type={media_type}
 							media_id={media_id}
@@ -60,7 +60,7 @@ export default async function mediaPage({
 						></VideoEmbed>
 					</div>
 				</div>
-				<div className="w-">
+				<div className="">
 					<MediaInfoComponent
 						media_type={media_type}
 						media_id={media_id}

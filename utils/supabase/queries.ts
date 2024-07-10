@@ -109,13 +109,17 @@ export const getPostsOfMedia = async (
 	}
 };
 
-export const getUserPosts = async (userId: string): Promise<any | null> => {
+export const getUserPosts = async (
+	userId: string,
+	page: number
+): Promise<any | null> => {
 	try {
 		const { data, error } = await supabase
 			.from("posts")
 			.select("*")
 			.eq("creatorid", userId)
-			.order("created_at", { ascending: false });
+			.order("created_at", { ascending: false })
+			.range(page * 6, page * 6 + 5);
 		if (error) throw error;
 		return data;
 	} catch (error) {

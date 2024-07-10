@@ -26,7 +26,7 @@ const MediaInfoComponent = async ({ media_type, media_id }: MediaInfoProps) => {
 					<TVShowDetails tv_show_id={media_id}></TVShowDetails>
 				)}
 			</div>
-			<div className="w-full h-[450px] flex flex-col md:flex-row gap-2 md:gap-0 rounded-xl items-center">
+			<div className="w-full flex flex-col md:flex-row gap-2 md:gap-0 rounded-xl items-center">
 				<div className="min-w-[300px] min-h-[450px] rounded-xl overflow-hidden drop-shadow-2xl">
 					<img
 						src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}

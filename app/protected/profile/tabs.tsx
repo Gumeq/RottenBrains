@@ -1,27 +1,34 @@
 "use client";
 
+import Loader from "@/components/Loader";
 import HomePostCard from "@/components/post/HomePostCard";
 import { IPost } from "@/types";
 import { getSavedPosts, getUserPosts } from "@/utils/supabase/queries";
 import { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
+
+let likePage = 0;
 
 const Tabs: React.FC<any> = ({ user }) => {
 	const [activeTab, setActiveTab] = useState("posts");
 	const [userPosts, setUserPosts] = useState<any[]>([]);
 	const [savedUserPosts, setSavedUserPosts] = useState<any[]>([]);
-	console.log(user);
+	const [loading, setLoading] = useState<boolean>(false);
+	const [hasMore, setHasMore] = useState<boolean>(true);
+
+	const { ref, inView } = useInView();
 	user = user.user;
 
-	useEffect(() => {
-		const fetchUserPosts = async () => {
-			if (user) {
-				const posts = await getUserPosts(user.id);
-				setUserPosts(posts);
-			}
-		};
+	// useEffect(() => {
+	// 	const fetchUserPosts = async () => {
+	// 		if (user) {
+	// 			const posts = await getUserPosts(user.id, likePage);
+	// 			setUserPosts(posts);
+	// 		}
+	// 	};
 
-		fetchUserPosts();
-	}, [user]);
+	// 	fetchUserPosts();
+	// }, [user]);
 
 	useEffect(() => {
 		const fetchSavedUserPosts = async () => {
@@ -33,6 +40,31 @@ const Tabs: React.FC<any> = ({ user }) => {
 
 		fetchSavedUserPosts();
 	}, [user, activeTab]);
+
+	useEffect(() => {
+		const loadMore = async () => {
+			if (inView && hasMore && !loading) {
+				setLoading(true);
+				try {
+					console.log("loadMore");
+					const res = await getUserPosts(user.id, likePage);
+					console.log(res);
+					if (res.length === 0) {
+						setHasMore(false); // No more posts to load
+					} else {
+						setUserPosts((prevData) => [...prevData, ...res]);
+						likePage++;
+					}
+				} catch (error) {
+					console.error("Error fetching posts:", error);
+				} finally {
+					setLoading(false);
+				}
+			}
+		};
+
+		loadMore();
+	}, [inView, hasMore, loading, user.id]);
 
 	const renderContent = () => {
 		switch (activeTab) {
@@ -48,6 +80,9 @@ const Tabs: React.FC<any> = ({ user }) => {
 								))}
 							</div>
 						)}
+						{loading && <Loader></Loader>}
+						{!loading && hasMore && <div ref={ref}></div>}
+						{!hasMore && <div>No more posts to load.</div>}
 					</div>
 				);
 			case "likes":

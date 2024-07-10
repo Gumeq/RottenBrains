@@ -2,6 +2,7 @@
 
 // components/VideoEmbed.js
 import { getMediaDetails } from "@/utils/tmdb";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 type VideoEmbedProps = {
@@ -64,7 +65,7 @@ const VideoEmbed = ({
 	};
 
 	return (
-		<div>
+		<div className="relative">
 			{!showVideo ? (
 				<div className="relative text-center rounded-xl overflow-hidden">
 					{media_type === "tv" && (
@@ -89,33 +90,98 @@ const VideoEmbed = ({
 					</button>
 				</div>
 			) : (
-				<iframe
-					allowFullScreen
-					id="iframe"
-					loading="lazy"
-					src={link}
-					style={{ display: "block", width: "100%", height: "100%" }}
-				></iframe>
+				<div className="aspect-w-16 aspect-h-9">
+					<iframe
+						allowFullScreen
+						id="iframe"
+						loading="lazy"
+						src={link}
+						// style={{ display: "block", width: "100%", height: "100%" }}
+						className="inline-block w-full h-full"
+					></iframe>
+				</div>
 			)}
-			<div className="flex justify-center gap-4 my-4">
-				<button
-					onClick={() => updateLinkStart("https://vidsrc.pro/embed/")}
-					className="bg-foreground/10 hover:bg-foreground/20 text-foreground font-semibold py-2 px-4 rounded"
-				>
-					vidsrc.pro
-				</button>
-				<button
-					onClick={() => updateLinkStart("https://vidsrc.me/embed/")}
-					className="bg-foreground/10 hover:bg-foreground/20 text-foreground font-semibold py-2 px-4 rounded"
-				>
-					vidsrc.me
-				</button>
-				<button
-					onClick={() => updateLinkStart("https://vidsrc.to/embed/")}
-					className="bg-foreground/10 hover:bg-foreground/20 text-foreground font-semibold py-2 px-4 rounded"
-				>
-					vidsrc.to
-				</button>
+			<div className="flex md:flex-row flex-col justify-between mt-2 items-center">
+				<div>
+					{media_type === "tv" &&
+					episode_number &&
+					episode_number > 1 ? (
+						<Link
+							href={`/protected/watch/${media_type}/${media_id}/${season_number}/${
+								episode_number - 1
+							}`}
+						>
+							<div className="px-4 py-2 bg-foreground/10 rounded flex flex-row gap-2 items-center">
+								<img
+									src="/assets/icons/caret-left-solid.svg"
+									alt=""
+									width={10}
+									height={10}
+									className="invert-on-dark"
+								/>
+								<p>Previous Episode</p>
+							</div>
+						</Link>
+					) : (
+						<div className="px-4 py-2 bg-foreground/10 rounded flex flex-row gap-2 items-center">
+							No Previous Episode
+						</div>
+					)}
+				</div>
+				<div className="flex justify-center gap-4 my-4">
+					<button
+						onClick={() =>
+							updateLinkStart("https://vidsrc.pro/embed/")
+						}
+						className="bg-foreground/10 hover:bg-foreground/20 text-foreground font-semibold py-2 px-4 rounded"
+					>
+						vidsrc.pro
+					</button>
+					<button
+						onClick={() =>
+							updateLinkStart("https://vidsrc.me/embed/")
+						}
+						className="bg-foreground/10 hover:bg-foreground/20 text-foreground font-semibold py-2 px-4 rounded"
+					>
+						vidsrc.me
+					</button>
+					<button
+						onClick={() =>
+							updateLinkStart("https://vidsrc.to/embed/")
+						}
+						className="bg-foreground/10 hover:bg-foreground/20 text-foreground font-semibold py-2 px-4 rounded"
+					>
+						vidsrc.to
+					</button>
+				</div>
+				<div>
+					{media_type === "tv" &&
+					season_number &&
+					episode_number &&
+					media.seasons[season_number].episode_count >
+						episode_number ? (
+						<Link
+							href={`/protected/watch/${media_type}/${media_id}/${season_number}/${
+								Number(episode_number) + 1
+							}`}
+						>
+							<div className="px-4 py-2 bg-foreground/10 rounded flex flex-row gap-2 items-center">
+								<p>Next Episode</p>
+								<img
+									src="/assets/icons/caret-right-solid.svg"
+									alt=""
+									width={10}
+									height={10}
+									className="invert-on-dark"
+								/>
+							</div>
+						</Link>
+					) : (
+						<div className="px-4 py-2 bg-foreground/10 rounded flex flex-row gap-2 items-center">
+							No Next Episode
+						</div>
+					)}
+				</div>
 			</div>
 		</div>
 	);
