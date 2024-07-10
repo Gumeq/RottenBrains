@@ -28,7 +28,6 @@ const NotificationsPage = () => {
 				.from("notifications")
 				.select("*")
 				.eq("user_id", userId)
-				.eq("read", false)
 				.order("created_at", { ascending: false });
 
 			if (error) {
@@ -49,7 +48,8 @@ const NotificationsPage = () => {
 					.from("notifications")
 					.update({ read: true })
 					.eq("user_id", userId)
-					.eq("read", false);
+					.eq("read", false)
+					.limit(25);
 
 				if (error) {
 					console.error(
@@ -63,17 +63,41 @@ const NotificationsPage = () => {
 		}
 	}, [notifications, userId]);
 
+	const unreadNotifications = notifications.filter(
+		(notification) => !notification.read
+	);
+	const readNotifications = notifications.filter(
+		(notification) => notification.read
+	);
+
 	return (
 		<div className="max-w-xl mx-auto w-screen">
-			<ul>
-				{notifications.map((notification) => (
-					<li key={notification.id}>
-						<NotificationCard
-							notification={notification}
-						></NotificationCard>
-					</li>
-				))}
-			</ul>
+			{unreadNotifications.length > 0 && (
+				<div className="mb-4">
+					<h2 className="text-lg font-bold">New</h2>
+					<ul className="flex flex-col gap-2">
+						{unreadNotifications.map((notification) => (
+							<li key={notification.id}>
+								<NotificationCard
+									notification={notification}
+								></NotificationCard>
+							</li>
+						))}
+					</ul>
+				</div>
+			)}
+			<div>
+				<h2 className="text-lg font-bold">Older</h2>
+				<ul className="flex flex-col gap-2">
+					{readNotifications.map((notification) => (
+						<li key={notification.id}>
+							<NotificationCard
+								notification={notification}
+							></NotificationCard>
+						</li>
+					))}
+				</ul>
+			</div>
 		</div>
 	);
 };

@@ -2,6 +2,7 @@
 
 import { getUserFromDB } from "@/utils/supabase/queries";
 import { useEffect, useState } from "react";
+import ProfilePicture from "../ProfilePicture";
 
 type Notification = {
 	id: string;
@@ -31,16 +32,12 @@ const NotificationCard = ({ notification }: { notification: Notification }) => {
 
 	const action = notification.type === "like" ? "liked" : "followed";
 
+	console.log(fromUser);
+
 	return (
 		<div className="rounded-xl bg-foreground/5 p-4 flex flex-row justify-between">
 			<div className="flex flex-row items-center gap-4">
-				<img
-					src={fromUser.user.imageURL}
-					alt=""
-					width={40}
-					height={40}
-					className="rounded-full overflow-hidden"
-				/>
+				<ProfilePicture userId={fromUser.user.id}></ProfilePicture>
 				<p>
 					<span className="font-bold">{fromUser.user.username}</span>{" "}
 					{action === "liked"

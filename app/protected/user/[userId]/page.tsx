@@ -22,7 +22,7 @@ export default async function userProfile({
 	const formattedDate = formatter.format(date);
 	let userPosts;
 	if (user) {
-		userPosts = await getUserPosts(user.user.id);
+		userPosts = await getUserPosts(user.user.id, 0);
 	}
 
 	return (
