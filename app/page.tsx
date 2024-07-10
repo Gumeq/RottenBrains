@@ -26,7 +26,7 @@ export default async function Index() {
 				<div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
 					<div className="text-xl font-bold">
 						<img
-							src="assets/images/logo-text.png"
+							src="/assets/images/logo-text.png"
 							alt=""
 							width={80}
 							height={80}
@@ -36,7 +36,7 @@ export default async function Index() {
 					{isSupabaseConnected && <AuthButton />}
 				</div>
 			</nav>
-			<div className="flex flex-col gap-4 w-screen max-w-7xl h-[50vh] items-center justify-center px-8">
+			<div className="flex flex-col gap-4 w-screen max-w-7xl items-center justify-center px-8 my-16">
 				<img
 					src="/assets/images/logo-text.png"
 					alt="logo-text.png"
@@ -46,7 +46,7 @@ export default async function Index() {
 					Review movies, share with friends, and watch your favorites
 					all in one place.
 				</h1>
-				<div className="flex flex-row gap-4">
+				<div className="flex md:flex-row flex-col gap-4">
 					<Link href={"/protected/home"}>
 						<div className="font-bold px-8 py-4 my-4 bg-accent rounded-lg text-xl">
 							Get Started

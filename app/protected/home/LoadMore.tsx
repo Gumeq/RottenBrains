@@ -6,7 +6,7 @@ import { getPostsFromFollowedUsers } from "@/utils/supabase/serverQueries";
 import React, { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
-let page = 1;
+let page = 0;
 
 const LoadMore = ({ user }: any) => {
 	const [data, setData] = useState<any[]>([]);
@@ -47,12 +47,12 @@ const LoadMore = ({ user }: any) => {
 			<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center gap-4 px-2">
 				{data.map((post: IPost, index: number) => (
 					<div className="" key={post.id}>
-						<HomePostCard post={post} index={index} />
+						<HomePostCard post={post} />
 					</div>
 				))}
 			</div>
 			{loading && <Loader></Loader>}
-			{!loading && hasMore && <div ref={ref}>Load More</div>}
+			{!loading && hasMore && <div ref={ref}></div>}
 			{!hasMore && <div>No more posts to load.</div>}
 		</div>
 	);

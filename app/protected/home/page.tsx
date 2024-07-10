@@ -24,7 +24,7 @@ const PostsPage = async () => {
 	return (
 		<div className="max-w-6xl w-full mx-auto px-2">
 			<h1 className="text-2xl font-bold my-4"></h1>
-			{posts && posts.length > 0 ? (
+			{/* {posts && posts.length > 0 ? (
 				<div>
 					<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center gap-4 px-2">
 						{posts.map((post: IPost, index: number) => (
@@ -43,7 +43,8 @@ const PostsPage = async () => {
 						Home Page
 					</p>
 				</div>
-			)}
+			)} */}
+			<LoadMore user={user}></LoadMore>
 		</div>
 	);
 };

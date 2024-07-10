@@ -15,25 +15,37 @@ export async function TopNavbarDesktop() {
 	const user = await getCurrentUser();
 
 	return (
-		<div className="fixed top-0 bg-background w-screen items-center justify-center z-30 hidden xl:flex">
+		<nav className="fixed top-0 bg-background w-screen items-center justify-center z-30 hidden xl:flex p-2">
 			<div className="flex flex-col">
-				<div className="flex flex-row gap-10 items-center justify-center">
-					<div className="flex items-center">
-						<Link href={"/protected/profile"}>
-							<img
-								src={user?.user.imageURL}
-								alt={""}
-								width={35}
-								height={35}
-								className="rounded-full overflow-hidden max-w-[35px] max-h-[35px]"
-							></img>
-						</Link>
-					</div>
+				<div className="flex flex-row gap-10 items-center justify-between w-screen max-w-4xl">
+					<img
+						src="/assets/images/logo-text.png"
+						alt="text-logo"
+						width={80}
+						height={80}
+						className="invert-on-dark"
+					/>
 					<div className=" px-0 py-4 flex flex-row gap-2 w-[400px]">
 						<div className=" h-full md:w-full">
 							<SearchBar link={true} user={true}></SearchBar>
 						</div>
 					</div>
+					<div className="flex flex-row gap-8">
+						<NotificationButton></NotificationButton>
+						<div className="flex items-center">
+							<Link href={"/protected/profile"}>
+								<img
+									src={user?.user.imageURL}
+									alt={""}
+									width={35}
+									height={35}
+									className="rounded-full overflow-hidden max-w-[35px] max-h-[35px]"
+								></img>
+							</Link>
+						</div>
+					</div>
+				</div>
+				<div className="flex items-center justify-center">
 					<ul className="flex flex-row p-2 justify-between gap-2">
 						{sidebarLinks.map((link: INavLink) => {
 							return (
@@ -52,11 +64,11 @@ export async function TopNavbarDesktop() {
 								</Link>
 							);
 						})}
+						<div className="flex flex-row items-center gap-4"></div>
 					</ul>
-					<NotificationButton></NotificationButton>
 				</div>
 			</div>
-		</div>
+		</nav>
 	);
 }
 

@@ -9,8 +9,15 @@ import NotificationButton from "../notifications/RealtimeNotifications";
 
 const MobileTopNav = async () => {
 	return (
-		<div className="w-screen bg-background fixed top-0 z-30 flex md:hidden items-center justify-center px-8">
+		<div className="w-screen bg-background fixed top-0 z-30 flex md:hidden items-center justify-center p-2">
 			<div className="flex flex-row items-center justify-between w-full py-2">
+				<img
+					src="/assets/images/logo-text.png"
+					alt="text-logo"
+					width={80}
+					height={80}
+					className="invert-on-dark"
+				/>
 				<div className="  flex flex-row ">
 					<div className=" h-full w-full">
 						<SearchBar link={true}></SearchBar>

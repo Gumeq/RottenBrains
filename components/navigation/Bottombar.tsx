@@ -11,32 +11,36 @@ const Bottombar = async () => {
 
 	return (
 		<div className="fixed bottom-0 z-50 ">
-			<ul className="bottom-bar flex flex-row gap-6">
+			<ul className="bottom-bar flex flex-row gap-2">
 				{sidebarLinks.map((link: INavLink) => {
 					return (
-						<Link
-							href={link.route}
-							className="flex gap-4 items-center p-4"
-						>
-							<img
-								src={link.imgURL}
-								alt={""}
-								width={20}
-								height={20}
-								className="invert-on-dark"
-							/>
+						<Link href={link.route} className="p-2">
+							<div className="flex flex-col gap-1 items-center">
+								<img
+									src={link.imgURL}
+									alt={""}
+									width={20}
+									height={20}
+									className="invert-on-dark"
+								/>
+								<p>{link.label}</p>
+							</div>
 						</Link>
 					);
 				})}
 				<li>
-					<Link href={"/protected/profile"}>
+					<Link
+						href={"/protected/profile"}
+						className="flex flex-col gap-1 items-center"
+					>
 						<img
 							src={user?.user.imageURL}
 							alt={""}
-							width={25}
-							height={25}
-							className="rounded-full overflow-hidden"
+							width={30}
+							height={30}
+							className="rounded-full overflow-hidden min-w-[30px] min-h-[30px]"
 						></img>
+						<p>Profile</p>
 					</Link>
 				</li>
 			</ul>
