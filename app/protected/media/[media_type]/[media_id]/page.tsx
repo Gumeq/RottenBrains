@@ -58,8 +58,6 @@ export default async function mediaPage({
 		return <h1>No Media Found</h1>;
 	}
 
-	console.log(media.next_episode_to_air.air_date);
-
 	const postsOfMedia = await getPostsOfMedia(media_id, media_type);
 	const mediaVideos = await getVideos(media_type, media_id);
 	const mediaRecommendations = await getRecommendations(media_type, media_id);
