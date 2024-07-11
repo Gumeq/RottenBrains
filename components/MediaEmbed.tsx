@@ -158,7 +158,7 @@ const VideoEmbed = ({
 					{media_type === "tv" &&
 					season_number &&
 					episode_number &&
-					media.seasons[season_number].episode_count >
+					media.seasons[season_number - 1].episode_count >
 						episode_number ? (
 						<Link
 							href={`/protected/watch/${media_type}/${media_id}/${season_number}/${
