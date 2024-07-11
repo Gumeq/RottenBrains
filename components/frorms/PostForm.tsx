@@ -7,6 +7,7 @@ import { createClient } from "@/utils/supabase/client";
 import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
 import SearchBar from "../searchBar/SearchBar";
+import { getMediaDetails } from "@/utils/tmdb";
 
 type PostFormProps = {
 	post?: IPost;
@@ -27,6 +28,19 @@ const PostForm = ({ post, action }: PostFormProps) => {
 
 	// State to manage loading
 	const [loading, setLoading] = useState(false);
+
+	useEffect(() => {
+		const fetchMediaDetails = async () => {
+			if (action === "Update" && post) {
+				const mediaDetails = await getMediaDetails(
+					post.media_type,
+					post.mediaid
+				);
+				setMedia(mediaDetails);
+			}
+		};
+		fetchMediaDetails();
+	}, [action, post]);
 
 	// Use useEffect to update the review_user when media changes
 	useEffect(() => {
@@ -95,7 +109,6 @@ const PostForm = ({ post, action }: PostFormProps) => {
 			creatorId: user?.id,
 			media_type: media?.media_type,
 		};
-		console.log("Form submitted:", dbvalues);
 
 		const supabase = createClient();
 
@@ -145,9 +158,33 @@ const PostForm = ({ post, action }: PostFormProps) => {
 				console.error("Error inserting data:", error);
 			}
 		}
-		console.log("done");
 		setLoading(false);
 		router.push("/protected/home");
+	};
+
+	// Handle post deletion
+	const handleDelete = async () => {
+		if (!post) return;
+
+		setLoading(true);
+		const supabase = createClient();
+
+		try {
+			const { data, error } = await supabase
+				.from("posts")
+				.delete()
+				.eq("id", post.id);
+
+			if (error) {
+				throw error;
+			}
+
+			router.push("/protected/home");
+		} catch (error) {
+			console.error("Error deleting post:", error);
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	return (
@@ -215,6 +252,18 @@ const PostForm = ({ post, action }: PostFormProps) => {
 						>
 							{loading ? "Loading..." : action}
 						</button>
+
+						{/* Delete Button */}
+						{action === "Update" && (
+							<button
+								type="button"
+								onClick={handleDelete}
+								className="border-2 border-red-500 text-foreground font-bold py-3 rounded hover:bg-red-500 transition duration-300 mt-2"
+								disabled={loading}
+							>
+								Delete
+							</button>
+						)}
 					</form>
 				</div>
 			</div>
