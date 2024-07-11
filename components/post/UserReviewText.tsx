@@ -38,7 +38,6 @@ const UserReviewText = ({
 					"pr-10": showMoreIndicator && !expanded, // Conditional padding
 				})}
 			>
-				<strong>{creator_name} </strong>
 				{post_review}
 				{showMoreIndicator && !expanded && (
 					<button
