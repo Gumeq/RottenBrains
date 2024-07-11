@@ -4,6 +4,7 @@ import YouTubeEmbed from "@/components/YoutubeEmbed";
 import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
 import { getPostsOfMedia } from "@/utils/supabase/queries";
 import {
+	getMediaDetails,
 	getRecommendations,
 	getReviews,
 	getSimilar,
@@ -47,7 +48,7 @@ export default async function mediaPage({
 	const media_type = params.media_type;
 	let mediaData;
 	try {
-		mediaData = await fetchMediaData(media_type, media_id);
+		mediaData = await getMediaDetails(media_type, media_id);
 	} catch (error) {
 		console.error("Error fetching media data:", error);
 		mediaData = null;
@@ -56,6 +57,8 @@ export default async function mediaPage({
 	if (!media) {
 		return <h1>No Media Found</h1>;
 	}
+
+	console.log(media.next_episode_to_air.air_date);
 
 	const postsOfMedia = await getPostsOfMedia(media_id, media_type);
 	const mediaVideos = await getVideos(media_type, media_id);
