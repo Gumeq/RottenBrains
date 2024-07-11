@@ -15,6 +15,11 @@ export function OAuthButton() {
 			displayName: "Google",
 			icon: "/assets/icons/google.svg",
 		},
+		{
+			name: "discord",
+			displayName: "Discord",
+			icon: "/assets/icons/discord.svg",
+		},
 	];
 
 	return (
