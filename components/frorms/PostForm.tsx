@@ -10,7 +10,7 @@ import SearchBar from "../searchBar/SearchBar";
 import { getMediaDetails } from "@/utils/tmdb";
 
 type PostFormProps = {
-	post?: IPost;
+	post?: any;
 	action: "Create" | "Update";
 };
 
