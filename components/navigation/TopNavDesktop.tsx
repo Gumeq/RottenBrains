@@ -33,22 +33,6 @@ export async function TopNavbarDesktop() {
 							<SearchBar link={true} user={true}></SearchBar>
 						</div>
 					</div>
-					<div className="flex flex-row gap-8">
-						<NotificationButton></NotificationButton>
-						<div className="flex items-center">
-							<Link href={"/protected/profile"}>
-								<img
-									src={user?.user.imageURL}
-									alt={""}
-									width={35}
-									height={35}
-									className="rounded-full overflow-hidden max-w-[35px] max-h-[35px]"
-								></img>
-							</Link>
-						</div>
-					</div>
-				</div>
-				<div className="flex items-center justify-center">
 					<ul className="flex flex-row p-2 justify-between gap-2">
 						{sidebarLinks.map((link: INavLink) => {
 							return (
@@ -63,12 +47,26 @@ export async function TopNavbarDesktop() {
 										height={20}
 										className="invert"
 									/>
-									{link.label}
+									{/* {link.label} */}
 								</Link>
 							);
 						})}
-						<div className="flex flex-row items-center gap-4"></div>
+						{/* <div className="flex flex-row items-center gap-4"></div> */}
 					</ul>
+					<div className="flex flex-row gap-8">
+						<NotificationButton></NotificationButton>
+						<div className="flex items-center">
+							<Link href={"/protected/profile"}>
+								<img
+									src={user?.user.imageURL}
+									alt={""}
+									width={35}
+									height={35}
+									className="rounded-full overflow-hidden max-w-[35px] max-h-[35px]"
+								></img>
+							</Link>
+						</div>
+					</div>
 				</div>
 			</div>
 		</nav>
