@@ -4,6 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { SubmitButton } from "../login/submit-button";
 import { addUserToDB } from "@/utils/supabase/queries";
+import { OAuthButton } from "@/components/auth/OAuthSignIn";
 
 export default function Register({
 	searchParams,
@@ -137,6 +138,7 @@ export default function Register({
 				>
 					Sign Up
 				</SubmitButton>
+				<OAuthButton></OAuthButton>
 				{searchParams?.message && (
 					<p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
 						{searchParams.message}
