@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import classNames from "classnames";
 
 type UserReviewProps = {
 	post_review: string;
@@ -16,47 +17,46 @@ const UserReviewText = ({
 	const textRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		// Calculate number of lines dynamically
+		// Calculate if the text overflows
 		if (textRef.current) {
-			const lineHeight = parseInt(
-				getComputedStyle(textRef.current).lineHeight || "0",
-				10
-			);
-			const maxHeight = lineHeight * 1; // Adjust this based on the number of lines you want to show initially
-			const isOverflowing = textRef.current.scrollHeight > maxHeight;
+			const isOverflowing =
+				textRef.current.scrollWidth > textRef.current.clientWidth;
 			setShowMoreIndicator(isOverflowing);
 		}
-	}, []);
+	}, [post_review, expanded]);
 
 	const toggleExpanded = () => {
 		setExpanded(!expanded);
 	};
 
-	const initialText = <p>{post_review}</p>;
-
 	return (
-		<div className="overflow-hidden w-full">
-			<div ref={textRef} className={`${expanded ? "" : "line-clamp-1"}`}>
-				{initialText}
-			</div>
-			<span>
+		<div className="w-full relative">
+			<div
+				ref={textRef}
+				className={classNames("overflow-hidden", {
+					"whitespace-nowrap text-ellipsis": !expanded,
+					"pr-10": showMoreIndicator && !expanded, // Conditional padding
+				})}
+			>
+				<strong>{creator_name} </strong>
+				{post_review}
 				{showMoreIndicator && !expanded && (
 					<button
-						className="text-foreground/50 hover:underline focus:outline-none"
+						className="absolute right-0  text-foreground/60 hover:underline focus:outline-none ml-1"
 						onClick={toggleExpanded}
 					>
-						Show more
+						more
 					</button>
 				)}
 				{expanded && (
 					<button
-						className="text-foreground/50 hover:underline focus:outline-none"
+						className=" hover:underline focus:outline-none ml-1 text-foreground/60"
 						onClick={toggleExpanded}
 					>
 						Show less
 					</button>
 				)}
-			</span>
+			</div>
 		</div>
 	);
 };
