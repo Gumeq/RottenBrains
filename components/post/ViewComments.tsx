@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import AddComment from "./AddComment";
 import { getPostComments } from "@/utils/supabase/queries";
-import { divide } from "lodash";
 import CommentCard from "./CommentCard";
 
 interface ViewCommentsProps {
@@ -13,7 +12,6 @@ interface ViewCommentsProps {
 const ViewComments: React.FC<ViewCommentsProps> = ({ postId }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [comments, setComments] = useState<any[]>([]);
-
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
@@ -54,21 +52,29 @@ const ViewComments: React.FC<ViewCommentsProps> = ({ postId }) => {
 							Close
 						</button>
 						<div className="flex flex-col overflow-y-auto h-3/4">
-							{!loading && (
+							{loading ? (
+								<div className="flex justify-center items-center h-full">
+									<span>Loading...</span>
+								</div>
+							) : comments.length === 0 ? (
+								<div className="flex justify-center items-center h-full">
+									<span>No comments yet</span>
+								</div>
+							) : (
 								<div className="w-full">
-									{comments &&
-										comments.map((comment) => (
-											<div className="w-full">
-												<CommentCard
-													comment={comment}
-												></CommentCard>
-											</div>
-										))}
+									{comments.map((comment) => (
+										<div
+											key={comment.id}
+											className="w-full"
+										>
+											<CommentCard comment={comment} />
+										</div>
+									))}
 								</div>
 							)}
 						</div>
 						<div className="absolute w-11/12 bottom-6 ">
-							<AddComment postId={postId}></AddComment>
+							<AddComment postId={postId} />
 						</div>
 					</div>
 				</div>

@@ -66,8 +66,19 @@ export default async function mediaPage({
 
 	return (
 		<div className="flex flex-col mx-auto max-w-7xl w-[1500px]">
-			<div className="flex flex-col md:flex-row gap-8  p-4 md:p-8 rounded-[20px] ">
+			<div className="flex flex-col md:flex-row p-4 md:p-8 rounded-[20px] ">
 				<div className="w-[300px] h-[450px] bg-foreground/10 rounded-[12px] overflow-hidden mx-auto">
+					<div className="absolute p-2 text-lg m-2 font-bold bg-background/50 flex flex-row gap-2 items-center justify-center rounded-[6px]">
+						<img
+							src="/assets/icons/star-solid.svg"
+							alt=""
+							width={20}
+							height={20}
+							className="invert-on-dark"
+							loading="lazy"
+						/>
+						<p>{media.vote_average.toFixed(1)}</p>
+					</div>
 					<img
 						src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
 						alt=""
@@ -150,16 +161,18 @@ export default async function mediaPage({
 				)}
 			</div>
 			<div className="">
-				<h2 className="text-xl font-bold pt-4">Videos</h2>
-				<div className="flex flex-col md:flex-row gap-4 py-4 items-center justify-center">
-					{mediaVideos &&
-						mediaVideos.results
-							.slice(0, 3)
-							.map((video: any) => (
-								<YouTubeEmbed
-									videoId={video.key}
-								></YouTubeEmbed>
-							))}
+				<div className="bg-accent/5 p-4 rounded-xl">
+					<h2 className="text-xl font-bold">Videos</h2>
+					<div className="flex flex-col md:flex-row gap-4 py-4 items-center justify-center">
+						{mediaVideos &&
+							mediaVideos.results
+								.slice(0, 3)
+								.map((video: any) => (
+									<YouTubeEmbed
+										videoId={video.key}
+									></YouTubeEmbed>
+								))}
+					</div>
 				</div>
 				<div className=" py-4  ">
 					{postsOfMedia && (
@@ -211,7 +224,7 @@ export default async function mediaPage({
 								))}
 					</div>
 				</div>
-				<div className="max-w-7xl w-screen">
+				<div className="max-w-7xl w-screen border-2 border-dotted border-accent p-4 my-4 rounded-xl">
 					<div className="flex  flex-col gap-2 invisible-scroll custom-scrollbar">
 						{mediaReviews && (
 							<div>
