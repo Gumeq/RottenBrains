@@ -83,7 +83,8 @@ const ExploreCard = (media: any) => {
 							<div className="bg-foreground/5 px-2 py-1 rounded-lg font-bold text-sm">
 								{media.release_date
 									? media.release_date.slice(0, 4)
-									: media.first_air_date.slice(0, 4)}
+									: media.first_air_date &&
+									  media.first_air_date.slice(0, 4)}
 							</div>
 						</div>
 						<div className="px-1 flex flex-row gap-2 justify-between w-[100%] h-auto items-center">

@@ -66,41 +66,53 @@ const VideoEmbed = ({
 
 	return (
 		<div className="relative">
-			{!showVideo ? (
-				<div className="relative text-center rounded-xl overflow-hidden">
-					{media_type === "tv" && (
-						<h3 className="text-lg absolute p-4">
-							{formatEpisodeCode(
-								season_number || 0,
-								episode_number || 0
-							)}{" "}
-						</h3>
-					)}
+			<div className="my-2">
+				<h2 className="text-xl font-bold flex flex-row gap-2">
+					{media.title || media.name}
+					{season_number !== undefined &&
+						episode_number !== undefined && (
+							<h2>
+								{" - "}
+								{formatEpisodeCode(
+									season_number,
+									episode_number
+								)}
+							</h2>
+						)}
+				</h2>
+			</div>
+			<div>
+				{!showVideo ? (
+					<div className="relative text-center rounded-xl overflow-hidden">
+						<img
+							src={`https://image.tmdb.org/t/p/original${media.backdrop_path}`}
+							alt="Media Poster"
+							className="w-full h-auto"
+						/>
+						<button
+							onClick={handleButtonClick}
+							className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-accent text-white text-lg font-semibold py-2 px-4 rounded hover:bg-accent/80 transition-colors duration-300"
+						>
+							Play Video
+						</button>
+					</div>
+				) : (
+					<div className="aspect-w-16 aspect-h-9">
+						<iframe
+							allowFullScreen
+							id="iframe"
+							loading="lazy"
+							src={link}
+							className="inline-block w-full h-full"
+							frameBorder="0"
+							marginHeight={0}
+							marginWidth={0}
+							scrolling="no"
+						></iframe>
+					</div>
+				)}
+			</div>
 
-					<img
-						src={`https://image.tmdb.org/t/p/original${media.backdrop_path}`}
-						alt="Media Poster"
-						className="w-full h-auto"
-					/>
-					<button
-						onClick={handleButtonClick}
-						className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-accent text-white text-lg font-semibold py-2 px-4 rounded hover:bg-accent/80 transition-colors duration-300"
-					>
-						Play Video
-					</button>
-				</div>
-			) : (
-				<div className="aspect-w-16 aspect-h-9">
-					<iframe
-						allowFullScreen
-						id="iframe"
-						loading="lazy"
-						src={link}
-						// style={{ display: "block", width: "100%", height: "100%" }}
-						className="inline-block w-full h-full"
-					></iframe>
-				</div>
-			)}
 			<div className="flex md:flex-row flex-col justify-between mt-2 items-center">
 				<div>
 					{media_type === "tv" &&

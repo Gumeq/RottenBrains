@@ -45,6 +45,15 @@ export const getTVDetails = async (tvId: number) => {
 export const getSeasonDetails = async (tvId: number, season_number: number) => {
 	return fetchFromApi(`tv/${tvId}/season/${season_number}?language=en-US`);
 };
+export const getEpisodeDetails = async (
+	tvId: number,
+	season_number: number,
+	episode_number: number
+) => {
+	return fetchFromApi(
+		`tv/${tvId}/season/${season_number}/episode/${episode_number}?language=en-US`
+	);
+};
 
 export const getMediaDetails = async (media_type: string, media_id: number) => {
 	if (media_type === "movie") {

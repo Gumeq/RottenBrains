@@ -3,6 +3,7 @@
 import { getSeasonDetails, getTVDetails } from "@/utils/tmdb";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import EpisodeCard from "./EpisodeCard";
 
 type Season = {
 	season_number: number;
@@ -52,13 +53,6 @@ const TVShowDetails = ({ tv_show_id }: TVShowDetailsProps) => {
 			console.error("Error fetching season details:", error);
 		}
 	};
-
-	const formatEpisodeCode = (seasonNumber: number, episodeNumber: number) => {
-		return `S${String(seasonNumber).padStart(2, "0")}E${String(
-			episodeNumber
-		).padStart(2, "0")}`;
-	};
-
 	return (
 		<div className="p-4">
 			<h1 className="text-2xl font-bold mb-4">Seasons</h1>
@@ -92,15 +86,11 @@ const TVShowDetails = ({ tv_show_id }: TVShowDetailsProps) => {
 								key={episode.episode_number}
 								href={`/protected/watch/tv/${tv_show_id}/${selectedSeason}/${episode.episode_number}`}
 							>
-								<div className="border p-4 rounded mb-2 hover:border-accent">
-									<h3 className="text-lg">
-										{formatEpisodeCode(
-											selectedSeason,
-											episode.episode_number
-										)}{" "}
-										- {episode.name}
-									</h3>
-								</div>
+								<EpisodeCard
+									media_id={tv_show_id}
+									season_number={selectedSeason}
+									episode_number={episode.episode_number}
+								></EpisodeCard>
 							</Link>
 						))}
 					</div>
