@@ -19,17 +19,6 @@ const Tabs: React.FC<any> = ({ user }) => {
 	const { ref, inView } = useInView();
 	user = user.user;
 
-	// useEffect(() => {
-	// 	const fetchUserPosts = async () => {
-	// 		if (user) {
-	// 			const posts = await getUserPosts(user.id, likePage);
-	// 			setUserPosts(posts);
-	// 		}
-	// 	};
-
-	// 	fetchUserPosts();
-	// }, [user]);
-
 	useEffect(() => {
 		const fetchSavedUserPosts = async () => {
 			if (user) {

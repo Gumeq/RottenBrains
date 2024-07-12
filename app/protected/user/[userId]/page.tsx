@@ -2,6 +2,7 @@ import FollowButton from "@/components/post/FollowButton";
 import HomePostCard from "@/components/post/HomePostCard";
 import { getUserFromDB, getUserPosts } from "@/utils/supabase/queries";
 import React from "react";
+import Tabs from "./tabs";
 
 export default async function userProfile({
 	params,
@@ -55,13 +56,8 @@ export default async function userProfile({
 					</div>
 				</div>
 			)}
-			<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center gap-4">
-				{userPosts &&
-					userPosts.map((post: any) => (
-						<div>
-							<HomePostCard post={post}></HomePostCard>
-						</div>
-					))}
+			<div className="flex items-center w-full">
+				<Tabs user={user}></Tabs>
 			</div>
 		</div>
 	);
