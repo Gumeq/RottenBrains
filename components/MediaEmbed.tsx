@@ -23,6 +23,8 @@ const VideoEmbed = ({
 	);
 	const [media, setMedia] = useState<any>();
 	const [showVideo, setShowVideo] = useState(false);
+	const [nextClicked, setNextClicked] = useState(false);
+	const [prevClicked, setPrevClicked] = useState(false);
 
 	const updateLinkStart = (newLinkStart: string) => {
 		setLinkStart(newLinkStart);
@@ -40,6 +42,12 @@ const VideoEmbed = ({
 		const fetchMediaDetails = async () => {
 			try {
 				const mediaData = await getMediaDetails(media_type, media_id);
+				if (mediaData && mediaData.seasons) {
+					mediaData.seasons = mediaData.seasons.filter(
+						(season: { season_number: number }) =>
+							season.season_number !== 0
+					);
+				}
 				setMedia(mediaData);
 			} catch (error) {
 				console.error("Error fetching media data:", error);
@@ -62,6 +70,60 @@ const VideoEmbed = ({
 		return `S${String(seasonNumber).padStart(2, "0")}E${String(
 			episodeNumber
 		).padStart(2, "0")}`;
+	};
+
+	const getNextEpisodeLink = () => {
+		if (
+			media_type === "tv" &&
+			season_number !== undefined &&
+			episode_number !== undefined
+		) {
+			const seasonIndex = season_number - 1;
+			const currentSeason = media.seasons[seasonIndex];
+
+			if (currentSeason && episode_number < currentSeason.episode_count) {
+				// Next episode in the same season
+				return `/protected/watch/${media_type}/${media_id}/${season_number}/${
+					Number(episode_number) + 1
+				}`;
+			} else if (seasonIndex + 1 < media.seasons.length) {
+				// First episode of the next season
+				const nextSeason = media.seasons[seasonIndex + 1];
+				return `/protected/watch/${media_type}/${media_id}/${nextSeason.season_number}/1`;
+			}
+		}
+		return null;
+	};
+
+	const getPreviousEpisodeLink = () => {
+		if (
+			media_type === "tv" &&
+			season_number !== undefined &&
+			episode_number !== undefined
+		) {
+			const seasonIndex = season_number - 1;
+			if (episode_number > 1) {
+				// Previous episode in the same season
+				return `/protected/watch/${media_type}/${media_id}/${season_number}/${
+					Number(episode_number) - 1
+				}`;
+			} else if (seasonIndex > 0) {
+				// Last episode of the previous season
+				const prevSeason = media.seasons[seasonIndex - 1];
+				return `/protected/watch/${media_type}/${media_id}/${prevSeason.season_number}/${prevSeason.episode_count}`;
+			}
+		}
+		return null;
+	};
+
+	const handleNextClick = () => {
+		setNextClicked(true);
+		setPrevClicked(false);
+	};
+
+	const handlePrevClick = () => {
+		setPrevClicked(true);
+		setNextClicked(false);
 	};
 
 	return (
@@ -115,15 +177,14 @@ const VideoEmbed = ({
 
 			<div className="flex md:flex-row flex-col justify-between mt-2 items-center">
 				<div>
-					{media_type === "tv" &&
-					episode_number &&
-					episode_number > 1 ? (
-						<Link
-							href={`/protected/watch/${media_type}/${media_id}/${season_number}/${
-								episode_number - 1
-							}`}
-						>
-							<div className="px-4 py-2 bg-foreground/10 rounded flex flex-row gap-2 items-center">
+					{media_type === "tv" && getPreviousEpisodeLink() ? (
+						<Link href={getPreviousEpisodeLink() || "#"}>
+							<div
+								className={`px-4 py-2 bg-foreground/10 rounded flex flex-row gap-2 items-center ${
+									prevClicked ? "border-2 border-accent" : ""
+								}`}
+								onClick={handlePrevClick}
+							>
 								<img
 									src="/assets/icons/caret-left-solid.svg"
 									alt=""
@@ -167,17 +228,14 @@ const VideoEmbed = ({
 					</button>
 				</div>
 				<div>
-					{media_type === "tv" &&
-					season_number &&
-					episode_number &&
-					media.seasons[season_number - 1].episode_count >
-						episode_number ? (
-						<Link
-							href={`/protected/watch/${media_type}/${media_id}/${season_number}/${
-								Number(episode_number) + 1
-							}`}
-						>
-							<div className="px-4 py-2 bg-foreground/10 rounded flex flex-row gap-2 items-center">
+					{media_type === "tv" && getNextEpisodeLink() ? (
+						<Link href={getNextEpisodeLink() || "#"}>
+							<div
+								className={`px-4 py-2 bg-foreground/10 rounded flex flex-row gap-2 items-center ${
+									nextClicked ? "border-2 border-accent" : ""
+								}`}
+								onClick={handleNextClick}
+							>
 								<p>Next Episode</p>
 								<img
 									src="/assets/icons/caret-right-solid.svg"

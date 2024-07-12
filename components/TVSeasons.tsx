@@ -32,7 +32,11 @@ const TVShowDetails = ({ tv_show_id }: TVShowDetailsProps) => {
 		const fetchTVShowDetails = async () => {
 			try {
 				const tvShowData = await getTVDetails(tv_show_id);
-				setSeasons(tvShowData.seasons);
+				// Filter out special seasons
+				const filteredSeasons = tvShowData.seasons.filter(
+					(season: Season) => season.season_number !== 0
+				);
+				setSeasons(filteredSeasons);
 			} catch (error) {
 				console.error("Error fetching TV show details:", error);
 			}
@@ -41,10 +45,7 @@ const TVShowDetails = ({ tv_show_id }: TVShowDetailsProps) => {
 		fetchTVShowDetails();
 	}, [tv_show_id]);
 
-	const handleSeasonChange = async (
-		event: React.ChangeEvent<HTMLSelectElement>
-	) => {
-		const seasonNumber = Number(event.target.value);
+	const handleSeasonChange = async (seasonNumber: number) => {
 		try {
 			const seasonData = await getSeasonDetails(tv_show_id, seasonNumber);
 			setEpisodes(seasonData.episodes);
@@ -53,27 +54,24 @@ const TVShowDetails = ({ tv_show_id }: TVShowDetailsProps) => {
 			console.error("Error fetching season details:", error);
 		}
 	};
+
 	return (
 		<div className="p-4">
 			<h1 className="text-2xl font-bold mb-4">Seasons</h1>
-			<div className="mb-4">
-				<select
-					onChange={handleSeasonChange}
-					className="p-2 border rounded w-full md:w-1/2 lg:w-1/3 bg-background text-foreground"
-					defaultValue=""
-				>
-					<option value="" disabled>
-						Select a Season
-					</option>
-					{seasons.map((season) => (
-						<option
-							key={season.season_number}
-							value={season.season_number}
-						>
-							{season.name} ({season.episode_count} episodes)
-						</option>
-					))}
-				</select>
+			<div className="py-4 flex flex-wrap gap-2 custom-scrollbar">
+				{seasons.map((season) => (
+					<button
+						key={season.season_number}
+						onClick={() => handleSeasonChange(season.season_number)}
+						className={`p-2 px-4 rounded-full bg-foreground/10 text-foreground whitespace-nowrap ${
+							selectedSeason === season.season_number
+								? "border-2 border-accent"
+								: ""
+						}`}
+					>
+						{season.name}
+					</button>
+				))}
 			</div>
 			{selectedSeason !== null && (
 				<div className="mt-8">

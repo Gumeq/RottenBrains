@@ -11,7 +11,9 @@ const SearchCard = (media: any) => {
 				height={100} // Height in pixels
 			/>
 			<div className="flex flex-col pl-4">
-				<p className="text-foreground">{media.title || media.name}</p>
+				<p className="text-foreground text-lg font-bold">
+					{media.title || media.name}
+				</p>
 				<p className="text-foreground/70">
 					{media.release_date?.slice(0, 4) ||
 						media.first_air_date?.slice(0, 4)}
