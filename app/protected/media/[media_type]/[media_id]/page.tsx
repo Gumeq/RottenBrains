@@ -174,7 +174,7 @@ export default async function mediaPage({
 								))}
 					</div>
 				</div>
-				<div className=" py-4  ">
+				<div className="">
 					{postsOfMedia && (
 						<div>
 							{postsOfMedia.length > 0 && (
