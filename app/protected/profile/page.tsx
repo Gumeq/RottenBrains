@@ -33,7 +33,7 @@ const ProfilePage = async () => {
 								height={150}
 								className="rounded-full"
 							></img> */}
-							<ProfilePicture user={user}></ProfilePicture>
+							<ProfilePicture></ProfilePicture>
 						</div>
 						<div className="flex flex-col items-center justify-center">
 							<p className="text-4xl font-bold">
