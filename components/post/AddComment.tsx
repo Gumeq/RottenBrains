@@ -1,4 +1,5 @@
 "use client";
+import { useUser } from "@/context/UserContext";
 import fetchUserData from "@/utils/clientFunctions/fetchUserData";
 import { addNotification } from "@/utils/clientFunctions/notificationsData";
 import { createClient } from "@/utils/supabase/client";
@@ -12,7 +13,7 @@ const AddComment: React.FC<CommentProps> = ({ postId }) => {
 	const [content, setContent] = useState("");
 
 	const supabase = createClient();
-	const user = fetchUserData();
+	const { user } = useUser();
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();

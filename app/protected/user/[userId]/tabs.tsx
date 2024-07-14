@@ -7,28 +7,16 @@ import { getSavedPosts, getUserPosts } from "@/utils/supabase/queries";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
-let likePage = 0;
-
 const Tabs: React.FC<any> = ({ user }) => {
 	const [activeTab, setActiveTab] = useState("posts");
 	const [userPosts, setUserPosts] = useState<any[]>([]);
 	const [savedUserPosts, setSavedUserPosts] = useState<any[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [hasMore, setHasMore] = useState<boolean>(true);
+	const [likePage, setLikePage] = useState<number>(0); // Use state for likePage
 
 	const { ref, inView } = useInView();
 	user = user.user;
-
-	useEffect(() => {
-		const fetchSavedUserPosts = async () => {
-			if (user) {
-				const posts = await getSavedPosts(user.id);
-				setSavedUserPosts(posts);
-			}
-		};
-
-		fetchSavedUserPosts();
-	}, [user, activeTab]);
 
 	useEffect(() => {
 		const loadMore = async () => {
@@ -42,7 +30,7 @@ const Tabs: React.FC<any> = ({ user }) => {
 						setHasMore(false); // No more posts to load
 					} else {
 						setUserPosts((prevData) => [...prevData, ...res]);
-						likePage++;
+						setLikePage((prevPage) => prevPage + 1); // Increment page state
 					}
 				} catch (error) {
 					console.error("Error fetching posts:", error);
@@ -53,7 +41,7 @@ const Tabs: React.FC<any> = ({ user }) => {
 		};
 
 		loadMore();
-	}, [inView, hasMore, loading, user.id, activeTab]);
+	}, [inView, hasMore, loading, user.id, activeTab]); // Include likePage in dependency array
 
 	const renderContent = () => {
 		switch (activeTab) {
@@ -63,7 +51,7 @@ const Tabs: React.FC<any> = ({ user }) => {
 						{userPosts.length > 0 && (
 							<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center gap-4 px-2">
 								{userPosts.map((post: IPost) => (
-									<div className="">
+									<div key={post.id} className="">
 										<HomePostCard post={post} />
 									</div>
 								))}
@@ -83,7 +71,7 @@ const Tabs: React.FC<any> = ({ user }) => {
 							{savedUserPosts.length > 0 && (
 								<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center gap-4 px-2">
 									{savedUserPosts.map((post: IPost) => (
-										<div className="">
+										<div key={post.id} className="">
 											<HomePostCard post={post} />
 										</div>
 									))}

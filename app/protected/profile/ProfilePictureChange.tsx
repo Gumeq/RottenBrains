@@ -1,16 +1,23 @@
 "use client";
+import { useUser } from "@/context/UserContext";
 import { uploadProfilePicture } from "@/utils/supabase/queries";
-import React, { useState } from "react";
-// import { uploadProfilePicture } from "@/utils/supabase/queries"; // You need to implement this function
+import React, { useState, useEffect, ChangeEvent } from "react";
 
-const ProfilePicture = ({ user }: any) => {
-	const [image, setImage] = useState(user.user.imageURL);
-	const [isEditing, setIsEditing] = useState(false);
+const ProfilePicture: React.FC = () => {
+	const { user } = useUser();
+	const [image, setImage] = useState<string>("");
+	const [isEditing, setIsEditing] = useState<boolean>(false);
 	const [newImage, setNewImage] = useState<string | ArrayBuffer | null>(null);
 	const [file, setFile] = useState<File | null>(null);
 
-	const handleFileChange = (e: any) => {
-		const selectedFile = e.target.files[0];
+	useEffect(() => {
+		if (user?.imageURL) {
+			setImage(user.imageURL);
+		}
+	}, [user]);
+
+	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const selectedFile = e.target.files?.[0];
 		if (selectedFile) {
 			const reader = new FileReader();
 			reader.onload = () => {
@@ -29,22 +36,31 @@ const ProfilePicture = ({ user }: any) => {
 
 	const handleSave = async () => {
 		if (file) {
-			const success = await uploadProfilePicture(file);
+			const success = await uploadProfilePicture(
+				file,
+				user?.id.toString()
+			);
 			if (success) {
-				setImage(newImage);
+				setImage(newImage as string);
 				setIsEditing(false);
 				setNewImage(null);
 				setFile(null); // Reset the file object
 			} else {
 				// Handle error
+				console.error("Error uploading profile picture");
 			}
 		}
 	};
+
+	if (!user) {
+		return null; // Optionally, you can render a loading indicator or a message here
+	}
+
 	return (
 		<div className="flex flex-col items-center relative">
 			<img
-				src={newImage || image}
-				alt=""
+				src={(newImage as string) || image}
+				alt="Profile"
 				width={150}
 				height={150}
 				className="rounded-full max-w-[150px] max-h-[150px] overlay-hidden"
@@ -70,11 +86,11 @@ const ProfilePicture = ({ user }: any) => {
 			) : (
 				<button
 					onClick={() => setIsEditing(true)}
-					className=" text-white px-4 py-2 rounded absolute w-full h-full flex items-center justify-center opacity-0 hover:opacity-100"
+					className="text-white px-4 py-2 rounded absolute w-full h-full flex items-center justify-center opacity-0 hover:opacity-100"
 				>
 					<img
 						src="/assets/icons/pen-to-square-solid.svg"
-						alt=""
+						alt="Edit"
 						width={50}
 						height={50}
 						className="invert-on-dark"

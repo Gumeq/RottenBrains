@@ -1,6 +1,7 @@
 "use client";
 
 import NotificationCard from "@/components/notifications/NotificationCard";
+import { useUser } from "@/context/UserContext";
 import fetchUserData from "@/utils/clientFunctions/fetchUserData";
 import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
@@ -18,7 +19,7 @@ type Notification = {
 const NotificationsPage = () => {
 	const [notifications, setNotifications] = useState<Notification[]>([]);
 	const supabase = createClient();
-	const user = fetchUserData();
+	const { user } = useUser();
 	const userId = user?.id;
 
 	useEffect(() => {
@@ -26,7 +27,18 @@ const NotificationsPage = () => {
 		const fetchNotifications = async () => {
 			const { data, error } = await supabase
 				.from("notifications")
-				.select("*")
+				.select(
+					`
+                *,
+                users:from_user_id (
+                    id,
+                    username,
+                    name,
+                    email,
+                    imageURL
+                )
+            `
+				)
 				.eq("user_id", userId)
 				.order("created_at", { ascending: false });
 
@@ -69,6 +81,8 @@ const NotificationsPage = () => {
 	const readNotifications = notifications.filter(
 		(notification) => notification.read
 	);
+
+	console.log(notifications);
 
 	return (
 		<div className="max-w-xl mx-auto w-screen">

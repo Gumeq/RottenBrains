@@ -97,7 +97,18 @@ export const getPostsOfMedia = async (
 	try {
 		const { data, error } = await supabase
 			.from("posts")
-			.select("*")
+			.select(
+				`
+                *,
+                users (
+                    id,
+                    username,
+                    name,
+                    email,
+                    imageURL
+                )
+            `
+			)
 			.eq("mediaid", mediaid)
 			.eq("media_type", media_type)
 			.order("created_at", { ascending: false });
@@ -116,7 +127,18 @@ export const getUserPosts = async (
 	try {
 		const { data, error } = await supabase
 			.from("posts")
-			.select("*")
+			.select(
+				`
+                *,
+                users (
+                    id,
+                    username,
+                    name,
+                    email,
+                    imageURL
+                )
+            `
+			)
 			.eq("creatorid", userId)
 			.order("created_at", { ascending: false })
 			.range(page * 6, page * 6 + 5);
@@ -162,7 +184,18 @@ export const getPostComments = async (postId: string): Promise<any | null> => {
 	try {
 		const { data, error } = await supabase
 			.from("comments")
-			.select("*")
+			.select(
+				`
+                *,
+                users (
+                    id,
+                    username,
+                    name,
+                    email,
+                    imageURL
+                )
+            `
+			)
 			.eq("post_id", postId)
 			.order("created_at", { ascending: false })
 			.limit(10);
@@ -174,25 +207,10 @@ export const getPostComments = async (postId: string): Promise<any | null> => {
 	}
 };
 
-export const uploadProfilePicture = async (file: File) => {
-	let userId: string | null = null;
-
-	const getUser = async () => {
-		try {
-			const {
-				data: { user },
-				error,
-			} = await supabase.auth.getUser();
-			if (error) throw error;
-			userId = user ? user.id : null;
-		} catch (error) {
-			console.log("Error fetching user:", error);
-			userId = null;
-		}
-	};
-
-	await getUser();
-
+export const uploadProfilePicture = async (
+	file: File,
+	userId: string | undefined
+) => {
 	if (!userId) {
 		console.error("User not found or not authenticated");
 		return false;

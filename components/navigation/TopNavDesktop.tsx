@@ -1,19 +1,13 @@
 import React from "react";
-
 import Link from "next/link";
 import { sidebarLinks } from "@/constants";
 import { INavLink } from "@/types";
-
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
-import ProfilePicture from "../ProfilePicture";
-
 import SearchBar from "../searchBar/SearchBar";
-import AuthButton from "../auth/AuthButton";
 import NotificationButton from "../notifications/RealtimeNotifications";
+import ProfilePicture from "./ProfilePicture";
 
 export async function TopNavbarDesktop() {
-	const user = await getCurrentUser();
-
 	return (
 		<nav className="fixed top-0 bg-background w-screen items-center justify-center z-30 hidden xl:flex p-2">
 			<div className="flex flex-col">
@@ -56,15 +50,7 @@ export async function TopNavbarDesktop() {
 					<div className="flex flex-row gap-8">
 						<NotificationButton></NotificationButton>
 						<div className="flex items-center">
-							<Link href={"/protected/profile"}>
-								<img
-									src={user?.user.imageURL}
-									alt={""}
-									width={35}
-									height={35}
-									className="rounded-full overflow-hidden max-w-[35px] max-h-[35px]"
-								></img>
-							</Link>
+							<ProfilePicture></ProfilePicture>
 						</div>
 					</div>
 				</div>

@@ -1,4 +1,5 @@
 "use client";
+import { useUser } from "@/context/UserContext";
 import fetchUserData from "@/utils/clientFunctions/fetchUserData";
 import {
 	getSavedStatus,
@@ -13,8 +14,8 @@ interface SaveButtonProps {
 
 const SaveButton: React.FC<SaveButtonProps> = ({ postId }) => {
 	const [saved, setSaved] = useState(false);
-	const user = fetchUserData();
-	const userId = user?.id;
+	const { user } = useUser();
+	const userId = user?.id.toString();
 
 	const handleSave = useCallback(async () => {
 		if (userId) {

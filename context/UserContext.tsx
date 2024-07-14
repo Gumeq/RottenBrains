@@ -24,7 +24,7 @@ const UserProvider = ({ children }: { children: any }) => {
 	useEffect(() => {
 		const fetchUser = async () => {
 			const user = await getCurrentUser();
-			setUser(user);
+			setUser(user.user);
 			setLoading(false);
 		};
 

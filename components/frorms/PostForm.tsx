@@ -8,6 +8,7 @@ import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
 import SearchBar from "../searchBar/SearchBar";
 import { getMediaDetails } from "@/utils/tmdb";
+import { useUser } from "@/context/UserContext";
 
 type PostFormProps = {
 	post?: any;
@@ -17,7 +18,7 @@ type PostFormProps = {
 const PostForm = ({ post, action }: PostFormProps) => {
 	const [media, setMedia] = useState<IMedia | null>(null);
 
-	const user = fetchUserData();
+	const { user } = useUser();
 	const router = useRouter();
 
 	// State to manage input values

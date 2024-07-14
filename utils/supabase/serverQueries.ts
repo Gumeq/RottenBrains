@@ -43,7 +43,18 @@ export const getPostsFromFollowedUsers = async (
 
 		const { data: postsData, error: postsError } = await supabase
 			.from("posts")
-			.select("*")
+			.select(
+				`
+                *,
+                users (
+                    id,
+                    username,
+                    name,
+                    email,
+                    imageURL
+                )
+            `
+			)
 			.in("creatorid", followedUserIds)
 			.order("created_at", { ascending: false })
 			.range(page * 6, page * 6 + 5);

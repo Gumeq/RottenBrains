@@ -1,5 +1,6 @@
 "use client";
 
+import { useUser } from "@/context/UserContext";
 import fetchUserData from "@/utils/clientFunctions/fetchUserData";
 import {
 	getLikedStatus,
@@ -15,8 +16,8 @@ interface SaveButtonProps {
 const LikeButton: React.FC<SaveButtonProps> = ({ postId }) => {
 	const [liked, setLiked] = useState(false);
 	const [animate, setAnimate] = useState(false); // State to handle animation class
-	const user = fetchUserData();
-	const userId = user?.id;
+	const { user } = useUser();
+	const userId = user?.id.toString();
 
 	const handleLike = useCallback(async () => {
 		if (userId) {

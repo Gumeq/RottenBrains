@@ -2,58 +2,38 @@
 
 import Loader from "@/components/Loader";
 import HomePostCard from "@/components/post/HomePostCard";
+import { useUser } from "@/context/UserContext";
 import { IPost } from "@/types";
-import { getSavedPosts, getUserPosts } from "@/utils/supabase/queries";
+import { getUserPosts } from "@/utils/supabase/queries";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
-let likePage = 0;
-
-const Tabs: React.FC<any> = ({ user }) => {
+const Tabs: React.FC<any> = () => {
 	const [activeTab, setActiveTab] = useState("posts");
 	const [userPosts, setUserPosts] = useState<any[]>([]);
 	const [savedUserPosts, setSavedUserPosts] = useState<any[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [hasMore, setHasMore] = useState<boolean>(true);
-
+	const [likePage, setLikePage] = useState<number>(0); // Use state for likePage
 	const { ref, inView } = useInView();
-	user = user.user;
-
-	// useEffect(() => {
-	// 	const fetchUserPosts = async () => {
-	// 		if (user) {
-	// 			const posts = await getUserPosts(user.id, likePage);
-	// 			setUserPosts(posts);
-	// 		}
-	// 	};
-
-	// 	fetchUserPosts();
-	// }, [user]);
-
-	useEffect(() => {
-		const fetchSavedUserPosts = async () => {
-			if (user) {
-				const posts = await getSavedPosts(user.id);
-				setSavedUserPosts(posts);
-			}
-		};
-
-		fetchSavedUserPosts();
-	}, [user, activeTab]);
+	const { user } = useUser();
 
 	useEffect(() => {
 		const loadMore = async () => {
-			if (inView && hasMore && !loading) {
+			if (inView && hasMore && !loading && user) {
 				setLoading(true);
 				try {
 					console.log("loadMore");
-					const res = await getUserPosts(user.id, likePage);
+					const res = await getUserPosts(
+						user.id.toString(),
+						likePage
+					);
 					console.log(res);
 					if (res.length === 0) {
 						setHasMore(false); // No more posts to load
 					} else {
 						setUserPosts((prevData) => [...prevData, ...res]);
-						likePage++;
+						setLikePage((prevPage) => prevPage + 1); // Increment page state
 					}
 				} catch (error) {
 					console.error("Error fetching posts:", error);
@@ -64,7 +44,7 @@ const Tabs: React.FC<any> = ({ user }) => {
 		};
 
 		loadMore();
-	}, [inView, hasMore, loading, user.id, activeTab]);
+	}, [inView, hasMore, loading, user, likePage]); // Include likePage in dependency array
 
 	const renderContent = () => {
 		switch (activeTab) {
@@ -74,7 +54,7 @@ const Tabs: React.FC<any> = ({ user }) => {
 						{userPosts.length > 0 && (
 							<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center gap-4 px-2">
 								{userPosts.map((post: IPost) => (
-									<div className="">
+									<div key={post.id}>
 										<HomePostCard post={post} />
 									</div>
 								))}
@@ -94,7 +74,7 @@ const Tabs: React.FC<any> = ({ user }) => {
 							{savedUserPosts.length > 0 && (
 								<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center gap-4 px-2">
 									{savedUserPosts.map((post: IPost) => (
-										<div className="">
+										<div key={post.id}>
 											<HomePostCard post={post} />
 										</div>
 									))}
