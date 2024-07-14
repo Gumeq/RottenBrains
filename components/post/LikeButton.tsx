@@ -7,7 +7,7 @@ import {
 	likePost,
 	removeLike,
 } from "@/utils/clientFunctions/updatePostData";
-import { addToFavorites } from "@/utils/tmdb/tmdbApi";
+// import { addToFavorites } from "@/utils/tmdb/tmdbApi";
 import { useCallback, useEffect, useState } from "react";
 
 interface SaveButtonProps {
