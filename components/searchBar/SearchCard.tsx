@@ -5,7 +5,7 @@ const SearchCard = (media: any) => {
 	return (
 		<div className="flex flex-row">
 			<img
-				src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
+				src={`https://image.tmdb.org/t/p/w200${media.poster_path}`}
 				alt="Movie Poster Not Available"
 				width={100} // Width in pixels
 				height={100} // Height in pixels

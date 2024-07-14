@@ -62,7 +62,7 @@ const EpisodeCard = ({
 		<div className="border p-4 rounded-[10px] mb-2 hover:border-accent flex flex-row gap-4 items-center">
 			<div>
 				<img
-					src={`https://image.tmdb.org/t/p/original${episode.still_path}`}
+					src={`https://image.tmdb.org/t/p/w200${episode.still_path}`}
 					alt="episode still"
 					width={160}
 					height={90}
