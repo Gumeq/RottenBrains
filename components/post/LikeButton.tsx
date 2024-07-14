@@ -25,12 +25,12 @@ const LikeButton: React.FC<any> = ({ post }) => {
 		if (userId && user) {
 			setLiked((prevLiked) => !prevLiked); // Optimistic update
 			setAnimate(true); // Trigger the animation
-			const accountId = user.tmdb_id;
-			console.log(accountId);
-			const sessionId = localStorage.getItem("session_id");
-			console.log(sessionId);
-			console.log(post.mediaid);
-			console.log(post.media_type);
+			// const accountId = user.tmdb_id;
+			// console.log(accountId);
+			// const sessionId = localStorage.getItem("session_id");
+			// console.log(sessionId);
+			// console.log(post.mediaid);
+			// console.log(post.media_type);
 			try {
 				if (liked) {
 					await removeLike(userId, postId);
