@@ -5,7 +5,7 @@ import TVShowDetails from "./TVSeasons";
 type MediaInfoProps = {
 	media_type: string;
 	media_id: number;
-	season_number: number;
+	season_number?: number;
 };
 
 const MediaInfoComponent = async ({
@@ -27,7 +27,7 @@ const MediaInfoComponent = async ({
 	return (
 		<div>
 			<div>
-				{media_type === "tv" && (
+				{media_type === "tv" && season_number && (
 					<TVShowDetails
 						tv_show_id={media_id}
 						season_number={season_number}
