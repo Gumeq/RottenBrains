@@ -5,9 +5,14 @@ import TVShowDetails from "./TVSeasons";
 type MediaInfoProps = {
 	media_type: string;
 	media_id: number;
+	season_number: number;
 };
 
-const MediaInfoComponent = async ({ media_type, media_id }: MediaInfoProps) => {
+const MediaInfoComponent = async ({
+	media_type,
+	media_id,
+	season_number,
+}: MediaInfoProps) => {
 	let mediaData;
 	try {
 		mediaData = await getMediaDetails(media_type, media_id);
@@ -23,7 +28,10 @@ const MediaInfoComponent = async ({ media_type, media_id }: MediaInfoProps) => {
 		<div>
 			<div>
 				{media_type === "tv" && (
-					<TVShowDetails tv_show_id={media_id}></TVShowDetails>
+					<TVShowDetails
+						tv_show_id={media_id}
+						season_number={season_number}
+					></TVShowDetails>
 				)}
 			</div>
 			<div className="w-full flex flex-col md:flex-row gap-2 md:gap-0 rounded-xl items-center">

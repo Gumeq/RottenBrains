@@ -1,8 +1,5 @@
 import AuthButton from "@/components/auth/AuthButton";
-import HomePostCard from "@/components/post/HomePostCard";
-import { getUserPosts } from "@/utils/supabase/queries";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
-import { NextPage } from "next";
 import React from "react";
 import Tabs from "./tabs";
 import ProfilePicture from "./ProfilePictureChange";
@@ -58,7 +55,7 @@ const ProfilePage = async () => {
 					))}
 			</div> */}
 			<div className="flex items-center w-full">
-				<Tabs user={user}></Tabs>
+				<Tabs></Tabs>
 			</div>
 		</div>
 	);

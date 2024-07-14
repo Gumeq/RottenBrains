@@ -21,9 +21,10 @@ type Episode = {
 
 type TVShowDetailsProps = {
 	tv_show_id: number;
+	season_number: number;
 };
 
-const TVShowDetails = ({ tv_show_id }: TVShowDetailsProps) => {
+const TVShowDetails = ({ tv_show_id, season_number }: TVShowDetailsProps) => {
 	const [seasons, setSeasons] = useState<Season[]>([]);
 	const [selectedSeason, setSelectedSeason] = useState<number | null>(null);
 	const [episodes, setEpisodes] = useState<Episode[]>([]);
@@ -37,6 +38,18 @@ const TVShowDetails = ({ tv_show_id }: TVShowDetailsProps) => {
 					(season: Season) => season.season_number !== 0
 				);
 				setSeasons(filteredSeasons);
+				// If there are seasons, select the first one by default
+				if (filteredSeasons.length > 0) {
+					console.log(filteredSeasons);
+					const firstSeasonNumber =
+						filteredSeasons[season_number - 1].season_number;
+					setSelectedSeason(firstSeasonNumber);
+					const seasonData = await getSeasonDetails(
+						tv_show_id,
+						firstSeasonNumber
+					);
+					setEpisodes(seasonData.episodes);
+				}
 			} catch (error) {
 				console.error("Error fetching TV show details:", error);
 			}

@@ -64,6 +64,7 @@ export default async function mediaPage({
 					<MediaInfoComponent
 						media_type={media_type}
 						media_id={media_id}
+						season_number={season_number}
 					></MediaInfoComponent>
 				</div>
 			</div>
