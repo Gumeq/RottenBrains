@@ -19,11 +19,11 @@ const Bottombar = async () => {
 								<img
 									src={link.imgURL}
 									alt={""}
-									width={20}
-									height={20}
+									width={15}
+									height={15}
 									className="invert-on-dark"
 								/>
-								<p>{link.label}</p>
+								<p className="text-sm">{link.label}</p>
 							</div>
 						</Link>
 					);
@@ -36,11 +36,11 @@ const Bottombar = async () => {
 						<img
 							src={user?.user.imageURL}
 							alt={""}
-							width={30}
-							height={30}
-							className="rounded-full overflow-hidden min-w-[30px] min-h-[30px]"
+							width={20}
+							height={20}
+							className="rounded-full overflow-hidden min-w-[20px] min-h-[20px]"
 						></img>
-						<p>Profile</p>
+						<p className="text-sm">Profile</p>
 					</Link>
 				</li>
 			</ul>

@@ -153,9 +153,15 @@ const VideoEmbed = ({
 						/>
 						<button
 							onClick={handleButtonClick}
-							className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-accent text-white text-lg font-semibold py-2 px-4 rounded hover:bg-accent/80 transition-colors duration-300"
+							className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/60 text-white text-lg font-semibold rounded-full hover:bg-accent/80 transition-colors duration-300 flex items-center justify-center w-40 h-40"
 						>
-							Play Video
+							<img
+								src="/assets/icons/play-solid.svg"
+								alt=""
+								width={20}
+								height={20}
+								className="invert min-w-[40px] min-h-[40px]"
+							/>
 						</button>
 					</div>
 				) : (
@@ -176,31 +182,35 @@ const VideoEmbed = ({
 			</div>
 
 			<div className="flex md:flex-row flex-col justify-between mt-2 items-center">
-				<div>
-					{media_type === "tv" && getPreviousEpisodeLink() ? (
-						<Link href={getPreviousEpisodeLink() || "#"}>
-							<div
-								className={`px-4 py-2 bg-foreground/10 rounded flex flex-row gap-2 items-center ${
-									prevClicked ? "border-2 border-accent" : ""
-								}`}
-								onClick={handlePrevClick}
-							>
-								<img
-									src="/assets/icons/caret-left-solid.svg"
-									alt=""
-									width={10}
-									height={10}
-									className="invert-on-dark"
-								/>
-								<p>Previous Episode</p>
+				{media_type === "tv" && (
+					<div>
+						{getPreviousEpisodeLink() ? (
+							<Link href={getPreviousEpisodeLink() || "#"}>
+								<div
+									className={`px-4 py-2 bg-foreground/10 rounded flex flex-row gap-2 items-center ${
+										prevClicked
+											? "border-2 border-accent"
+											: ""
+									}`}
+									onClick={handlePrevClick}
+								>
+									<img
+										src="/assets/icons/caret-left-solid.svg"
+										alt=""
+										width={10}
+										height={10}
+										className="invert-on-dark"
+									/>
+									<p>Previous Episode</p>
+								</div>
+							</Link>
+						) : (
+							<div className="px-4 py-2 bg-foreground/10 rounded flex flex-row gap-2 items-center">
+								No Previous Episode
 							</div>
-						</Link>
-					) : (
-						<div className="px-4 py-2 bg-foreground/10 rounded flex flex-row gap-2 items-center">
-							No Previous Episode
-						</div>
-					)}
-				</div>
+						)}
+					</div>
+				)}
 				<div className="flex justify-center gap-4 my-4">
 					<button
 						onClick={() =>
@@ -227,31 +237,35 @@ const VideoEmbed = ({
 						vidsrc.to
 					</button>
 				</div>
-				<div>
-					{media_type === "tv" && getNextEpisodeLink() ? (
-						<Link href={getNextEpisodeLink() || "#"}>
-							<div
-								className={`px-4 py-2 bg-foreground/10 rounded flex flex-row gap-2 items-center ${
-									nextClicked ? "border-2 border-accent" : ""
-								}`}
-								onClick={handleNextClick}
-							>
-								<p>Next Episode</p>
-								<img
-									src="/assets/icons/caret-right-solid.svg"
-									alt=""
-									width={10}
-									height={10}
-									className="invert-on-dark"
-								/>
+				{media_type === "tv" && (
+					<div>
+						{getNextEpisodeLink() ? (
+							<Link href={getNextEpisodeLink() || "#"}>
+								<div
+									className={`px-4 py-2 bg-foreground/10 rounded flex flex-row gap-2 items-center ${
+										nextClicked
+											? "border-2 border-accent"
+											: ""
+									}`}
+									onClick={handleNextClick}
+								>
+									<p>Next Episode</p>
+									<img
+										src="/assets/icons/caret-right-solid.svg"
+										alt=""
+										width={10}
+										height={10}
+										className="invert-on-dark"
+									/>
+								</div>
+							</Link>
+						) : (
+							<div className="px-4 py-2 bg-foreground/10 rounded flex flex-row gap-2 items-center">
+								No Next Episode
 							</div>
-						</Link>
-					) : (
-						<div className="px-4 py-2 bg-foreground/10 rounded flex flex-row gap-2 items-center">
-							No Next Episode
-						</div>
-					)}
-				</div>
+						)}
+					</div>
+				)}
 			</div>
 		</div>
 	);

@@ -1,7 +1,3 @@
-import {
-	getCurrentUser,
-	getPostsFromFollowedUsers,
-} from "@/utils/supabase/serverQueries";
 import LoadMore from "./LoadMore";
 
 // Server component fetching and displaying posts

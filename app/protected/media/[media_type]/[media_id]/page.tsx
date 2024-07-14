@@ -65,7 +65,7 @@ export default async function mediaPage({
 	const mediaReviews = await getReviews(media_type, media_id);
 
 	return (
-		<div className="flex flex-col mx-auto max-w-7xl w-[1500px]">
+		<div className="flex flex-col mx-auto md:max-w-7xl max-w-screen w-screen ">
 			<div className="flex flex-col md:flex-row p-4 md:p-8 rounded-[20px] ">
 				<div className="w-[300px] h-[450px] bg-foreground/10 rounded-[12px] overflow-hidden mx-auto">
 					<div className="absolute p-2 text-lg m-2 font-bold bg-background/50 flex flex-row gap-2 items-center justify-center rounded-[6px]">

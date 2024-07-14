@@ -11,7 +11,7 @@ import Link from "next/link";
 const MobileTopNav = async () => {
 	return (
 		<div className="w-screen bg-background fixed top-0 z-30 flex md:hidden items-center justify-center p-2">
-			<div className="flex flex-row items-center justify-between w-full py-2">
+			<div className="flex flex-row items-center justify-between w-full">
 				<Link href={"/protected/home"}>
 					<img
 						src="/assets/images/logo-text.png"
@@ -21,10 +21,8 @@ const MobileTopNav = async () => {
 						className="invert-on-dark"
 					/>
 				</Link>
-				<div className="  flex flex-row ">
-					<div className=" h-full w-full">
-						<SearchBar link={true}></SearchBar>
-					</div>
+				<div className=" h-full w-full mx-4">
+					<SearchBar link={true}></SearchBar>
 				</div>
 				<NotificationButton></NotificationButton>
 			</div>

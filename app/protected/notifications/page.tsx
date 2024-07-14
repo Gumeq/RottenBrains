@@ -60,8 +60,7 @@ const NotificationsPage = () => {
 					.from("notifications")
 					.update({ read: true })
 					.eq("user_id", userId)
-					.eq("read", false)
-					.limit(25);
+					.eq("read", false);
 
 				if (error) {
 					console.error(

@@ -7,27 +7,53 @@ import {
 	likePost,
 	removeLike,
 } from "@/utils/clientFunctions/updatePostData";
+import { addToFavorites } from "@/utils/tmdb/tmdbApi";
 import { useCallback, useEffect, useState } from "react";
 
 interface SaveButtonProps {
 	postId: string;
 }
 
-const LikeButton: React.FC<SaveButtonProps> = ({ postId }) => {
+const LikeButton: React.FC<any> = ({ post }) => {
+	const postId = post.id;
 	const [liked, setLiked] = useState(false);
 	const [animate, setAnimate] = useState(false); // State to handle animation class
 	const { user } = useUser();
 	const userId = user?.id.toString();
 
 	const handleLike = useCallback(async () => {
-		if (userId) {
+		if (userId && user) {
 			setLiked((prevLiked) => !prevLiked); // Optimistic update
 			setAnimate(true); // Trigger the animation
+			const accountId = user.tmdb_id;
+			console.log(accountId);
+			const sessionId = localStorage.getItem("session_id");
+			console.log(sessionId);
+			console.log(post.mediaid);
+			console.log(post.media_type);
 			try {
 				if (liked) {
 					await removeLike(userId, postId);
+					// if (sessionId) {
+					// 	await addToFavorites(
+					// 		accountId,
+					// 		sessionId,
+					// 		post.media_type,
+					// 		post.mediaid,
+					// 		false
+					// 	);
+					// }
 				} else {
 					await likePost(userId, postId);
+					// if (sessionId) {
+					// 	await addToFavorites(
+					// 		accountId,
+					// 		sessionId,
+					// 		post.media_type,
+					// 		post.mediaid,
+					// 		true
+					// 	);
+					// }
 				}
 			} catch (error) {
 				setLiked((prevLiked) => !prevLiked); // Revert if there's an error

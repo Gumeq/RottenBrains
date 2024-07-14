@@ -4,6 +4,7 @@ import HomePostCard from "@/components/post/HomePostCard";
 import { useUser } from "@/context/UserContext";
 import { IPost } from "@/types";
 import { getPostsFromFollowedUsers } from "@/utils/supabase/serverQueries";
+import { fetchFromApi } from "@/utils/tmdb/tmdbApi";
 import React, { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 

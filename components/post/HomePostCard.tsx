@@ -258,7 +258,7 @@ export function HomePostCard({ post, index }: any) {
 					<div className="flex flex-row gap-2 align-center w-full h-full justify-between items-center">
 						<div className="flex flex-row items-center">
 							<div className="flex flex-row gap-2">
-								<LikeButton postId={post.id} />
+								<LikeButton post={post} />
 								<p className="font-bold text-xl text-foreground/50">
 									<PostLikedNumber postId={post.id} />{" "}
 								</p>

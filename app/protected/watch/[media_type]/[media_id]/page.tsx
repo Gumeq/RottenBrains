@@ -40,8 +40,8 @@ export default async function mediaPage({
 
 	return (
 		<>
-			<div className=" max-w-7xl w-screen h-full mx-auto flex flex-col gap-4">
-				<div className="w-full h-10  bg-accent flex items-center justify-center font-bold rounded-xl">
+			<div className=" max-w-7xl w-screen h-full mx-auto flex flex-col gap-4 px-4">
+				<div className="w-full p-2 text-center bg-accent flex items-center justify-center font-bold rounded-xl">
 					Warning: For the best experience use an adBlocker!
 				</div>
 				<div className="">

@@ -11,7 +11,7 @@ export function getRelativeTime(dateString: string): string {
 	if (diffDays < 0) {
 		// Handle past dates
 		if (diffYears >= 1) {
-			return "over a year ago";
+			return `${diffYears} year${diffYears > 1 ? "s" : ""} ago`;
 		} else if (diffMonths >= 1) {
 			return `${diffMonths} month${diffMonths > 1 ? "s" : ""} ago`;
 		} else if (diffWeeks >= 1) {
@@ -26,7 +26,7 @@ export function getRelativeTime(dateString: string): string {
 	} else if (diffDays > 0) {
 		// Handle future dates
 		if (diffYears >= 1) {
-			return `in over a year`;
+			return `in ${diffYears} year${diffYears > 1 ? "s" : ""}`;
 		} else if (diffMonths >= 1) {
 			return `in ${diffMonths} month${diffMonths > 1 ? "s" : ""}`;
 		} else if (diffWeeks >= 1) {

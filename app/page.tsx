@@ -1,6 +1,7 @@
 import AuthButton from "@/components/auth/AuthButton";
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 
 export default async function Index() {
@@ -16,6 +17,10 @@ export default async function Index() {
 	};
 
 	const isSupabaseConnected = canInitSupabaseClient();
+
+	if (isSupabaseConnected) {
+		return redirect("/protected/home");
+	}
 
 	return (
 		<div className="flex-1 w-full flex flex-col items-center gap-8">

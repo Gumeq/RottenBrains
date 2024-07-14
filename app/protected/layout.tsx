@@ -20,7 +20,7 @@ export default async function ProtectedLayout({
 	}
 	return (
 		<div>
-			<div className="w-full md:h-[85px] h-[80px] "> </div>
+			<div className="w-full md:h-[85px] h-[60px] "> </div>
 			<div className="bg-background text-foreground w-full md:flex overflow-x-hidden">
 				<TopNavbarDesktop />
 				<MobileTopNav></MobileTopNav>
