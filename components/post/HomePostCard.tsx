@@ -179,7 +179,7 @@ export function HomePostCard({ post, index }: any) {
 
 	return (
 		<motion.div
-			className="relative rounded-[16px] overflow-hidden border border-foreground/30"
+			className="relative rounded-[8px] overflow-hidden border border-foreground/20"
 			variants={variants}
 			initial="hidden"
 			animate="visible"
@@ -190,7 +190,7 @@ export function HomePostCard({ post, index }: any) {
 			}}
 			viewport={{ amount: 0 }}
 		>
-			<div className="w-screen md:w-[350px] max-w-[calc(100vw-20px)] flex flex-col bg-foreground/5 relative">
+			<div className="w-[350px] max-w-[calc(100vw-10px)] flex flex-col relative">
 				<div className="flex flex-col relative overflow-hidden rounded-xl">
 					<div className="flex flex-row gap-4 items-center p-2 px-4">
 						<span className="min-w-[35px] min-h-[35px]">
@@ -215,12 +215,12 @@ export function HomePostCard({ post, index }: any) {
 							</p>
 						</div>
 					</div>
-					<div className="relative my-auto flex flex-col gap-4 p-2">
+					<div className="relative my-auto flex flex-col gap-4">
 						<div className="flex flex-col z-10 gap-2">
 							<div className="w-[320px] h-[480px] mx-auto">
 								{media && (
-									<div className="rounded-[8px] overflow-hidden">
-										<div className="absolute p-2 text-lg m-2 font-bold bg-background/50 flex flex-row gap-2 items-center justify-center rounded-[6px]">
+									<div className="rounded-[4px] overflow-hidden">
+										<div className="absolute p-1 px-2 text-lg m-1 font-bold bg-background/50 flex flex-row gap-2 items-center justify-center rounded-[4px]">
 											<img
 												src="/assets/icons/star-solid.svg"
 												alt=""
@@ -248,13 +248,13 @@ export function HomePostCard({ post, index }: any) {
 						</div>
 					</div>
 				</div>
-				<div className="mx-4 px-2 py-2 rounded-[8px]">
+				<div className="mx-2 p-2 py-4">
 					<UserReviewText
 						post_review={post.review_user || "no review"}
 						creator_name={creator?.username || "no user"}
 					/>
 				</div>
-				<div className="w-full h-[50px] px-4">
+				<div className="w-full px-4">
 					<div className="flex flex-row gap-2 align-center w-full h-full justify-between items-center">
 						<div className="flex flex-row items-center">
 							<div className="flex flex-row gap-2">
