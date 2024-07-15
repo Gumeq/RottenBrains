@@ -1,6 +1,7 @@
 import { getMediaDetails } from "@/utils/tmdb";
 import React from "react";
 import TVShowDetails from "./TVSeasons";
+import Link from "next/link";
 
 type MediaInfoProps = {
 	media_type: string;
@@ -34,19 +35,47 @@ const MediaInfoComponent = async ({
 					></TVShowDetails>
 				)}
 			</div>
-			<div className="w-full flex flex-col md:flex-row gap-2 md:gap-0 rounded-xl items-center">
-				<div className="min-w-[300px] min-h-[450px] rounded-xl overflow-hidden drop-shadow-2xl">
-					<img
-						src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
-						alt=""
-						width="300"
-						height="450"
-					/>
-				</div>
-				<div className="w-full md:h-5/6 bg-foreground/10 rounded-r-xl">
+			<div className="w-full flex flex-col md:flex-row gap-2 md:gap-0 rounded-xl items-center mb-4">
+				<Link href={`/protected/media/${media_type}/${media_id}`}>
+					<div className="min-w-[300px] min-h-[450px] rounded-[8px] overflow-hidden drop-shadow-2xl">
+						<div className="absolute p-2 text-lg m-2 font-bold bg-background/50 backdrop-blur flex flex-row gap-2 items-center justify-center rounded-[6px]">
+							<img
+								src="/assets/icons/star-solid.svg"
+								alt=""
+								width={20}
+								height={20}
+								className="invert-on-dark"
+								loading="lazy"
+							/>
+							<p>{media.vote_average.toFixed(1)}</p>
+						</div>
+						<img
+							src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
+							alt=""
+							width="300"
+							height="450"
+						/>
+					</div>
+				</Link>
+
+				<div className="w-full md:h-5/6 bg-foreground/10 md:rounded-r-[8px] relative">
 					<div className="flex flex-col p-8 text-foreground/70 gap-2 w-full ">
-						<p className="text-2xl font-bold py-2 text-foreground">
-							{media.title || media.name}
+						<Link
+							href={`/protected/media/${media_type}/${media_id}`}
+						>
+							<p className="text-2xl font-bold py-2 text-foreground">
+								{media.title || media.name}{" "}
+								<span className="text-foreground/50">
+									(
+									{(media.release_date &&
+										media.release_date.slice(0, 4)) ||
+										media.first_air_date.slice(0, 4)}
+									)
+								</span>
+							</p>
+						</Link>
+						<p className="italic text-foreground/70 text-lg">
+							{media.tagline}
 						</p>
 						<p className="py-2 max-w-[90%]">{media.overview}</p>
 						<p>
@@ -55,6 +84,46 @@ const MediaInfoComponent = async ({
 								.map((genre: any) => genre.name)
 								.join(", ")}
 						</p>
+						<div>
+							{media.number_of_seasons && (
+								<p className="">
+									Seasons: {media.number_of_seasons}
+								</p>
+							)}
+						</div>
+						<div>
+							{media.next_episode_to_air && (
+								<div>
+									<div className="flex flex-row gap-2 items-center text-xl font-bold py-4">
+										<h2 className="">Next Episode:</h2>
+										<p>
+											{media.next_episode_to_air.air_date}
+										</p>
+									</div>
+								</div>
+							)}
+						</div>
+						<div>
+							{media_type === "movie" ? (
+								<div>
+									<Link
+										href={`/protected/watch/${media_type}/${media_id}`}
+										className="absolute bottom-0 right-0 m-4 px-4 py-2 bg-accent/80 font-bold rounded-[4px]"
+									>
+										Watch Now
+									</Link>
+								</div>
+							) : (
+								<div>
+									<Link
+										className="absolute bottom-0 right-0 m-4 px-4 py-2 bg-accent/80 font-bold rounded-[4px]"
+										href={`/protected/watch/${media_type}/${media_id}/1/1`}
+									>
+										Watch Now
+									</Link>
+								</div>
+							)}
+						</div>
 					</div>
 				</div>
 			</div>

@@ -220,7 +220,7 @@ export function HomePostCard({ post, index }: any) {
 							<div className="w-[320px] h-[480px] mx-auto">
 								{media && (
 									<div className="rounded-[4px] overflow-hidden">
-										<div className="absolute p-1 px-2 text-lg m-1 font-bold bg-background/50 flex flex-row gap-2 items-center justify-center rounded-[4px]">
+										<div className="absolute p-1 px-2 text-lg m-1 font-bold backdrop-blur-xl bg-background/30 flex flex-row gap-2 items-center justify-center rounded-[4px]">
 											<img
 												src="/assets/icons/star-solid.svg"
 												alt=""

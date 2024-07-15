@@ -69,9 +69,9 @@ const TVShowDetails = ({ tv_show_id, season_number }: TVShowDetailsProps) => {
 	};
 
 	return (
-		<div className="p-4">
-			<h1 className="text-2xl font-bold mb-4">Seasons</h1>
-			<div className="py-4 flex flex-wrap gap-2 custom-scrollbar">
+		<div className="my-8">
+			<h1 className="text-2xl font-bold mb-2">Seasons</h1>
+			<div className="py-2 flex flex-wrap gap-2 custom-scrollbar">
 				{seasons.map((season) => (
 					<button
 						key={season.season_number}
@@ -87,11 +87,11 @@ const TVShowDetails = ({ tv_show_id, season_number }: TVShowDetailsProps) => {
 				))}
 			</div>
 			{selectedSeason !== null && (
-				<div className="mt-8">
+				<div className="mt-2">
 					<h2 className="text-2xl font-bold mb-4">
 						Episodes of Season {selectedSeason}
 					</h2>
-					<div className="max-h-[400px] overflow-y-auto custom-scrollbar">
+					<div className="max-h-[50vh] overflow-y-auto custom-scrollbar">
 						{episodes.map((episode) => (
 							<Link
 								key={episode.episode_number}

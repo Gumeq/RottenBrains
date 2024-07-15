@@ -1,3 +1,4 @@
+import ExploreTab from "@/components/explore/ExploreTab";
 import VideoEmbed from "@/components/MediaEmbed";
 import MediaInfoComponent from "@/components/MediaInfoComponent";
 import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
@@ -66,6 +67,11 @@ export default async function mediaPage({
 						media_id={media_id}
 						season_number={season_number}
 					></MediaInfoComponent>
+				</div>
+				<div>
+					<h1 className="text-xl pt-8 font-bold">Trending Movies</h1>
+					<div className="w-1/6 h-[5px] bg-accent rounded-full my-1"></div>
+					<ExploreTab action="Trending_TV"></ExploreTab>
 				</div>
 			</div>
 		</>

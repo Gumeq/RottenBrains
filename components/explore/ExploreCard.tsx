@@ -3,7 +3,7 @@ import React from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-const ExploreCard = (media: any) => {
+const ExploreCard = async (media: any) => {
 	media = media.media;
 	let media_type: string;
 	if ("title" in media) {
@@ -69,6 +69,11 @@ const ExploreCard = (media: any) => {
 								/>
 							</div>
 						</Link>
+						<div className="px-1 flex flex-row gap-2 justify-between w-[100%] h-auto items-center">
+							<p className="font-bold truncate md:text-lg text-md">
+								{media.title || media.name}
+							</p>
+						</div>
 						<div className="w-full flex-row md:gap-2 justify-between hidden md:flex">
 							<div className="bg-foreground/5 px-2 py-1 rounded-lg font-bold text-sm flex flex-row gap-1 items-center justify-center">
 								<img
@@ -86,11 +91,6 @@ const ExploreCard = (media: any) => {
 									: media.first_air_date &&
 									  media.first_air_date.slice(0, 4)}
 							</div>
-						</div>
-						<div className="px-1 flex flex-row gap-2 justify-between w-[100%] h-auto items-center">
-							<p className="font-bold truncate md:text-lg text-md">
-								{media.title || media.name}
-							</p>
 						</div>
 						<div className="flex items-center justify-center w-full">
 							<Link href={watchLink} className="w-full">

@@ -66,9 +66,9 @@ export default async function mediaPage({
 
 	return (
 		<div className="flex flex-col mx-auto md:max-w-7xl max-w-screen w-screen ">
-			<div className="flex flex-col md:flex-row p-4 md:p-8 rounded-[20px] ">
-				<div className="w-[300px] h-[450px] bg-foreground/10 rounded-[12px] overflow-hidden mx-auto">
-					<div className="absolute p-2 text-lg m-2 font-bold bg-background/50 flex flex-row gap-2 items-center justify-center rounded-[6px]">
+			<div className="w-full flex flex-col md:flex-row gap-2 md:gap-0 rounded-xl items-center mb-4">
+				<div className="min-w-[300px] min-h-[450px] rounded-[8px] overflow-hidden drop-shadow-2xl">
+					<div className="absolute p-2 text-lg m-2 font-bold bg-background/50 backdrop-blur flex flex-row gap-2 items-center justify-center rounded-[6px]">
 						<img
 							src="/assets/icons/star-solid.svg"
 							alt=""
@@ -84,81 +84,72 @@ export default async function mediaPage({
 						alt=""
 						width="300"
 						height="450"
-						className=""
 					/>
 				</div>
-				<div className=" flex flex-col gap-8 max-w-3xl">
-					<div className="flex flex-col gap-2">
-						<h1 className="text-4xl font-bold py-2">
+				<div className="w-full md:h-5/6 bg-foreground/10 md:rounded-r-[8px] relative">
+					<div className="flex flex-col p-8 text-foreground/70 gap-2 w-full ">
+						<p className="text-2xl font-bold py-2 text-foreground">
 							{media.title || media.name}{" "}
-							<span className="text-2xl text-foreground/50">
+							<span className="text-foreground/50">
 								(
 								{(media.release_date &&
 									media.release_date.slice(0, 4)) ||
 									media.first_air_date.slice(0, 4)}
 								)
 							</span>
-						</h1>
-						<div>
-							{media.number_of_seasons && (
-								<p className="text-2xl text-foreground/70">
-									{media.number_of_seasons} Seasons
-								</p>
-							)}
-						</div>
-					</div>
-
-					<div className="flex flex-row gap-4 flex-wrap">
-						{media?.genres.map((genre: any) => (
-							<div
-								key={genre.id}
-								className="py-2 px-4 bg-foreground/5 rounded-full"
-							>
-								<p>{genre.name}</p>
-							</div>
-						))}
-					</div>
-					<div>
+						</p>
 						<p className="italic text-foreground/70 text-lg">
 							{media.tagline}
 						</p>
-					</div>
-					<div>
-						<h2 className="text-xl pb-2 font-semibold">Overview</h2>
-						<p className="max-w-full lg:w-[1000px]">
-							{media.overview}
+						<p className="py-2 max-w-[90%]">{media.overview}</p>
+						<p>
+							Genre:{" "}
+							{media.genres
+								.map((genre: any) => genre.name)
+								.join(", ")}
 						</p>
-					</div>
-					<div>
-						{media.next_episode_to_air && (
-							<div>
-								<div className="flex flex-row gap-2 items-center text-xl font-bold py-4">
-									<h2 className="">Next Episode:</h2>
-									<p>{media.next_episode_to_air.air_date}</p>
+						<div>
+							{media.number_of_seasons && (
+								<p className="">
+									Seasons: {media.number_of_seasons}
+								</p>
+							)}
+						</div>
+						<div>
+							{media.next_episode_to_air && (
+								<div>
+									<div className="flex flex-row gap-2 items-center text-xl font-bold py-4">
+										<h2 className="">Next Episode:</h2>
+										<p>
+											{media.next_episode_to_air.air_date}
+										</p>
+									</div>
 								</div>
-							</div>
-						)}
+							)}
+						</div>
+						<div>
+							{media_type === "movie" ? (
+								<div>
+									<Link
+										href={`/protected/watch/${media_type}/${media_id}`}
+										className="absolute bottom-0 right-0 m-4 px-4 py-2 bg-accent/80 font-bold rounded-[4px]"
+									>
+										Watch Now
+									</Link>
+								</div>
+							) : (
+								<div>
+									<Link
+										className="absolute bottom-0 right-0 m-4 px-4 py-2 bg-accent/80 font-bold rounded-[4px]"
+										href={`/protected/watch/${media_type}/${media_id}/1/1`}
+									>
+										Watch Now
+									</Link>
+								</div>
+							)}
+						</div>
 					</div>
 				</div>
-			</div>
-			<div>
-				{media_type === "movie" ? (
-					<div>
-						<Link
-							href={`/protected/watch/${media_type}/${media_id}`}
-						>
-							Watch
-						</Link>
-					</div>
-				) : (
-					<div>
-						<Link
-							href={`/protected/watch/${media_type}/${media_id}/1/1`}
-						>
-							Watch
-						</Link>
-					</div>
-				)}
 			</div>
 			<div className="">
 				<div className="bg-accent/5 p-4 rounded-xl">
@@ -182,7 +173,7 @@ export default async function mediaPage({
 									User Posts
 								</h2>
 							)}
-							<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center gap-4 p-2">
+							<div className="flex flex-row flex-wrap gap-4">
 								{postsOfMedia?.slice(0, 9).map((post: any) => (
 									<div>
 										<HomePostCard
