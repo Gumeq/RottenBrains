@@ -7,6 +7,7 @@ import { getPostsFromFollowedUsers } from "@/utils/supabase/serverQueries";
 import { fetchFromApi } from "@/utils/tmdb/tmdbApi";
 import React, { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
+import FollowUsers from "./FollowUsers";
 
 const LoadMore = () => {
 	const [data, setData] = useState<any[]>([]);
@@ -21,12 +22,10 @@ const LoadMore = () => {
 			if (inView && hasMore && !loading && user?.id) {
 				setLoading(true);
 				try {
-					console.log("loadMore");
 					const res = await getPostsFromFollowedUsers(
 						user.id.toString(),
 						page
 					);
-					console.log(res);
 					if (res.length === 0) {
 						setHasMore(false); // No more posts to load
 					} else {
@@ -55,7 +54,14 @@ const LoadMore = () => {
 			</div>
 			{loading && <Loader></Loader>}
 			{!loading && hasMore && <div ref={ref}></div>}
-			{!hasMore && <div>No more posts to load.</div>}
+			{!hasMore && (
+				<div>
+					<div className="w-full flex flex-col items-center justify-center my-4 text-lg">
+						Follow more people to get more posts on the Home page!
+					</div>
+					<FollowUsers></FollowUsers>
+				</div>
+			)}
 		</div>
 	);
 };

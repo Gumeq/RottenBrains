@@ -1,5 +1,6 @@
 "use client";
 
+import { useUser } from "@/context/UserContext";
 import fetchUserData from "@/utils/clientFunctions/fetchUserData";
 import {
 	followUser,
@@ -21,10 +22,10 @@ interface SaveButtonProps {
 const FollowButton: React.FC<SaveButtonProps> = ({ user_to_follow_id }) => {
 	const [followed, setFollowed] = useState(false);
 
-	const user = fetchUserData();
+	const { user } = useUser();
 	let userId: string;
 	if (user) {
-		userId = user.id;
+		userId = user.id.toString();
 	}
 
 	const handleFollow = async () => {
@@ -46,7 +47,7 @@ const FollowButton: React.FC<SaveButtonProps> = ({ user_to_follow_id }) => {
 		const fetchData = async () => {
 			if (user) {
 				const isUserFollowed = await getFollowStatus(
-					user.id,
+					user.id.toString(),
 					user_to_follow_id
 				); // Assuming getSavedStatus is asynchronous
 				setFollowed(isUserFollowed);

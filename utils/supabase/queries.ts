@@ -335,3 +335,19 @@ export async function getPostCount(id: string): Promise<any | null> {
 		return null;
 	}
 }
+
+export const getNewestUsers = async () => {
+	try {
+		const { data, error } = await supabase
+			.from("users")
+			.select("*")
+			.order("created_at", { ascending: false })
+			.limit(10);
+		if (error) throw error;
+
+		return data;
+	} catch (error) {
+		console.error("Error in getNewestUsers:", error);
+		return null;
+	}
+};
