@@ -31,7 +31,7 @@ export default async function userProfile({
 		<div className="max-w-6xl mx-auto w-screen">
 			{user && (
 				<div className="max-w-2xl mx-auto flex items-center justify-center py-4">
-					<div className="flex flex-row w-full justify-between">
+					<div className="flex md:flex-row w-full justify-between flex-col gap-4">
 						<div className="flex flex-col gap-8 items-center justify-between">
 							<div>
 								<img

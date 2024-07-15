@@ -3,7 +3,7 @@ import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import React from "react";
 import Tabs from "./tabs";
 import ProfilePicture from "./ProfilePictureChange";
-import ConnectButton from "@/utils/tmdb/ConnectButton";
+// import ConnectButton from "@/utils/tmdb/ConnectButton";
 import FollowInfo from "../user/[userId]/FollowInfo";
 import FollowButton from "@/components/post/FollowButton";
 
@@ -24,7 +24,7 @@ const ProfilePage = async () => {
 		<div className="max-w-6xl mx-auto ">
 			{user && (
 				<div className="max-w-2xl mx-auto flex items-center justify-center py-4">
-					<div className="flex flex-row w-full justify-between">
+					<div className="flex md:flex-row w-full justify-between flex-col gap-4">
 						<div className="flex flex-col gap-8 items-center justify-between">
 							<div>
 								<ProfilePicture></ProfilePicture>
