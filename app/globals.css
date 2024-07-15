@@ -69,7 +69,7 @@
 }
 
 .bottom-bar {
-	@apply z-50 flex-between w-screen bottom-0  bg-background p-2 px-4 md:hidden;
+	@apply z-50 flex-between w-screen bottom-0  bg-background p-1 px-4 md:hidden;
 }
 
 /* Dark-themed scrollbar */

@@ -255,3 +255,83 @@ export const uploadProfilePicture = async (
 		return false;
 	}
 };
+
+export async function getFollowers(id: string): Promise<any | null> {
+	try {
+		const {
+			data: followers,
+			error,
+			count: followers_count,
+		} = await supabase
+			.from("follows")
+			.select(
+				`
+                *,
+                users:user_id (
+                    id,
+                    username,
+                    name,
+                    email,
+                    imageURL
+                )
+            `,
+				{ count: "exact" }
+			)
+			.eq("following_id", id);
+
+		if (error) throw error;
+
+		return { followers_count, followers };
+	} catch (error) {
+		console.error("Error in getFollowers:", error);
+		return null;
+	}
+}
+
+export async function getFollowing(id: string): Promise<any | null> {
+	try {
+		const {
+			data: following,
+			error,
+			count: following_count,
+		} = await supabase
+			.from("follows")
+			.select(
+				`
+                *,
+                users:following_id (
+                    id,
+                    username,
+                    name,
+                    email,
+                    imageURL
+                )
+            `,
+				{ count: "exact" }
+			)
+			.eq("user_id", id);
+
+		if (error) throw error;
+
+		return { following_count, following };
+	} catch (error) {
+		console.error("Error in getFollowing:", error);
+		return null;
+	}
+}
+
+export async function getPostCount(id: string): Promise<any | null> {
+	try {
+		const { error, count: post_count } = await supabase
+			.from("posts")
+			.select("*", { count: "exact" })
+			.eq("creatorid", id);
+
+		if (error) throw error;
+
+		return { post_count };
+	} catch (error) {
+		console.error("Error in getPostCount:", error);
+		return null;
+	}
+}

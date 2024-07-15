@@ -147,19 +147,7 @@ export function HomePostCard({ post, index }: any) {
 		return () => {
 			isMounted = false;
 		};
-	}, [media_type, media_id, post.creatorid]);
-
-	if (!currentUser) {
-		return <p>no current user</p>;
-	}
-
-	const creator = post.users;
-
-	if (!creator) {
-		return <p>no creator</p>;
-	}
-
-	const userId = currentUser.id;
+	}, [media_type, media_id]);
 
 	const variants = useMemo(
 		() => ({
@@ -168,6 +156,18 @@ export function HomePostCard({ post, index }: any) {
 		}),
 		[]
 	);
+
+	if (!currentUser) {
+		return <p>no current user</p>;
+	}
+
+	const userId = currentUser.id;
+
+	const creator = post.users;
+
+	if (!creator) {
+		return <p>no creator</p>;
+	}
 
 	if (loading) {
 		return <LoadingSkeleton index={index} />;
