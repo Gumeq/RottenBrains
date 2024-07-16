@@ -5,20 +5,12 @@ import { redirect } from "next/navigation";
 import { useState } from "react";
 
 export default async function Index() {
-	const canInitSupabaseClient = () => {
-		// This function is just for the interactive tutorial.
-		// Feel free to remove it once you have Supabase connected.
-		try {
-			createClient();
-			return true;
-		} catch (e) {
-			return false;
-		}
-	};
+	const supabase = createClient();
+	const {
+		data: { user },
+	} = await supabase.auth.getUser();
 
-	const isSupabaseConnected = canInitSupabaseClient();
-
-	if (isSupabaseConnected) {
+	if (user) {
 		return redirect("/protected/home");
 	}
 
@@ -38,7 +30,7 @@ export default async function Index() {
 							className="invert-on-dark"
 						/>
 					</div>
-					{isSupabaseConnected && <AuthButton />}
+					{<AuthButton />}
 				</div>
 			</nav>
 			<div className="flex flex-col gap-4 w-screen max-w-7xl items-center justify-center px-8 my-16">
