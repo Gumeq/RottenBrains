@@ -39,7 +39,7 @@ export async function TopNavbarDesktop() {
 										alt={""}
 										width={20}
 										height={20}
-										className="invert"
+										className="invert-on-dark"
 									/>
 									{/* {link.label} */}
 								</Link>
