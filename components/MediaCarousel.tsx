@@ -42,7 +42,7 @@ const TopMoviesCarousel = ({ movies }: any) => {
 								<div className="absolute inset-0 bg-gradient-to-t from-background to-transparent"></div>
 								<div className="relative w-full h-full flex justify-center items-end p-16 flex-row">
 									<div className="flex flex-col items-center gap-4">
-										<p className="text-4xl font-bold">
+										<p className="md:text-4xl font-bold text-center text-2xl ">
 											{media.title || media.name}
 										</p>
 										<div className="opacity-60 flex flex-row gap-2">

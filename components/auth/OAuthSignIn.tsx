@@ -1,5 +1,6 @@
 "use client";
 import { oAuthSignIn } from "@/app/login/actions";
+import { Button } from "@headlessui/react";
 import { Provider } from "@supabase/supabase-js";
 
 type OAuthProvider = {
@@ -30,6 +31,7 @@ export function OAuthButton() {
 					onClick={async () => {
 						await oAuthSignIn(provider.name);
 					}}
+					type={"button"}
 				>
 					{provider.icon && (
 						<img
