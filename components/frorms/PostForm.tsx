@@ -12,6 +12,7 @@ import { useUser } from "@/context/UserContext";
 
 type PostFormProps = {
 	post?: any;
+	from_media?: any;
 	action: "Create" | "Update";
 };
 
@@ -23,10 +24,9 @@ const PostForm = ({ post, action }: PostFormProps) => {
 
 	// State to manage input values
 	const [formValues, setFormValues] = useState({
-		review_user: "",
+		review_user: "Λοιπον είδα το ",
 		vote_user: 0,
 	});
-	const [userReview, setUserReview] = useState("");
 
 	// State to manage loading
 	const [loading, setLoading] = useState(false);
@@ -44,7 +44,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
 		fetchMediaDetails();
 	}, [action, post]);
 
-	// Use useEffect to update the form values when media changes
+	// Use useEffect to update the review_user when media changes
 	useEffect(() => {
 		if (action === "Update" && post) {
 			setFormValues((prevValues) => ({
@@ -52,7 +52,6 @@ const PostForm = ({ post, action }: PostFormProps) => {
 				review_user: post.review_user,
 				vote_user: post.vote_user,
 			}));
-			setUserReview(post.review_user);
 		} else {
 			if (media) {
 				setFormValues((prevValues) => ({
@@ -61,54 +60,44 @@ const PostForm = ({ post, action }: PostFormProps) => {
 				}));
 			}
 		}
-	}, [media, action, post]);
+	}, [media]);
 
 	// Function to update the review text based on the rating
 	const updateReviewText = (rating: number) => {
 		let reviewText = `Λοιπον είδα το ${media?.title || media?.name}, `;
 		if (rating >= 8) {
 			reviewText += ` καλή ${
-				media?.media_type === "movie" ? "ταινία!" : "σειρα!"
+				media?.media_type === "movie" ? "ταινία" : "σειρα"
 			}`;
 		} else if (rating >= 4) {
 			reviewText += ` μέτρια ${
-				media?.media_type === "movie" ? "ταινία." : "σειρα."
+				media?.media_type === "movie" ? "ταινία" : "σειρα"
 			}`;
 		} else {
 			reviewText += ` κακή ${
-				media?.media_type === "movie" ? "ταινία..." : "σειρα..."
+				media?.media_type === "movie" ? "ταινία" : "σειρα"
 			}`;
 		}
-		return reviewText;
-	};
-
-	// Use useEffect to update the dynamic part of review_user based on the rating
-	useEffect(() => {
-		const dynamicReviewText = updateReviewText(formValues.vote_user);
 		setFormValues((prevValues) => ({
 			...prevValues,
-			review_user: dynamicReviewText + " " + userReview,
+			review_user: reviewText,
 		}));
-	}, [formValues.vote_user, media, userReview]);
+	};
+
+	// Use useEffect to update review_user based on the rating
+	useEffect(() => {
+		updateReviewText(formValues.vote_user);
+	}, [formValues.vote_user]);
 
 	// Handle input change
 	const handleInputChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 	) => {
 		const { name, value } = e.target;
-		if (name === "review_user") {
-			setUserReview(value);
-			setFormValues((prevValues) => ({
-				...prevValues,
-				review_user:
-					updateReviewText(prevValues.vote_user) + " " + value,
-			}));
-		} else {
-			setFormValues({
-				...formValues,
-				[name]: value,
-			});
-		}
+		setFormValues({
+			...formValues,
+			[name]: value,
+		});
 	};
 
 	// Handle form submission
@@ -232,7 +221,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
 							</label>
 							<textarea
 								name="review_user"
-								value={userReview}
+								value={formValues.review_user}
 								onChange={handleInputChange}
 								placeholder="Write your review here..."
 								className="border p-3 rounded focus:outline-none focus:ring-2 focus:ring-accent text-foreground bg-background h-40 resize-none"
