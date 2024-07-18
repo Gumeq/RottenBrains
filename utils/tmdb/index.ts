@@ -91,3 +91,13 @@ export const getReviews = async (media_type: string, media_id: number) => {
 export const getCredits = async (media_type: string, media_id: number) => {
 	return fetchFromApi(`${media_type}/${media_id}/credits?language=en-US`);
 };
+
+export const getFromGenres = async (
+	media_type: string,
+	page: number,
+	genre: string
+) => {
+	return fetchFromApi(
+		`discover/${media_type}?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc&with_genres=${genre}`
+	);
+};

@@ -3,10 +3,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import movieGenres from "../../../constants/movie_genres.json";
 import tvGenres from "../../../constants/tv_genres.json";
-import { getFromGenres } from "@/utils/tmdb";
 import Link from "next/link";
 import { useInView } from "react-intersection-observer";
 import Loader from "@/components/Loader";
+import { getFromGenres } from "@/utils/tmdb";
 
 const GenreSelector: React.FC = () => {
 	const [selectedType, setSelectedType] = useState<"movie" | "tv">("movie");
