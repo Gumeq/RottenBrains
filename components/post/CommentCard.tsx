@@ -5,6 +5,9 @@ import { timeAgo } from "./TimeAgo";
 
 const CommentCard = ({ comment }: any) => {
 	const creator = comment.users;
+	if (!creator) {
+		return <p>loading...</p>;
+	}
 
 	return (
 		<div className="w-full">

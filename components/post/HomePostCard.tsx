@@ -4,17 +4,15 @@ import { IPost } from "@/types";
 import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
 import React, { useEffect, useState, useMemo } from "react";
 import SaveButton from "./SaveButton";
-import LikeButton from "./LikeButton";
 import Link from "next/link";
 import ProfilePicture from "../ProfilePicture";
-import PostLikedNumber from "./PostLikedNumber";
 import UserReviewText from "./UserReviewText";
 import { timeAgo } from "./TimeAgo";
-import ViewComments from "./ViewComments";
 import { motion } from "framer-motion";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useUser } from "@/context/UserContext";
+import PostStats from "./PostStats";
 
 const LoadingSkeleton = ({ index }: any) => {
 	const variants = {
@@ -192,27 +190,43 @@ export function HomePostCard({ post, index }: any) {
 		>
 			<div className="w-[350px] max-w-[calc(100vw-10px)] flex flex-col relative">
 				<div className="flex flex-col relative overflow-hidden rounded-xl">
-					<div className="flex flex-row gap-4 items-center p-2 px-4">
-						<span className="min-w-[35px] min-h-[35px]">
-							<ProfilePicture userId={creator.id} />
-						</span>
+					<div className="flex flex-row gap-4 items-center p-2 px-4 justify-between">
+						<div className="flex flex-row items-center gap-2">
+							<span className="min-w-[35px] min-h-[35px]">
+								<ProfilePicture userId={creator.id} />
+							</span>
+							<div>
+								<p className="line-clamp-1">
+									<span className="font-bold text-lg">
+										{creator.username}
+									</span>{" "}
+									watched{" "}
+									<span className="text-lg font-bold hover:underline">
+										<Link
+											href={`/protected/media/${media_type}/${media_id}`}
+										>
+											{media &&
+												(media.title || media.name)}
+										</Link>
+									</span>
+								</p>
+								<p className="text-sm opacity-50">
+									{timeAgo(post.created_at)}
+								</p>
+							</div>
+						</div>
 						<div>
-							<p className="line-clamp-1">
-								<span className="font-bold text-lg">
-									{creator.username}
-								</span>{" "}
-								watched{" "}
-								<span className="text-lg font-bold hover:underline">
-									<Link
-										href={`/protected/media/${media_type}/${media_id}`}
-									>
-										{media && (media.title || media.name)}
-									</Link>
-								</span>
-							</p>
-							<p className="text-sm opacity-50">
-								{timeAgo(post.created_at)}
-							</p>
+							{post.creatorid === userId && (
+								<Link href={`/protected/edit-post/${post.id}`}>
+									<img
+										src="/assets/icons/ellipsis-solid.svg"
+										alt=""
+										width={20}
+										height={20}
+										className="invert-on-dark justify-self-end min-w-[20px] min-h-[20px] opacity-80"
+									/>
+								</Link>
+							)}
 						</div>
 					</div>
 					<div className="relative my-auto flex flex-col gap-4">
@@ -254,24 +268,29 @@ export function HomePostCard({ post, index }: any) {
 						creator_name={creator?.username || "no user"}
 					/>
 				</div>
-				<div className="w-full px-4">
-					<div className="flex flex-row gap-2 align-center w-full h-full justify-between items-center">
+				<div className="w-full px-4 pb-2 flex items-center">
+					<div className="flex flex-row align-center w-full h-full justify-between items-center">
 						<div className="flex flex-row items-center">
-							<div className="flex flex-row gap-2">
-								<LikeButton post={post} />
-								<p className="font-bold text-xl text-foreground/50">
-									<PostLikedNumber postId={post.id} />{" "}
-								</p>
-							</div>
-
-							<ViewComments postId={post.id} />
+							<PostStats
+								post={post}
+								user={currentUser}
+							></PostStats>
 						</div>
-						{post.creatorid === userId && (
-							<Link href={`/protected/edit-post/${post.id}`}>
-								edit
+						<div className="flex flex-row gap-2 items-center">
+							<Link
+								className=""
+								href={`/protected/create-post/${media_type}/${media_id}`}
+							>
+								<img
+									src="/assets/icons/square-plus-solid.svg"
+									alt=""
+									width={30}
+									height={30}
+									className="invert-on-dark opacity-50"
+								/>
 							</Link>
-						)}
-						<SaveButton postId={post.id} />
+							<SaveButton postId={post.id} />
+						</div>
 					</div>
 				</div>
 			</div>

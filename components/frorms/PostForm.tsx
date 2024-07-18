@@ -16,7 +16,7 @@ type PostFormProps = {
 	action: "Create" | "Update";
 };
 
-const PostForm = ({ post, action }: PostFormProps) => {
+const PostForm = ({ post, action, from_media }: PostFormProps) => {
 	const [media, setMedia] = useState<IMedia | null>(null);
 
 	const { user } = useUser();
@@ -44,6 +44,19 @@ const PostForm = ({ post, action }: PostFormProps) => {
 		fetchMediaDetails();
 	}, [action, post]);
 
+	useEffect(() => {
+		const fetchMediaDetails = async () => {
+			if (action === "Create" && from_media) {
+				const mediaDetails = await getMediaDetails(
+					from_media.media_type,
+					from_media.media_id
+				);
+				setMedia(mediaDetails);
+			}
+		};
+		fetchMediaDetails();
+	}, [action, from_media]);
+
 	// Use useEffect to update the review_user when media changes
 	useEffect(() => {
 		if (action === "Update" && post) {
@@ -66,23 +79,30 @@ const PostForm = ({ post, action }: PostFormProps) => {
 	const updateReviewText = (rating: number) => {
 		let reviewText = `Λοιπον είδα το ${media?.title || media?.name}, `;
 		if (rating >= 8) {
-			reviewText += ` καλή ${
-				media?.media_type === "movie" ? "ταινία" : "σειρα"
-			}`;
+			reviewText += ` καλή`;
 		} else if (rating >= 4) {
-			reviewText += ` μέτρια ${
-				media?.media_type === "movie" ? "ταινία" : "σειρα"
-			}`;
+			reviewText += ` μέτρια`;
 		} else {
-			reviewText += ` κακή ${
-				media?.media_type === "movie" ? "ταινία" : "σειρα"
-			}`;
+			reviewText += ` κακή`;
+		}
+		if (media?.media_type === "movie") {
+			reviewText += ` ταινία`;
+		} else if (from_media) {
+			if (from_media.media_type === "movie") {
+				reviewText += ` ταινία`;
+			} else {
+				reviewText += ` σειρα`;
+			}
+		} else {
+			reviewText += ` σειρα`;
 		}
 		setFormValues((prevValues) => ({
 			...prevValues,
 			review_user: reviewText,
 		}));
 	};
+
+	// media?.media_type === "movie" ? "ταινία" : "σειρα";
 
 	// Use useEffect to update review_user based on the rating
 	useEffect(() => {
@@ -105,12 +125,22 @@ const PostForm = ({ post, action }: PostFormProps) => {
 		e.preventDefault();
 		setLoading(true);
 
-		const dbvalues = {
-			...formValues,
-			mediaId: media?.id,
-			creatorId: user?.id,
-			media_type: media?.media_type,
-		};
+		let dbvalues: any;
+		if (from_media) {
+			dbvalues = {
+				...formValues,
+				mediaId: from_media?.media_id,
+				creatorId: user?.id,
+				media_type: from_media?.media_type,
+			};
+		} else {
+			dbvalues = {
+				...formValues,
+				mediaId: media?.id,
+				creatorId: user?.id,
+				media_type: media?.media_type,
+			};
+		}
 
 		const supabase = createClient();
 
@@ -205,7 +235,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
 							alt="Poster"
 							width="300"
 							height="450"
-							className="object-cover"
+							className="min-w-[300px] min-h-[450px]"
 						/>
 					)}
 				</div>

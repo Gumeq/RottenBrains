@@ -52,7 +52,6 @@ export const getFollowStatus = async (
 		.single();
 
 	if (error) {
-		console.error("Error fetching follow status:", error.message);
 		return false;
 	}
 

@@ -26,8 +26,6 @@ const FollowInfo = ({ user }: any) => {
 				);
 				setFollowers(followers);
 				setFollowersCount(followers_count);
-				console.log("Followers: ");
-				console.log(followers);
 
 				const { following, following_count } = await getFollowing(
 					user.id

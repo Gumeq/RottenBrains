@@ -23,12 +23,10 @@ const Tabs: React.FC<any> = () => {
 			if (inView && hasMore && !loading && user) {
 				setLoading(true);
 				try {
-					console.log("loadMore");
 					const res = await getUserPosts(
 						user.id.toString(),
 						likePage
 					);
-					console.log(res);
 					if (res.length === 0) {
 						setHasMore(false); // No more posts to load
 					} else {

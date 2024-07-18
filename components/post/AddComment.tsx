@@ -9,11 +9,11 @@ interface CommentProps {
 	postId: string;
 }
 
-const AddComment: React.FC<CommentProps> = ({ postId }) => {
+const AddComment: React.FC<any> = ({ post, user }) => {
 	const [content, setContent] = useState("");
+	const postId = post.id;
 
 	const supabase = createClient();
-	const { user } = useUser();
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -25,7 +25,23 @@ const AddComment: React.FC<CommentProps> = ({ postId }) => {
 
 		const { data, error } = await supabase
 			.from("comments")
-			.insert([{ post_id: postId, user_id: user.id, content }]);
+			.insert([{ post_id: postId, user_id: user.id, content }])
+			.select();
+
+		const { error: incrementError } = await supabase.rpc(
+			"increment_comments",
+			{ post_id: postId }
+		);
+		if (incrementError) throw incrementError;
+		if (data && data.length > 0) {
+			await addNotification(
+				user.id,
+				post.users.id,
+				"comment",
+				post.id,
+				data[0].id
+			);
+		}
 
 		if (error) {
 			console.error(error);
@@ -36,7 +52,8 @@ const AddComment: React.FC<CommentProps> = ({ postId }) => {
 
 	return (
 		<form onSubmit={handleSubmit} className="w-full">
-			<textarea
+			<input
+				type="text"
 				value={content}
 				onChange={(e) => setContent(e.target.value)}
 				required

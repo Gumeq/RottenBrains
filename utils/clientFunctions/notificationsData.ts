@@ -6,58 +6,57 @@ export async function addNotification(
 	from_userId: string,
 	userId: string,
 	type: string,
-	postId?: string
+	postId?: string,
+	comment_id?: string
 ) {
-	const { error: notifError } = await supabase
-		.from("notifications")
-		.select("user_id,post_id,type")
-		.eq("from_user_id", from_userId)
-		.eq("user_id", userId)
-		.eq("post_id", postId)
-		.eq("type", "like")
-		.single();
+	if (type !== "comment") {
+		const { error: notifError } = await supabase
+			.from("notifications")
+			.select("user_id,post_id,type")
+			.eq("from_user_id", from_userId)
+			.eq("user_id", userId)
+			.eq("post_id", postId)
+			.eq("type", type)
+			.single();
 
-	const { error: notifErrorFollow } = await supabase
-		.from("notifications")
-		.select("from_user_id,user_id,type")
-		.eq("user_id", userId)
-		.eq("from_user_id", from_userId)
-		.eq("type", "follow")
-		.single();
-
-	if (notifError && type === "like") {
+		if (notifError) {
+			if (type === "like") {
+				const { data, error } = await supabase
+					.from("notifications")
+					.insert([
+						{
+							user_id: userId,
+							from_user_id: from_userId,
+							type,
+							post_id: postId,
+							read: false,
+						},
+					]);
+			}
+			if (type === "follow") {
+				const { data, error } = await supabase
+					.from("notifications")
+					.insert([
+						{
+							user_id: userId,
+							from_user_id: from_userId,
+							type,
+							read: false,
+						},
+					]);
+			}
+		}
+	} else if (type === "comment") {
 		const { data, error } = await supabase.from("notifications").insert([
 			{
 				user_id: userId,
 				from_user_id: from_userId,
 				type,
 				post_id: postId,
+				comment_id: comment_id,
 				read: false,
 			},
 		]);
-
-		if (error) {
-			console.error("Error adding notification:", error);
-		} else {
-			console.log("Notification added:", data);
-		}
-	} else if (notifErrorFollow && type === "follow") {
-		const { data, error } = await supabase.from("notifications").insert([
-			{
-				user_id: userId,
-				from_user_id: from_userId,
-				type,
-				read: false,
-			},
-		]);
-
-		if (error) {
-			console.error("Error adding notification:", error);
-		} else {
-			console.log("Notification added:", data);
-		}
-	} else {
-		console.log("notification already added");
 	}
 }
 

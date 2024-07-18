@@ -57,10 +57,8 @@ export const getSavedStatus = async (
 			.eq("user_id", userId)
 			.eq("post_id", postId)
 			.single();
-		if (error) throw error;
 		return data !== null;
 	} catch (error) {
-		handleError("getSavedStatus", error);
 		return false;
 	}
 };
@@ -138,10 +136,8 @@ export const getLikedStatus = async (
 			.eq("user_id", userId)
 			.eq("post_id", postId)
 			.single();
-		if (error) throw error;
 		return data !== null;
 	} catch (error) {
-		handleError("getLikedStatus", error);
 		return false;
 	}
 };

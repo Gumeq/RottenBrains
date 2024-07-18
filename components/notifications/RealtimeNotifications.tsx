@@ -12,13 +12,12 @@ const NotificationButton = () => {
 	const { user } = useUser();
 
 	useEffect(() => {
-		const fetchInitialDataAndSubscribe = async () => {
-			const userId = user?.id;
+		if (!user) {
+			return;
+		}
+		const userId = user.id;
 
-			if (!userId) {
-				return;
-			}
-
+		const fetchUnreadNotifications = async () => {
 			const { data, error } = await supabase
 				.from("notifications")
 				.select("read")
@@ -27,9 +26,14 @@ const NotificationButton = () => {
 
 			if (error) {
 				console.error("Error fetching notifications:", error);
-			} else {
-				setHasUnread(data.length > 0);
+				return;
 			}
+
+			setHasUnread(data && data.length > 0);
+		};
+
+		const fetchInitialDataAndSubscribe = async () => {
+			await fetchUnreadNotifications();
 
 			const channel = supabase
 				.channel(`public:notifications:user_id=eq.${userId}`)
@@ -39,10 +43,24 @@ const NotificationButton = () => {
 						event: "INSERT",
 						schema: "public",
 						table: "notifications",
-						filter: `user_id=eq.${userId}`,
 					},
 					(payload) => {
-						setHasUnread(true);
+						if (payload.new.user_id === userId) {
+							setHasUnread(true);
+						}
+					}
+				)
+				.on(
+					"postgres_changes",
+					{
+						event: "UPDATE",
+						schema: "public",
+						table: "notifications",
+					},
+					(payload) => {
+						if (payload.new.user_id === userId) {
+							fetchUnreadNotifications();
+						}
 					}
 				)
 				.subscribe();
@@ -53,10 +71,10 @@ const NotificationButton = () => {
 		};
 
 		fetchInitialDataAndSubscribe();
-	}, [router, supabase]);
+	}, [user, supabase]);
 
 	const handleClick = () => {
-		router.push("/protected/notifications"); // Navigate to the notifications page
+		router.push("/protected/notifications");
 	};
 
 	return (

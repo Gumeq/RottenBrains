@@ -148,6 +148,19 @@ export default async function mediaPage({
 								</div>
 							)}
 						</div>
+
+						<Link
+							className="absolute top-0 right-0 m-4 font-bold rounded-[4px]"
+							href={`/protected/create-post/${media_type}/${media_id}`}
+						>
+							<img
+								src="/assets/icons/square-plus-solid.svg"
+								alt=""
+								width={30}
+								height={30}
+								className="invert-on-dark opacity-80"
+							/>
+						</Link>
 					</div>
 				</div>
 			</div>

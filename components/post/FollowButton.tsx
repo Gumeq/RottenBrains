@@ -64,11 +64,11 @@ const FollowButton: React.FC<SaveButtonProps> = ({ user_to_follow_id }) => {
 	return (
 		<button onClick={handleFollow}>
 			{followed ? (
-				<div className="px-8 py-2 bg-foreground/20 rounded-full">
+				<div className="px-8 py-2 bg-foreground/20 rounded-full hover:bg-accent/20">
 					UnFollow
 				</div>
 			) : (
-				<div className="px-8 py-2 bg-foreground/20 rounded-full">
+				<div className="px-8 py-2 bg-foreground/20 rounded-full hover:bg-accent/20">
 					Follow
 				</div>
 			)}
