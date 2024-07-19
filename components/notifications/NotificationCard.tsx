@@ -1,6 +1,5 @@
 "use client";
 
-import ProfilePicture from "../ProfilePicture";
 import CommentNotification from "./NotificationCards/CommentNotification";
 import FollowNotification from "./NotificationCards/FollowNotification";
 import LikeNotification from "./NotificationCards/LikeNotification";

@@ -193,7 +193,7 @@ export function HomePostCard({ post, index }: any) {
 					<div className="flex flex-row gap-4 items-center p-2 px-4 justify-between">
 						<div className="flex flex-row items-center gap-2">
 							<span className="min-w-[35px] min-h-[35px]">
-								<ProfilePicture userId={creator.id} />
+								<ProfilePicture user={creator} />
 							</span>
 							<div>
 								<p className="line-clamp-1">
@@ -282,10 +282,10 @@ export function HomePostCard({ post, index }: any) {
 								href={`/protected/create-post/${media_type}/${media_id}`}
 							>
 								<img
-									src="/assets/icons/square-plus-solid.svg"
+									src="/assets/icons/square-plus-regular.svg"
 									alt=""
-									width={30}
-									height={30}
+									width={25}
+									height={25}
 									className="invert-on-dark opacity-50"
 								/>
 							</Link>

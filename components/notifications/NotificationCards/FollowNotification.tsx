@@ -8,7 +8,7 @@ const FollowNotification = ({ notification }: any) => {
 		<div className="rounded-[8px] bg-foreground/5 p-4 flex flex-row justify-between border border-foreground/10 ">
 			<div className="flex flex-row items-center justify-between w-full">
 				<div className="flex flex-row items-center gap-4">
-					<ProfilePicture userId={fromUser.id}></ProfilePicture>
+					<ProfilePicture user={fromUser}></ProfilePicture>
 					<p className="">
 						<span className="font-bold">{fromUser.username}</span>{" "}
 						started following you!

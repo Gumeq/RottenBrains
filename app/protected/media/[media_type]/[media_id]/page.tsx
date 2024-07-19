@@ -154,7 +154,7 @@ export default async function mediaPage({
 							href={`/protected/create-post/${media_type}/${media_id}`}
 						>
 							<img
-								src="/assets/icons/square-plus-solid.svg"
+								src="/assets/icons/square-plus-regular.svg"
 								alt=""
 								width={30}
 								height={30}

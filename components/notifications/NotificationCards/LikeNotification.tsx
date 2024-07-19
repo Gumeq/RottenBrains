@@ -34,7 +34,7 @@ const LikeNotification = ({ notification }: any) => {
 						<div className="flex flex-row gap-4 items-center ">
 							<div className="h-full">
 								<ProfilePicture
-									userId={fromUser.id}
+									user={fromUser}
 								></ProfilePicture>
 							</div>
 							<p className="">

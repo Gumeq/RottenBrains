@@ -1,5 +1,6 @@
 "use client";
 
+import Loader from "@/components/Loader";
 import FollowButton from "@/components/post/FollowButton";
 import { getNewestUsers } from "@/utils/supabase/queries";
 import Link from "next/link";
@@ -29,7 +30,7 @@ const FollowUsers = () => {
 	}, []);
 
 	if (loading) {
-		return <div>Loading...</div>;
+		return <Loader></Loader>;
 	}
 
 	return (

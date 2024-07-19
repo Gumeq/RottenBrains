@@ -1,10 +1,6 @@
 import React from "react";
 
-import { getCurrentUser } from "@/utils/supabase/serverQueries";
-import ProfilePicture from "../ProfilePicture";
-
 import SearchBar from "../searchBar/SearchBar";
-import AuthButton from "../auth/AuthButton";
 import NotificationButton from "../notifications/RealtimeNotifications";
 import Link from "next/link";
 
