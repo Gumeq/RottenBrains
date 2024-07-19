@@ -72,7 +72,7 @@ const TopMoviesCarousel = ({ movies }: any) => {
 										<div className="flex flex-row gap-4 font-bold">
 											<Link
 												href={
-													media.type === "movie"
+													media.title
 														? `/protected/watch/${media.media_type}/${media.id}`
 														: `/protected/watch/${media.media_type}/${media.id}/1/1`
 												}
