@@ -150,6 +150,60 @@ export const getUserPosts = async (
 	}
 };
 
+export const getUserLikedPosts = async (
+	userId: string,
+	page: number
+): Promise<any | null> => {
+	try {
+		const { data, error } = await supabase
+			.from("likes")
+			.select(
+				`
+                *,
+                posts (
+                    *,
+					users (*)
+                )
+            `
+			)
+			.eq("user_id", userId)
+			.order("created_at", { ascending: false })
+			.range(page * 6, page * 6 + 5);
+		if (error) throw error;
+		return data;
+	} catch (error) {
+		handleError("getUserPosts", error);
+		return null;
+	}
+};
+
+export const getUserSavedPosts = async (
+	userId: string,
+	page: number
+): Promise<any | null> => {
+	try {
+		const { data, error } = await supabase
+			.from("saves")
+			.select(
+				`
+                *,
+                posts (
+                    *,
+					users (*)
+                )
+            `
+			)
+			.eq("user_id", userId)
+			.order("created_at", { ascending: false })
+			.range(page * 6, page * 6 + 5);
+		if (error) throw error;
+		return data;
+	} catch (error) {
+		handleError("getUserPosts", error);
+		return null;
+	}
+};
+
 export const getUserNotifications = async (
 	userId: string
 ): Promise<any | null> => {
