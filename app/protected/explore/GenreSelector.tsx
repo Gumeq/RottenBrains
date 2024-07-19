@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useInView } from "react-intersection-observer";
 import Loader from "@/components/Loader";
 import { getFromGenres } from "@/utils/tmdb";
+import { motion } from "framer-motion";
 
 const GenreSelector: React.FC = () => {
 	const [selectedType, setSelectedType] = useState<"movie" | "tv">("movie");
@@ -18,6 +19,11 @@ const GenreSelector: React.FC = () => {
 	const { ref, inView } = useInView();
 
 	const targetRef = useRef<HTMLDivElement>(null);
+
+	const variants = {
+		hidden: { opacity: 0 },
+		visible: { opacity: 1 },
+	};
 
 	useEffect(() => {
 		const loadMore = async () => {
@@ -117,13 +123,24 @@ const GenreSelector: React.FC = () => {
 					))}
 				</ul>
 			</div>
-			<div className="w-full grid lg:grid-cols-5 md:grid-cols-4 grid-cols-2 gap-4 mx-auto">
+			<div className="w-full grid lg:grid-cols-5 md:grid-cols-4 grid-cols-2 gap-4 mx-auto items-center justify-items-center">
 				{mediaGenre && mediaGenre.length > 0 ? (
 					mediaGenre.map((media: any) => (
 						<Link
 							href={`/protected/media/${selectedType}/${media.id}`}
 						>
-							<div key={media.id}>
+							<motion.div
+								key={media.id}
+								variants={variants}
+								initial="hidden"
+								animate="visible"
+								transition={{
+									delay: 0.15,
+									ease: "easeInOut",
+									duration: 0.25,
+								}}
+								viewport={{ amount: 0 }}
+							>
 								<img
 									src={`https://image.tmdb.org/t/p/w200${media.poster_path}`}
 									alt={media.title || media.name}
@@ -132,7 +149,7 @@ const GenreSelector: React.FC = () => {
 									className="md:min-w-[240px] md:min-h-[360px] rounded-[8px] hover:opacity-80 "
 									loading="lazy"
 								/>
-							</div>
+							</motion.div>
 						</Link>
 					))
 				) : (

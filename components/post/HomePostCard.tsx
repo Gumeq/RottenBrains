@@ -188,9 +188,9 @@ export function HomePostCard({ post, index }: any) {
 			}}
 			viewport={{ amount: 0 }}
 		>
-			<div className="w-[350px] max-w-[calc(100vw-10px)] flex flex-col relative">
+			<div className="w-[330px] max-w-[calc(100vw-10px)] flex flex-col relative">
 				<div className="flex flex-col relative overflow-hidden rounded-xl">
-					<div className="flex flex-row gap-4 items-center p-2 px-4 justify-between">
+					<div className="flex flex-row gap-4 items-center p-2 justify-between">
 						<div className="flex flex-row items-center gap-2">
 							<span className="min-w-[35px] min-h-[35px]">
 								<ProfilePicture user={creator} />
@@ -249,11 +249,11 @@ export function HomePostCard({ post, index }: any) {
 											href={`/protected/media/${media_type}/${media_id}`}
 										>
 											<img
-												src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
+												src={`https://image.tmdb.org/t/p/w300${media.poster_path}`}
 												alt=""
-												width={400}
-												height={600}
-												className="min-h-[300px] min-w-[200px] mx-auto"
+												width={320}
+												height={480}
+												className="min-h-[480px] min-w-[320px] mx-auto"
 											/>
 										</Link>
 									</div>
@@ -262,13 +262,13 @@ export function HomePostCard({ post, index }: any) {
 						</div>
 					</div>
 				</div>
-				<div className="mx-2 p-2 py-4">
+				<div className="pl-3 p-2 pt-4">
 					<UserReviewText
 						post_review={post.review_user || "no review"}
 						creator_name={creator?.username || "no user"}
 					/>
 				</div>
-				<div className="w-full px-4 pb-2 flex items-center">
+				<div className="w-full p-2 flex items-center">
 					<div className="flex flex-row align-center w-full h-full justify-between items-center">
 						<div className="flex flex-row items-center">
 							<PostStats

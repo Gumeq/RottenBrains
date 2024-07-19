@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Link from "next/link";
 import { sidebarLinks } from "@/constants";
@@ -6,8 +7,11 @@ import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import SearchBar from "../searchBar/SearchBar";
 import NotificationButton from "../notifications/RealtimeNotifications";
 import ProfilePicture from "./ProfilePicture";
+import { usePathname } from "next/navigation";
 
-export async function TopNavbarDesktop() {
+export function TopNavbarDesktop() {
+	const pathname = usePathname();
+
 	return (
 		<nav className="fixed top-0 bg-background w-screen items-center justify-center z-30 hidden xl:flex p-2">
 			<div className="flex flex-col">
@@ -29,10 +33,13 @@ export async function TopNavbarDesktop() {
 					</div>
 					<ul className="flex flex-row p-2 justify-between gap-2">
 						{sidebarLinks.map((link: INavLink) => {
+							const isActive = pathname.includes(link.route);
 							return (
 								<Link
 									href={link.route}
-									className="flex gap-4 items-center p-2 leftsidebar-link"
+									className={`flex gap-4 items-center p-2 leftsidebar-link ${
+										isActive ? "bg-accent" : ""
+									}`}
 								>
 									<img
 										src={link.imgURL}
