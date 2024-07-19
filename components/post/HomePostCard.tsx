@@ -249,7 +249,7 @@ export function HomePostCard({ post, index }: any) {
 											href={`/protected/media/${media_type}/${media_id}`}
 										>
 											<img
-												src={`https://image.tmdb.org/t/p/w300${media.poster_path}`}
+												src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
 												alt=""
 												width={320}
 												height={480}

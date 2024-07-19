@@ -142,11 +142,11 @@ const GenreSelector: React.FC = () => {
 								viewport={{ amount: 0 }}
 							>
 								<img
-									src={`https://image.tmdb.org/t/p/w200${media.poster_path}`}
+									src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
 									alt={media.title || media.name}
 									width={180}
 									height={240}
-									className="md:min-w-[240px] md:min-h-[360px] rounded-[8px] hover:opacity-80 "
+									className="md:min-w-[240px] md:min-h-[360px] rounded-[8px] hover:opacity-80 bg-foreground/5 "
 									loading="lazy"
 								/>
 							</motion.div>

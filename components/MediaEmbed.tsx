@@ -19,7 +19,7 @@ const VideoEmbed = ({
 	episode_number,
 }: VideoEmbedProps) => {
 	const [linkStart, setLinkStart] = useState<string>(
-		"https://vidsrc.pro/embed/"
+		"https://vidsrc.to/embed/"
 	);
 	const [media, setMedia] = useState<any>();
 	const [showVideo, setShowVideo] = useState(false);
@@ -214,11 +214,11 @@ const VideoEmbed = ({
 				<div className="flex justify-center gap-4 my-4">
 					<button
 						onClick={() =>
-							updateLinkStart("https://vidsrc.pro/embed/")
+							updateLinkStart("https://vidsrc.to/embed/")
 						}
 						className="bg-foreground/10 hover:bg-foreground/20 text-foreground font-semibold py-2 px-4 rounded"
 					>
-						vidsrc.pro
+						vidsrc.to
 					</button>
 					<button
 						onClick={() =>
@@ -230,11 +230,11 @@ const VideoEmbed = ({
 					</button>
 					<button
 						onClick={() =>
-							updateLinkStart("https://vidsrc.to/embed/")
+							updateLinkStart("https://vidsrc.pro/embed/")
 						}
 						className="bg-foreground/10 hover:bg-foreground/20 text-foreground font-semibold py-2 px-4 rounded"
 					>
-						vidsrc.to
+						vidsrc.pro
 					</button>
 				</div>
 				{media_type === "tv" && (
