@@ -57,11 +57,11 @@
 }
 
 .leftsidebar {
-	@apply hidden 2xl:flex px-6 py-10 flex-col justify-between min-w-[270px] h-screen bg-foreground/5  fixed top-0 left-0;
+	@apply hidden 2xl:flex flex-col justify-between min-w-[270px] h-screen bg-foreground/5  fixed top-0 left-0;
 }
 
 .leftsidebar-link {
-	@apply rounded-lg hover:bg-accent transition;
+	@apply hover:bg-accent rounded-[4px] transition;
 }
 
 .topbar {

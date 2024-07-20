@@ -1,6 +1,5 @@
 import { getMediaDetails } from "@/utils/tmdb";
 import React from "react";
-import TVShowDetails from "./TVSeasons";
 import Link from "next/link";
 
 type MediaInfoProps = {
@@ -27,15 +26,7 @@ const MediaInfoComponent = async ({
 	}
 	return (
 		<div>
-			<div>
-				{media_type === "tv" && season_number && (
-					<TVShowDetails
-						tv_show_id={media_id}
-						season_number={season_number}
-					></TVShowDetails>
-				)}
-			</div>
-			<div className="w-full flex flex-col md:flex-row gap-2 md:gap-0 rounded-xl items-center mb-4">
+			<div className="w-full flex flex-col md:flex-row gap-2 md:gap-0 rounded-xl items-center">
 				<Link href={`/protected/media/${media_type}/${media_id}`}>
 					<div className="min-w-[300px] min-h-[450px] rounded-[8px] overflow-hidden drop-shadow-2xl">
 						<div className="absolute p-2 text-lg m-2 font-bold bg-background/50 backdrop-blur flex flex-row gap-2 items-center justify-center rounded-[6px]">

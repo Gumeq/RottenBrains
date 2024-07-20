@@ -59,7 +59,7 @@ const EpisodeCard = ({
 	}
 
 	return (
-		<div className="border p-2 rounded-[8px] mb-2 hover:border-accent flex flex-row gap-4 items-center">
+		<div className=" p-2 rounded-[8px] mb-2 hover:border-accent flex flex-row gap-4 ">
 			<div>
 				<img
 					src={`https://image.tmdb.org/t/p/w200${episode.still_path}`}
@@ -67,7 +67,7 @@ const EpisodeCard = ({
 					width={160}
 					height={90}
 					loading="lazy"
-					className="max-w-[160px] max-h-[90px] bg-foreground/10 rounded-[6px]"
+					className="max-w-[160px] max-h-[90px] bg-foreground/10 rounded-[4px]"
 				/>
 			</div>
 			<div className="flex flex-col">

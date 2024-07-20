@@ -116,18 +116,6 @@ export default async function mediaPage({
 							)}
 						</div>
 						<div>
-							{media.next_episode_to_air && (
-								<div>
-									<div className="flex flex-row gap-2 items-center text-xl font-bold py-4">
-										<h2 className="">Next Episode:</h2>
-										<p>
-											{media.next_episode_to_air.air_date}
-										</p>
-									</div>
-								</div>
-							)}
-						</div>
-						<div>
 							{media_type === "movie" ? (
 								<div>
 									<Link

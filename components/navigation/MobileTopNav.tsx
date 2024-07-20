@@ -12,14 +12,14 @@ const MobileTopNav = async () => {
 					<img
 						src="/assets/images/logo-text.png"
 						alt="text-logo"
-						width={80}
-						height={80}
+						width={60}
+						height={60}
 						className="invert-on-dark"
 					/>
 				</Link>
-				<div className=" h-full w-full mx-4">
+				{/* <div className=" h-full w-full mx-4">
 					<SearchBar link={true}></SearchBar>
-				</div>
+				</div> */}
 				<NotificationButton></NotificationButton>
 			</div>
 		</div>

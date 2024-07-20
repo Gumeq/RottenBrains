@@ -8,48 +8,59 @@ import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import NotificationButton from "../notifications/RealtimeNotifications";
 
 const Bottombar = () => {
 	const { user } = useUser();
 	// const icon = user?.imageURL;
 	const pathname = usePathname();
 	return (
-		<div className="fixed bottom-0 z-50 ">
-			<ul className="bottom-bar flex flex-row gap-2">
+		<div className="fixed bottom-2 z-50 flex items-center justify-center w-screen md:hidden">
+			<ul className=" w-[80vw] bg-background flex flex-row items-center justify-between rounded-full border border-foreground/30 drop-shadow-xl">
 				{sidebarLinks.map((link: INavLink) => {
 					const isActive = pathname.includes(link.route);
 					return (
-						<Link href={link.route} className="p-2">
+						<Link href={link.route} className=" h-full">
 							<div
-								className={`flex flex-col gap-1 items-center p-2 leftsidebar-link ${
-									isActive ? "bg-accent" : ""
+								className={`flex items-center p-2 m-1 rounded-full ${
+									isActive ? "bg-foreground/20" : ""
 								}`}
 							>
 								<img
 									src={link.imgURL}
 									alt={""}
-									width={15}
-									height={15}
-									className="invert-on-dark"
+									width={25}
+									height={25}
+									className="invert-on-dark w-[25px] h-[25px]"
 								/>
-								<p className="text-sm">{link.label}</p>
+								{/* <p className="text-sm">{link.label}</p> */}
 							</div>
 						</Link>
 					);
 				})}
+				<li
+					className={`flex items-center p-2 rounded-full ${
+						pathname.includes("/protected/notifications")
+							? "bg-foreground/20"
+							: ""
+					}`}
+				>
+					<NotificationButton></NotificationButton>
+					{/* <p className="text-sm">Notifs</p> */}
+				</li>
 				<li>
 					<Link
 						href={"/protected/profile"}
-						className="flex flex-col gap-1 items-center"
+						className={`flex items-center min-w-[45px] min-h-[45px]`}
 					>
 						<img
 							src={user?.imageURL}
 							alt={""}
-							width={20}
-							height={20}
-							className="rounded-full overflow-hidden min-w-[20px] min-h-[20px]"
+							width={50}
+							height={50}
+							className="rounded-full overflow-hidden  border border-foreground/30 drop-shadow-xl"
 						></img>
-						<p className="text-sm">Profile</p>
+						{/* <p className="text-sm">Profile</p> */}
 					</Link>
 				</li>
 			</ul>

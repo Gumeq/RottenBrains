@@ -127,22 +127,7 @@ const VideoEmbed = ({
 	};
 
 	return (
-		<div className="relative">
-			<div className="my-2">
-				<h2 className="text-xl font-bold flex flex-row gap-2">
-					{media.title || media.name}
-					{season_number !== undefined &&
-						episode_number !== undefined && (
-							<h2>
-								{" - "}
-								{formatEpisodeCode(
-									season_number,
-									episode_number
-								)}
-							</h2>
-						)}
-				</h2>
-			</div>
+		<div className="relative flex flex-col gap-2">
 			<div>
 				{!showVideo ? (
 					<div className="relative text-center rounded-xl overflow-hidden">
@@ -165,7 +150,7 @@ const VideoEmbed = ({
 						</button>
 					</div>
 				) : (
-					<div className="aspect-w-16 aspect-h-9">
+					<div className="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden">
 						<iframe
 							allowFullScreen
 							id="iframe"
@@ -180,8 +165,22 @@ const VideoEmbed = ({
 					</div>
 				)}
 			</div>
-
-			<div className="flex md:flex-row flex-col justify-between mt-2 items-center">
+			<div className="">
+				<h2 className="text-xl font-bold flex flex-row gap-2">
+					{media.title || media.name}
+					{season_number !== undefined &&
+						episode_number !== undefined && (
+							<h2>
+								{" - "}
+								{formatEpisodeCode(
+									season_number,
+									episode_number
+								)}
+							</h2>
+						)}
+				</h2>
+			</div>
+			<div className="flex md:flex-row flex-col justify-between items-center gap-4">
 				{media_type === "tv" && (
 					<div>
 						{getPreviousEpisodeLink() ? (
@@ -211,7 +210,7 @@ const VideoEmbed = ({
 						)}
 					</div>
 				)}
-				<div className="flex justify-center gap-4 my-4">
+				<div className="flex justify-center gap-4 ">
 					<button
 						onClick={() =>
 							updateLinkStart("https://vidsrc.to/embed/")

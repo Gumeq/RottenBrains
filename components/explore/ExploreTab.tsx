@@ -13,7 +13,7 @@ export async function ExploreTab({ action }: ExploreTabProps) {
 		exploreData = null;
 	}
 	return (
-		<div className="flex flex-row overflow-x-auto gap-2 custom-scrollbar">
+		<div className="flex flex-row overflow-x-auto gap-2 pb-2 custom-scrollbar">
 			{exploreData &&
 				exploreData.results.map((media: any) => (
 					<div key={media.id} className="w-full">

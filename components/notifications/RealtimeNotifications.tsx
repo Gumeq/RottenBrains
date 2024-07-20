@@ -82,9 +82,9 @@ const NotificationButton = () => {
 			<img
 				src={"/assets/icons/bell-solid.svg"}
 				alt="Notification Bell"
-				width={20}
-				height={20}
-				className="invert-on-dark min-w-[20px] min-h-[20px]"
+				width={25}
+				height={25}
+				className="invert-on-dark max-w-[25px] max-h-[25px]"
 			/>
 			{hasUnread && (
 				<span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-accent"></span>
