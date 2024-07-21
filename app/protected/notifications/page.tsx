@@ -25,7 +25,7 @@ const NotificationsPage = () => {
 				.select(
 					`
 					*, 
-					users:user_id (*),
+					users:from_user_id (*),
 					post_id:posts (*),
 					comment_id:comments(*)
 				`
