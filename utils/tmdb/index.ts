@@ -19,15 +19,15 @@ export const getNowPlayingMovies = async () => {
 };
 
 export const getTrendingTV = async () => {
-	return fetchFromApi("trending/tv/week?language=en-US");
+	return fetchFromApi("trending/tv/day?language=en-US");
 };
 
 export const getTrendingMovies = async () => {
-	return fetchFromApi("trending/movie/week?language=en-US");
+	return fetchFromApi("trending/movie/day?language=en-US");
 };
 
 export const getPopular = async () => {
-	return fetchFromApi("trending/all/week?language=en-US");
+	return fetchFromApi("trending/all/day?language=en-US");
 };
 
 export const getAiringToday = async () => {

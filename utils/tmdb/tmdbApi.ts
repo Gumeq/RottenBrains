@@ -3,7 +3,6 @@ const BASE_URL = "https://api.themoviedb.org/3";
 
 export const fetchFromApi = async (endpoint: string): Promise<any> => {
 	const url = `${BASE_URL}/${endpoint}&api_key=${API_KEY}`;
-
 	try {
 		const response = await fetch(url);
 		if (!response.ok) {
