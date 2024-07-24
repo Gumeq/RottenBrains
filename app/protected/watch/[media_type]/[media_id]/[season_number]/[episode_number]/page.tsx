@@ -5,6 +5,7 @@ import HomePostCard from "@/components/post/HomePostCard";
 import TVShowDetails from "@/components/TVSeasons";
 import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
 import { getPostsOfMedia } from "@/utils/supabase/queries";
+import { getMediaDetails } from "@/utils/tmdb";
 
 export async function generateMetadata({ params }: any) {
 	const media_id = parseInt(params.media_id, 10);
@@ -50,9 +51,18 @@ export default async function mediaPage({
 
 	const postsOfMedia = await getPostsOfMedia(media_id, media_type);
 
+	const media = await getMediaDetails(media_type, media_id);
+
 	return (
 		<>
-			<div className=" max-w-[1800px] w-screen h-full mx-auto flex flex-col px-4">
+			<div>
+				<img
+					src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
+					alt=""
+					className="w-screen lg:h-[150vh] h-[300vh] object-cover blur-[100px] absolute top-0 mask2 opacity-30 overflow-hidden"
+				/>
+			</div>
+			<div className=" max-w-[80vw] w-screen h-full mx-auto flex flex-col px-4 relative z-10">
 				<div className="w-full p-2 text-center bg-accent flex items-center justify-center font-bold rounded-xl my-2">
 					For the best experience use an adBlocker!
 				</div>
@@ -64,12 +74,12 @@ export default async function mediaPage({
 							season_number={season_number}
 							episode_number={episode_number}
 						></VideoEmbed>
-						<div>
+						{/* <div>
 							<MediaInfoComponent
 								media_type={media_type}
 								media_id={media_id}
 							></MediaInfoComponent>
-						</div>
+						</div> */}
 						<div className="">
 							{postsOfMedia && (
 								<div>
@@ -78,7 +88,6 @@ export default async function mediaPage({
 											User Posts
 										</h2>
 									)}
-									<div className="w-1/6 h-[5px] bg-accent rounded-full mb-4 "></div>
 									<div className="flex flex-row flex-nowrap overflow-x-auto gap-2 pb-4 custom scrollbar">
 										{postsOfMedia
 											?.slice(0, 9)

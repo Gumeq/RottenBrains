@@ -78,10 +78,10 @@ const GenreSelector: React.FC = () => {
 			className="w-full flex justify-center flex-col gap-4 p-2"
 			ref={targetRef}
 		>
-			<button
+			{/* <button
 				onClick={handleScrollToTarget}
 				className="fixed bottom-[25px] right-[25px] bg-accent p-8 rounded-full min-h-10 min-w-10 hidden md:block"
-			></button>
+			></button> */}
 			<div className="flex flex-row gap-4 justify-center my-4">
 				<button
 					key={"movie"}

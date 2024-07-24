@@ -42,6 +42,13 @@ export const getTVDetails = async (tvId: number) => {
 	return fetchFromApi(`tv/${tvId}?language=en-US`);
 };
 
+export const getMovieCredits = async (movieId: number) => {
+	return fetchFromApi(`movie/${movieId}/credits?language=en-US`);
+};
+export const getTVCredits = async (tvId: number) => {
+	return fetchFromApi(`tv/${tvId}/credits?language=en-US`);
+};
+
 export const getSeasonDetails = async (tvId: number, season_number: number) => {
 	return fetchFromApi(`tv/${tvId}/season/${season_number}?language=en-US`);
 };
@@ -61,6 +68,21 @@ export const getMediaDetails = async (media_type: string, media_id: number) => {
 	} else {
 		return await getTVDetails(media_id);
 	}
+};
+
+export const getMediaCredits = async (media_type: string, media_id: number) => {
+	if (media_type === "movie") {
+		return await getMovieCredits(media_id);
+	} else {
+		return await getTVCredits(media_id);
+	}
+};
+
+export const getPersonDetails = async (person_id: number) => {
+	return fetchFromApi(`person/${person_id}?language=en-US`);
+};
+export const getPersonImages = async (person_id: number) => {
+	return fetchFromApi(`person/${person_id}/tagged_images?page=1`);
 };
 
 export const getVideos = async (media_type: string, media_id: number) => {

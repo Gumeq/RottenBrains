@@ -49,7 +49,7 @@ const MediaInfoComponent = async ({
 					</div>
 				</Link>
 
-				<div className="w-full md:h-5/6 bg-foreground/10 md:rounded-r-[8px] relative">
+				{/* <div className="w-full md:h-5/6 bg-foreground/10 md:rounded-r-[8px] relative">
 					<div className="flex flex-col p-8 text-foreground/70 gap-2 w-full ">
 						<Link
 							href={`/protected/media/${media_type}/${media_id}`}
@@ -116,7 +116,7 @@ const MediaInfoComponent = async ({
 							)}
 						</div>
 					</div>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);

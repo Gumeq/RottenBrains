@@ -134,7 +134,7 @@ const VideoEmbed = ({
 						<img
 							src={`https://image.tmdb.org/t/p/original${media.backdrop_path}`}
 							alt="Media Poster"
-							className="w-full h-auto"
+							className="w-full h-auto drop-shadow-lg"
 						/>
 						<button
 							onClick={handleButtonClick}
@@ -150,7 +150,7 @@ const VideoEmbed = ({
 						</button>
 					</div>
 				) : (
-					<div className="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden">
+					<div className="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden drop-shadow-lg">
 						<iframe
 							allowFullScreen
 							id="iframe"

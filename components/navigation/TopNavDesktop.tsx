@@ -13,15 +13,15 @@ export function TopNavbarDesktop() {
 	const pathname = usePathname();
 
 	return (
-		<nav className="fixed top-0 bg-background w-screen items-center justify-center z-30 hidden xl:flex p-2">
+		<nav className="fixed top-0 bg-background/30 backdrop-blur-xl w-screen items-center justify-center z-30 hidden xl:flex p-1">
 			<div className="flex flex-col">
-				<div className="flex flex-row gap-10 items-center justify-between w-screen max-w-4xl">
+				<div className="flex flex-row gap-10 items-center justify-between w-screen max-w-[95vw]">
 					<Link href={"/protected/home"}>
 						<img
 							src="/assets/images/logo-text.png"
 							alt="text-logo"
-							width={80}
-							height={80}
+							width={50}
+							height={50}
 							className="invert-on-dark"
 						/>
 					</Link>
@@ -32,7 +32,7 @@ export function TopNavbarDesktop() {
 								<Link
 									href={link.route}
 									className={`flex gap-4 items-center px-4 py-2 rounded-[4px] ${
-										isActive ? "bg-accent" : ""
+										isActive ? "bg-foreground/20" : ""
 									}`}
 								>
 									<img
