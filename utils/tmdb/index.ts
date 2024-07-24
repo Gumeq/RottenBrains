@@ -84,6 +84,9 @@ export const getPersonDetails = async (person_id: number) => {
 export const getPersonImages = async (person_id: number) => {
 	return fetchFromApi(`person/${person_id}/tagged_images?page=1`);
 };
+export const getPersonCredits = async (person_id: number) => {
+	return fetchFromApi(`person/${person_id}/combined_credits?language=en-US`);
+};
 
 export const getVideos = async (media_type: string, media_id: number) => {
 	return fetchFromApi(`${media_type}/${media_id}/videos?language=en-US`);

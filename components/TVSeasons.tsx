@@ -76,7 +76,7 @@ const TVShowDetails = ({ tv_show_id, season_number }: TVShowDetailsProps) => {
 					<button
 						key={season.season_number}
 						onClick={() => handleSeasonChange(season.season_number)}
-						className={`p-2 px-4 rounded-full bg-foreground/10 text-foreground whitespace-nowrap ${
+						className={`flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg text-foreground whitespace-nowrap ${
 							selectedSeason === season.season_number
 								? "border-2 border-accent"
 								: ""

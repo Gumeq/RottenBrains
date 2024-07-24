@@ -1,6 +1,36 @@
-import { getPersonDetails, getPersonImages } from "@/utils/tmdb";
+import {
+	getPersonCredits,
+	getPersonDetails,
+	getPersonImages,
+} from "@/utils/tmdb";
 import Link from "next/link";
 import React from "react";
+
+async function getAndSortPersonCredits(person_id: number) {
+	try {
+		// Get the credits for the person
+		let credits = await getPersonCredits(person_id);
+		credits = credits.cast;
+
+		// Remove duplicates based on title or name
+		const uniqueCredits = credits.filter(
+			(credit: any, index: any, self: any) =>
+				index ===
+				self.findIndex(
+					(c: any) =>
+						(c.title || c.name) === (credit.title || credit.name)
+				)
+		);
+
+		// Sort the credits by popularity in descending order
+		uniqueCredits.sort((a: any, b: any) => b.popularity - a.popularity);
+
+		return uniqueCredits;
+	} catch (error) {
+		console.error("Error fetching or sorting credits:", error);
+		return [];
+	}
+}
 
 const page = async ({ params }: { params: { person_id: number } }) => {
 	const person_id = params.person_id;
@@ -8,6 +38,8 @@ const page = async ({ params }: { params: { person_id: number } }) => {
 	console.log(person_details);
 	const images = await getPersonImages(person_id);
 	console.log(images);
+	const credits = await getAndSortPersonCredits(person_id);
+	console.log(credits);
 	return (
 		<div className="lg:w-screen py-4">
 			<div>
@@ -91,10 +123,10 @@ const page = async ({ params }: { params: { person_id: number } }) => {
 							</div>
 							<div className="h-full relative">
 								<div className="h-full aspect-[3/2] grid">
-									{images.results.map((image: any) => (
+									{credits.map((credit: any) => (
 										<div>
 											<img
-												src={`https://image.tmdb.org/t/p/w500${image.file_path}`}
+												src={`https://image.tmdb.org/t/p/w500${credit.poster_path}`}
 												alt=""
 											/>
 										</div>

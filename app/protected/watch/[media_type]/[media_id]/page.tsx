@@ -1,4 +1,5 @@
 import ExploreTab from "@/components/explore/ExploreTab";
+import GoBackArrow from "@/components/GoBackArrow";
 import VideoEmbed from "@/components/MediaEmbed";
 import MediaInfoComponent from "@/components/MediaInfoComponent";
 import HomePostCard from "@/components/post/HomePostCard";
@@ -55,12 +56,18 @@ export default async function mediaPage({
 					className="w-screen lg:h-[150vh] h-[300vh] object-cover blur-[100px] absolute top-0 mask2 opacity-30 overflow-hidden"
 				/>
 			</div>
-			<div className=" max-w-[80vw] w-screen h-full mx-auto flex flex-col px-4 relative z-10">
-				<div className="w-full p-2 text-center bg-accent flex items-center justify-center font-bold rounded-xl my-2">
+			<div className=" lg:max-w-[80vw] w-screen h-full mx-auto flex flex-col relative z-10">
+				<div className="w-screen h-16 bg-white/10 flex-row gap-4 flex lg:hidden z-20 relative items-center px-4">
+					<GoBackArrow />
+					<p className="truncate text-lg">
+						Watch {media.title || media.name}
+					</p>
+				</div>
+				<div className="w-full p-2 text-center bg-accent flex items-center justify-center font-bold lg:rounded-xl my-2">
 					For the best experience use an adBlocker!
 				</div>
-				<div className="flex md:flex-row flex-col gap-4">
-					<div className="md:w-[75%] flex flex-col gap-4">
+				<div className="flex md:flex-row flex-col gap-4 px-2">
+					<div className="lg:w-[75%] flex flex-col gap-4">
 						<VideoEmbed
 							media_type={media_type}
 							media_id={media_id}

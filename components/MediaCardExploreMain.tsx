@@ -27,9 +27,9 @@ const MediaCardExploreMain = (media: any, color: any) => {
 				className=" absolute w-full h-full object-cover object-center opacity-50"
 			/>
 			<div
-				className={`absolute inset-0 w-full h-full opacity-70 backdrop-blur-xl`}
+				className={`absolute inset-0 w-full h-full opacity-50 backdrop-blur-xl`}
 				style={{
-					backgroundImage: `linear-gradient(180deg, ${media.averageColor} 0%, black 100%)`,
+					backgroundImage: `linear-gradient(180deg, black 0%, black 100%)`,
 				}}
 			></div>
 			<div className="absolute lg:p-4 p-2 z-10 inset-0 flex flex-row gap-4">

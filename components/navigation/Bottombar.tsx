@@ -15,12 +15,15 @@ const Bottombar = () => {
 	// const icon = user?.imageURL;
 	const pathname = usePathname();
 	return (
-		<div className="fixed bottom-2 z-50 flex items-center justify-center w-screen md:hidden">
-			<ul className=" w-[80vw] bg-background flex flex-row items-center justify-between rounded-full border border-foreground/30 drop-shadow-xl">
+		<div className="fixed bottom-0 z-50 flex items-center justify-center w-screen md:hidden">
+			<ul className=" w-full h-16 bg-background flex flex-row items-center justify-between drop-shadow-xl px-4">
 				{sidebarLinks.map((link: INavLink) => {
 					const isActive = pathname.includes(link.route);
 					return (
-						<Link href={link.route} className=" h-full">
+						<Link
+							href={link.route}
+							className=" h-full flex items-center justify-center"
+						>
 							<div
 								className={`flex items-center p-2 m-1 rounded-full ${
 									isActive ? "bg-foreground/20" : ""

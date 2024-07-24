@@ -165,8 +165,8 @@ const VideoEmbed = ({
 					</div>
 				)}
 			</div>
-			<div className="">
-				<h2 className="text-xl font-bold flex flex-row gap-2">
+			<div className="flex flex-row justify-between">
+				<h2 className="text-xl flex flex-row gap-2 truncate items-center">
 					{media.title || media.name}
 					{season_number !== undefined &&
 						episode_number !== undefined && (
@@ -179,14 +179,28 @@ const VideoEmbed = ({
 							</h2>
 						)}
 				</h2>
+				<Link
+					href={`/protected/create-post/${media_type}/${media_id}`}
+					className=" flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg"
+				>
+					<img
+						src="/assets/icons/star-outline.svg"
+						alt=""
+						width={20}
+						height={20}
+						className="invert-on-dark"
+						loading="lazy"
+					/>
+					<p className="text-lg">Rate</p>
+				</Link>
 			</div>
-			<div className="flex md:flex-row flex-col justify-between items-center gap-4">
+			<div className="flex md:flex-row flex-row justify-between items-center gap-4">
 				{media_type === "tv" && (
 					<div>
 						{getPreviousEpisodeLink() ? (
 							<Link href={getPreviousEpisodeLink() || "#"}>
 								<div
-									className={`px-4 py-2 bg-foreground/10 rounded flex flex-row gap-2 items-center ${
+									className={`flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg ${
 										prevClicked
 											? "border-2 border-accent"
 											: ""
@@ -204,13 +218,13 @@ const VideoEmbed = ({
 								</div>
 							</Link>
 						) : (
-							<div className="px-4 py-2 bg-foreground/10 rounded flex flex-row gap-2 items-center">
+							<div className="flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg">
 								No Previous Episode
 							</div>
 						)}
 					</div>
 				)}
-				<div className="flex justify-center gap-4 ">
+				{/* <div className="flex justify-center gap-4 ">
 					<button
 						onClick={() =>
 							updateLinkStart("https://vidsrc.to/embed/")
@@ -235,13 +249,13 @@ const VideoEmbed = ({
 					>
 						vidsrc.pro
 					</button>
-				</div>
+				</div> */}
 				{media_type === "tv" && (
 					<div>
 						{getNextEpisodeLink() ? (
 							<Link href={getNextEpisodeLink() || "#"}>
 								<div
-									className={`px-4 py-2 bg-foreground/10 rounded flex flex-row gap-2 items-center ${
+									className={`flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg ${
 										nextClicked
 											? "border-2 border-accent"
 											: ""
@@ -259,7 +273,7 @@ const VideoEmbed = ({
 								</div>
 							</Link>
 						) : (
-							<div className="px-4 py-2 bg-foreground/10 rounded flex flex-row gap-2 items-center">
+							<div className="flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg">
 								No Next Episode
 							</div>
 						)}
