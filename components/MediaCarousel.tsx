@@ -96,10 +96,10 @@ const TopMoviesCarousel = ({ movies }: any) => {
 														className="rounded-[8px] drop-shadow-xl min-h-[100%] w-auto mx-4 aspect-[2/3]"
 													>
 														<LazyImage
-															src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
+															src={`https://image.tmdb.org/t/p/w342${media.poster_path}`}
 															alt="Poster Image"
 															className={
-																"rounded-[8px]"
+																"rounded-[8px] inset-0 object-cover"
 															}
 														/>
 													</Link>
@@ -132,11 +132,11 @@ const TopMoviesCarousel = ({ movies }: any) => {
 														</div>
 													</div>
 												</div>
-												<div className="absolute top-0 ">
+												<div className="absolute top-0 w-full h-full">
 													<LazyImage
-														src={`https://image.tmdb.org/t/p/original${media.backdrop_path}`}
+														src={`https://image.tmdb.org/t/p/w1280${media.backdrop_path}`}
 														alt="Background Image"
-														className="lg:rounded-[16px] mask1 w-full h-full aspect-[3/2] object-cover opacity-80"
+														className="lg:rounded-[16px] mask1 w-full h-full aspect-[3/2] inset-0 object-cover opacity-80"
 													/>
 												</div>
 											</div>

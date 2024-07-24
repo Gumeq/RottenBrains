@@ -60,7 +60,7 @@ const ExploreCard = async (media: any) => {
 						>
 							<div className="aspect-w-2 aspect-h-3 rounded-xl overflow-hidden">
 								<img
-									src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
+									src={`https://image.tmdb.org/t/p/w342${media.poster_path}`}
 									alt=""
 									height="300"
 									width="200"
