@@ -93,13 +93,13 @@ const TopMoviesCarousel = ({ movies }: any) => {
 												<div className="lg:h-[60%] h-[100%] z-10 flex flex-row ">
 													<Link
 														href={`/protected/media/${media.media_type}/${media.id}`}
-														className="rounded-[8px] drop-shadow-xl min-h-[100%] w-auto mx-4 aspect-[2/3]"
+														className="rounded-[8px] drop-shadow-xl min-h-[100%] w-auto mx-4 aspect-[2/3] "
 													>
 														<LazyImage
 															src={`https://image.tmdb.org/t/p/w342${media.poster_path}`}
 															alt="Poster Image"
 															className={
-																"rounded-[8px] inset-0 object-cover"
+																"rounded-[8px] w-full h-full inset-0 object-cover"
 															}
 														/>
 													</Link>

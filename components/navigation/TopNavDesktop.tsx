@@ -13,41 +13,51 @@ export function TopNavbarDesktop() {
 	const pathname = usePathname();
 
 	return (
-		<nav className="fixed top-0 bg-background/30 backdrop-blur-xl w-screen items-center justify-center z-30 hidden xl:flex p-1">
-			<div className="flex flex-col">
-				<div className="flex flex-row gap-10 items-center justify-between w-screen max-w-[95vw]">
-					<Link href={"/protected/home"}>
-						<img
-							src="/assets/images/logo-text.png"
-							alt="text-logo"
-							width={50}
-							height={50}
-							className="invert-on-dark"
-						/>
-					</Link>
-					<ul className="flex flex-row justify-between gap-4">
-						{sidebarLinks.map((link: INavLink) => {
-							const isActive = pathname.includes(link.route);
-							return (
-								<Link
-									href={link.route}
-									className={`flex gap-4 items-center px-4 py-2 rounded-[4px] ${
-										isActive ? "bg-foreground/20" : ""
-									}`}
-								>
-									<img
-										src={link.imgURL}
-										alt={""}
-										width={20}
-										height={20}
-										className="invert-on-dark"
-									/>
-									{link.label}
-								</Link>
-							);
-						})}
-						{/* <div className="flex flex-row items-center gap-4"></div> */}
-					</ul>
+		<nav className="fixed top-0 bg-background backdrop-blur-xl w-screen h-16 items-center justify-center z-30 hidden xl:flex p-1">
+			<div className="flex flex-col items-center">
+				<div className="flex flex-row gap-10 items-center justify-between w-screen lg:max-w-[80vw] max-w-">
+					<div className="flex flex-row gap-16">
+						<Link
+							href={"/protected/home"}
+							className="px-4 py-2  bg-accent rounded-[8px]"
+						>
+							<img
+								src="/assets/images/logo-text.png"
+								alt="text-logo"
+								width={60}
+								height={60}
+								className=""
+							/>
+						</Link>
+						<ul className="flex flex-row justify-between gap-8">
+							{sidebarLinks.map((link: INavLink) => {
+								const isActive = pathname.includes(link.route);
+								return (
+									<Link
+										href={link.route}
+										className={`flex gap-4 items-center px-4 py-2 rounded-[4px] justify-center ${
+											isActive ? "underline" : ""
+										}`}
+									>
+										{/* <img
+											src={link.imgURL}
+											alt={""}
+											width={15}
+											height={15}
+											className="invert-on-dark"
+										/> */}
+										<p className="text-xl ">{link.label}</p>
+									</Link>
+								);
+							})}
+							{/* <div className="flex flex-row items-center gap-4"></div> */}
+						</ul>
+					</div>
+
+					<div className=" h-full lg:w-[20vw] w-screen lg:p-0 p-2">
+						<SearchBar link={true} user={true}></SearchBar>
+					</div>
+
 					<div className="flex flex-row gap-8">
 						<NotificationButton></NotificationButton>
 						<div className="flex items-center">

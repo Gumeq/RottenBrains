@@ -5,6 +5,7 @@ import React from "react";
 import GenreSelector from "./GenreSelector";
 import SearchBar from "@/components/searchBar/SearchBar";
 import { getAverageColor } from "fast-average-color-node";
+import ScrollButtons from "@/components/explore/ScrollButtons";
 
 const fetchMoviesWithColors = async (movies: any) => {
 	const moviesWithColors = await Promise.all(
@@ -27,53 +28,88 @@ const page = async () => {
 				<MediaCarousel movies={moviesWithColors}></MediaCarousel>
 			</div>
 			<div
-				className="lg:max-w-[90vw] w-full flex flex-col gap-2 lg:-mt-[20vh] mt-4 z-10 lg:px-0 px-2"
+				className="lg:max-w-[90vw] w-full flex flex-col gap-8 lg:-mt-[20vh] mt-4 z-10 lg:px-0 px-2"
 				id="explore"
 			>
 				<div className="flex md:flex-row flex-col  justify-between md:mt-8 my-4 items-center w-full">
 					<div>
 						<h1 className="text-2xl font-bold">Explore</h1>
 					</div>
-					<div className=" h-full lg:w-[400px] w-screen lg:p-0 p-2">
+					<div className=" h-full lg:w-[20vw] w-screen lg:p-0 p-2">
 						<SearchBar link={true} user={true}></SearchBar>
 					</div>
 				</div>
-				<div>
-					<div className="flex flex-row gap-2 items-center my-2">
-						<div className="w-2 h-2 bg-accent rounded-full"></div>
-						<h1 className="text-xl font-bold">Now in cinemas</h1>
+				<div className="flex flex-col gap-4">
+					<div className="flex flex-row justify-between items-center">
+						<div className="flex flex-row gap-2 items-center my-2">
+							<div className="w-2 h-2 bg-accent rounded-full"></div>
+							<h1 className="text-xl font-bold">
+								Now in cinemas
+							</h1>
+						</div>
+						<ScrollButtons
+							containerId="cinemasNow"
+							scrollPercent={100}
+						></ScrollButtons>
 					</div>
-					<ExploreTab action="Now_in_cinemas"></ExploreTab>
+
+					<ExploreTab
+						action="Now_in_cinemas"
+						containerId="cinemasNow"
+					></ExploreTab>
 				</div>
-				<div>
-					<div className="flex flex-row gap-2 items-center my-2">
-						<div className="w-2 h-2 bg-accent rounded-full"></div>
-						<h1 className="text-xl font-bold">Popular Today</h1>
+				<div className="flex flex-col gap-4">
+					<div className="flex flex-row justify-between items-center">
+						<div className="flex flex-row gap-2 items-center my-2">
+							<div className="w-2 h-2 bg-accent rounded-full"></div>
+							<h1 className="text-xl font-bold">Popular Today</h1>
+						</div>
+						<ScrollButtons
+							containerId="popularToday"
+							scrollPercent={100}
+						></ScrollButtons>
 					</div>
-					<ExploreTab action="Popular_Today"></ExploreTab>
+
+					<ExploreTab
+						action="Popular_Today"
+						containerId="popularToday"
+					></ExploreTab>
 				</div>
-				<div>
-					<div className="flex flex-row gap-2 items-center my-2">
-						<div className="w-2 h-2 bg-accent rounded-full"></div>
-						<h1 className="text-xl font-bold">Trending TV</h1>
+				<div className="flex flex-col gap-4">
+					<div className="flex flex-row justify-between items-center">
+						<div className="flex flex-row gap-2 items-center my-2">
+							<div className="w-2 h-2 bg-accent rounded-full"></div>
+							<h1 className="text-xl font-bold">Trending TV</h1>
+						</div>
+						<ScrollButtons
+							containerId="trendngTV"
+							scrollPercent={100}
+						></ScrollButtons>
 					</div>
-					<ExploreTab action="Trending_TV"></ExploreTab>
+
+					<ExploreTab
+						action="Trending_TV"
+						containerId="trendngTV"
+					></ExploreTab>
 				</div>
-				<div>
-					<div className="flex flex-row gap-2 items-center">
-						<div className="w-2 h-2 bg-accent rounded-full"></div>
-						<h1 className="text-xl font-bold my-2">
-							Trending Movies
-						</h1>
+				<div className="flex flex-col gap-4">
+					<div className="flex flex-row justify-between items-center">
+						<div className="flex flex-row gap-2 items-center my-2">
+							<div className="w-2 h-2 bg-accent rounded-full"></div>
+							<h1 className="text-xl font-bold">
+								Trending Movies
+							</h1>
+						</div>
+						<ScrollButtons
+							containerId="trendngmovies"
+							scrollPercent={100}
+						></ScrollButtons>
 					</div>
-					<ExploreTab action="Trending_Movies"></ExploreTab>
-				</div>
-				<div>
-					<div className="flex flex-row gap-2 items-center">
-						<div className="w-2 h-2 bg-accent rounded-full"></div>
-						<h1 className="text-xl font-bold my-2">Airing Today</h1>
-					</div>
-					<ExploreTab action="Airing_Today"></ExploreTab>
+
+					<ExploreTab
+						action="Trending_Movies"
+						containerId="trendngmovies"
+					></ExploreTab>
 				</div>
 			</div>
 			<div className="max-w-7xl w-screen flex flex-col items-center mx-auto">

@@ -14,6 +14,7 @@ import {
 } from "@/utils/tmdb";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import Sidebar from "./Sidebar";
 
 function transformRuntime(minutes: number): string {
 	const hours: number = Math.floor(minutes / 60);
@@ -168,8 +169,14 @@ export default async function mediaPage({
 					className="w-screen lg:h-[150vh] h-[300vh] object-cover blur-[100px] absolute top-0 mask2 opacity-30 overflow-hidden"
 				/>
 			</div>
+			<div className="absolute">
+				<Sidebar></Sidebar>
+			</div>
 			<div className=" relative lg:h-screen h-auto w-screen lg:w-auto text-white py-4">
-				<div className=" relative lg:h-screen h-auto flex w-screen lg:w-auto">
+				<div
+					className=" relative lg:h-screen h-auto flex w-screen lg:w-auto"
+					id="overview"
+				>
 					<div className="h-full mx-auto flex flex-col lg:gap-8 gap-4 w-screen lg:w-auto px-2 lg:my-8">
 						<div className=" flex flex-col gap-4">
 							<p className="text-4xl text-foreground ">
@@ -267,7 +274,7 @@ export default async function mediaPage({
 							</div>
 							<div className="h-full relative">
 								<Link
-									className="absolute hover:scale-105 bottom-0 m-4 px-6 py-2 rounded-full bg-black/30 flex flex-row gap-4 items-center z-10 drop-shadow-lg backdrop-blur-lg"
+									className="absolute bottom-0 m-4 flex flex-row z-10 bg-black/20 backdrop-blur-lg items-center gap-2  px-6 py-2 rounded-[8px] hover:scale-105 drop-shadow-lg"
 									href={watchLink}
 								>
 									<img
@@ -278,7 +285,7 @@ export default async function mediaPage({
 									<p>Watch</p>
 								</Link>
 								<img
-									src={`https://image.tmdb.org/t/p/original${media.backdrop_path}`}
+									src={`https://image.tmdb.org/t/p/w1280${media.backdrop_path}`}
 									alt=""
 									className="h-full rounded-[4px] drop-shadow-lg"
 								/>
@@ -372,27 +379,32 @@ export default async function mediaPage({
 					</div>
 				</div>
 			</div>
-			<div className="lg:w-[80vw] w-screen mx-auto relative lg:-mt-[10vh] p-2 lg:p-0">
-				{/* <div className="bg-accent/5 p-4 rounded-xl">
-					<h2 className="text-xl font-bold">Videos</h2>
-					<div className="flex flex-col md:flex-row gap-4 py-4 items-center justify-center">
+			<div className="lg:w-[75vw] w-screen ml-[5vw] relative lg:-mt-[10vh] p-2 lg:p-0 flex flex-col gap-8">
+				<div className="">
+					<h2 className="text-xl font-bold" id="videos">
+						Videos
+					</h2>
+					<div className="flex flex-col md:flex-row gap-4 py-4 items-center overflow-x-auto">
 						{mediaVideos &&
 							mediaVideos.results
-								.slice(0, 3)
+								.slice(0, 10)
 								.map((video: any) => (
 									<YouTubeEmbed
 										videoId={video.key}
 									></YouTubeEmbed>
 								))}
 					</div>
-				</div> */}
+				</div>
 				<div className="">
 					{postsOfMedia && (
 						<div>
 							{postsOfMedia.length > 0 && (
-								<h2 className="text-xl font-bold py-4 ">
-									User Posts
-								</h2>
+								<div className="flex flex-row gap-2 items-center my-2">
+									<div className="w-2 h-2 bg-accent rounded-full"></div>
+									<h1 className="text-xl font-bold">
+										User Posts
+									</h1>
+								</div>
 							)}
 							<div className="flex flex-row flex-wrap gap-4">
 								{postsOfMedia?.slice(0, 9).map((post: any) => (
@@ -406,7 +418,10 @@ export default async function mediaPage({
 						</div>
 					)}
 				</div>
-				<h2 className="text-xl font-bold pt-4">Recommended</h2>
+				<div className="flex flex-row gap-2 items-center my-2">
+					<div className="w-2 h-2 bg-accent rounded-full"></div>
+					<h1 className="text-xl font-bold">Recommended</h1>
+				</div>
 				<div className="">
 					<div className="flex flex-row overflow-x-auto gap-2 invisible-scroll custom-scrollbar">
 						{mediaRecommendations &&
@@ -421,7 +436,10 @@ export default async function mediaPage({
 								))}
 					</div>
 				</div>
-				<h2 className="text-xl font-bold pt-4">You might like</h2>
+				<div className="flex flex-row gap-2 items-center my-2">
+					<div className="w-2 h-2 bg-accent rounded-full"></div>
+					<h1 className="text-xl font-bold">You might like</h1>
+				</div>
 				<div className="">
 					<div className="flex flex-row overflow-x-auto gap-2 invisible-scroll custom-scrollbar">
 						{mediaSimilar &&

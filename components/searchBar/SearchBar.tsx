@@ -9,7 +9,7 @@ const SearchBar = ({ media, setMedia, link }: any) => {
 	};
 	return (
 		<form action="" className="" onSubmit={handleSearch}>
-			<div className="max-w-[500px] ">
+			<div className="max-w-screen ">
 				<SearchMovies
 					media={media}
 					setMedia={setMedia}
