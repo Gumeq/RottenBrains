@@ -5,6 +5,7 @@ const defaultUrl = process.env.VERCEL_URL
 	: "http://localhost:3000";
 import UserProvider from "@/context/UserContext";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata = {
 	metadataBase: new URL(defaultUrl),
@@ -24,6 +25,7 @@ export default function RootLayout({
 					<main className="">{children}</main>
 					<div className="w-full h-[200px] "> </div>
 					<Analytics />
+					<SpeedInsights />
 				</body>
 			</UserProvider>
 		</html>
