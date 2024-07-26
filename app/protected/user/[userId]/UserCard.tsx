@@ -7,7 +7,7 @@ const UserCard = ({ user }: any) => {
 			<div className="bg-foreground/10 p-2 rounded flex flex-row gap-2 items-center">
 				<div>
 					<img
-						src={user.imageURL}
+						src={user.image_url}
 						alt=""
 						width={30}
 						height={30}

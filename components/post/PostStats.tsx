@@ -126,52 +126,30 @@ const PostStats = ({ post, user }: any) => {
 		};
 	}, [postId, supabase]);
 
-	useEffect(() => {
-		const fetchComments = async () => {
-			try {
-				const comments = await getPostComments(postId);
-				setState((prevState) => ({
-					...prevState,
-					comments,
-					loading: false,
-				}));
-			} catch (error) {
-				console.error("Error fetching comments:", error);
-				setState((prevState) => ({
-					...prevState,
-					loading: false,
-				}));
-			}
-		};
+	const fetchComments = async () => {
+		try {
+			const comments = await getPostComments(postId);
+			setState((prevState) => ({
+				...prevState,
+				comments,
+				loading: false,
+			}));
+		} catch (error) {
+			console.error("Error fetching comments:", error);
+			setState((prevState) => ({
+				...prevState,
+				loading: false,
+			}));
+		}
+	};
 
-		fetchComments();
-
-		const channel = supabase
-			.channel(`public:comments:post_id=eq.${postId}`)
-			.on(
-				"postgres_changes",
-				{
-					event: "INSERT",
-					schema: "public",
-					table: "comments",
-					filter: `post_id=eq.${postId}`,
-				},
-				(payload) => {
-					setState((prevState: any) => ({
-						...prevState,
-						comments: [payload.new, ...prevState.comments],
-					}));
-				}
-			)
-			.subscribe();
-
-		return () => {
-			supabase.removeChannel(channel);
-		};
-	}, [postId, supabase]);
-
-	const togglePopup = () => {
+	const togglePopup = async () => {
 		setState((prevState) => ({ ...prevState, isOpen: !prevState.isOpen }));
+
+		if (!state.isOpen) {
+			setState((prevState) => ({ ...prevState, loading: true }));
+			await fetchComments();
+		}
 	};
 
 	if (!userId) {
@@ -239,7 +217,7 @@ const PostStats = ({ post, user }: any) => {
 										<div className="flex justify-center items-center h-full">
 											<span>Loading...</span>
 										</div>
-									) : state.comments.length === 0 ? (
+									) : state.comments?.length === 0 ? (
 										<div className="flex justify-center items-center h-full">
 											<span>No comments yet</span>
 										</div>
@@ -261,7 +239,11 @@ const PostStats = ({ post, user }: any) => {
 									)}
 								</div>
 								<div className="absolute w-11/12 bottom-6">
-									<AddComment post={post} user={user} />
+									<AddComment
+										post={post}
+										user={user}
+										fetchComments={fetchComments}
+									/>
 								</div>
 							</div>
 						</div>

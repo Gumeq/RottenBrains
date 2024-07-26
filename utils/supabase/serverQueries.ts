@@ -51,7 +51,7 @@ export const getPostsFromFollowedUsers = async (
                     username,
                     name,
                     email,
-                    imageURL
+                    image_url
                 )
             `
 			)

@@ -7,7 +7,7 @@ const SearchUserCard = ({ user }: any) => {
 			<div className="h-[100px] flex flex-row p-4 items-center gap-4 text-foreground">
 				<div>
 					<img
-						src={user.imageURL}
+						src={user.image_url}
 						alt={""}
 						width={50}
 						height={50}

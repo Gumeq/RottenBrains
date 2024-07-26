@@ -43,7 +43,7 @@ const getUser = async () => {
 						email: supabaseUser.user.email,
 						username: supabaseUser.user.user_metadata.name,
 						name: supabaseUser.user.user_metadata.full_name,
-						imageURL: supabaseUser.user.user_metadata.picture,
+						image_url: supabaseUser.user.user_metadata.picture,
 						// Add any other fields you need to store
 					},
 				]);

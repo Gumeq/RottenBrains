@@ -50,7 +50,7 @@ export default function Register({
 						email,
 						username,
 						name,
-						imageURL: avatarUrl,
+						image_url: avatarUrl,
 						// Add any other fields you need to store
 					},
 				]);

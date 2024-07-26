@@ -11,8 +11,8 @@ const ProfilePicture: React.FC = () => {
 	const [file, setFile] = useState<File | null>(null);
 
 	useEffect(() => {
-		if (user?.imageURL) {
-			setImage(user.imageURL);
+		if (user?.image_url) {
+			setImage(user.image_url);
 		}
 	}, [user]);
 

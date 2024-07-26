@@ -43,7 +43,7 @@ const FollowUsers = () => {
 					>
 						<Link href={`/protected/user/${user.id}`}>
 							<img
-								src={user.imageURL}
+								src={user.image_url}
 								alt=""
 								width={100}
 								height={100}

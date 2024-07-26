@@ -39,7 +39,7 @@ const ProfilePicture = ({ user }: any) => {
 				<div>
 					<Link href={`/protected/user/${user.id}`}>
 						<img
-							src={user.imageURL}
+							src={user.image_url}
 							alt={""}
 							width={35}
 							height={35}

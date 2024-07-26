@@ -100,7 +100,7 @@ const PostsPage = async () => {
 							className="flex flex-row gap-2 items-center"
 						>
 							<img
-								src={user.imageURL}
+								src={user.image_url}
 								alt="prof-pic"
 								className="w-10 h-10 aspect-[1/1] rounded-full"
 							/>

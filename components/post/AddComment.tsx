@@ -1,15 +1,9 @@
 "use client";
-import { useUser } from "@/context/UserContext";
-import fetchUserData from "@/utils/clientFunctions/fetchUserData";
-import { addNotification } from "@/utils/clientFunctions/notificationsData";
-import { createClient } from "@/utils/supabase/client";
 import { useState } from "react";
+import { createClient } from "@/utils/supabase/client";
+import { addNotification } from "@/utils/clientFunctions/notificationsData";
 
-interface CommentProps {
-	postId: string;
-}
-
-const AddComment: React.FC<any> = ({ post, user }) => {
+const AddComment: React.FC<any> = ({ post, user, fetchComments }) => {
 	const [content, setContent] = useState("");
 	const postId = post.id;
 
@@ -47,6 +41,7 @@ const AddComment: React.FC<any> = ({ post, user }) => {
 			console.error(error);
 		} else {
 			setContent("");
+			await fetchComments(); // Fetch comments after adding a new comment
 		}
 	};
 

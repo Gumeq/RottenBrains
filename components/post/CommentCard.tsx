@@ -14,7 +14,7 @@ const CommentCard = ({ comment }: any) => {
 			<div className="p-2 flex flex-row gap-4 w-11/12 ">
 				<div className="">
 					<img
-						src={creator.imageURL}
+						src={creator.image_url}
 						alt={" "}
 						width={30}
 						height={30}

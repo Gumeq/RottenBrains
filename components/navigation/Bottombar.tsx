@@ -12,7 +12,7 @@ import NotificationButton from "../notifications/RealtimeNotifications";
 
 const Bottombar = () => {
 	const { user } = useUser();
-	// const icon = user?.imageURL;
+	// const icon = user?.image_url;
 	const pathname = usePathname();
 	return (
 		<div className="fixed bottom-0 z-50 flex items-center justify-center w-screen md:hidden drop-shadow-xl border-t ">
@@ -57,7 +57,7 @@ const Bottombar = () => {
 						className={`flex items-center min-w-[45px] min-h-[45px]`}
 					>
 						<img
-							src={user?.imageURL}
+							src={user?.image_url}
 							alt={""}
 							width={50}
 							height={50}

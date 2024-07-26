@@ -11,7 +11,7 @@ export async function addUserToDB(
 	email: string,
 	username: string,
 	name: string,
-	imageURL: string
+	image_url: string
 ): Promise<void> {
 	try {
 		const { data, error } = await supabase
@@ -105,7 +105,7 @@ export const getPostsOfMedia = async (
                     username,
                     name,
                     email,
-                    imageURL
+                    image_url
                 )
             `
 			)
@@ -135,7 +135,7 @@ export const getUserPosts = async (
                     username,
                     name,
                     email,
-                    imageURL
+                    image_url
                 )
             `
 			)
@@ -246,7 +246,7 @@ export const getPostComments = async (postId: string): Promise<any | null> => {
                     username,
                     name,
                     email,
-                    imageURL
+                    image_url
                 )
             `
 			)
@@ -296,7 +296,7 @@ export const uploadProfilePicture = async (
 
 		const { data: updateData, error: updateError } = await supabase
 			.from("users")
-			.update({ imageURL: publicURL.publicUrl })
+			.update({ image_url: publicURL.publicUrl })
 			.eq("id", userId);
 
 		if (updateError) {
@@ -326,7 +326,7 @@ export async function getFollowers(id: string): Promise<any | null> {
                     username,
                     name,
                     email,
-                    imageURL
+                    image_url
                 )
             `,
 				{ count: "exact" }
@@ -358,7 +358,7 @@ export async function getFollowing(id: string): Promise<any | null> {
                     username,
                     name,
                     email,
-                    imageURL
+                    image_url
                 )
             `,
 				{ count: "exact" }

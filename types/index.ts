@@ -22,7 +22,7 @@ export type IUser = {
 	name: string;
 	username: string;
 	email: string;
-	imageURL: string;
+	image_url: string;
 	postsId: Array<number>;
 	likes: Array<string>;
 	saves: Array<string>;

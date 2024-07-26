@@ -35,7 +35,7 @@ export default async function userProfile({
 						<div className="flex flex-col gap-8 items-center justify-between">
 							<div>
 								<img
-									src={user.user.imageURL}
+									src={user.user.image_url}
 									alt={""}
 									width={150}
 									height={150}

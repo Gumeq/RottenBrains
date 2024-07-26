@@ -9,7 +9,7 @@ const ProfilePicture = () => {
 		<div>
 			<Link href={"/protected/profile"}>
 				<img
-					src={user?.imageURL}
+					src={user?.image_url}
 					alt={""}
 					width={35}
 					height={35}
