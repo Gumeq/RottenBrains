@@ -22,10 +22,6 @@ export default async function userProfile({
 	};
 	const formatter = new Intl.DateTimeFormat("en-US", options);
 	const formattedDate = formatter.format(date);
-	let userPosts;
-	if (user) {
-		userPosts = await getUserPosts(user.user.id, 0);
-	}
 
 	return (
 		<div className="max-w-6xl mx-auto w-screen">
