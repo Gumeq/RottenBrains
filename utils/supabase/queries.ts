@@ -46,7 +46,7 @@ export async function addPostToDB(post: IPost): Promise<void> {
 			.from("Posts")
 			.insert([
 				{
-					movieId: post.mediaId,
+					movieId: post.media_id,
 					vote_user: post.vote_user,
 					review_user: post.review_user,
 					creatorId: post.creatorId,
@@ -91,7 +91,7 @@ export const getSavedPosts = async (userId: string): Promise<any | null> => {
 };
 
 export const getPostsOfMedia = async (
-	mediaid: number,
+	media_id: number,
 	media_type: string
 ): Promise<any | null> => {
 	try {
@@ -109,7 +109,7 @@ export const getPostsOfMedia = async (
                 )
             `
 			)
-			.eq("mediaid", mediaid)
+			.eq("media_id", media_id)
 			.eq("media_type", media_type)
 			.order("created_at", { ascending: false });
 		if (error) throw error;
@@ -121,85 +121,85 @@ export const getPostsOfMedia = async (
 };
 
 export const getUserPosts = async (
-	userId: string,
+	creator_id: string,
+	user_id: string,
 	page: number
 ): Promise<any | null> => {
 	try {
-		const { data, error } = await supabase
-			.from("posts")
-			.select(
-				`
-                *,
-                users (
-                    id,
-                    username,
-                    name,
-                    email,
-                    image_url
-                )
-            `
-			)
-			.eq("creatorid", userId)
-			.order("created_at", { ascending: false })
-			.range(page * 6, page * 6 + 5);
-		if (error) throw error;
-		return data;
+		const supabase = createClient();
+
+		// Call the new RPC function to fetch posts with creator details and like/save status
+		const { data: postsData, error: postsError } = await supabase.rpc(
+			"fetch_user_posts",
+			{
+				creator_id: creator_id,
+				current_user_id: user_id,
+				result_limit: 6,
+				result_offset: page * 6,
+			}
+		);
+
+		if (postsError) throw postsError;
+
+		return postsData;
 	} catch (error) {
-		handleError("getUserPosts", error);
+		console.error("getUserPosts", error);
 		return null;
 	}
 };
 
 export const getUserLikedPosts = async (
-	userId: string,
+	creator_id: string,
+	user_id: string,
 	page: number
 ): Promise<any | null> => {
 	try {
-		const { data, error } = await supabase
-			.from("likes")
-			.select(
-				`
-                *,
-                posts (
-                    *,
-					users (*)
-                )
-            `
-			)
-			.eq("user_id", userId)
-			.order("created_at", { ascending: false })
-			.range(page * 6, page * 6 + 5);
-		if (error) throw error;
-		return data;
+		const supabase = createClient();
+
+		// Call the new RPC function to fetch liked posts with creator details and like/save status
+		const { data: postsData, error: postsError } = await supabase.rpc(
+			"fetch_user_liked_posts",
+			{
+				creator_id: creator_id,
+				current_user_id: user_id, // Assuming the current user is the same for this function
+				result_limit: 6,
+				result_offset: page * 6,
+			}
+		);
+
+		if (postsError) throw postsError;
+
+		return postsData;
 	} catch (error) {
-		handleError("getUserPosts", error);
+		console.error("getUserLikedPosts", error);
 		return null;
 	}
 };
 
 export const getUserSavedPosts = async (
-	userId: string,
+	creator_id: string,
+	user_id: string,
 	page: number
 ): Promise<any | null> => {
 	try {
-		const { data, error } = await supabase
-			.from("saves")
-			.select(
-				`
-                *,
-                posts (
-                    *,
-					users (*)
-                )
-            `
-			)
-			.eq("user_id", userId)
-			.order("created_at", { ascending: false })
-			.range(page * 6, page * 6 + 5);
-		if (error) throw error;
-		return data;
+		const supabase = createClient();
+
+		// Call the new RPC function to fetch saved posts with creator details and like/save status
+		const { data: postsData, error: postsError } = await supabase.rpc(
+			"fetch_user_saved_posts",
+			{
+				creator_id: creator_id,
+				current_user_id: user_id,
+				result_limit: 6,
+				result_offset: page * 6,
+			}
+		);
+
+		if (postsError) throw postsError;
+
+		return postsData;
 	} catch (error) {
-		handleError("getUserPosts", error);
+		console.error("getUserSavedPosts", error);
 		return null;
 	}
 };

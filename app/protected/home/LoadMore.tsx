@@ -30,6 +30,7 @@ const LoadMore = () => {
 						setHasMore(false); // No more posts to load
 					} else {
 						setData((prevData) => [...prevData, ...res]);
+						console.log(data);
 						setPage((prevPage) => prevPage + 1);
 					}
 				} catch (error) {
@@ -46,7 +47,7 @@ const LoadMore = () => {
 	return (
 		<div className=" ">
 			<div className="grid grid-cols-1 justify-items-center gap-4 px-2">
-				{data.map((post: IPost, index: number) => (
+				{data.map((post: any, index: number) => (
 					<div className="" key={post.id}>
 						<HomePostCard post={post} />
 					</div>

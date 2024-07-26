@@ -105,7 +105,8 @@ const LoadingSkeleton = ({ index }: any) => {
 const ErrorComponent = () => <div>Error loading post.</div>;
 
 export function HomePostCard({ post, index }: any) {
-	const media_id = post.mediaid;
+	console.log(post);
+	const media_id = post.media_id;
 	const media_type = post.media_type;
 	const [media, setMedia] = useState<any>(null);
 	const [loading, setLoading] = useState<boolean>(true);
@@ -161,7 +162,13 @@ export function HomePostCard({ post, index }: any) {
 
 	const userId = currentUser.id;
 
-	const creator = post.users;
+	const creator = {
+		id: post.creatorid,
+		email: post.creator_email,
+		image_url: post.creator_image_url,
+		name: post.creator_name,
+		username: post.creator_username,
+	};
 
 	if (!creator) {
 		return <p>no creator</p>;
@@ -289,7 +296,7 @@ export function HomePostCard({ post, index }: any) {
 									className="invert-on-dark opacity-50"
 								/>
 							</Link>
-							<SaveButton postId={post.id} />
+							<SaveButton post={post} />
 						</div>
 					</div>
 				</div>

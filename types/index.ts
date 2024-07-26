@@ -30,7 +30,7 @@ export type IUser = {
 export type IPost = {
 	id: number;
 	created_at: string;
-	mediaId: number;
+	media_id: number;
 	media_type: string;
 	vote_user: number;
 	review_user: string;

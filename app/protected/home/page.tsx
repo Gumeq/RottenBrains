@@ -25,7 +25,7 @@ async function fetchMoviesAndTvDetails() {
 		const movieDetails = await fetchMediaDetails(movieDetailsArray);
 		const tvDetails = await fetchMediaDetails(tvDetailsArray);
 
-		console.log("Movie Details:", movieDetails);
+		// console.log("Movie Details:", movieDetails);
 		// console.log("TV Details:", tvDetails);
 
 		return { movieDetails, tvDetails };
@@ -50,7 +50,7 @@ const PostsPage = async () => {
 					</div>
 				</div>
 			</div>
-			<div className="w-[30%] h-screen fixed left-0 z-20 hidden lg:block p-[2vw]">
+			<div className="w-[30%] h-screen fixed left-0 z-20 hidden lg:flex  flex-col items-center p-4 ">
 				<div>
 					<h2 className="text-foreground/50 my-2">
 						Newest movies added

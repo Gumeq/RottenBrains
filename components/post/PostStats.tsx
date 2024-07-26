@@ -13,11 +13,11 @@ import AddComment from "./AddComment";
 import CommentCard from "./CommentCard";
 
 const PostStats = ({ post, user }: any) => {
-	const postId = post.id;
+	const postId = post.post_id;
 	const supabase = createClient();
 	const [state, setState] = useState({
-		liked: false,
-		likes: 0,
+		liked: post.has_liked,
+		likes: post.total_likes,
 		animate: false,
 		isOpen: false,
 		comments: [],
@@ -50,19 +50,6 @@ const PostStats = ({ post, user }: any) => {
 			}
 		}
 	}, [userId, postId, state.liked]);
-
-	useEffect(() => {
-		if (userId) {
-			const fetchData = async () => {
-				const isPostLiked = await getLikedStatus(userId, postId);
-				setState((prevState) => ({
-					...prevState,
-					liked: isPostLiked,
-				}));
-			};
-			fetchData();
-		}
-	}, [userId, postId]);
 
 	useEffect(() => {
 		if (state.animate) {

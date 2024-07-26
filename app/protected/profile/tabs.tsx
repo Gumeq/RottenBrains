@@ -42,6 +42,7 @@ const Tabs: React.FC<any> = () => {
 				try {
 					const res = await getUserPosts(
 						user.id.toString(),
+						user.id.toString(),
 						postPage
 					);
 					if (res.length === 0) {
@@ -68,8 +69,10 @@ const Tabs: React.FC<any> = () => {
 				try {
 					const res = await getUserLikedPosts(
 						user.id.toString(),
+						user.id.toString(),
 						likesPage
 					);
+					console.log(res);
 					if (res.length === 0) {
 						setHasMoreLikes(false); // No more posts to load
 					} else {
@@ -92,6 +95,7 @@ const Tabs: React.FC<any> = () => {
 				setLoadingSaves(true);
 				try {
 					const res = await getUserSavedPosts(
+						user.id.toString(),
 						user.id.toString(),
 						savesPage
 					);
@@ -119,7 +123,7 @@ const Tabs: React.FC<any> = () => {
 					<div className="w-full">
 						{userPosts.length > 0 && (
 							<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center gap-4 px-2">
-								{userPosts.map((post: IPost) => (
+								{userPosts.map((post: any) => (
 									<div key={post.id}>
 										<HomePostCard post={post} />
 									</div>
@@ -140,7 +144,7 @@ const Tabs: React.FC<any> = () => {
 							<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center gap-4 px-2">
 								{userLikes.map((post: any) => (
 									<div>
-										<HomePostCard post={post.posts} />
+										<HomePostCard post={post} />
 									</div>
 								))}
 							</div>
@@ -159,7 +163,7 @@ const Tabs: React.FC<any> = () => {
 							<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center gap-4 px-2">
 								{userSaves.map((post: any) => (
 									<div>
-										<HomePostCard post={post.posts} />
+										<HomePostCard post={post} />
 									</div>
 								))}
 							</div>

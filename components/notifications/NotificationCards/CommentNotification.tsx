@@ -8,7 +8,7 @@ const CommentNotification = ({ notification }: any) => {
 	const [media, setMedia] = useState<any>(null);
 	const fromUser = notification.users;
 	const media_type = notification.post_id?.media_type;
-	const media_id = notification.post_id?.mediaid;
+	const media_id = notification.post_id?.media_id;
 	const comment = notification.comment_id;
 
 	useEffect(() => {

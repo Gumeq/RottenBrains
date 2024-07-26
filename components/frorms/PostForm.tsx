@@ -36,7 +36,7 @@ const PostForm = ({ post, action, from_media }: PostFormProps) => {
 			if (action === "Update" && post) {
 				const mediaDetails = await getMediaDetails(
 					post.media_type,
-					post.mediaid
+					post.media_id
 				);
 				setMedia(mediaDetails);
 			}
@@ -129,14 +129,14 @@ const PostForm = ({ post, action, from_media }: PostFormProps) => {
 		if (from_media) {
 			dbvalues = {
 				...formValues,
-				mediaId: from_media?.media_id,
+				media_id: from_media?.media_id,
 				creatorId: user?.id,
 				media_type: from_media?.media_type,
 			};
 		} else {
 			dbvalues = {
 				...formValues,
-				mediaId: media?.id,
+				media_id: media?.id,
 				creatorId: user?.id,
 				media_type: media?.media_type,
 			};
@@ -151,7 +151,7 @@ const PostForm = ({ post, action, from_media }: PostFormProps) => {
 					.from("posts")
 					.update([
 						{
-							mediaid: dbvalues.mediaId,
+							media_id: dbvalues.media_id,
 							media_type: dbvalues.media_type,
 							creatorid: dbvalues.creatorId,
 							vote_user: dbvalues.vote_user,
@@ -174,7 +174,7 @@ const PostForm = ({ post, action, from_media }: PostFormProps) => {
 					.from("posts")
 					.insert([
 						{
-							mediaid: dbvalues.mediaId,
+							media_id: dbvalues.media_id,
 							media_type: dbvalues.media_type,
 							creatorid: dbvalues.creatorId,
 							vote_user: dbvalues.vote_user,

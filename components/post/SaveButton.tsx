@@ -8,13 +8,10 @@ import {
 } from "@/utils/clientFunctions/updatePostData";
 import { useCallback, useEffect, useState } from "react";
 
-interface SaveButtonProps {
-	postId: string;
-}
-
-const SaveButton: React.FC<SaveButtonProps> = ({ postId }) => {
-	const [saved, setSaved] = useState(false);
+const SaveButton: React.FC<any> = ({ post }: any) => {
+	const [saved, setSaved] = useState<boolean>(post.has_saved);
 	const { user } = useUser();
+	const postId = post.post_id;
 	const userId = user?.id.toString();
 
 	const handleSave = useCallback(async () => {
@@ -32,16 +29,6 @@ const SaveButton: React.FC<SaveButtonProps> = ({ postId }) => {
 			}
 		}
 	}, [userId, postId, saved]);
-
-	useEffect(() => {
-		if (userId) {
-			const fetchData = async () => {
-				const isPostSaved = await getSavedStatus(userId, postId);
-				setSaved(isPostSaved);
-			};
-			fetchData();
-		}
-	}, [userId, postId]);
 
 	if (!userId) {
 		return null; // Return null if user ID isn't available
