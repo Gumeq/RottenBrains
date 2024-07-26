@@ -1,6 +1,7 @@
 "use client";
 
 import { IUser } from "@/types";
+import { createClient } from "@/utils/supabase/client";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import {
 	createContext,
@@ -18,19 +19,27 @@ interface UserContextType {
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 const UserProvider = ({ children }: { children: any }) => {
-	const [user, setUser] = useState<IUser | null>(null);
+	const [user, setUser] = useState<any | null>(null);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const fetchUser = async () => {
-			const user = await getCurrentUser();
-			setUser(user.user);
-			setLoading(false);
+			const supabase = createClient();
+			const { data, error } = await supabase.auth.getSession();
+			if (data) {
+				const { data: user } = await supabase
+					.from("users")
+					.select("*")
+					.eq("id", data.session?.user.id);
+				if (user) {
+					setUser(user[0]);
+					setLoading(false);
+				}
+			} else {
+			}
 		};
-
 		fetchUser();
 	}, []);
-
 	return (
 		<UserContext.Provider value={{ user, loading }}>
 			{children}

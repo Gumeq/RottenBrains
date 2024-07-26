@@ -16,7 +16,23 @@ type Episode = {
 	overview: string;
 	still_path: string;
 	air_date: string;
+	runtime: number;
 };
+
+function transformRuntime(minutes: number): string {
+	const hours: number = Math.floor(minutes / 60);
+	const remainingMinutes: number = minutes % 60;
+
+	if (hours > 0) {
+		return `${hours} h ${remainingMinutes} m`;
+	} else {
+		if (remainingMinutes > 0) {
+			return `${remainingMinutes} m`;
+		} else {
+			return "N/A";
+		}
+	}
+}
 
 const EpisodeCard = ({
 	media_id,
@@ -35,6 +51,7 @@ const EpisodeCard = ({
 					episode_number
 				);
 				setEpisode(episodeData);
+				console.log(episodeData);
 				setLoading(false);
 			} catch (error) {
 				console.error("Error fetching Episode Details:", error);
@@ -60,7 +77,10 @@ const EpisodeCard = ({
 
 	return (
 		<div className=" p-2 rounded-[8px] mb-2 hover:border-accent flex flex-row gap-4 hover:bg-foreground/20">
-			<div>
+			<div className="relative">
+				<div className="absolute bottom-0 right-0 m-1 text-sm p-1 py-0 rounded-[4px] bg-black/70 text-white">
+					{transformRuntime(episode.runtime)}
+				</div>
 				<img
 					src={`https://image.tmdb.org/t/p/w200${episode.still_path}`}
 					alt="episode still"

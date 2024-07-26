@@ -34,7 +34,7 @@ const FollowUsers = () => {
 	}
 
 	return (
-		<div>
+		<div className="">
 			<ul className="flex flex-row gap-2 overflow-x-auto custom-scrollbar py-2">
 				{users.map((user: any) => (
 					<li

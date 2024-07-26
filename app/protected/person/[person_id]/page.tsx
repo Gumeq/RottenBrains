@@ -6,60 +6,9 @@ import {
 import Link from "next/link";
 import React from "react";
 
-async function getAndSortPersonCredits(person_id: number) {
-	// Define unwanted genre IDs
-	const unwantedGenreIds = [10767, 10770]; // Example: Talk Show, TV Movie
-
-	try {
-		// Get the person's details
-		const personDetails = await getPersonDetails(person_id);
-		const knownForDepartment = personDetails.known_for_department;
-
-		// Get the credits for the person
-		let credits = await getPersonCredits(person_id);
-		credits = credits.cast;
-
-		// Filter by known for department and unwanted genres
-		const filteredCredits = credits.filter((credit: any) => {
-			const genreIds = credit.genre_ids || [];
-			const hasCorrectRole =
-				knownForDepartment === "Acting"
-					? !!credit.character
-					: credit.job === knownForDepartment;
-			return (
-				hasCorrectRole &&
-				!genreIds.some((genreId: number) =>
-					unwantedGenreIds.includes(genreId)
-				)
-			);
-		});
-
-		// Remove duplicates based on title or name
-		const uniqueCredits = filteredCredits.filter(
-			(credit: any, index: any, self: any) =>
-				index ===
-				self.findIndex(
-					(c: any) =>
-						(c.title || c.name) === (credit.title || credit.name)
-				)
-		);
-
-		// Sort the credits by popularity in descending order
-		uniqueCredits.sort((a: any, b: any) => b.popularity - a.popularity);
-
-		return uniqueCredits;
-	} catch (error) {
-		console.error("Error fetching or sorting credits:", error);
-		return [];
-	}
-}
-
 const page = async ({ params }: { params: { person_id: number } }) => {
 	const person_id = params.person_id;
 	const person_details = await getPersonDetails(person_id);
-	const images = await getPersonImages(person_id);
-	console.log(images);
-	const credits = await getAndSortPersonCredits(person_id);
 	return (
 		<div className="lg:w-screen py-4">
 			<div>
@@ -99,6 +48,16 @@ const page = async ({ params }: { params: { person_id: number } }) => {
 									alt=""
 									className="h-full rounded-[4px] drop-shadow-lg"
 								/>
+							</div>
+							<div className=" h-full rounded-[4px] drop-shadow-lg aspect-[16/9] overflow-auto">
+								<div className="flex flex-row gap-4 ">
+									<p className="font-bold text-xl text-foreground/50 w-[100px]">
+										Biography
+									</p>
+									<p className="w-full">
+										{person_details.biography}
+									</p>
+								</div>
 							</div>
 						</div>
 					</div>

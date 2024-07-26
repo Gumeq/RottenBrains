@@ -67,7 +67,7 @@ const TopMoviesCarousel = ({ movies }: any) => {
 	);
 
 	return (
-		<div className="w-screen lg:h-screen h-auto ">
+		<div className="w-screen lg:h-screen h-auto text-white ">
 			<Slider {...settings}>
 				{movies &&
 					movies.map((media: any, index: number) => {

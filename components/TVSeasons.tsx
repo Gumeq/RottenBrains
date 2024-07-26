@@ -71,12 +71,12 @@ const TVShowDetails = ({ tv_show_id, season_number }: TVShowDetailsProps) => {
 	return (
 		<div className="">
 			{/* <h1 className="text-2xl font-bold mb-2">Seasons</h1> */}
-			<div className="py-2 flex flex-wrap gap-2 custom-scrollbar">
+			<div className="py-2 flex overflow-x-auto gap-2 custom-scrollbar">
 				{seasons.map((season) => (
 					<button
 						key={season.season_number}
 						onClick={() => handleSeasonChange(season.season_number)}
-						className={`flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg text-foreground whitespace-nowrap ${
+						className={`flex flex-row items-center gap-2 bg-foreground/10 px-2 py-1 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg text-foreground whitespace-nowrap ${
 							selectedSeason === season.season_number
 								? "border-2 border-accent"
 								: ""

@@ -44,8 +44,8 @@ const LoadMore = () => {
 	}, [inView, hasMore, loading, user?.id, page]);
 
 	return (
-		<div className="">
-			<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center gap-4 px-2">
+		<div className=" ">
+			<div className="grid grid-cols-1 justify-items-center gap-4 px-2">
 				{data.map((post: IPost, index: number) => (
 					<div className="" key={post.id}>
 						<HomePostCard post={post} />
@@ -55,8 +55,8 @@ const LoadMore = () => {
 			{loading && <Loader></Loader>}
 			{!loading && hasMore && <div ref={ref}></div>}
 			{!hasMore && (
-				<div>
-					<div className="w-full flex flex-col items-center justify-center my-4 text-lg">
+				<div className="w-full flex flex-col items-center justify-center my-4 text-lg">
+					<div>
 						Follow more people to get more posts on the Home page!
 					</div>
 					<FollowUsers></FollowUsers>

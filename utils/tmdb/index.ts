@@ -70,6 +70,19 @@ export const getMediaDetails = async (media_type: string, media_id: number) => {
 	}
 };
 
+export const fetchMediaDetails = async (mediaItems: any) => {
+	try {
+		const requests = mediaItems.map((item: any) =>
+			fetchFromApi(`${item.type}/${item.tmdb_id}?language=en-US`)
+		);
+		const mediaDetails = await Promise.all(requests);
+		return mediaDetails;
+	} catch (error) {
+		console.error("Error fetching media details:", error);
+		return [];
+	}
+};
+
 export const getMediaCredits = async (media_type: string, media_id: number) => {
 	if (media_type === "movie") {
 		return await getMovieCredits(media_id);

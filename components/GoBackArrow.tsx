@@ -10,7 +10,7 @@ const GoBackArrow = () => {
 			<img
 				src="/assets/icons/arrow-back.svg"
 				alt=""
-				className="w-6 h-6 invert"
+				className="w-6 h-6 invert-on-dark"
 			></img>
 		</button>
 	);

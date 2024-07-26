@@ -157,29 +157,26 @@ export default async function mediaPage({
 			: `/protected/watch/${media_type}/${media.id}/1/1`;
 
 	return (
-		<div className="lg:w-screen">
-			<div className="w-screen h-16 bg-white/10 flex-row gap-4 flex lg:hidden z-20 relative items-center px-4">
+		<div className="lg:w-screen ">
+			<div className="w-screen h-16 bg-foreground/10 flex-row gap-4 flex lg:hidden z-20 relative items-center px-4">
 				<GoBackArrow />
 				<p className="truncate text-lg">{media.title || media.name}</p>
 			</div>
-			<div>
+			<div className="">
 				<img
 					src={`https://image.tmdb.org/t/p/w200${media.poster_path}`}
 					alt=""
-					className="w-screen lg:h-[150vh] h-[300vh] object-cover blur-[100px] absolute top-0 mask2 opacity-30 overflow-hidden"
+					className="w-screen lg:h-[150vh] h-[300vh] object-cover blur-[100px] absolute top-0 mask2 opacity-30 overflow-hidden bg-black"
 				/>
 			</div>
-			<div className="absolute">
-				<Sidebar></Sidebar>
-			</div>
-			<div className=" relative lg:h-screen h-auto w-screen lg:w-auto text-white py-4">
+			<div className=" relative lg:h-screen h-auto w-screen lg:w-auto py-4 ">
 				<div
 					className=" relative lg:h-screen h-auto flex w-screen lg:w-auto"
 					id="overview"
 				>
 					<div className="h-full mx-auto flex flex-col lg:gap-8 gap-4 w-screen lg:w-auto px-2 lg:my-8">
 						<div className=" flex flex-col gap-4">
-							<p className="text-4xl text-foreground ">
+							<p className="text-4xl">
 								{media.title || media.name}
 							</p>
 							{media.tagline && (
@@ -280,14 +277,14 @@ export default async function mediaPage({
 									<img
 										src="/assets/icons/play-solid.svg"
 										alt=""
-										className="w-[20px] h-[20px] invert-on-dark"
+										className="w-[20px] h-[20px] invert"
 									/>
-									<p>Watch</p>
+									<p className="text-white">Watch</p>
 								</Link>
 								<img
 									src={`https://image.tmdb.org/t/p/w1280${media.backdrop_path}`}
 									alt=""
-									className="h-full rounded-[4px] drop-shadow-lg"
+									className="h-full rounded-[4px] drop-shadow-lg "
 								/>
 							</div>
 						</div>
@@ -359,7 +356,7 @@ export default async function mediaPage({
 									<p className="font-bold text-xl text-foreground/50 w-[100px]">
 										Stars
 									</p>
-									<p className="xl:w-[600px] lg:w-[300px] w-[60vw]">
+									<div className="xl:w-[600px] lg:w-[300px] w-[60vw]">
 										{mediaCredits.actors
 											? mediaCredits.actors
 													.slice(0, 5)
@@ -372,26 +369,29 @@ export default async function mediaPage({
 														</Link>
 													))
 											: "N/A"}
-									</p>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div className="lg:w-[75vw] w-screen ml-[5vw] relative lg:-mt-[10vh] p-2 lg:p-0 flex flex-col gap-8">
+			<div className="lg:w-[75vw] w-screen mx-auto relative lg:-mt-[10vh] p-2 lg:p-0 flex flex-col gap-8">
 				<div className="">
 					<h2 className="text-xl font-bold" id="videos">
 						Videos
 					</h2>
-					<div className="flex flex-col md:flex-row gap-4 py-4 items-center overflow-x-auto">
+					<div className="flex gap-4 py-4 items-center overflow-x-auto whitespace-nowrap custom-scrollbar">
 						{mediaVideos &&
 							mediaVideos.results
 								.slice(0, 10)
 								.map((video: any) => (
-									<YouTubeEmbed
-										videoId={video.key}
-									></YouTubeEmbed>
+									<div className="inline-block">
+										<YouTubeEmbed
+											videoId={video.key}
+											key={video.key}
+										></YouTubeEmbed>
+									</div>
 								))}
 					</div>
 				</div>
