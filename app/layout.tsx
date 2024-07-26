@@ -3,9 +3,8 @@ import "./globals.css";
 const defaultUrl = process.env.VERCEL_URL
 	? `https://${process.env.VERCEL_URL}`
 	: "http://localhost:3000";
-
-import { GoogleAnalytics } from "@next/third-parties/google";
 import UserProvider from "@/context/UserContext";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata = {
 	metadataBase: new URL(defaultUrl),
@@ -24,9 +23,9 @@ export default function RootLayout({
 				<body className="bg-background text-foreground overflow-x-hidden">
 					<main className="">{children}</main>
 					<div className="w-full h-[200px] "> </div>
+					<Analytics />
 				</body>
 			</UserProvider>
-			<GoogleAnalytics gaId="G-06SFYC5DWK" />
 		</html>
 	);
 }

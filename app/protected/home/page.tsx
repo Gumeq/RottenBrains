@@ -81,7 +81,7 @@ const PostsPage = async () => {
 								className="text-foreground/50"
 							>
 								<img
-									src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+									src={`https://image.tmdb.org/t/p/w342${item.poster_path}`}
 									alt=""
 									className="rounded-[4px]"
 								/>
