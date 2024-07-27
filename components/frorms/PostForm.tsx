@@ -255,7 +255,6 @@ const PostForm = ({ post, action, from_media }: PostFormProps) => {
 								onChange={handleInputChange}
 								placeholder="Write your review here..."
 								className="border p-3 rounded focus:outline-none focus:ring-2 focus:ring-accent text-foreground bg-background h-40 resize-none"
-								maxLength={200}
 							/>
 						</div>
 						{/* Rating */}
