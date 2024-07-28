@@ -28,14 +28,14 @@ const page = async () => {
 				<MediaCarousel movies={moviesWithColors}></MediaCarousel>
 			</div>
 			<div
-				className="lg:max-w-[90vw] w-full flex flex-col gap-8 lg:-mt-[20vh] mt-4 z-10 lg:px-0 px-2"
+				className="md:max-w-[90vw] w-full flex flex-col gap-8 md:-mt-[20vh] mt-4 z-10 md:px-0 px-2"
 				id="explore"
 			>
 				<div className="flex md:flex-row flex-col  justify-between md:mt-8 my-4 items-center w-full">
 					<div>
 						<h1 className="text-2xl font-bold">Explore</h1>
 					</div>
-					<div className=" h-full lg:w-[20vw] w-screen lg:p-0 p-2">
+					<div className=" h-full md:w-[20vw] w-screen md:p-0 p-2">
 						<SearchBar link={true} user={true}></SearchBar>
 					</div>
 				</div>

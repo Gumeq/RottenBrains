@@ -34,7 +34,7 @@ const ScrollButtons = ({
 	};
 
 	return (
-		<div className="flex flex-row gap-4">
+		<div className="lg:flex flex-row gap-4 hidden">
 			<button
 				onClick={scrollLeft}
 				className="bg-foreground/10 p-2 rounded-full z-10 hover:scale-105 drop-shadow-lg "

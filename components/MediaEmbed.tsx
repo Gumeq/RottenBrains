@@ -166,19 +166,19 @@ const VideoEmbed = ({
 				)}
 			</div>
 			<div className="flex flex-row justify-between">
-				<h2 className="text-xl flex flex-row gap-2 truncate items-center">
-					{media.title || media.name}
+				<span className="text-xl flex flex-row gap-2 truncate items-center">
 					{season_number !== undefined &&
 						episode_number !== undefined && (
-							<h2>
-								{" - "}
+							<h2 className="">
 								{formatEpisodeCode(
 									season_number,
 									episode_number
 								)}
+								{" - "}
 							</h2>
 						)}
-				</h2>
+					<p className="truncate pr-1">{media.title || media.name}</p>
+				</span>
 				<Link
 					href={`/protected/create-post/${media_type}/${media_id}`}
 					className=" flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg"

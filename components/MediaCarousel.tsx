@@ -67,7 +67,7 @@ const TopMoviesCarousel = ({ movies }: any) => {
 	);
 
 	return (
-		<div className="w-screen lg:h-screen h-auto text-white ">
+		<div className="w-screen md:h-screen h-auto text-white ">
 			<Slider {...settings}>
 				{movies &&
 					movies.map((media: any, index: number) => {
@@ -77,20 +77,20 @@ const TopMoviesCarousel = ({ movies }: any) => {
 								: `/protected/watch/${media.media_type}/${media.id}/1/1`;
 						return (
 							<div
-								className="lg:h-screen h-full w-full lg:px-0"
+								className="md:h-screen h-full w-full md:px-0"
 								key={index}
 							>
 								<div
-									className="w-full lg:h-full h-full flex items-center justify-center"
+									className="w-full md:h-full h-full flex items-center justify-center"
 									style={{
 										backgroundImage: `radial-gradient(circle, ${media.averageColor} 0%, black 100%)`,
 									}}
 								>
-									<div className="flex lg:flex-row flex-col gap-8 h-full lg:w-[80vw] w-[100vw] lg:py-10">
-										<div className="xl:w-[70%] lg:w-[90%] w-[100%] flex items-start ">
+									<div className="flex md:flex-row flex-col gap-8 h-full md:w-[80vw] w-[100vw] md:py-10">
+										<div className="xl:w-[70%] md:w-[90%] w-[100%] flex items-start ">
 											<div className="relative w-full h-auto aspect-[3/2] flex flex-col">
-												<div className="lg:h-[40%] h-[10%]"></div>
-												<div className="lg:h-[60%] h-[100%] z-10 flex flex-row ">
+												<div className="md:h-[40%] h-[10%]"></div>
+												<div className="md:h-[60%] h-[100%] z-10 flex flex-row ">
 													<Link
 														href={`/protected/media/${media.media_type}/${media.id}`}
 														className="rounded-[8px] drop-shadow-xl min-h-[100%] w-auto mx-4 aspect-[2/3] "
@@ -104,11 +104,11 @@ const TopMoviesCarousel = ({ movies }: any) => {
 														/>
 													</Link>
 
-													<div className="flex flex-col h-full w-full lg:justify-end">
-														<div className=" xl:h-[30%] lg:h-[50%] h-full w-full flex lg:flex-row items-center gap-4 flex-col ">
+													<div className="flex flex-col h-full w-full md:justify-end">
+														<div className=" xl:h-[30%] md:h-[50%] h-full w-full flex md:flex-row items-center gap-4 flex-col ">
 															<Link
 																href={watchLink}
-																className="relative lg:h-full w-auto h-[50%] bg-white/20 rounded-full flex items-center justify-center hover:bg-white/40"
+																className="relative md:h-full w-auto h-[50%] bg-white/20 rounded-full flex items-center justify-center hover:bg-white/40"
 																style={{
 																	aspectRatio:
 																		"1 / 1",
@@ -120,8 +120,8 @@ const TopMoviesCarousel = ({ movies }: any) => {
 																	className="w-[40%] h-[40%] ml-[5%] invert"
 																/>
 															</Link>
-															<div className="flex-col gap-2 flex text-center lg:text-left">
-																<p className="lg:text-4xl md:text-2xl text-xl ">
+															<div className="flex-col gap-2 flex text-center md:text-left">
+																<p className="md:text-4xl md:text-2xl text-xl ">
 																	{media.title ||
 																		media.name}
 																</p>
@@ -136,16 +136,16 @@ const TopMoviesCarousel = ({ movies }: any) => {
 													<LazyImage
 														src={`https://image.tmdb.org/t/p/w1280${media.backdrop_path}`}
 														alt="Background Image"
-														className="lg:rounded-[16px] mask1 w-full h-full aspect-[3/2] inset-0 object-cover opacity-80"
+														className="md:rounded-[16px] mask1 w-full h-full aspect-[3/2] inset-0 object-cover opacity-80"
 													/>
 												</div>
 											</div>
 										</div>
-										<div className=" lg:h-[60%] h-full lg:w-[30%] w-full flex flex-col lg:gap-8 gap-4 px-4 lg:px-0">
+										<div className=" md:h-[60%] h-full md:w-[30%] w-full flex flex-col md:gap-8 gap-4 px-4 md:px-0">
 											<div className="flex flex-row items-center justify-between">
 												<div className="flex flex-row items-center gap-2">
 													<div className="w-2 h-2 bg-accent rounded-full"></div>
-													<p className="lg:text-xl text-lg">
+													<p className="md:text-xl text-lg">
 														Popular Today
 													</p>
 												</div>
@@ -153,7 +153,7 @@ const TopMoviesCarousel = ({ movies }: any) => {
 													className="px-4 py-2 bg-foreground/20 flex flex-row gap-4 items-center rounded-[8px] hover:bg-foreground/40"
 													href={"#explore"}
 												>
-													<p className="lg:text-lg text-md">
+													<p className="md:text-lg text-md">
 														View More
 													</p>
 													<img

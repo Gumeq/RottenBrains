@@ -57,13 +57,13 @@ export default async function mediaPage({
 				/>
 			</div>
 			<div className=" lg:max-w-[80vw] w-screen h-full mx-auto flex flex-col relative z-10">
-				<div className="w-screen h-16 bg-white/10 flex-row gap-4 flex lg:hidden z-20 relative items-center px-4">
+				<div className="w-screen h-16 bg-white/10 flex-row gap-4 flex lg:hidden z-20 items-center px-4 fixed backdrop-blur-xl">
 					<GoBackArrow />
 					<p className="truncate text-lg">
 						Watch {media.title || media.name}
 					</p>
 				</div>
-				<div className="w-full p-2 text-center bg-accent flex items-center justify-center font-bold lg:rounded-xl my-2">
+				<div className="w-full p-2 text-center bg-accent flex items-center justify-center font-bold lg:rounded-xl my-2 px-2 mt-16 lg:mt-2">
 					For the best experience use an adBlocker!
 				</div>
 				<div className="flex md:flex-row flex-col gap-4 px-2">

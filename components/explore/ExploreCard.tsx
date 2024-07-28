@@ -18,7 +18,7 @@ const ExploreCard = async (media: any) => {
 			: `/protected/watch/${media_type}/${media.id}/1/1`;
 
 	return (
-		<div className="w-[130px] md:w-[250px] rounded-xl">
+		<div className="w-[130px] md:w-[250px] rounded-[8px]">
 			<div className="flex flex-col gap-2">
 				{!media ? (
 					<>

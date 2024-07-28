@@ -15,7 +15,7 @@ const Bottombar = () => {
 	// const icon = user?.image_url;
 	const pathname = usePathname();
 	return (
-		<div className="fixed bottom-0 z-50 flex items-center justify-center w-screen md:hidden drop-shadow-xl border-t ">
+		<div className="fixed bottom-0 z-50 flex items-center justify-center w-screen lg:hidden drop-shadow-xl border-t ">
 			<ul className=" w-full h-16 bg-background flex flex-row items-center justify-between drop-shadow-xl px-4">
 				{sidebarLinks.map((link: INavLink) => {
 					const isActive = pathname.includes(link.route);

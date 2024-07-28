@@ -13,7 +13,7 @@ export function TopNavbarDesktop() {
 	const pathname = usePathname();
 
 	return (
-		<nav className="fixed top-0 bg-background backdrop-blur-xl w-screen h-16 items-center justify-center z-30 hidden xl:flex p-1">
+		<nav className="fixed top-0 bg-background backdrop-blur-xl w-screen h-16 items-center justify-center z-30 hidden lg:flex p-1">
 			<div className="flex flex-col items-center">
 				<div className="flex flex-row gap-10 items-center justify-between w-screen lg:max-w-[80vw] max-w-">
 					<div className="flex flex-row gap-16">

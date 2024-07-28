@@ -330,7 +330,7 @@ export default async function mediaPage({
 										Writers
 									</p>
 									<p className="xl:w-[600px] lg:w-[300px] w-[60vw]">
-										<div className="flex flex-row">
+										<div className="flex flex-row flex-wrap">
 											{mediaCredits.writers
 												? mediaCredits.writers
 														.slice(0, 5)
@@ -378,9 +378,10 @@ export default async function mediaPage({
 			</div>
 			<div className="lg:w-[75vw] w-screen mx-auto relative lg:-mt-[10vh] p-2 lg:p-0 flex flex-col gap-8">
 				<div className="">
-					<h2 className="text-xl font-bold" id="videos">
-						Videos
-					</h2>
+					<div className="flex flex-row gap-2 items-center my-2">
+						<div className="w-2 h-2 bg-accent rounded-full"></div>
+						<h1 className="text-xl font-bold">Videos</h1>
+					</div>
 					<div className="flex gap-4 py-4 items-center overflow-x-auto whitespace-nowrap custom-scrollbar">
 						{mediaVideos &&
 							mediaVideos.results
@@ -418,11 +419,11 @@ export default async function mediaPage({
 						</div>
 					)}
 				</div>
-				<div className="flex flex-row gap-2 items-center my-2">
-					<div className="w-2 h-2 bg-accent rounded-full"></div>
-					<h1 className="text-xl font-bold">Recommended</h1>
-				</div>
 				<div className="">
+					<div className="flex flex-row gap-2 items-center my-2">
+						<div className="w-2 h-2 bg-accent rounded-full"></div>
+						<h1 className="text-xl font-bold">Recommended</h1>
+					</div>
 					<div className="flex flex-row overflow-x-auto gap-2 invisible-scroll custom-scrollbar">
 						{mediaRecommendations &&
 							mediaRecommendations.results
@@ -436,11 +437,11 @@ export default async function mediaPage({
 								))}
 					</div>
 				</div>
-				<div className="flex flex-row gap-2 items-center my-2">
-					<div className="w-2 h-2 bg-accent rounded-full"></div>
-					<h1 className="text-xl font-bold">You might like</h1>
-				</div>
 				<div className="">
+					<div className="flex flex-row gap-2 items-center my-2">
+						<div className="w-2 h-2 bg-accent rounded-full"></div>
+						<h1 className="text-xl font-bold">You might like</h1>
+					</div>
 					<div className="flex flex-row overflow-x-auto gap-2 invisible-scroll custom-scrollbar">
 						{mediaSimilar &&
 							mediaSimilar.results
