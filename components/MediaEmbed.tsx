@@ -150,18 +150,30 @@ const VideoEmbed = ({
 						</button>
 					</div>
 				) : (
-					<div className="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden drop-shadow-lg">
+					<div className="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden drop-shadow-lg z-20 relative">
 						<iframe
 							allowFullScreen
 							id="iframe"
 							loading="lazy"
 							src={link}
-							className="inline-block w-full h-full"
+							className="inline-block w-full h-full z-50"
 							frameBorder="0"
 							marginHeight={0}
 							marginWidth={0}
 							scrolling="no"
 						></iframe>
+
+						{/* <iframe
+							src="https://ww1.9anime2.com/embed/MTIzMTM3"
+							allowFullScreen
+							id="iframe"
+							loading="lazy"
+							className="inline-block w-full h-full"
+							frameBorder="0"
+							marginHeight={0}
+							marginWidth={0}
+							scrolling="no"
+						></iframe> */}
 					</div>
 				)}
 			</div>
@@ -194,7 +206,7 @@ const VideoEmbed = ({
 					<p className="text-lg">Rate</p>
 				</Link>
 			</div>
-			<div className="flex md:flex-row flex-row justify-between items-center gap-4">
+			<div className="flex md:flex-row flex-col justify-between items-center gap-4">
 				{media_type === "tv" && (
 					<div>
 						{getPreviousEpisodeLink() ? (
@@ -224,7 +236,7 @@ const VideoEmbed = ({
 						)}
 					</div>
 				)}
-				{/* <div className="flex justify-center gap-4 ">
+				<div className="flex justify-center gap-4 ">
 					<button
 						onClick={() =>
 							updateLinkStart("https://vidsrc.to/embed/")
@@ -249,7 +261,7 @@ const VideoEmbed = ({
 					>
 						vidsrc.pro
 					</button>
-				</div> */}
+				</div>
 				{media_type === "tv" && (
 					<div>
 						{getNextEpisodeLink() ? (

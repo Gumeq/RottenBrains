@@ -166,7 +166,7 @@ export default async function mediaPage({
 				<img
 					src={`https://image.tmdb.org/t/p/w200${media.poster_path}`}
 					alt=""
-					className="w-screen lg:h-[150vh] h-[300vh] object-cover blur-[100px] absolute top-0 mask2 opacity-30 overflow-hidden bg-black"
+					className="w-screen h-[300vh] object-cover blur-[100px] absolute top-0 mask2 opacity-30 overflow-hidden bg-black"
 				/>
 			</div>
 			<div className=" relative lg:h-screen h-auto w-screen lg:w-auto py-4 ">
