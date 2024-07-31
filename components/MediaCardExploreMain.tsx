@@ -22,7 +22,7 @@ const MediaCardExploreMain = (media: any, color: any) => {
 	return (
 		<div className=" relative w-full aspect-[3/1] h-auto rounded-[8px] overflow-hidden ">
 			<img
-				src={`https://image.tmdb.org/t/p/w300${media.backdrop_path}`}
+				src={`https://image.tmdb.org/t/p/w200${media.backdrop_path}`}
 				alt=""
 				className=" absolute w-full h-full object-cover object-center opacity-50"
 			/>

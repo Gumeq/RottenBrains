@@ -150,13 +150,13 @@ const VideoEmbed = ({
 						</button>
 					</div>
 				) : (
-					<div className="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden drop-shadow-lg z-20 relative">
+					<div className="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden drop-shadow-lg z-50 relative">
 						<iframe
 							allowFullScreen
 							id="iframe"
 							loading="lazy"
 							src={link}
-							className="inline-block w-full h-full z-50"
+							className="inline-block w-full h-full"
 							frameBorder="0"
 							marginHeight={0}
 							marginWidth={0}

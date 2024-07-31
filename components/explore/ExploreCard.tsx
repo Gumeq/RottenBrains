@@ -59,14 +59,23 @@ const ExploreCard = async (media: any) => {
 							href={`/protected/media/${media_type}/${media.id}`}
 						>
 							<div className="aspect-w-2 aspect-h-3 rounded-xl overflow-hidden">
-								<img
-									src={`https://image.tmdb.org/t/p/w342${media.poster_path}`}
-									alt=""
-									height="300"
-									width="200"
-									className=""
-									loading="lazy"
-								/>
+								<picture>
+									<source
+										media="(min-width: 768px)"
+										srcSet={`https://image.tmdb.org/t/p/w342${media.poster_path}`}
+									/>
+									<source
+										media="(max-width: 767px)"
+										srcSet={`https://image.tmdb.org/t/p/w92${media.poster_path}`}
+									/>
+									<img
+										src={`https://image.tmdb.org/t/p/w92${media.poster_path}`}
+										alt=""
+										height="300"
+										width="250"
+										loading="lazy"
+									/>
+								</picture>
 							</div>
 						</Link>
 						<div className="px-1 flex flex-row gap-2 justify-between w-[100%] h-auto items-center">

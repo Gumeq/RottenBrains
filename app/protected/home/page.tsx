@@ -39,6 +39,9 @@ async function fetchMoviesAndTvDetails() {
 const PostsPage = async () => {
 	const users = await getNewestUsers();
 	const { movieDetails, tvDetails } = await fetchMoviesAndTvDetails();
+	if (!users) {
+		return;
+	}
 	return (
 		<>
 			<div className="w-screen flex items-center flex-col">
@@ -93,7 +96,7 @@ const PostsPage = async () => {
 			<div className="w-[30%] h-screen  fixed right-0 z-20 my-20 hidden lg:block">
 				<h2 className="text-foreground/50">Suggested for you</h2>
 				<div className="flex flex-col gap-4 my-2">
-					{users?.map((user: any) => (
+					{users.map((user: any) => (
 						<Link
 							href={`/protected/user/${user.id}`}
 							key={user.id}

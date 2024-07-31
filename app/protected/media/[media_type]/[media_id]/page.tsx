@@ -158,7 +158,7 @@ export default async function mediaPage({
 
 	return (
 		<div className="lg:w-screen ">
-			<div className="w-screen h-16 bg-foreground/10 flex-row gap-4 flex lg:hidden z-20 relative items-center px-4">
+			<div className="w-screen h-16 bg-white/10 flex-row gap-4 flex lg:hidden z-20 items-center px-4 fixed backdrop-blur-xl">
 				<GoBackArrow />
 				<p className="truncate text-lg">{media.title || media.name}</p>
 			</div>
@@ -169,7 +169,7 @@ export default async function mediaPage({
 					className="w-screen h-[300vh] object-cover blur-[100px] absolute top-0 mask2 opacity-30 overflow-hidden bg-black"
 				/>
 			</div>
-			<div className=" relative lg:h-screen h-auto w-screen lg:w-auto py-4 ">
+			<div className=" relative lg:h-screen h-auto w-screen lg:w-auto py-4 mt-16 lg:mt-0 ">
 				<div
 					className=" relative lg:h-screen h-auto flex w-screen lg:w-auto"
 					id="overview"
