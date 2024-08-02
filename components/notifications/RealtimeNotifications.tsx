@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 import { useUser } from "@/context/UserContext";
 
@@ -10,6 +10,7 @@ const NotificationButton = () => {
 	const router = useRouter();
 	const supabase = createClient();
 	const { user } = useUser();
+	const pathname = usePathname();
 
 	useEffect(() => {
 		if (!user) {
@@ -80,7 +81,11 @@ const NotificationButton = () => {
 	return (
 		<button onClick={handleClick} className="pointer relative">
 			<img
-				src={"/assets/icons/bell-solid.svg"}
+				src={`${
+					pathname.includes("/protected/notifications")
+						? "/assets/icons/notifications.svg"
+						: "/assets/icons/notifications-outline.svg"
+				}`}
 				alt="Notification Bell"
 				width={25}
 				height={25}

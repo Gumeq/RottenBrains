@@ -6,6 +6,7 @@ import HomePostCard from "@/components/post/HomePostCard";
 import RecommendedCard from "@/components/RecommendedCard";
 import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
 import { getPostsOfMedia } from "@/utils/supabase/queries";
+import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import { getMediaDetails, getRecommendations } from "@/utils/tmdb";
 import Link from "next/link";
 
@@ -44,7 +45,18 @@ export default async function mediaPage({
 	const media_id = params.media_id;
 	const media_type = params.media_type;
 
-	const postsOfMedia = await getPostsOfMedia(media_id, media_type);
+	const user = await getCurrentUser();
+
+	let postsOfMedia: any = [];
+	if (user) {
+		postsOfMedia = await getPostsOfMedia(
+			user.user.id,
+			media_type,
+			media_id,
+			0
+		);
+		console.log(postsOfMedia);
+	}
 	const recommendations = await getRecommendations(media_type, media_id);
 	const media = await getMediaDetails(media_type, media_id);
 	return (
@@ -101,7 +113,7 @@ export default async function mediaPage({
 							)}
 						</div>
 					</div>
-					<div className="md:w-[25%] h-full flex flex-col ">
+					<div className="md:w-[25%] lg:h-[75vh] h-full flex flex-col overflow-y-auto custom-scrollbar">
 						<p className="text-lg font-bold mb-2">
 							Recommendations
 						</p>

@@ -37,7 +37,7 @@ const ScrollButtons = ({
 		<div className="lg:flex flex-row gap-4 hidden">
 			<button
 				onClick={scrollLeft}
-				className="bg-foreground/10 p-2 rounded-full z-10 hover:scale-105 drop-shadow-lg "
+				className="bg-foreground/10 p-2 rounded-full z-10 hover:bg-foreground/20 drop-shadow-lg "
 			>
 				<img
 					src="/assets/icons/chevron-back.svg"
@@ -47,7 +47,7 @@ const ScrollButtons = ({
 			</button>
 			<button
 				onClick={scrollRight}
-				className="bg-foreground/10 p-2 rounded-full z-10 hover:scale-105 drop-shadow-lg"
+				className="bg-foreground/10 p-2 rounded-full z-10 hover:bg-foreground/20 drop-shadow-lg"
 			>
 				<img
 					src="/assets/icons/chevron-forward.svg"

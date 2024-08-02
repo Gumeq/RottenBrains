@@ -6,6 +6,7 @@ import HomePostCard from "@/components/post/HomePostCard";
 import TVShowDetails from "@/components/TVSeasons";
 import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
 import { getPostsOfMedia } from "@/utils/supabase/queries";
+import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import { getMediaDetails } from "@/utils/tmdb";
 
 export async function generateMetadata({ params }: any) {
@@ -50,7 +51,18 @@ export default async function mediaPage({
 	const season_number = params.season_number;
 	const episode_number = params.episode_number;
 
-	const postsOfMedia = await getPostsOfMedia(media_id, media_type);
+	const user = await getCurrentUser();
+
+	let postsOfMedia: any = [];
+	if (user) {
+		postsOfMedia = await getPostsOfMedia(
+			user.user.id,
+			media_type,
+			media_id,
+			0
+		);
+		console.log(postsOfMedia);
+	}
 
 	const media = await getMediaDetails(media_type, media_id);
 

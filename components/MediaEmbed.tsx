@@ -1,7 +1,7 @@
 "use client";
 
 // components/VideoEmbed.js
-import { getMediaDetails } from "@/utils/tmdb";
+import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
@@ -19,9 +19,10 @@ const VideoEmbed = ({
 	episode_number,
 }: VideoEmbedProps) => {
 	const [linkStart, setLinkStart] = useState<string>(
-		"https://vidsrc.to/embed/"
+		"https://vidsrc.net/embed/"
 	);
 	const [media, setMedia] = useState<any>();
+	const [episode, setEpisode] = useState<any>();
 	const [showVideo, setShowVideo] = useState(false);
 	const [nextClicked, setNextClicked] = useState(false);
 	const [prevClicked, setPrevClicked] = useState(false);
@@ -57,6 +58,28 @@ const VideoEmbed = ({
 
 		fetchMediaDetails();
 	}, [media_type, media_id]);
+
+	useEffect(() => {
+		const fetchEpisodeDetails = async () => {
+			if (season_number && episode_number) {
+				try {
+					const episodeData = await getEpisodeDetails(
+						media_id,
+						season_number,
+						episode_number
+					);
+					setEpisode(episodeData);
+				} catch (error) {
+					console.error("Error fetching episode data:", error);
+					setEpisode(null);
+				}
+			}
+		};
+
+		if (media_type === "tv") {
+			fetchEpisodeDetails();
+		}
+	}, [media_type, media_id, season_number, episode_number]);
 
 	const handleButtonClick = () => {
 		setShowVideo(true);
@@ -132,9 +155,14 @@ const VideoEmbed = ({
 				{!showVideo ? (
 					<div className="relative text-center rounded-xl overflow-hidden">
 						<img
-							src={`https://image.tmdb.org/t/p/original${media.backdrop_path}`}
+							src={
+								media_type === "movie"
+									? `https://image.tmdb.org/t/p/w500${media.backdrop_path}`
+									: episode &&
+									  `https://image.tmdb.org/t/p/w500${episode.still_path}`
+							}
 							alt="Media Poster"
-							className="w-full h-auto drop-shadow-lg"
+							className="w-full h-auto drop-shadow-lg bg-foreground/10"
 						/>
 						<button
 							onClick={handleButtonClick}
@@ -239,19 +267,11 @@ const VideoEmbed = ({
 				<div className="flex justify-center gap-4 ">
 					<button
 						onClick={() =>
-							updateLinkStart("https://vidsrc.to/embed/")
+							updateLinkStart("https://vidsrc.net/embed/")
 						}
 						className="bg-foreground/10 hover:bg-foreground/20 text-foreground font-semibold py-2 px-4 rounded"
 					>
-						vidsrc.to
-					</button>
-					<button
-						onClick={() =>
-							updateLinkStart("https://vidsrc.me/embed/")
-						}
-						className="bg-foreground/10 hover:bg-foreground/20 text-foreground font-semibold py-2 px-4 rounded"
-					>
-						vidsrc.me
+						vidsrc.net
 					</button>
 					<button
 						onClick={() =>

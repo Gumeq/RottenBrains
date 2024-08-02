@@ -2,17 +2,20 @@ import { fetchUserDataServer } from "@/utils/serverFunctions/fetchUserData";
 
 export const sidebarLinks = [
 	{
-		imgURL: "/assets/icons/house-solid.svg",
+		image_url: "/assets/icons/home-outline.svg",
+		image_url_active: "/assets/icons/home.svg",
 		route: "/protected/home",
 		label: "Home",
 	},
 	{
-		imgURL: "/assets/icons/magnifying-glass-solid.svg",
+		image_url: "/assets/icons/compass-outline.svg",
+		image_url_active: "/assets/icons/compass.svg",
 		route: "/protected/explore",
 		label: "Explore",
 	},
 	{
-		imgURL: "/assets/icons/square-plus-solid.svg",
+		image_url: "/assets/icons/add-circle-outline.svg",
+		image_url_active: "/assets/icons/add-circle.svg",
 		route: "/protected/create-post",
 		label: "Add Post",
 	},

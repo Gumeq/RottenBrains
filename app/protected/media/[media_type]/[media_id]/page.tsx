@@ -15,6 +15,7 @@ import {
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import Sidebar from "./Sidebar";
+import { getCurrentUser } from "@/utils/supabase/serverQueries";
 
 function transformRuntime(minutes: number): string {
 	const hours: number = Math.floor(minutes / 60);
@@ -143,7 +144,18 @@ export default async function mediaPage({
 		return <h1>No Media Found</h1>;
 	}
 
-	const postsOfMedia = await getPostsOfMedia(media_id, media_type);
+	const user = await getCurrentUser();
+
+	let postsOfMedia: any = [];
+	if (user) {
+		postsOfMedia = await getPostsOfMedia(
+			user.user.id,
+			media_type,
+			media_id,
+			0
+		);
+		console.log(postsOfMedia);
+	}
 	const mediaVideos = await getVideos(media_type, media_id);
 	const trailers = await getTrailerOrFirstFive(media_type, media_id);
 	const mediaRecommendations = await getRecommendations(media_type, media_id);

@@ -91,31 +91,30 @@ export const getSavedPosts = async (userId: string): Promise<any | null> => {
 };
 
 export const getPostsOfMedia = async (
+	user_id: string,
+	media_type: string,
 	media_id: number,
-	media_type: string
+	page: number
 ): Promise<any | null> => {
+	console.log(user_id, media_type, media_id, page);
 	try {
-		const { data, error } = await supabase
-			.from("posts")
-			.select(
-				`
-                *,
-                users (
-                    id,
-                    username,
-                    name,
-                    email,
-                    image_url
-                )
-            `
-			)
-			.eq("media_id", media_id)
-			.eq("media_type", media_type)
-			.order("created_at", { ascending: false });
-		if (error) throw error;
-		return data;
+		// Call the RPC function to fetch posts with media type and ID
+		const { data: postsData, error: postsError } = await supabase.rpc(
+			"fetch_posts_by_media",
+			{
+				current_user_id: user_id,
+				media_type_param: media_type,
+				media_id_param: media_id,
+				result_limit: 6,
+				result_offset: page * 6,
+			}
+		);
+
+		if (postsError) throw postsError;
+
+		return postsData;
 	} catch (error) {
-		handleError("getPostsOfMedia", error);
+		console.error("getPostsByMedia", error);
 		return null;
 	}
 };

@@ -91,7 +91,7 @@ const TVShowDetails = ({ tv_show_id, season_number }: TVShowDetailsProps) => {
 					{/* <h2 className="text-2xl font-bold mb-4">
 						Episodes of Season {selectedSeason}
 					</h2> */}
-					<div className="">
+					<div className="lg:h-[75vh] h-full flex flex-col overflow-y-auto custom-scrollbar">
 						{episodes.map((episode) => (
 							<Link
 								key={episode.episode_number}

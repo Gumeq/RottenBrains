@@ -28,7 +28,7 @@ const LazyImage = ({ src, alt, className, ...props }: any) => {
 
 const TopMoviesCarousel = ({ movies }: any) => {
 	const settings = {
-		dots: true,
+		dots: false,
 		infinite: true,
 		fade: true,
 		waitForAnimate: false,
@@ -108,7 +108,7 @@ const TopMoviesCarousel = ({ movies }: any) => {
 														<div className=" xl:h-[30%] md:h-[50%] h-full w-full flex md:flex-row items-center gap-4 flex-col ">
 															<Link
 																href={watchLink}
-																className="relative md:h-full w-auto h-[50%] bg-white/20 rounded-full flex items-center justify-center hover:bg-white/40"
+																className="relative md:h-full w-auto h-[50%] bg-white/20 rounded-full backdrop-blur-md flex items-center justify-center hover:bg-white/40"
 																style={{
 																	aspectRatio:
 																		"1 / 1",
@@ -121,7 +121,7 @@ const TopMoviesCarousel = ({ movies }: any) => {
 																/>
 															</Link>
 															<div className="flex-col gap-2 flex text-center md:text-left">
-																<p className="md:text-4xl md:text-2xl text-xl ">
+																<p className="lg:text-4xl md:text-2xl text-xl ">
 																	{media.title ||
 																		media.name}
 																</p>

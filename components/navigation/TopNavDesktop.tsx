@@ -19,34 +19,42 @@ export function TopNavbarDesktop() {
 					<div className="flex flex-row gap-16">
 						<Link
 							href={"/protected/home"}
-							className="px-4 py-2  bg-accent rounded-[8px]"
+							className=" p-2 m-1 rounded-[8px]"
 						>
 							<img
-								src="/assets/images/logo-text.png"
+								src="/assets/images/logo-text-new.svg"
 								alt="text-logo"
-								width={60}
-								height={60}
-								className=""
+								width={80}
+								height={80}
+								className="invert p-1"
 							/>
 						</Link>
 						<ul className="flex flex-row justify-between gap-8">
-							{sidebarLinks.map((link: INavLink) => {
+							{sidebarLinks.map((link: any) => {
 								const isActive = pathname.includes(link.route);
 								return (
 									<Link
 										href={link.route}
-										className={`flex gap-4 items-center px-4 py-2 rounded-[4px] justify-center ${
-											isActive ? "underline" : ""
-										}`}
+										className=" h-full flex items-center justify-center"
 									>
-										{/* <img
-											src={link.imgURL}
-											alt={""}
-											width={15}
-											height={15}
-											className="invert-on-dark"
-										/> */}
-										<p className="text-xl ">{link.label}</p>
+										<div
+											className={`flex flex-row gap-2 items-center p-2 m-1 rounded-full justify-center `}
+										>
+											<img
+												src={`${
+													isActive
+														? link.image_url_active
+														: link.image_url
+												}`}
+												alt={""}
+												width={25}
+												height={25}
+												className="invert-on-dark w-[25px] h-[25px]"
+											/>
+											<p className="text-lg">
+												{link.label}
+											</p>
+										</div>
 									</Link>
 								);
 							})}

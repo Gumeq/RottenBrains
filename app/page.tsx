@@ -23,7 +23,7 @@ export default async function Index() {
 				<div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
 					<div className="text-xl font-bold">
 						<img
-							src="/assets/images/logo-text.png"
+							src="/assets/images/logo-text-new.svg"
 							alt=""
 							width={80}
 							height={80}
@@ -35,7 +35,7 @@ export default async function Index() {
 			</nav>
 			<div className="flex flex-col gap-4 w-screen max-w-7xl items-center justify-center px-8 my-16">
 				<img
-					src="/assets/images/logo-text.png"
+					src="/assets/images/logo-text-new.svg"
 					alt="logo-text.png"
 					className="invert-on-dark"
 				/>

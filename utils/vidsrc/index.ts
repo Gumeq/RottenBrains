@@ -1,22 +1,33 @@
-export async function fetchVidsrc(type: string, page: number) {
-	const urlMovies = `https://vidsrc.to/vapi/movie/${type}/${page}`;
-	const urlTv = `https://vidsrc.to/vapi/tv/${type}/${page}`;
+export async function fetchVidsrc() {
+	const urlMovies = `https://vidsrc.xyz/movies/latest/page-1.json`;
+	const urlTv = `https://vidsrc.xyz/tvshows/latest/page-1.json`;
+	const urlEpisodes = `https://vidsrc.xyz/episodes/latest/page-1.json`;
 
 	try {
-		const responseMovies = await fetch(urlMovies);
-		const responseTv = await fetch(urlTv);
+		// Fetch both URLs in parallel
+		const [responseMovies, responseTv, responseEpisodes] =
+			await Promise.all([
+				fetch(urlMovies),
+				fetch(urlTv),
+				fetch(urlEpisodes),
+			]);
 
-		if (!responseMovies.ok || !responseTv.ok) {
+		// Check if both responses are OK
+		if (!responseMovies.ok || !responseTv.ok || !responseEpisodes.ok) {
 			throw new Error(
-				`HTTP error! status: ${responseMovies.status}, ${responseTv.status}`
+				`HTTP error! status: ${responseMovies.status}, ${responseTv.status}, ${responseEpisodes.status}`
 			);
 		}
 
+		// Parse JSON data
 		const dataMovies = await responseMovies.json();
+		console.log(dataMovies);
 		const dataTv = await responseTv.json();
-		return { dataMovies, dataTv };
+		const dataEpisodes = await responseEpisodes.json();
+
+		return { dataMovies, dataTv, dataEpisodes };
 	} catch (error) {
-		console.error("Error fetching movie or TV info:", error);
-		return { dataMovies: null, dataTv: null };
+		console.error("Error fetching movie, TV, or episode info:", error);
+		return { dataMovies: null, dataTv: null, dataEpisodes: null };
 	}
 }

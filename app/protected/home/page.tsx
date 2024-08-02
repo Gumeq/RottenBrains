@@ -4,22 +4,25 @@ import Link from "next/link";
 import FollowButton from "@/components/post/FollowButton";
 import { fetchVidsrc } from "@/utils/vidsrc";
 import { fetchMediaDetails } from "@/utils/tmdb";
+import ProfilePicture from "@/components/ProfilePicture";
 
 async function fetchMoviesAndTvDetails() {
-	const { dataMovies, dataTv } = await fetchVidsrc("new", 1);
+	const { dataMovies, dataTv } = await fetchVidsrc();
+
+	console.log(await fetch("https://vidsrc.xyz/movie/tt5433140"));
 
 	if (dataMovies && dataTv) {
-		const newMovies = dataMovies.result.items;
-		const newTvShows = dataTv.result.items;
+		const newMovies = dataMovies.result;
+		const newTvShows = dataTv.result;
 
 		const movieDetailsArray = newMovies.map((item: any) => ({
 			tmdb_id: item.tmdb_id,
-			type: item.type,
+			type: "movie",
 		}));
 
 		const tvDetailsArray = newTvShows.map((item: any) => ({
 			tmdb_id: item.tmdb_id,
-			type: item.type,
+			type: "tv",
 		}));
 
 		const movieDetails = await fetchMediaDetails(movieDetailsArray);
@@ -102,11 +105,7 @@ const PostsPage = async () => {
 							key={user.id}
 							className="flex flex-row gap-2 items-center"
 						>
-							<img
-								src={user.image_url}
-								alt="prof-pic"
-								className="w-10 h-10 aspect-[1/1] rounded-full"
-							/>
+							<ProfilePicture user={user}></ProfilePicture>
 							<div className="flex flex-col">
 								<p>{user.username}</p>
 								<p className="text-foreground/50 text-sm">

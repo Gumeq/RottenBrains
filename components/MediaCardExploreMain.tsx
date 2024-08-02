@@ -32,7 +32,7 @@ const MediaCardExploreMain = (media: any, color: any) => {
 					backgroundImage: `linear-gradient(180deg, black 0%, black 100%)`,
 				}}
 			></div>
-			<div className="absolute lg:p-4 p-2 z-10 inset-0 flex flex-row gap-4">
+			<div className="absolute p-2 z-10 inset-0 flex flex-row gap-4">
 				<Link
 					href={`/protected/media/${media.media_type}/${media.id}`}
 					className="h-full aspect-[2/3] w-auto min-h-full"
