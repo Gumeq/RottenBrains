@@ -105,7 +105,6 @@ const LoadingSkeleton = ({ index }: any) => {
 const ErrorComponent = () => <div>Error loading post.</div>;
 
 export function HomePostCard({ post, index }: any) {
-	console.log(post);
 	const media_id = post.media_id;
 	const media_type = post.media_type;
 	const [media, setMedia] = useState<any>(null);

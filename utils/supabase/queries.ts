@@ -82,7 +82,6 @@ export const getSavedPosts = async (userId: string): Promise<any | null> => {
 			.eq("user_id", userId)
 			.order("created_at", { ascending: false });
 		if (error) throw error;
-		console.log(data);
 		return data;
 	} catch (error) {
 		handleError("getSavedPosts", error);
@@ -96,7 +95,6 @@ export const getPostsOfMedia = async (
 	media_id: number,
 	page: number
 ): Promise<any | null> => {
-	console.log(user_id, media_type, media_id, page);
 	try {
 		// Call the RPC function to fetch posts with media type and ID
 		const { data: postsData, error: postsError } = await supabase.rpc(

@@ -21,7 +21,6 @@ export async function fetchVidsrc() {
 
 		// Parse JSON data
 		const dataMovies = await responseMovies.json();
-		console.log(dataMovies);
 		const dataTv = await responseTv.json();
 		const dataEpisodes = await responseEpisodes.json();
 

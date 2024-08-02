@@ -40,7 +40,6 @@ const TVShowDetails = ({ tv_show_id, season_number }: TVShowDetailsProps) => {
 				setSeasons(filteredSeasons);
 				// If there are seasons, select the first one by default
 				if (filteredSeasons.length > 0) {
-					console.log(filteredSeasons);
 					const firstSeasonNumber =
 						filteredSeasons[season_number - 1].season_number;
 					setSelectedSeason(firstSeasonNumber);

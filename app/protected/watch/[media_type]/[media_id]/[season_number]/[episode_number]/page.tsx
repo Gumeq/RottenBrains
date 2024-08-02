@@ -61,7 +61,6 @@ export default async function mediaPage({
 			media_id,
 			0
 		);
-		console.log(postsOfMedia);
 	}
 
 	const media = await getMediaDetails(media_type, media_id);

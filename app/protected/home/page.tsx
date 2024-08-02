@@ -9,8 +9,6 @@ import ProfilePicture from "@/components/ProfilePicture";
 async function fetchMoviesAndTvDetails() {
 	const { dataMovies, dataTv } = await fetchVidsrc();
 
-	console.log(await fetch("https://vidsrc.xyz/movie/tt5433140"));
-
 	if (dataMovies && dataTv) {
 		const newMovies = dataMovies.result;
 		const newTvShows = dataTv.result;
@@ -27,9 +25,6 @@ async function fetchMoviesAndTvDetails() {
 
 		const movieDetails = await fetchMediaDetails(movieDetailsArray);
 		const tvDetails = await fetchMediaDetails(tvDetailsArray);
-
-		// console.log("Movie Details:", movieDetails);
-		// console.log("TV Details:", tvDetails);
 
 		return { movieDetails, tvDetails };
 	} else {

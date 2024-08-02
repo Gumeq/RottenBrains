@@ -17,7 +17,6 @@ const FollowUsers = () => {
 				const data = await getNewestUsers();
 				if (data) {
 					setUsers(data);
-					console.log("Fetched users:", data);
 				}
 			} catch (error) {
 				console.error("Error fetching users:", error);

@@ -5,7 +5,6 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 const ProfilePicture = ({ user }: any) => {
-	console.log(user);
 	// const [loading, setLoading] = useState<boolean>(true);
 	// const [error, setError] = useState<string | null>(null);
 

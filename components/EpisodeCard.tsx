@@ -51,7 +51,6 @@ const EpisodeCard = ({
 					episode_number
 				);
 				setEpisode(episodeData);
-				console.log(episodeData);
 				setLoading(false);
 			} catch (error) {
 				console.error("Error fetching Episode Details:", error);

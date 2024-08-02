@@ -30,11 +30,8 @@ const getUser = async () => {
 	}
 
 	if (supabaseUser) {
-		console.log(supabaseUser);
 		const dbUser = await getUserFromDB(supabaseUser.user.id);
-		console.log(dbUser);
 		if (!dbUser) {
-			console.log("no db user");
 			const { error: insertError } = await supabase
 				.from("users") // Replace 'profiles' with your actual table name
 				.insert([
@@ -47,7 +44,6 @@ const getUser = async () => {
 						// Add any other fields you need to store
 					},
 				]);
-			console.log("created");
 			if (insertError) {
 				console.log(
 					"Error inserting user profile:",

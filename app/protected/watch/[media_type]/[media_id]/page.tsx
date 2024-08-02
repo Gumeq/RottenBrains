@@ -55,7 +55,6 @@ export default async function mediaPage({
 			media_id,
 			0
 		);
-		console.log(postsOfMedia);
 	}
 	const recommendations = await getRecommendations(media_type, media_id);
 	const media = await getMediaDetails(media_type, media_id);

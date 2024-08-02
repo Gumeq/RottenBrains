@@ -12,7 +12,6 @@ export default async function Page({
 
 	const post = await getPostById(post_id);
 
-	console.log(post);
 	return (
 		<div className="w-screen">
 			<div className="w-screen h-16 bg-white/10 flex-row gap-4 flex lg:hidden z-20 relative items-center px-4">

@@ -30,7 +30,6 @@ const LoadMore = () => {
 						setHasMore(false); // No more posts to load
 					} else {
 						setData((prevData) => [...prevData, ...res]);
-						console.log(data);
 						setPage((prevPage) => prevPage + 1);
 					}
 				} catch (error) {

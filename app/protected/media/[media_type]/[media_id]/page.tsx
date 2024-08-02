@@ -154,7 +154,6 @@ export default async function mediaPage({
 			media_id,
 			0
 		);
-		console.log(postsOfMedia);
 	}
 	const mediaVideos = await getVideos(media_type, media_id);
 	const trailers = await getTrailerOrFirstFive(media_type, media_id);

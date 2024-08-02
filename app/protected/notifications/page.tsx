@@ -37,7 +37,6 @@ const NotificationsPage = () => {
 			if (error) {
 				console.error("Error fetching notifications:", error);
 			} else {
-				console.log("Fetched notifications:", data); // Log notifications data
 				setNotifications(data);
 			}
 			setIsLoading(false);

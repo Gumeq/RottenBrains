@@ -72,7 +72,6 @@ const Tabs: React.FC<any> = () => {
 						user.id.toString(),
 						likesPage
 					);
-					console.log(res);
 					if (res.length === 0) {
 						setHasMoreLikes(false); // No more posts to load
 					} else {
@@ -102,7 +101,6 @@ const Tabs: React.FC<any> = () => {
 					if (res.length === 0) {
 						setHasMoreSaves(false); // No more posts to load
 					} else {
-						console.log(res);
 						setUserSaves((prevData) => [...prevData, ...res]);
 						setSavesPage((prevPage) => prevPage + 1); // Increment page state
 					}
