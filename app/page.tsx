@@ -33,7 +33,7 @@ export default async function Index() {
 					{<AuthButton />}
 				</div>
 			</nav>
-			<div className="flex flex-col gap-4 w-screen max-w-7xl items-center justify-center px-8 my-16">
+			<div className="flex flex-col gap-4 w-screen max-w-4xl items-center justify-center px-8 my-16">
 				<img
 					src="/assets/images/logo-text-new.svg"
 					alt="logo-text.png"

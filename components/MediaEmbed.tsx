@@ -157,9 +157,9 @@ const VideoEmbed = ({
 						<img
 							src={
 								media_type === "movie"
-									? `https://image.tmdb.org/t/p/w500${media.backdrop_path}`
+									? `https://image.tmdb.org/t/p/w780${media.backdrop_path}`
 									: episode &&
-									  `https://image.tmdb.org/t/p/w500${episode.still_path}`
+									  `https://image.tmdb.org/t/p/w780${episode.still_path}`
 							}
 							alt="Media Poster"
 							className="w-full h-auto drop-shadow-lg bg-foreground/10"
@@ -205,36 +205,25 @@ const VideoEmbed = ({
 					</div>
 				)}
 			</div>
-			<div className="flex flex-row justify-between">
-				<span className="text-xl flex flex-row gap-2 truncate items-center">
+			<div className="flex flex-row justify-between py-2">
+				<span className="text-xl font-bold flex flex-row gap-2 truncate items-center">
 					{season_number !== undefined &&
-						episode_number !== undefined && (
+						episode_number !== undefined &&
+						episode && (
 							<h2 className="">
+								{episode.name}
+								{" | "}
 								{formatEpisodeCode(
 									season_number,
 									episode_number
 								)}
-								{" - "}
+								{" | "}
 							</h2>
 						)}
 					<p className="truncate pr-1">{media.title || media.name}</p>
 				</span>
-				<Link
-					href={`/protected/create-post/${media_type}/${media_id}`}
-					className=" flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg"
-				>
-					<img
-						src="/assets/icons/star-outline.svg"
-						alt=""
-						width={20}
-						height={20}
-						className="invert-on-dark"
-						loading="lazy"
-					/>
-					<p className="text-lg">Rate</p>
-				</Link>
 			</div>
-			<div className="flex md:flex-row flex-col justify-between items-center gap-4">
+			<div className="flex md:flex-row flex-col items-center gap-4">
 				{media_type === "tv" && (
 					<div>
 						{getPreviousEpisodeLink() ? (
@@ -264,24 +253,6 @@ const VideoEmbed = ({
 						)}
 					</div>
 				)}
-				<div className="flex justify-center gap-4 ">
-					<button
-						onClick={() =>
-							updateLinkStart("https://vidsrc.net/embed/")
-						}
-						className="bg-foreground/10 hover:bg-foreground/20 text-foreground font-semibold py-2 px-4 rounded"
-					>
-						vidsrc.net
-					</button>
-					<button
-						onClick={() =>
-							updateLinkStart("https://vidsrc.pro/embed/")
-						}
-						className="bg-foreground/10 hover:bg-foreground/20 text-foreground font-semibold py-2 px-4 rounded"
-					>
-						vidsrc.pro
-					</button>
-				</div>
 				{media_type === "tv" && (
 					<div>
 						{getNextEpisodeLink() ? (
@@ -311,6 +282,38 @@ const VideoEmbed = ({
 						)}
 					</div>
 				)}
+				<div className="flex justify-center gap-4 ">
+					<button
+						onClick={() =>
+							updateLinkStart("https://vidsrc.net/embed/")
+						}
+						className="flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg"
+					>
+						vidsrc.net
+					</button>
+					<button
+						onClick={() =>
+							updateLinkStart("https://vidsrc.pro/embed/")
+						}
+						className="flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg"
+					>
+						vidsrc.pro
+					</button>
+				</div>
+				<Link
+					href={`/protected/create-post/${media_type}/${media_id}`}
+					className=" flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg"
+				>
+					<img
+						src="/assets/icons/star-outline.svg"
+						alt=""
+						width={20}
+						height={20}
+						className="invert-on-dark"
+						loading="lazy"
+					/>
+					<p className="text-lg">Rate</p>
+				</Link>
 			</div>
 		</div>
 	);

@@ -77,7 +77,7 @@ const TVShowDetails = ({ tv_show_id, season_number }: TVShowDetailsProps) => {
 						onClick={() => handleSeasonChange(season.season_number)}
 						className={`flex flex-row items-center gap-2 bg-foreground/10 px-2 py-1 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg text-foreground whitespace-nowrap ${
 							selectedSeason === season.season_number
-								? "border-2 border-accent"
+								? "border-2 border-foreground/20"
 								: ""
 						}`}
 					>

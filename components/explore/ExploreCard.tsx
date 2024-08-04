@@ -18,7 +18,7 @@ const ExploreCard = async (media: any) => {
 			: `/protected/watch/${media_type}/${media.id}/1/1`;
 
 	return (
-		<div className="w-[130px] md:w-[250px] rounded-[8px]">
+		<div className="w-[130px] md:w-[180px] rounded-[8px]">
 			<div className="flex flex-col gap-2">
 				{!media ? (
 					<>
@@ -67,10 +67,10 @@ const ExploreCard = async (media: any) => {
 									/>
 									<source
 										media="(max-width: 767px)"
-										srcSet={`https://image.tmdb.org/t/p/w92${media.poster_path}`}
+										srcSet={`https://image.tmdb.org/t/p/w154${media.poster_path}`}
 									/>
 									<img
-										src={`https://image.tmdb.org/t/p/w92${media.poster_path}`}
+										src={`https://image.tmdb.org/t/p/w154${media.poster_path}`}
 										alt=""
 										className="w-full h-full bg-background"
 										loading="lazy"

@@ -180,9 +180,9 @@ export default async function mediaPage({
 					className="w-screen h-[300vh] object-cover blur-[100px] absolute top-0 mask2 opacity-30 overflow-hidden bg-black"
 				/>
 			</div>
-			<div className=" relative lg:h-screen h-auto w-screen lg:w-auto py-4 mt-16 lg:mt-0 ">
+			<div className=" relative h-auto w-screen lg:w-auto py-4 mt-16 lg:mt-0 ">
 				<div
-					className=" relative lg:h-screen h-auto flex w-screen lg:w-auto"
+					className=" relative h-auto flex w-screen lg:w-auto"
 					id="overview"
 				>
 					<div className="h-full mx-auto flex flex-col lg:gap-8 gap-4 w-screen lg:w-auto px-2 lg:my-8">
@@ -272,7 +272,7 @@ export default async function mediaPage({
 								</div>
 							</div>
 						</div>
-						<div className="lg:h-[45%] h-auto flex lg:flex-row flex-col lg:gap-8 gap-4 ">
+						<div className="lg:h-[45vh] h-auto flex lg:flex-row flex-col lg:gap-8 gap-4 ">
 							<div className="h-full   ">
 								<img
 									src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
@@ -340,7 +340,7 @@ export default async function mediaPage({
 									<p className="font-bold text-xl text-foreground/50 w-[100px]">
 										Writers
 									</p>
-									<p className="xl:w-[600px] lg:w-[300px] w-[60vw]">
+									<span className="xl:w-[600px] lg:w-[300px] w-[60vw]">
 										<div className="flex flex-row flex-wrap">
 											{mediaCredits.writers
 												? mediaCredits.writers
@@ -360,7 +360,7 @@ export default async function mediaPage({
 														)
 												: "N/A"}
 										</div>
-									</p>
+									</span>
 								</div>
 
 								<div className="flex flex-row gap-4">
@@ -387,7 +387,7 @@ export default async function mediaPage({
 					</div>
 				</div>
 			</div>
-			<div className="lg:w-[75vw] w-screen mx-auto relative lg:-mt-[10vh] p-2 lg:p-0 flex flex-col gap-8">
+			<div className="lg:w-[75vw] w-screen mx-auto relative p-2 lg:p-0 flex flex-col gap-8">
 				<div className="">
 					<div className="flex flex-row gap-2 items-center my-2">
 						<div className="w-2 h-2 bg-accent rounded-full"></div>
@@ -466,29 +466,6 @@ export default async function mediaPage({
 								))}
 					</div>
 				</div>
-				{/* <div className="max-w-7xl w-screen border-2 border-dotted border-accent p-4 my-4 rounded-xl">
-					<div className="flex  flex-col gap-2 invisible-scroll custom-scrollbar">
-						{mediaReviews && (
-							<div>
-								<h2 className="text-xl font-bold pt-4">
-									Reviews
-								</h2>
-								{mediaReviews.results
-									.slice(0, 2)
-									.map((review: any) => (
-										<div>
-											<div className="max-h-[200px]  p-2 overflow-y-auto custom-scrollbar">
-												<h3 className="font-bold text-lg py-2">
-													{review.author}
-												</h3>
-												<p>"{review.content}"</p>
-											</div>
-										</div>
-									))}
-							</div>
-						)}
-					</div>
-				</div> */}
 			</div>
 			<div className=" h-[500px]"></div>
 		</div>

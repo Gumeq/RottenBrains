@@ -90,7 +90,7 @@ const EpisodeCard = ({
 				/>
 			</div>
 			<div className="flex flex-col">
-				<h3 className="text-lg">
+				<h3 className="">
 					{formatEpisodeCode(season_number, episode_number)} -{" "}
 					{episode.name}
 				</h3>
