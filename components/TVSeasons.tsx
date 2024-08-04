@@ -70,7 +70,7 @@ const TVShowDetails = ({ tv_show_id, season_number }: TVShowDetailsProps) => {
 	return (
 		<div className="">
 			{/* <h1 className="text-2xl font-bold mb-2">Seasons</h1> */}
-			<div className="py-2 flex overflow-x-auto gap-2 custom-scrollbar">
+			<div className="p-2 flex overflow-x-auto gap-2 custom-scrollbar">
 				{seasons.map((season) => (
 					<button
 						key={season.season_number}

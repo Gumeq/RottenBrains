@@ -74,7 +74,7 @@ export default async function mediaPage({
 						Watch {media.title || media.name}
 					</p>
 				</div>
-				<div className="w-full p-2 my-2 text-center bg-accent flex items-center justify-center font-bold lg:rounded-xl mt-16 lg:mt-2">
+				<div className="w-full p-2 my-2 text-center bg-accent flex items-center justify-center font-bold lg:rounded-xl lg:mt-20 mt-16">
 					For the best experience use an adBlocker!
 				</div>
 				<div className="flex md:flex-row flex-col gap-4 ">

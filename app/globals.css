@@ -72,13 +72,13 @@
 	@apply z-50 flex-between w-screen bottom-0  bg-background p-1 px-4 md:hidden;
 }
 
-/* Dark-themed scrollbar */
+/* Dark-themed scrollbar with transparent background */
 .custom-scrollbar::-webkit-scrollbar {
 	width: 12px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-	background: #1e1e1e; /* Dark track color */
+	background: transparent; /* Transparent track color */
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
@@ -92,7 +92,7 @@
 /* For Firefox */
 .custom-scrollbar {
 	scrollbar-width: thin;
-	scrollbar-color: #555 #1e1e1e; /* thumb color, track color */
+	scrollbar-color: #555 transparent; /* thumb color, track color */
 }
 
 @media (max-width: 600px) {
@@ -279,4 +279,16 @@
 .hidden-scrollbar {
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none; /* Firefox */
+}
+
+.sidebar {
+	transition: transform 0.3s ease;
+}
+
+.sidebar-hidden {
+	transform: translateX(-100%);
+}
+
+.sidebar-visible {
+	transform: translateX(0);
 }

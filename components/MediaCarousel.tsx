@@ -26,6 +26,15 @@ const LazyImage = ({ src, alt, className, ...props }: any) => {
 	);
 };
 
+function formatNumber(num: number): string {
+	if (num >= 1000000) {
+		return (num / 1000000).toFixed(1).replace(/\.0$/, "") + "m";
+	} else if (num >= 1000) {
+		return (num / 1000).toFixed(1).replace(/\.0$/, "") + "k";
+	}
+	return num.toString();
+}
+
 const TopMoviesCarousel = ({ movies }: any) => {
 	const settings = {
 		dots: false,
@@ -42,7 +51,7 @@ const TopMoviesCarousel = ({ movies }: any) => {
 
 	const memoizedMediaCards = useCallback(
 		(index: any, color: any) => (
-			<>
+			<div className="flex flex-col justify-between gap-2">
 				<div className="w-full h-1/4 ">
 					<MediaCardExploreMain
 						media={movies[index + 1] || movies[0]}
@@ -61,7 +70,7 @@ const TopMoviesCarousel = ({ movies }: any) => {
 						color={color}
 					/>
 				</div>
-			</>
+			</div>
 		),
 		[movies]
 	);
@@ -86,7 +95,7 @@ const TopMoviesCarousel = ({ movies }: any) => {
 										backgroundImage: `radial-gradient(circle, ${media.averageColor} 0%, black 100%)`,
 									}}
 								>
-									<div className="flex md:flex-row flex-col gap-8 h-full md:w-[80vw] w-[100vw] md:py-10">
+									<div className="flex md:flex-row flex-col gap-8 h-full md:w-[80vw] w-[100vw] lg:py-[6.5rem]">
 										<div className="xl:w-[70%] md:w-[90%] w-[100%] flex items-start ">
 											<div className="relative w-full h-auto aspect-[3/2] flex flex-col">
 												<div className="md:h-[40%] h-[10%]"></div>
@@ -133,10 +142,35 @@ const TopMoviesCarousel = ({ movies }: any) => {
 													</div>
 												</div>
 												<div className="absolute top-0 w-full h-full">
+													<div className="absolute right-0 m-4 bg-background/50 flex flex-row items-center gap-2 rounded-[4px] px-6 py-2 drop-shadow-lg z-20">
+														<img
+															src="/assets/icons/star-solid.svg"
+															alt=""
+															width={20}
+															height={20}
+															className="invert-on-dark"
+															loading="lazy"
+														/>
+														<p className="text-foreground/50">
+															<span className="text-foreground/100 text-lg">
+																{media.vote_average.toFixed(
+																	1
+																)}
+															</span>
+															/10{" "}
+															<span>
+																(
+																{formatNumber(
+																	media.vote_count
+																)}
+																)
+															</span>
+														</p>
+													</div>
 													<LazyImage
 														src={`https://image.tmdb.org/t/p/w1280${media.backdrop_path}`}
 														alt="Background Image"
-														className="md:rounded-[16px] mask1 w-full h-full aspect-[3/2] inset-0 object-cover opacity-80"
+														className="md:rounded-[8px] mask1 w-full h-full aspect-[3/2] inset-0 object-cover opacity-80 "
 													/>
 												</div>
 											</div>

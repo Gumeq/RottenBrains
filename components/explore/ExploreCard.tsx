@@ -59,7 +59,7 @@ const ExploreCard = async (media: any) => {
 							href={`/protected/media/${media_type}/${media.id}`}
 							className="relative"
 						>
-							<div className="aspect-w-2 aspect-h-3 rounded-xl overflow-hidden">
+							<div className="aspect-w-2 aspect-h-3 rounded-[8px] overflow-hidden">
 								<picture>
 									<source
 										media="(min-width: 768px)"

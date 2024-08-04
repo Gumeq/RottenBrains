@@ -180,7 +180,7 @@ export default async function mediaPage({
 					className="w-screen h-[300vh] object-cover blur-[100px] absolute top-0 mask2 opacity-30 overflow-hidden bg-black"
 				/>
 			</div>
-			<div className=" relative h-auto w-screen lg:w-auto py-4 mt-16 lg:mt-0 ">
+			<div className=" relative h-auto w-screen lg:w-auto py-4 mt-16 ">
 				<div
 					className=" relative h-auto flex w-screen lg:w-auto"
 					id="overview"

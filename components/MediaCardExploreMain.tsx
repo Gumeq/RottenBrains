@@ -38,7 +38,7 @@ const MediaCardExploreMain = (media: any, color: any) => {
 					className="h-full aspect-[2/3] w-auto min-h-full"
 				>
 					<img
-						src={`https://image.tmdb.org/t/p/w92${media.poster_path}`}
+						src={`https://image.tmdb.org/t/p/w342${media.poster_path}`}
 						alt=""
 						className="h-full aspect-[2/3] w-auto min-h-full rounded-[4px] drop-shadow-lg"
 					/>
@@ -52,19 +52,6 @@ const MediaCardExploreMain = (media: any, color: any) => {
 							media.release_date.slice(0, 4)) ||
 							media.first_air_date.slice(0, 4)}
 					</p>
-					{/* {media.media_type === "tv" && (
-							<>
-								<div className="w-2 h-2 bg-foreground rounded-full"></div>
-								<p>TV-{media.number_of_seasons}</p>
-							</>
-						)}
-						<div className="w-2 h-2 bg-foreground rounded-full"></div>
-						<p>
-							{media.media_type === "movie"
-								? transformRuntime(media.runtime)
-								: transformRuntime(media.episode_run_time)}
-						</p> */}
-
 					<Link
 						href={watchLink}
 						className="absolute bottom-0 right-0"

@@ -28,7 +28,7 @@ const page = async () => {
 				<MediaCarousel movies={moviesWithColors}></MediaCarousel>
 			</div>
 			<div
-				className="md:max-w-[90vw] w-full flex flex-col gap-8 md:-mt-[20vh] mt-4 z-10 md:px-0 px-2"
+				className="md:max-w-[90vw] w-full flex flex-col gap-8 md:-mt-[15vh] mt-4 z-10 md:px-0 px-2"
 				id="explore"
 			>
 				<div className="flex md:flex-row flex-col  justify-between md:mt-8 my-4 items-center w-full">

@@ -153,7 +153,7 @@ const VideoEmbed = ({
 		<div className="relative flex flex-col gap-2">
 			<div>
 				{!showVideo ? (
-					<div className="relative text-center rounded-xl overflow-hidden">
+					<div className="relative text-center lg:rounded-[8px] overflow-hidden">
 						<img
 							src={
 								media_type === "movie"
@@ -178,7 +178,7 @@ const VideoEmbed = ({
 						</button>
 					</div>
 				) : (
-					<div className="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden drop-shadow-lg z-50 relative">
+					<div className="aspect-w-16 aspect-h-9 lg:rounded-[8px] overflow-hidden drop-shadow-lg z-50 relative">
 						<iframe
 							allowFullScreen
 							id="iframe"
@@ -205,8 +205,8 @@ const VideoEmbed = ({
 					</div>
 				)}
 			</div>
-			<div className="flex flex-row justify-between py-2">
-				<span className="text-xl font-bold flex flex-row gap-2 truncate items-center">
+			<div className="flex flex-row justify-between p-2">
+				<span className="text-xl lg:font-bold flex flex-row flex-wrap gap-2 items-center">
 					{season_number !== undefined &&
 						episode_number !== undefined &&
 						episode && (
@@ -223,66 +223,83 @@ const VideoEmbed = ({
 					<p className="truncate pr-1">{media.title || media.name}</p>
 				</span>
 			</div>
-			<div className="flex md:flex-row flex-col items-center gap-4">
-				{media_type === "tv" && (
-					<div>
-						{getPreviousEpisodeLink() ? (
-							<Link href={getPreviousEpisodeLink() || "#"}>
-								<div
-									className={`flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg ${
-										prevClicked
-											? "border-2 border-accent"
-											: ""
-									}`}
-									onClick={handlePrevClick}
-								>
-									<img
-										src="/assets/icons/caret-left-solid.svg"
-										alt=""
-										width={10}
-										height={10}
-										className="invert-on-dark"
-									/>
-									<p>Previous Episode</p>
+			<div className="flex lg:flex-row flex-col items-center  justify-between">
+				<div className="flex flex-row gap-2">
+					{media_type === "tv" && (
+						<div>
+							{getPreviousEpisodeLink() ? (
+								<Link href={getPreviousEpisodeLink() || "#"}>
+									<div
+										className={`flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg ${
+											prevClicked
+												? "border-2 border-accent"
+												: ""
+										}`}
+										onClick={handlePrevClick}
+									>
+										<img
+											src="/assets/icons/caret-left-solid.svg"
+											alt=""
+											width={10}
+											height={10}
+											className="invert-on-dark"
+										/>
+										<p>Previous</p>
+									</div>
+								</Link>
+							) : (
+								<div className="flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg">
+									No Previous
 								</div>
-							</Link>
-						) : (
-							<div className="flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg">
-								No Previous Episode
-							</div>
-						)}
-					</div>
-				)}
-				{media_type === "tv" && (
-					<div>
-						{getNextEpisodeLink() ? (
-							<Link href={getNextEpisodeLink() || "#"}>
-								<div
-									className={`flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg ${
-										nextClicked
-											? "border-2 border-accent"
-											: ""
-									}`}
-									onClick={handleNextClick}
-								>
-									<p>Next Episode</p>
-									<img
-										src="/assets/icons/caret-right-solid.svg"
-										alt=""
-										width={10}
-										height={10}
-										className="invert-on-dark"
-									/>
+							)}
+						</div>
+					)}
+					{media_type === "tv" && (
+						<div>
+							{getNextEpisodeLink() ? (
+								<Link href={getNextEpisodeLink() || "#"}>
+									<div
+										className={`flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg ${
+											nextClicked
+												? "border-2 border-accent"
+												: ""
+										}`}
+										onClick={handleNextClick}
+									>
+										<p>Next</p>
+										<img
+											src="/assets/icons/caret-right-solid.svg"
+											alt=""
+											width={10}
+											height={10}
+											className="invert-on-dark"
+										/>
+									</div>
+								</Link>
+							) : (
+								<div className="flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg">
+									No Next
 								</div>
-							</Link>
-						) : (
-							<div className="flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg">
-								No Next Episode
-							</div>
-						)}
-					</div>
-				)}
-				<div className="flex justify-center gap-4 ">
+							)}
+						</div>
+					)}
+					<Link
+						href={`/protected/create-post/${media_type}/${media_id}`}
+						className=" flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg justify-self-end"
+					>
+						<img
+							src="/assets/icons/star-outline.svg"
+							alt=""
+							width={20}
+							height={20}
+							className="invert-on-dark"
+							loading="lazy"
+						/>
+						<p className="">Rate</p>
+					</Link>
+				</div>
+
+				<div className="flex justify-center gap-2 ">
 					<button
 						onClick={() =>
 							updateLinkStart("https://vidsrc.net/embed/")
@@ -300,20 +317,6 @@ const VideoEmbed = ({
 						vidsrc.pro
 					</button>
 				</div>
-				<Link
-					href={`/protected/create-post/${media_type}/${media_id}`}
-					className=" flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg"
-				>
-					<img
-						src="/assets/icons/star-outline.svg"
-						alt=""
-						width={20}
-						height={20}
-						className="invert-on-dark"
-						loading="lazy"
-					/>
-					<p className="text-lg">Rate</p>
-				</Link>
 			</div>
 		</div>
 	);
