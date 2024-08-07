@@ -19,7 +19,7 @@ const VideoEmbed = ({
 	episode_number,
 }: VideoEmbedProps) => {
 	const [linkStart, setLinkStart] = useState<string>(
-		"https://vidsrc.net/embed/"
+		"https://vidsrc.cc/v2/embed/"
 	);
 	const [media, setMedia] = useState<any>();
 	const [episode, setEpisode] = useState<any>();
@@ -190,18 +190,6 @@ const VideoEmbed = ({
 							marginWidth={0}
 							scrolling="no"
 						></iframe>
-
-						{/* <iframe
-							src="https://ww1.9anime2.com/embed/MTIzMTM3"
-							allowFullScreen
-							id="iframe"
-							loading="lazy"
-							className="inline-block w-full h-full"
-							frameBorder="0"
-							marginHeight={0}
-							marginWidth={0}
-							scrolling="no"
-						></iframe> */}
 					</div>
 				)}
 			</div>

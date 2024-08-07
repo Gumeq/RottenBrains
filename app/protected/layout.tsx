@@ -26,7 +26,7 @@ export default async function ProtectedLayout({
 				<div className="flex flex-1 ">{children}</div>
 				<Bottombar />
 			</div>
-			<div className="w-full h-[200px] "> </div>
+			{/* <div className="w-full h-[200px] "> </div> */}
 		</div>
 	);
 }

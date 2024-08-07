@@ -19,11 +19,11 @@ export async function ExploreTab({
 		<div className="relative">
 			<div
 				id={containerId}
-				className="flex flex-row overflow-x-auto lg:gap-4 gap-2 pb-2 hidden-scrollbar"
+				className="flex flex-row gap-2 pb-2 flex-wrap"
 			>
 				{exploreData &&
 					exploreData.results.map((media: any) => (
-						<div key={media.id} className="w-full">
+						<div key={media.id} className="">
 							<ExploreCard media={media} />
 						</div>
 					))}

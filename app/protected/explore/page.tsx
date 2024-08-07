@@ -47,10 +47,10 @@ const page = async () => {
 								Now in cinemas
 							</h1>
 						</div>
-						<ScrollButtons
+						{/* <ScrollButtons
 							containerId="cinemasNow"
 							scrollPercent={100}
-						></ScrollButtons>
+						></ScrollButtons> */}
 					</div>
 
 					<ExploreTab
@@ -64,10 +64,10 @@ const page = async () => {
 							<div className="w-2 h-2 bg-accent rounded-full"></div>
 							<h1 className="text-xl font-bold">Popular Today</h1>
 						</div>
-						<ScrollButtons
+						{/* <ScrollButtons
 							containerId="popularToday"
 							scrollPercent={100}
-						></ScrollButtons>
+						></ScrollButtons> */}
 					</div>
 
 					<ExploreTab
@@ -81,10 +81,10 @@ const page = async () => {
 							<div className="w-2 h-2 bg-accent rounded-full"></div>
 							<h1 className="text-xl font-bold">Trending TV</h1>
 						</div>
-						<ScrollButtons
+						{/* <ScrollButtons
 							containerId="trendngTV"
 							scrollPercent={100}
-						></ScrollButtons>
+						></ScrollButtons> */}
 					</div>
 
 					<ExploreTab
@@ -100,10 +100,10 @@ const page = async () => {
 								Trending Movies
 							</h1>
 						</div>
-						<ScrollButtons
+						{/* <ScrollButtons
 							containerId="trendngmovies"
 							scrollPercent={100}
-						></ScrollButtons>
+						></ScrollButtons> */}
 					</div>
 
 					<ExploreTab
@@ -112,7 +112,7 @@ const page = async () => {
 					></ExploreTab>
 				</div>
 			</div>
-			<div className="max-w-7xl w-screen flex flex-col items-center mx-auto">
+			<div className="w-screen max-w-[1920px] px-4 flex flex-col items-center mx-auto">
 				<h1 className="text-xl pt-8 font-bold">Explore More!</h1>
 				<GenreSelector></GenreSelector>
 			</div>

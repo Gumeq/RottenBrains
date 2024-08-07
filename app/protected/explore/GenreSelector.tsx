@@ -123,7 +123,7 @@ const GenreSelector: React.FC = () => {
 					))}
 				</ul>
 			</div>
-			<div className="w-full grid lg:grid-cols-5 md:grid-cols-4 grid-cols-2 gap-4 mx-auto items-center justify-items-center">
+			<div className="w-full gap-2 mx-auto items-center justify-items-center justify-center flex flex-row flex-wrap">
 				{mediaGenre && mediaGenre.length > 0 ? (
 					mediaGenre.map((media: any) => (
 						<Link
@@ -144,9 +144,9 @@ const GenreSelector: React.FC = () => {
 								<img
 									src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
 									alt={media.title || media.name}
-									width={180}
-									height={240}
-									className="md:min-w-[240px] md:min-h-[360px] rounded-[8px] hover:opacity-80 bg-foreground/5 "
+									width={200}
+									height={300}
+									className="md:min-w-[200px] md:min-h-[300px] rounded-[8px] hover:opacity-80 bg-foreground/5 "
 									loading="lazy"
 								/>
 							</motion.div>
