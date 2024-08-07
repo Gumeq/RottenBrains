@@ -157,9 +157,9 @@ const VideoEmbed = ({
 						<img
 							src={
 								media_type === "movie"
-									? `https://image.tmdb.org/t/p/w780${media.backdrop_path}`
+									? `https://image.tmdb.org/t/p/original${media.backdrop_path}`
 									: episode &&
-									  `https://image.tmdb.org/t/p/w780${episode.still_path}`
+									  `https://image.tmdb.org/t/p/original${episode.still_path}`
 							}
 							alt="Media Poster"
 							className="w-full h-auto drop-shadow-lg bg-foreground/10"
@@ -223,7 +223,7 @@ const VideoEmbed = ({
 					<p className="truncate pr-1">{media.title || media.name}</p>
 				</span>
 			</div>
-			<div className="flex lg:flex-row flex-col items-center  justify-between">
+			<div className="flex lg:flex-row flex-col-reverse items-center gap-2 justify-between">
 				<div className="flex flex-row gap-2">
 					{media_type === "tv" && (
 						<div>

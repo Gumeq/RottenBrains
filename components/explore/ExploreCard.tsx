@@ -18,7 +18,7 @@ const ExploreCard = async (media: any) => {
 			: `/protected/watch/${media_type}/${media.id}/1/1`;
 
 	return (
-		<div className="w-[130px] md:w-[180px] rounded-[8px]">
+		<div className="lg:w-[220px]  w-[180px] rounded-[8px]">
 			<div className="flex flex-col gap-2">
 				{!media ? (
 					<>
@@ -79,7 +79,7 @@ const ExploreCard = async (media: any) => {
 							</div>
 							<div className="absolute lg:p-2 p-1 bottom-0 w-full">
 								<div className="w-full flex-row md:gap-2 justify-between flex">
-									<div className="bg-black/20 px-2 py-1 lg:rounded-[6px] rounded-[7px] font-bold text-white lg:text-sm text-xs flex flex-row gap-1 items-center justify-center backdrop-blur-xl">
+									<div className="bg-black/20 px-2 py-1 lg:rounded-[6px] rounded-[7px] font-bold text-white text-sm  flex flex-row gap-1 items-center justify-center backdrop-blur-xl">
 										<img
 											src="/assets/icons/star-solid.svg"
 											alt=""
@@ -89,7 +89,7 @@ const ExploreCard = async (media: any) => {
 										/>
 										{media.vote_average.toFixed(1)}
 									</div>
-									<div className="bg-black/20 px-2 py-1 lg:rounded-[6px] rounded-[7px] font-bold text-white lg:text-sm text-xs flex flex-row gap-1 items-center justify-center backdrop-blur-xl">
+									<div className="bg-black/20 px-2 py-1 lg:rounded-[6px] rounded-[7px] font-bold text-white text-sm  flex flex-row gap-1 items-center justify-center backdrop-blur-xl">
 										{media.release_date
 											? media.release_date.slice(0, 4)
 											: media.first_air_date &&

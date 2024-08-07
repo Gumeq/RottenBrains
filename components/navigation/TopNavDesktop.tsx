@@ -124,6 +124,25 @@ export function TopNavbarDesktop() {
 							</div>
 						</Link>
 					))}
+					<Link
+						href={"/protected/watch-history"}
+						className="p-2 hover:bg-foreground/20 rounded-[8px]"
+					>
+						<div className="flex flex-row gap-2 items-center">
+							<img
+								src={`${
+									pathname.includes("watch-history")
+										? "/assets/icons/film-solid.svg"
+										: "/assets/icons/film-outline.svg"
+								}`}
+								alt={""}
+								width={25}
+								height={25}
+								className="invert-on-dark w-[25px] h-[25px]"
+							/>
+							<p className="text-lg">Watch History</p>
+						</div>
+					</Link>
 				</ul>
 				<div className="w-[90%] mx-auto h-[1px] bg-foreground/20"></div>
 			</div>

@@ -142,7 +142,7 @@ const TopMoviesCarousel = ({ movies }: any) => {
 													</div>
 												</div>
 												<div className="absolute top-0 w-full h-full">
-													<div className="absolute right-0 m-4 bg-background/50 flex flex-row items-center gap-2 rounded-[4px] px-6 py-2 drop-shadow-lg z-20">
+													<div className="absolute right-0 m-4 bg-background/50 lg:flex hidden flex-row items-center gap-2 rounded-[4px] px-6 py-2 drop-shadow-lg z-20">
 														<img
 															src="/assets/icons/star-solid.svg"
 															alt=""

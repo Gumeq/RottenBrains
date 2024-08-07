@@ -50,7 +50,7 @@ const PostsPage = async () => {
 	}
 	return (
 		<>
-			<div className="w-screen flex items-center flex-col mt-16">
+			<div className="w-screen flex items-center flex-col lg:mt-16">
 				<div className="min-w-[350px] w-[20vw] ">
 					<h1 className="text-lg font-bold my-4">For you</h1>
 					<div className="w-full border-b my-2"></div>

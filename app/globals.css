@@ -28,10 +28,6 @@
 }
 
 @layer base {
-	* {
-		@apply border-foreground/20;
-	}
-
 	body {
 		@apply font-roboto;
 	}

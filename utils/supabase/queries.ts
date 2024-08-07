@@ -402,3 +402,129 @@ export const getNewestUsers = async () => {
 		return null;
 	}
 };
+
+export const checkWatchHistoryExists = async (
+	user_id: string,
+	media_type: string,
+	media_id: number,
+	season_number?: number,
+	episode_number?: number
+) => {
+	const { data: result, error } = await supabase.rpc(
+		"check_watch_history_exists",
+		{
+			p_user_id: user_id,
+			p_media_type: media_type,
+			p_media_id: media_id,
+			p_season_number: season_number,
+			p_episode_number: episode_number,
+		}
+	);
+
+	if (error) {
+		throw new Error(error.message);
+	}
+
+	return result;
+};
+
+export const upsertWatchHistory = async (
+	user_id: string,
+	media_type: string,
+	media_id: number,
+	season_number?: number,
+	episode_number?: number
+) => {
+	try {
+		// Check if the item already exists using the SQL function
+		const { data: exists, error: checkError } = await supabase.rpc(
+			"check_watch_history_exists",
+			{
+				p_user_id: user_id,
+				p_media_type: media_type,
+				p_media_id: media_id,
+				p_season_number: season_number,
+				p_episode_number: episode_number,
+			}
+		);
+
+		if (checkError) {
+			console.error("Error checking existence:", checkError);
+			throw new Error(checkError.message);
+		}
+
+		console.log("Exists:", exists);
+
+		if (exists) {
+			// If the item exists, update the created_at field
+			const { error: updateError } = await supabase
+				.from("watch_history")
+				.update({ created_at: new Date().toISOString() })
+				.match({
+					user_id,
+					media_type,
+					media_id,
+					season_number,
+					episode_number,
+				});
+
+			if (updateError) {
+				console.error("Error updating watch history:", updateError);
+				throw new Error(updateError.message);
+			}
+
+			return { success: true, action: "updated" };
+		} else {
+			// If the item does not exist, insert a new row
+			const { error: insertError } = await supabase
+				.from("watch_history")
+				.insert([
+					{
+						user_id,
+						media_type,
+						media_id,
+						season_number,
+						episode_number,
+						created_at: new Date().toISOString(),
+					},
+				]);
+
+			if (insertError) {
+				console.error("Error inserting watch history:", insertError);
+				throw new Error(insertError.message);
+			}
+
+			return { success: true, action: "inserted" };
+		}
+	} catch (error) {
+		console.error("Error in upsertWatchHistory:", error);
+		throw error;
+	}
+};
+
+export const getWatchHistoryForUser = async (
+	user_id: string,
+	limit: number,
+	offset: number
+) => {
+	try {
+		const { data, error } = await supabase.rpc(
+			"get_watch_history_for_user",
+			{
+				p_user_id: user_id,
+				p_limit: limit,
+				p_offset: offset,
+			}
+		);
+
+		if (error) {
+			console.error("Error fetching watch history:", error);
+			throw new Error(error.message);
+		}
+
+		return data;
+	} catch (error) {
+		console.error("Error in getWatchHistoryForUser:", error);
+		throw error;
+	}
+};

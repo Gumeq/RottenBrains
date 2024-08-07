@@ -5,7 +5,7 @@ import MediaInfoComponent from "@/components/MediaInfoComponent";
 import HomePostCard from "@/components/post/HomePostCard";
 import RecommendedCard from "@/components/RecommendedCard";
 import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
-import { getPostsOfMedia } from "@/utils/supabase/queries";
+import { getPostsOfMedia, upsertWatchHistory } from "@/utils/supabase/queries";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import { getMediaDetails, getRecommendations } from "@/utils/tmdb";
 import Link from "next/link";
@@ -46,6 +46,7 @@ export default async function mediaPage({
 	const media_type = params.media_type;
 
 	const user = await getCurrentUser();
+	console.log(user);
 
 	let postsOfMedia: any = [];
 	if (user) {
@@ -58,6 +59,16 @@ export default async function mediaPage({
 	}
 	const recommendations = await getRecommendations(media_type, media_id);
 	const media = await getMediaDetails(media_type, media_id);
+	try {
+		const result = await upsertWatchHistory(
+			user.user.id,
+			media_type,
+			media_id
+		);
+		console.log(result);
+	} catch (error) {
+		console.error(error);
+	}
 	return (
 		<>
 			<div>

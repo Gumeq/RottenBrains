@@ -5,7 +5,7 @@ import MediaInfoComponent from "@/components/MediaInfoComponent";
 import HomePostCard from "@/components/post/HomePostCard";
 import TVShowDetails from "@/components/TVSeasons";
 import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
-import { getPostsOfMedia } from "@/utils/supabase/queries";
+import { getPostsOfMedia, upsertWatchHistory } from "@/utils/supabase/queries";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import { getMediaDetails } from "@/utils/tmdb";
 
@@ -64,6 +64,19 @@ export default async function mediaPage({
 	}
 
 	const media = await getMediaDetails(media_type, media_id);
+
+	try {
+		const result = await upsertWatchHistory(
+			user.user.id,
+			media_type,
+			media_id,
+			season_number,
+			episode_number
+		);
+		console.log(result);
+	} catch (error) {
+		console.error(error);
+	}
 
 	return (
 		<>
