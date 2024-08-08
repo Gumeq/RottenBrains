@@ -46,7 +46,6 @@ export default async function mediaPage({
 	const media_type = params.media_type;
 
 	const user = await getCurrentUser();
-	console.log(user);
 
 	let postsOfMedia: any = [];
 	if (user) {

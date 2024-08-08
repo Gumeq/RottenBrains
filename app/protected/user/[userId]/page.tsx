@@ -24,7 +24,7 @@ export default async function userProfile({
 	const formattedDate = formatter.format(date);
 
 	return (
-		<div className="max-w-6xl mx-auto w-screen">
+		<div className="max-w-6xl mx-auto w-screen mt-16">
 			{user && (
 				<div className="max-w-2xl mx-auto flex items-center justify-center py-4">
 					<div className="flex md:flex-row w-full justify-between flex-col gap-4">

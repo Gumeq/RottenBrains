@@ -13,6 +13,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useUser } from "@/context/UserContext";
 import PostStats from "./PostStats";
+import UserReviewTextNew from "./UserReviewTextNew";
 
 const LoadingSkeleton = ({ index }: any) => {
 	const variants = {
@@ -104,7 +105,7 @@ const LoadingSkeleton = ({ index }: any) => {
 
 const ErrorComponent = () => <div>Error loading post.</div>;
 
-export function HomePostCard({ post, index }: any) {
+export function HomePostCardNew({ post, index }: any) {
 	const media_id = post.media_id;
 	const media_type = post.media_type;
 	const [media, setMedia] = useState<any>(null);
@@ -183,7 +184,7 @@ export function HomePostCard({ post, index }: any) {
 
 	return (
 		<motion.div
-			className="relative rounded-[8px] overflow-hidden border border-foreground/20"
+			className="relative rounded-[16px] border border-foreground/10 p-4 max-w-2xl w-screen flex flex-col "
 			variants={variants}
 			initial="hidden"
 			animate="visible"
@@ -194,121 +195,90 @@ export function HomePostCard({ post, index }: any) {
 			}}
 			viewport={{ amount: 0 }}
 		>
-			<div className="w-[330px] max-w-[calc(100vw-10px)] flex flex-col relative">
-				<div className="flex flex-col relative overflow-hidden rounded-xl">
-					<div className="flex flex-row gap-4 items-center p-2 justify-between">
-						<div className="flex flex-row items-center gap-2">
-							<span className="min-w-[35px] min-h-[35px]">
-								<ProfilePicture user={creator} />
-							</span>
-							<div>
-								<p className="line-clamp-1">
-									<span className="font-bold text-lg">
-										{creator.username}
-									</span>{" "}
-									watched{" "}
-									<span className="text-lg font-bold hover:underline">
-										<Link
-											href={`/protected/media/${media_type}/${media_id}`}
-										>
-											{media &&
-												(media.title || media.name)}
-										</Link>
-									</span>
-								</p>
-								<p className="text-sm opacity-50">
-									{timeAgo(post.created_at)}
-								</p>
-							</div>
-						</div>
-						<div>
-							{post.creatorid === userId && (
-								<Link href={`/protected/edit-post/${post.id}`}>
-									<img
-										src="/assets/icons/ellipsis-solid.svg"
-										alt=""
-										width={20}
-										height={20}
-										className="invert-on-dark justify-self-end min-w-[20px] min-h-[20px] opacity-80"
-									/>
+			<div className="flex flex-row gap-4 items-center justify-between mb-4">
+				<div className="flex flex-row items-center gap-2">
+					<span className="min-w-[35px] min-h-[35px]">
+						<ProfilePicture user={creator} />
+					</span>
+					<div>
+						<p className="line-clamp-1">
+							<span className="font-bold">
+								{creator.username}
+							</span>{" "}
+							watched{" "}
+							<span className="font-bold hover:underline">
+								<Link
+									href={`/protected/media/${media_type}/${media_id}`}
+								>
+									{media && (media.title || media.name)}
 								</Link>
-							)}
-						</div>
-					</div>
-					<div className="relative my-auto flex flex-col gap-4">
-						<div className="flex flex-col z-10 gap-2">
-							<div className="w-[320px] h-[480px] mx-auto">
-								{media && (
-									<div className="rounded-[4px] overflow-hidden">
-										<div className="absolute p-1 px-2 text-lg m-1 font-bold backdrop-blur-xl bg-background/30 flex flex-row gap-2 items-center justify-center rounded-[4px]">
-											<img
-												src="/assets/icons/star-solid.svg"
-												alt=""
-												width={20}
-												height={20}
-												className="invert-on-dark"
-												loading="lazy"
-											/>
-											<p>{post.vote_user}</p>
-										</div>
-										<Link
-											href={`/protected/media/${media_type}/${media_id}`}
-										>
-											<img
-												src={`https://image.tmdb.org/t/p/w342${media.poster_path}`}
-												alt=""
-												width={320}
-												height={480}
-												className="min-h-[480px] min-w-[320px] mx-auto"
-											/>
-										</Link>
-									</div>
-								)}
-							</div>
-						</div>
+							</span>
+						</p>
+						<p className="text-sm opacity-50">
+							{timeAgo(post.created_at)}
+						</p>
 					</div>
 				</div>
-				<div className="pl-3 p-2 pt-4">
-					<UserReviewText
+				<div>
+					{post.creatorid === userId && (
+						<Link href={`/protected/edit-post/${post.id}`}>
+							<img
+								src="/assets/icons/ellipsis-solid.svg"
+								alt=""
+								width={20}
+								height={20}
+								className="invert-on-dark justify-self-end min-w-[20px] min-h-[20px] mr-2"
+							/>
+						</Link>
+					)}
+				</div>
+			</div>
+			<div className="w-full flex flex-row justify-between gap-4 mb-4">
+				<div className=" w-full">
+					<UserReviewTextNew
 						post_review={post.review_user || "no review"}
 						creator_name={creator?.username || "no user"}
 					/>
 				</div>
-				<div className="w-full p-2 flex items-center">
-					<div className="flex flex-row align-center w-full h-full justify-between items-center">
-						<div className="flex flex-row items-center">
-							<PostStats
-								post={post}
-								user={currentUser}
-							></PostStats>
-						</div>
-						<div className="flex flex-row gap-4 items-center">
-							<SaveButton post={post} />
-							<Link
-								className=""
-								href={`/protected/create-post/${media_type}/${media_id}`}
-							>
-								<img
-									src="/assets/icons/add-circle-outline.svg"
-									alt=""
-									width={30}
-									height={30}
-									className="invert-on-dark"
-								/>
-							</Link>
-							<Link
-								className=""
-								href={`/protected/create-post/${media_type}/${media_id}`}
-							>
-								<img
-									src="/assets/icons/share-solid.svg"
-									alt=""
-									width={30}
-									height={30}
-									className="invert-on-dark"
-								/>
-							</Link>
-						</div>
+				<Link href={`/protected/media/${media_type}/${media_id}`}>
+					<img
+						src={`https://image.tmdb.org/t/p/w154${media.poster_path}`}
+						alt=""
+						className="min-w-[154px] aspect-[2/3] rounded-[14px]"
+					/>
+				</Link>
+			</div>
+			<div className="w-full flex items-center">
+				<div className="flex flex-row align-center w-full h-full justify-between items-center">
+					<div className="flex flex-row items-center">
+						<PostStats post={post} user={currentUser}></PostStats>
+					</div>
+					<div className="flex flex-row gap-4 items-center">
+						<SaveButton post={post} />
+						<Link
+							className=""
+							href={`/protected/create-post/${media_type}/${media_id}`}
+						>
+							<img
+								src="/assets/icons/add-circle-outline.svg"
+								alt=""
+								width={30}
+								height={30}
+								className="invert-on-dark"
+							/>
+						</Link>
+						<Link
+							className=""
+							href={`/protected/create-post/${media_type}/${media_id}`}
+						>
+							<img
+								src="/assets/icons/share-solid.svg"
+								alt=""
+								width={30}
+								height={30}
+								className="invert-on-dark"
+							/>
+						</Link>
 					</div>
 				</div>
 			</div>
@@ -316,4 +286,4 @@ export function HomePostCard({ post, index }: any) {
 	);
 }
 
-export default HomePostCard;
+export default HomePostCardNew;

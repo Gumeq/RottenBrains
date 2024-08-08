@@ -17,7 +17,11 @@ export function TopNavbarDesktop() {
 
 	return (
 		<>
-			<nav className="fixed top-0 bg-background/50 backdrop-blur-xl w-screen h-16 items-center justify-center z-30 hidden lg:flex p-1">
+			<nav
+				className={`fixed top-0 bg-background/50 backdrop-blur-xl w-screen h-16 items-center justify-center z-30 hidden p-1 ${
+					pathname.includes("home") ? "lg:hidden" : "lg:flex"
+				}`}
+			>
 				<div className="flex flex-col items-center">
 					<div className="flex flex-row gap-10 items-center justify-between w-screen pr-8">
 						<div className="flex flex-row gap-16">
@@ -124,6 +128,37 @@ export function TopNavbarDesktop() {
 							</div>
 						</Link>
 					))}
+					<div className="w-[90%] mx-auto h-[1px] bg-foreground/20 my-2"></div>
+					<Link
+						className="w-full flex flex-row gap-1 p-2 items-center hover:bg-foreground/20 rounded-[8px]"
+						href={"/protected/profile"}
+					>
+						<h3 className=" text-lg font-bold">You</h3>
+						<img
+							src="/assets/icons/chevron-forward.svg"
+							alt=""
+							className="invert-on-dark w-[20px] h-[20px] opacity-50"
+						/>
+					</Link>
+					<Link
+						href={"/protected/profile"}
+						className="p-2 hover:bg-foreground/20 rounded-[8px]"
+					>
+						<div className="flex flex-row gap-2 items-center">
+							<img
+								src={`${
+									pathname.includes("profile")
+										? "/assets/icons/person-solid.svg"
+										: "/assets/icons/person-outline.svg"
+								}`}
+								alt={""}
+								width={25}
+								height={25}
+								className="invert-on-dark w-[25px] h-[25px]"
+							/>
+							<p className="text-lg">Your profile</p>
+						</div>
+					</Link>
 					<Link
 						href={"/protected/watch-history"}
 						className="p-2 hover:bg-foreground/20 rounded-[8px]"
@@ -132,15 +167,91 @@ export function TopNavbarDesktop() {
 							<img
 								src={`${
 									pathname.includes("watch-history")
-										? "/assets/icons/film-solid.svg"
-										: "/assets/icons/film-outline.svg"
+										? "/assets/icons/history.svg"
+										: "/assets/icons/history.svg"
 								}`}
 								alt={""}
 								width={25}
 								height={25}
 								className="invert-on-dark w-[25px] h-[25px]"
 							/>
-							<p className="text-lg">Watch History</p>
+							<p className="text-lg">History</p>
+						</div>
+					</Link>
+					<Link
+						href={"/protected/liked"}
+						className="p-2 hover:bg-foreground/20 rounded-[8px]"
+					>
+						<div className="flex flex-row gap-2 items-center">
+							<img
+								src={`${
+									pathname.includes("liked")
+										? "/assets/icons/heart-solid.svg"
+										: "/assets/icons/heart-outline.svg"
+								}`}
+								alt={""}
+								width={25}
+								height={25}
+								className="invert-on-dark w-[25px] h-[25px]"
+							/>
+							<p className="text-lg">Liked posts (soon)</p>
+						</div>
+					</Link>
+					<Link
+						href={"/protected/liked"}
+						className="p-2 hover:bg-foreground/20 rounded-[8px]"
+					>
+						<div className="flex flex-row gap-2 items-center">
+							<img
+								src={`${
+									pathname.includes("saved")
+										? "/assets/icons/bookmark-solid.svg"
+										: "/assets/icons/bookmark-outline.svg"
+								}`}
+								alt={""}
+								width={25}
+								height={25}
+								className="invert-on-dark w-[25px] h-[25px]"
+							/>
+							<p className="text-lg">Saved posts (soon)</p>
+						</div>
+					</Link>
+					<Link
+						href={"/protected/watch_list"}
+						className="p-2 hover:bg-foreground/20 rounded-[8px]"
+					>
+						<div className="flex flex-row gap-2 items-center">
+							<img
+								src={`${
+									pathname.includes("watch_list")
+										? "/assets/icons/view_list-solid.svg"
+										: "/assets/icons/view_list-outline.svg"
+								}`}
+								alt={""}
+								width={25}
+								height={25}
+								className="invert-on-dark w-[25px] h-[25px]"
+							/>
+							<p className="text-lg">Watch list (soon)</p>
+						</div>
+					</Link>
+					<Link
+						href={"/protected/watch_list"}
+						className="p-2 hover:bg-foreground/20 rounded-[8px]"
+					>
+						<div className="flex flex-row gap-2 items-center">
+							<img
+								src={`${
+									pathname.includes("watch_later")
+										? "/assets/icons/schedule-solid.svg"
+										: "/assets/icons/schedule-outline.svg"
+								}`}
+								alt={""}
+								width={25}
+								height={25}
+								className="invert-on-dark w-[25px] h-[25px]"
+							/>
+							<p className="text-lg">Watch later (soon)</p>
 						</div>
 					</Link>
 				</ul>

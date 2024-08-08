@@ -74,8 +74,15 @@ export const fetchMediaDetails = async (mediaItems: any) => {
 	try {
 		const requests = mediaItems.map((item: any) =>
 			fetchFromApi(`${item.type}/${item.tmdb_id}?language=en-US`)
+				.then((response) => ({ status: "fulfilled", value: response }))
+				.catch((error) => ({ status: "rejected", reason: error }))
 		);
-		const mediaDetails = await Promise.all(requests);
+
+		const results = await Promise.all(requests);
+		const mediaDetails = results
+			.filter((result) => result.status === "fulfilled")
+			.map((result) => result.value);
+
 		return mediaDetails;
 	} catch (error) {
 		console.error("Error fetching media details:", error);

@@ -23,7 +23,6 @@ export default function RootLayout({
 			<UserProvider>
 				<body className="bg-background text-foreground overflow-x-hidden">
 					<main className="">{children}</main>
-					<div className="w-full h-[200px] "> </div>
 					<Analytics />
 					<SpeedInsights />
 				</body>

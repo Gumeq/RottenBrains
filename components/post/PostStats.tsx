@@ -153,37 +153,35 @@ const PostStats = ({ post, user }: any) => {
 					{state.liked ? (
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 512 512"
-							width="30"
-							height="30"
+							height="30px"
+							viewBox="0 -960 960 960"
+							width="30px"
+							fill="0000000"
 							className={`heart-icon ${
 								state.animate ? "pop" : ""
 							} fill-accent`}
 						>
-							<path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" />
+							<path d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Z" />
 						</svg>
 					) : (
 						<img
-							src={"/assets/icons/heart-regular.svg"}
+							src={"/assets/icons/heart-outline.svg"}
 							alt="Not Liked"
 							width={30}
 							height={30}
-							className={`heart-icon invert-on-dark opacity-50 ${
+							className={`heart-icon invert-on-dark ${
 								state.animate ? "pop" : ""
 							}`}
 						/>
 					)}
 				</button>
-				<p className="opacity-50 font-bold text-xl">{state.likes}</p>
+				<p className="font-bold text-xl">{state.likes}</p>
 			</div>
 			<div className="flex flex-row items-center gap-2">
 				<div>
-					<button
-						onClick={togglePopup}
-						className="text-foreground opacity-50"
-					>
+					<button onClick={togglePopup} className="text-foreground">
 						<img
-							src="/assets/icons/comment-regular.svg"
+							src="/assets/icons/comment-outline.svg"
 							alt="Comment"
 							width={30}
 							height={30}
@@ -236,9 +234,7 @@ const PostStats = ({ post, user }: any) => {
 						</div>
 					)}
 				</div>
-				<p className="opacity-50 font-bold text-xl">
-					{state.commentCount}
-				</p>
+				<p className="font-bold text-xl">{state.commentCount}</p>
 			</div>
 		</div>
 	);

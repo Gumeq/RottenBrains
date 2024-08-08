@@ -40,17 +40,17 @@ const SaveButton: React.FC<any> = ({ post }: any) => {
 				<img
 					src={"/assets/icons/bookmark-solid.svg"}
 					alt="Saved"
-					width={20}
-					height={20}
-					className="invert-on-dark opacity-50"
+					width={30}
+					height={30}
+					className="invert-on-dark "
 				/>
 			) : (
 				<img
-					src={"/assets/icons/bookmark-regular.svg"}
+					src={"/assets/icons/bookmark-outline.svg"}
 					alt="Not Saved"
-					width={20}
-					height={20}
-					className="invert-on-dark opacity-50"
+					width={30}
+					height={30}
+					className="invert-on-dark "
 				/>
 			)}
 		</button>

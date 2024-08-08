@@ -8,6 +8,7 @@ import { fetchFromApi } from "@/utils/tmdb/tmdbApi";
 import React, { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import FollowUsers from "./FollowUsers";
+import HomePostCardNew from "@/components/post/HomePostCardNew";
 
 const LoadMore = () => {
 	const [data, setData] = useState<any[]>([]);
@@ -47,8 +48,8 @@ const LoadMore = () => {
 		<div className=" ">
 			<div className="grid grid-cols-1 justify-items-center gap-4 px-2">
 				{data.map((post: any, index: number) => (
-					<div className="" key={post.id}>
-						<HomePostCard post={post} />
+					<div className="" key={index}>
+						<HomePostCardNew post={post} />
 					</div>
 				))}
 			</div>

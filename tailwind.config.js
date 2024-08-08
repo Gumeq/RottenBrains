@@ -6,6 +6,9 @@ module.exports = {
 	],
 	theme: {
 		extend: {
+			boxShadow: {
+				"dark-grey": "0 4px 8px rgba(255, 255, 255, 0.1)", // Customize the color and blur as needed
+			},
 			colors: {
 				background: "hsl(var(--background))",
 				foreground: "hsl(var(--foreground))",
