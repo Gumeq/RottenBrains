@@ -29,7 +29,7 @@ const MediaCardExploreMain = (media: any, color: any) => {
 			<div
 				className={`absolute inset-0 w-full h-full opacity-50 backdrop-blur-xl`}
 				style={{
-					backgroundImage: `linear-gradient(180deg, black 0%, black 100%)`,
+					backgroundImage: `linear-gradient(180deg, black 0%, var(--background) 100%)`,
 				}}
 			></div>
 			<div className="absolute p-2 z-10 inset-0 flex flex-row gap-4">
@@ -56,7 +56,7 @@ const MediaCardExploreMain = (media: any, color: any) => {
 						href={watchLink}
 						className="absolute bottom-0 right-0"
 					>
-						<div className=" w-[40px] h-[40px] bg-white/20 rounded-full flex items-center justify-center hover:bg-white/40">
+						<div className=" w-[40px] h-[40px] bg-foreground/20 rounded-full flex items-center justify-center hover:bg-foreground/40">
 							<img
 								src="/assets/icons/play-solid.svg"
 								alt=""

@@ -112,8 +112,8 @@ const page = async () => {
 					></ExploreTab>
 				</div>
 			</div>
-			<div className="w-screen max-w-[1920px] px-4 flex flex-col items-center mx-auto">
-				<h1 className="text-xl pt-8 font-bold">Explore More!</h1>
+			<div className="w-screen lg:max-w-[90vw] flex flex-col items-center mx-auto">
+				<h1 className="text-4xl mt-16 font-bold">Explore More!</h1>
 				<GenreSelector></GenreSelector>
 			</div>
 		</div>

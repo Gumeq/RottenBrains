@@ -19,7 +19,7 @@ export async function ExploreTab({
 		<div className="relative">
 			<div
 				id={containerId}
-				className="flex flex-row gap-2 pb-2 flex-wrap"
+				className="grid 2xl:grid-cols-10 xl:grid-cols-8 lg:grid-cols-6 sm:grid-cols-4 grid-cols-2 gap-4"
 			>
 				{exploreData &&
 					exploreData.results.map((media: any) => (

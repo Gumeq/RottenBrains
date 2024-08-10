@@ -76,7 +76,7 @@ const TopMoviesCarousel = ({ movies }: any) => {
 	);
 
 	return (
-		<div className="w-screen md:h-screen h-auto text-white ">
+		<div className="w-screen md:h-screen h-auto text-foreground ">
 			<Slider {...settings}>
 				{movies &&
 					movies.map((media: any, index: number) => {
@@ -91,15 +91,15 @@ const TopMoviesCarousel = ({ movies }: any) => {
 							>
 								<div
 									className="w-full md:h-full h-full flex items-center justify-center"
-									style={{
-										backgroundImage: `radial-gradient(circle, ${media.averageColor} 0%, black 100%)`,
-									}}
+									// style={{
+									// 	backgroundImage: `radial-gradient(circle, ${media.averageColor} 0%, black 100%)`,
+									// }}
 								>
 									<div className="flex md:flex-row flex-col gap-8 h-full md:w-[80vw] w-[100vw] lg:py-[6.5rem]">
 										<div className="xl:w-[70%] md:w-[90%] w-[100%] flex items-start ">
 											<div className="relative w-full h-auto aspect-[3/2] flex flex-col">
 												<div className="md:h-[40%] h-[10%]"></div>
-												<div className="md:h-[60%] h-[100%] z-10 flex flex-row ">
+												<div className="md:h-[60%] h-[100%] z-10 flex flex-row md:gap-4">
 													<Link
 														href={`/protected/media/${media.media_type}/${media.id}`}
 														className="rounded-[8px] drop-shadow-xl min-h-[100%] w-auto mx-4 aspect-[2/3] "
@@ -117,7 +117,7 @@ const TopMoviesCarousel = ({ movies }: any) => {
 														<div className=" xl:h-[30%] md:h-[50%] h-full w-full flex md:flex-row items-center gap-4 flex-col ">
 															<Link
 																href={watchLink}
-																className="relative md:h-full w-auto h-[50%] bg-white/20 rounded-full backdrop-blur-md flex items-center justify-center hover:bg-white/40"
+																className="relative md:h-full w-auto h-[50%] bg-foreground/20 rounded-full backdrop-blur-md flex items-center justify-center hover:bg-foreground/40"
 																style={{
 																	aspectRatio:
 																		"1 / 1",

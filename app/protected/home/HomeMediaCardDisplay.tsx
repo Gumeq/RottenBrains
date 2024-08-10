@@ -4,7 +4,7 @@ import React from "react";
 const HomeMediaCardDisplay = (media: any, media_type: string) => {
 	media = media.media;
 	return (
-		<div className="rounded-[16px]">
+		<div className="">
 			<div className="flex flex-col gap-2">
 				<>
 					<Link

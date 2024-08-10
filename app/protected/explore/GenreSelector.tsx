@@ -82,12 +82,14 @@ const GenreSelector: React.FC = () => {
 				onClick={handleScrollToTarget}
 				className="fixed bottom-[25px] right-[25px] bg-accent p-8 rounded-full min-h-10 min-w-10 hidden md:block"
 			></button> */}
-			<div className="flex flex-row gap-4 justify-center my-4">
+			<div className="flex flex-row gap-4 justify-center mt-4">
 				<button
 					key={"movie"}
 					onClick={() => handleButtonClick("movie")}
-					className={`text-xl flex flex-col items-center px-6 py-3 rounded-[4px] hover:underline font-bold ${
+					className={`text-xl p-2 px-6 rounded-[8px] hover:bg-accent/30 ${
 						selectedType === "movie"
+							? "bg-accent/30"
+							: "bg-foreground/10"
 					}`}
 				>
 					Movie Genres
@@ -95,23 +97,25 @@ const GenreSelector: React.FC = () => {
 				<button
 					key={"tv"}
 					onClick={() => handleButtonClick("tv")}
-					className={`text-xl flex flex-col items-center px-6 py-3 rounded-[4px] hover:underline font-bold ${
+					className={`text-xl p-2 px-6 rounded-[8px] hover:bg-accent/30 ${
 						selectedType === "tv"
+							? "bg-accent/30"
+							: "bg-foreground/10"
 					}`}
 				>
 					TV Genres
 				</button>
 			</div>
-			<div className="flex justify-center my-4">
-				<ul className="flex flex-row flex-wrap gap-4 items-center justify-center">
+			<div className="flex justify-center mb-4">
+				<ul className="flex flex-row gap-4 items-center overflow-x-auto custom-scrollbar pb-2">
 					{genres.map((genre) => (
-						<li key={genre.id}>
+						<li key={genre.id} className="flex-shrink-0">
 							<button
 								key={genre.id}
-								className={`p-2 px-6 bg-foreground/10 rounded-full hover:bg-accent/30 ${
+								className={`p-2 px-6 rounded-[8px] hover:bg-accent/30  ${
 									genre.id.toString() === selectedGenre
-										? "border-2 border-accent"
-										: ""
+										? "bg-accent/30"
+										: "bg-foreground/10"
 								}`}
 								onClick={() =>
 									handleGenreClick(genre.id.toString())
@@ -123,7 +127,7 @@ const GenreSelector: React.FC = () => {
 					))}
 				</ul>
 			</div>
-			<div className="w-full gap-2 mx-auto items-center justify-items-center justify-center flex flex-row flex-wrap">
+			<div className="w-full mx-auto grid 2xl:grid-cols-10 xl:grid-cols-8 lg:grid-cols-6 sm:grid-cols-4 grid-cols-2 gap-4">
 				{mediaGenre && mediaGenre.length > 0 ? (
 					mediaGenre.map((media: any) => (
 						<Link
@@ -144,9 +148,7 @@ const GenreSelector: React.FC = () => {
 								<img
 									src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
 									alt={media.title || media.name}
-									width={200}
-									height={300}
-									className="md:min-w-[200px] md:min-h-[300px] rounded-[8px] hover:opacity-80 bg-foreground/5 "
+									className="rounded-[8px] hover:opacity-80 bg-foreground/5 "
 									loading="lazy"
 								/>
 							</motion.div>

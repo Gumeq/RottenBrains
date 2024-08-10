@@ -173,13 +173,13 @@ export default async function mediaPage({
 				<GoBackArrow />
 				<p className="truncate text-lg">{media.title || media.name}</p>
 			</div>
-			<div className="">
+			{/* <div className="">
 				<img
 					src={`https://image.tmdb.org/t/p/w200${media.poster_path}`}
 					alt=""
 					className="w-screen h-[300vh] object-cover blur-[100px] absolute top-0 mask2 opacity-30 overflow-hidden bg-black"
 				/>
-			</div>
+			</div> */}
 			<div className=" relative h-auto w-screen lg:w-auto py-4 mt-16 ">
 				<div
 					className=" relative h-auto flex w-screen lg:w-auto"

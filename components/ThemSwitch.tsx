@@ -20,13 +20,27 @@ export default function ThemeSwitch() {
 	return (
 		<button
 			onClick={toggleTheme}
-			className="p-2 rounded focus:outline-none flex items-center justify-center invert-on-dark"
+			className=" focus:outline-none flex items-center text-foreground w-full"
 			aria-label="Toggle theme"
 		>
 			{theme === "light" ? (
-				<img src="/assets/icons/light-mode.svg" alt="" />
+				<div className="flex flex-row gap-4 w-full justify-between items-center ">
+					<p>Change theme</p>
+					<img
+						src="/assets/icons/light-mode.svg"
+						alt=""
+						className="invert-on-dark"
+					/>
+				</div>
 			) : (
-				<img src="/assets/icons/dark-mode.svg" alt="" />
+				<div className="flex flex-row gap-4 w-full items-center justify-between">
+					<p>Change theme</p>
+					<img
+						src="/assets/icons/dark-mode.svg"
+						alt=""
+						className="invert-on-dark"
+					/>
+				</div>
 			)}
 		</button>
 	);

@@ -18,7 +18,7 @@ const ExploreCard = async (media: any) => {
 			: `/protected/watch/${media_type}/${media.id}/1/1`;
 
 	return (
-		<div className="lg:w-[220px]  w-[180px] rounded-[8px]">
+		<div className="rounded-[8px]">
 			<div className="flex flex-col gap-2">
 				{!media ? (
 					<>
@@ -85,7 +85,7 @@ const ExploreCard = async (media: any) => {
 											alt=""
 											width={10}
 											height={10}
-											className="invert-on-dark"
+											className="invert"
 										/>
 										{media.vote_average.toFixed(1)}
 									</div>

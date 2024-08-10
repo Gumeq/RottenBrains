@@ -142,9 +142,6 @@ const PostStats = ({ post, user }: any) => {
 	if (!userId) {
 		return null;
 	}
-
-	console.log(state.comments);
-
 	return (
 		<div className="flex flex-row gap-4 items-center">
 			<div className="flex flex-row items-center gap-2">
