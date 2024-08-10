@@ -5,7 +5,7 @@ import { addNotification } from "@/utils/clientFunctions/notificationsData";
 
 const AddComment: React.FC<any> = ({ post, user, fetchComments }) => {
 	const [content, setContent] = useState("");
-	const postId = post.id;
+	const postId = post.post_id;
 
 	const supabase = createClient();
 
@@ -30,9 +30,9 @@ const AddComment: React.FC<any> = ({ post, user, fetchComments }) => {
 		if (data && data.length > 0) {
 			await addNotification(
 				user.id,
-				post.users.id,
+				post.creatorid,
 				"comment",
-				post.id,
+				post.post_id,
 				data[0].id
 			);
 		}

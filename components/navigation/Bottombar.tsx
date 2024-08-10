@@ -16,7 +16,7 @@ const Bottombar = () => {
 	const pathname = usePathname();
 	return (
 		<div className="fixed bottom-0 z-50 flex items-center justify-center w-screen lg:hidden drop-shadow-xl">
-			<ul className=" w-full h-16 bg-background flex flex-row items-center justify-between drop-shadow-xl px-4 relative">
+			<ul className=" w-full h-16 bg-background flex flex-row items-center justify-between drop-shadow-xl px-4 relative border-t border-foreground/20">
 				<li>
 					<Link
 						href={"/protected/home"}
@@ -47,15 +47,18 @@ const Bottombar = () => {
 						<p className="text-sm">Home</p>
 					</Link>
 				</li>
-				<div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-background shadow-dark-grey flex items-center justify-center">
+				<Link
+					className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-background shadow-dark-grey flex items-center justify-center"
+					href={"/protected/create-post"}
+				>
 					<img
 						src="/assets/icons/plus.svg"
 						alt=""
 						className="invert-on-dark w-10 h-10"
 					/>
-				</div>
+				</Link>
 
-				<li className="h-full w-[30px] "></li>
+				<li className="h-full w-[50px] "></li>
 
 				<li
 					className={`flex flex-col gap-1 items-center rounded-full `}

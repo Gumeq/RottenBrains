@@ -18,7 +18,7 @@ export function TopNavbarDesktop() {
 	return (
 		<>
 			<nav
-				className={`fixed top-0 bg-background/50 backdrop-blur-xl w-screen h-16 items-center justify-center z-30 hidden p-1 ${
+				className={`fixed top-0 bg-background w-screen h-16 items-center justify-center z-30 hidden p-1 ${
 					pathname.includes("home") ? "lg:hidden" : "lg:flex"
 				}`}
 			>

@@ -83,8 +83,8 @@ const NotificationButton = () => {
 			<img
 				src={`${
 					pathname.includes("/protected/notifications")
-						? "/assets/icons/notifications.svg"
-						: "/assets/icons/notifications-outline.svg"
+						? "/assets/icons/notification-solid.svg"
+						: "/assets/icons/notification-outline.svg"
 				}`}
 				alt="Notification Bell"
 				width={25}

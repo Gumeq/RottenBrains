@@ -83,10 +83,8 @@ const EpisodeCard = ({
 				<img
 					src={`https://image.tmdb.org/t/p/w200${episode.still_path}`}
 					alt="episode still"
-					width={160}
-					height={90}
 					loading="lazy"
-					className="max-w-[160px] max-h-[90px] bg-foreground/10 rounded-[4px]"
+					className="w-[200px] min-w-[200px] bg-foreground/10 rounded-[4px]"
 				/>
 			</div>
 			<div className="flex flex-col">

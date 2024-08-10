@@ -134,16 +134,16 @@ const SearchMovies = ({ media, setMedia, link, user }: any) => {
 				<div className="relative">
 					<ComboboxInput
 						className={clsx(
-							"w-full rounded-[8px] border-none bg-foreground/10 py-1.5 pr-8 pl-3 text-sm/6 text-foreground",
+							"w-full rounded-full border border-foreground/20 bg-background py-1.5 pr-8 pl-3 text-sm/6 text-foreground",
 							"focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-foreground/25"
 						)}
 						displayValue={(media: any) => media?.title}
 						onChange={handleQueryChange}
 						placeholder="Search Rotten Brains"
 					/>
-					<ComboboxButton className="group absolute inset-y-0 right-0 px-2.5">
+					<ComboboxButton className="group absolute inset-y-0 right-0 px-4">
 						<img
-							src={"/assets/icons/magnifying-glass-solid.svg"}
+							src={"/assets/icons/search.svg"}
 							alt={""}
 							width={20}
 							height={20}

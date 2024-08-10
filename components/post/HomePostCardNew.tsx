@@ -15,95 +15,19 @@ import { useUser } from "@/context/UserContext";
 import PostStats from "./PostStats";
 import UserReviewTextNew from "./UserReviewTextNew";
 
-const LoadingSkeleton = ({ index }: any) => {
-	const variants = {
-		hidden: { opacity: 0 },
-		visible: { opacity: 1 },
-	};
-
-	return (
-		<motion.div
-			className="relative rounded-[16px] overflow-hidden border border-foreground/30"
-			variants={variants}
-			initial="hidden"
-			animate="visible"
-			transition={{
-				delay: index * 0.15,
-				ease: "easeInOut",
-				duration: 0.25,
-			}}
-			viewport={{ amount: 0 }}
-		>
-			<div className="w-screen md:w-[350px] max-w-[calc(100vw-20px)] flex flex-col bg-foreground/5 relative">
-				<div className="flex flex-col relative overflow-hidden rounded-xl">
-					<div className="flex flex-row gap-4 items-center p-2 px-4">
-						<Skeleton
-							circle
-							height={35}
-							width={35}
-							baseColor="#212121"
-							highlightColor="#323232"
-						/>
-						<div>
-							<Skeleton
-								width={120}
-								baseColor="#212121"
-								highlightColor="#323232"
-							/>
-							<Skeleton
-								width={80}
-								baseColor="#212121"
-								highlightColor="#323232"
-							/>
-						</div>
-					</div>
-					<div className="relative my-auto flex flex-col gap-4 p-2">
-						<div className="flex flex-col z-10 gap-2">
-							<Skeleton
-								height={480}
-								width={320}
-								baseColor="#212121"
-								highlightColor="#323232"
-							/>
-						</div>
-					</div>
-				</div>
-				<div className="mx-4 px-2 py-2 rounded-[8px]">
-					<Skeleton
-						count={3}
-						baseColor="#212121"
-						highlightColor="#323232"
-					/>
-				</div>
-				<div className="w-full h-[50px] px-4">
-					<div className="flex flex-row gap-2 align-center w-full h-full justify-between items-center">
-						<Skeleton
-							width={30}
-							height={30}
-							baseColor="#212121"
-							highlightColor="#323232"
-						/>
-						<Skeleton
-							width={30}
-							height={30}
-							baseColor="#212121"
-							highlightColor="#323232"
-						/>
-					</div>
-				</div>
-				<div className="px-4 pb-2">
-					<Skeleton
-						width={60}
-						baseColor="#212121"
-						highlightColor="#323232"
-					/>
-				</div>
-			</div>
-		</motion.div>
-	);
-};
-
 const ErrorComponent = () => <div>Error loading post.</div>;
+
+function getColorBasedOnNumber(value: number): string {
+	if (value >= 8 && value <= 10) {
+		return "green";
+	} else if (value >= 4 && value < 8) {
+		return "orange";
+	} else if (value >= 0 && value < 4) {
+		return "red";
+	} else {
+		throw new Error("Input value must be between 0 and 10.");
+	}
+}
 
 export function HomePostCardNew({ post, index }: any) {
 	const media_id = post.media_id;
@@ -175,7 +99,7 @@ export function HomePostCardNew({ post, index }: any) {
 	}
 
 	if (loading) {
-		return <LoadingSkeleton index={index} />;
+		return <p>loading</p>;
 	}
 
 	if (error) {
@@ -184,7 +108,7 @@ export function HomePostCardNew({ post, index }: any) {
 
 	return (
 		<motion.div
-			className="relative rounded-[16px] border border-foreground/10 p-4 max-w-2xl w-screen flex flex-col "
+			className="relative rounded-[16px] border border-foreground/10 p-4 max-w-2xl w-screen flex flex-col bg-foreground/5 "
 			variants={variants}
 			initial="hidden"
 			animate="visible"
@@ -219,7 +143,7 @@ export function HomePostCardNew({ post, index }: any) {
 						</p>
 					</div>
 				</div>
-				<div>
+				<div className="flex flex-row items-center gap-2">
 					{post.creatorid === userId && (
 						<Link href={`/protected/edit-post/${post.id}`}>
 							<img
@@ -231,10 +155,25 @@ export function HomePostCardNew({ post, index }: any) {
 							/>
 						</Link>
 					)}
+					<div className="w-full flex justify-end">
+						<p
+							className={`px-8 py-2 ${
+								post.vote_user === 10
+									? "bg-yellow-500/20"
+									: post.vote_user >= 8
+									? "bg-green-500/20"
+									: post.vote_user >= 4
+									? "bg-blue-500/20"
+									: "bg-red-500/20"
+							} rounded-[12px]`}
+						>
+							{post.vote_user}/10
+						</p>
+					</div>
 				</div>
 			</div>
 			<div className="w-full flex flex-row justify-between gap-4 mb-4">
-				<div className=" w-full">
+				<div className=" w-full flex flex-col gap-2">
 					<UserReviewTextNew
 						post_review={post.review_user || "no review"}
 						creator_name={creator?.username || "no user"}

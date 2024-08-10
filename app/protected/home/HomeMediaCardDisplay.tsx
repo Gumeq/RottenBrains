@@ -3,7 +3,6 @@ import React from "react";
 
 const HomeMediaCardDisplay = (media: any, media_type: string) => {
 	media = media.media;
-	console.log(media);
 	return (
 		<div className="rounded-[16px]">
 			<div className="flex flex-col gap-2">

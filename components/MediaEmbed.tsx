@@ -153,7 +153,7 @@ const VideoEmbed = ({
 		<div className="relative flex flex-col gap-2">
 			<div>
 				{!showVideo ? (
-					<div className="relative text-center lg:rounded-[8px] overflow-hidden">
+					<div className="relative text-center lg:rounded-[16px] overflow-hidden">
 						<img
 							src={
 								media_type === "movie"
@@ -178,7 +178,7 @@ const VideoEmbed = ({
 						</button>
 					</div>
 				) : (
-					<div className="aspect-w-16 aspect-h-9 lg:rounded-[8px] overflow-hidden drop-shadow-lg z-50 relative">
+					<div className="aspect-w-16 aspect-h-9 lg:rounded-[16px] overflow-hidden drop-shadow-lg z-50 relative">
 						<iframe
 							allowFullScreen
 							id="iframe"
@@ -193,7 +193,7 @@ const VideoEmbed = ({
 					</div>
 				)}
 			</div>
-			<div className="flex flex-row justify-between p-2">
+			<div className="flex flex-row justify-between p-2 lg:p-0 lg:py-2">
 				<span className="text-xl lg:font-bold flex flex-row flex-wrap gap-2 items-center">
 					{season_number !== undefined &&
 						episode_number !== undefined &&
@@ -211,14 +211,40 @@ const VideoEmbed = ({
 					<p className="truncate pr-1">{media.title || media.name}</p>
 				</span>
 			</div>
-			<div className="flex lg:flex-row flex-col-reverse items-center gap-2 justify-between">
-				<div className="flex flex-row gap-2">
+			<div className="flex flex-row items-center gap-6 justify-between lg:overflow-auto overflow-x-auto px-2 lg:px-0">
+				<div className="flex justify-center gap-2 ">
+					<button
+						onClick={() =>
+							updateLinkStart("https://vidsrc.cc/v2/embed/")
+						}
+						className="flex flex-row items-center gap-2 bg-foreground/10 px-4 py-2 rounded-full z-10"
+					>
+						vidsrc.cc
+					</button>
+					<button
+						onClick={() =>
+							updateLinkStart("https://vidsrc.net/embed/")
+						}
+						className="flex flex-row items-center gap-2 bg-foreground/10 px-4 py-2 rounded-full z-10 "
+					>
+						vidsrc.net
+					</button>
+					<button
+						onClick={() =>
+							updateLinkStart("https://vidsrc.pro/embed/")
+						}
+						className="flex flex-row items-center gap-2 bg-foreground/10 px-4 py-2 rounded-full z-10 "
+					>
+						vidsrc.pro
+					</button>
+				</div>
+				<div className="flex flex-row gap-2 flex-shrink-0">
 					{media_type === "tv" && (
 						<div>
 							{getPreviousEpisodeLink() ? (
 								<Link href={getPreviousEpisodeLink() || "#"}>
 									<div
-										className={`flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg ${
+										className={` flex flex-row items-center gap-2 bg-foreground/10 p-2 px-4 rounded-full z-10  ${
 											prevClicked
 												? "border-2 border-accent"
 												: ""
@@ -236,7 +262,7 @@ const VideoEmbed = ({
 									</div>
 								</Link>
 							) : (
-								<div className="flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg">
+								<div className=" flex flex-row items-center gap-2 bg-foreground/10 p-2 px-4 rounded-full z-10 ">
 									No Previous
 								</div>
 							)}
@@ -247,7 +273,7 @@ const VideoEmbed = ({
 							{getNextEpisodeLink() ? (
 								<Link href={getNextEpisodeLink() || "#"}>
 									<div
-										className={`flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg ${
+										className={` flex flex-row items-center gap-2 bg-foreground/10 p-2 px-4 rounded-full z-10  ${
 											nextClicked
 												? "border-2 border-accent"
 												: ""
@@ -265,7 +291,7 @@ const VideoEmbed = ({
 									</div>
 								</Link>
 							) : (
-								<div className="flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg">
+								<div className=" flex flex-row items-center gap-2 bg-foreground/10 p-2 px-4 rounded-full z-10 ">
 									No Next
 								</div>
 							)}
@@ -273,7 +299,7 @@ const VideoEmbed = ({
 					)}
 					<Link
 						href={`/protected/create-post/${media_type}/${media_id}`}
-						className=" flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg justify-self-end"
+						className=" flex flex-row items-center gap-2 bg-foreground/10 p-2 px-4 rounded-full z-10  justify-self-end"
 					>
 						<img
 							src="/assets/icons/star-outline.svg"
@@ -285,25 +311,20 @@ const VideoEmbed = ({
 						/>
 						<p className="">Rate</p>
 					</Link>
-				</div>
-
-				<div className="flex justify-center gap-2 ">
-					<button
-						onClick={() =>
-							updateLinkStart("https://vidsrc.net/embed/")
-						}
-						className="flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg"
+					<Link
+						href={`/`}
+						className=" flex flex-row items-center gap-2 bg-foreground/10 p-2 px-4 rounded-full z-10  justify-self-end"
 					>
-						vidsrc.net
-					</button>
-					<button
-						onClick={() =>
-							updateLinkStart("https://vidsrc.pro/embed/")
-						}
-						className="flex flex-row items-center gap-2 bg-foreground/10 px-6 py-2 rounded-[8px] z-10 hover:scale-105 drop-shadow-lg"
-					>
-						vidsrc.pro
-					</button>
+						<img
+							src="/assets/icons/share-outline.svg"
+							alt=""
+							width={20}
+							height={20}
+							className="invert-on-dark"
+							loading="lazy"
+						/>
+						<p className="">Share</p>
+					</Link>
 				</div>
 			</div>
 		</div>

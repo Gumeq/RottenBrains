@@ -90,7 +90,7 @@ const TVShowDetails = ({ tv_show_id, season_number }: TVShowDetailsProps) => {
 					{/* <h2 className="text-2xl font-bold mb-4">
 						Episodes of Season {selectedSeason}
 					</h2> */}
-					<div className="lg:h-[75vh] h-full flex flex-col overflow-y-auto custom-scrollbar">
+					<div className="flex flex-col">
 						{episodes.map((episode) => (
 							<Link
 								key={episode.episode_number}
