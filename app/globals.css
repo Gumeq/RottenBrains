@@ -240,8 +240,16 @@
 .page-loader {
 	width: 55px;
 	aspect-ratio: 1;
-	--g1: conic-gradient(from 90deg at 3px 3px, #0000 90deg, #fff 0);
-	--g2: conic-gradient(from -90deg at 22px 22px, #0000 90deg, #fff 0);
+	--g1: conic-gradient(
+		from 90deg at 3px 3px,
+		#0000 90deg,
+		hsl(var(--foreground)) 0
+	);
+	--g2: conic-gradient(
+		from -90deg at 22px 22px,
+		#0000 90deg,
+		hsl(var(--foreground)) 0
+	);
 	background: var(--g1), var(--g1), var(--g1), var(--g2), var(--g2), var(--g2);
 	background-size: 25px 25px;
 	background-repeat: no-repeat;
@@ -292,6 +300,21 @@
 	background: linear-gradient(
 		90deg,
 		rgba(15, 15, 15, 0) 0%,
-		rgba(15, 15, 15, 1) 100%
+		hsl(var(--background)) 100%
 	);
+}
+
+.gradient-explore {
+	background: linear-gradient(
+		180deg,
+		rgba(0, 0, 0, 0) 0%,
+		hsl(var(--background)) 90%,
+		hsl(var(--background)) 100%
+	);
+}
+
+.shadow_plus {
+	-webkit-box-shadow: 0px 0px 10px 5px hsla(0, 0%, 0%, 0.2);
+	-moz-box-shadow: 0px 0px 10px 5px hsla(0, 0%, 0%, 0.2);
+	box-shadow: 0px 0px 10px 5px hsla(0, 0%, 0%, 0.2);
 }

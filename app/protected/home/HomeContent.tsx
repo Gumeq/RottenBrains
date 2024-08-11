@@ -27,11 +27,9 @@ const HomeContent = async () => {
 		return;
 	}
 
-	const { dataMovies, dataTv, dataEpisodes } = await fetchVidsrc();
-
 	const watchHistory = await getWatchHistoryForUser(user.user.id, 10, 0);
 	const allRecommendations = await Promise.all(
-		watchHistory.map(async (item: any) => {
+		watchHistory.slice(0, 5).map(async (item: any) => {
 			const recs = await getRecommendations(
 				item.media_type,
 				item.media_id
@@ -67,9 +65,9 @@ const HomeContent = async () => {
 	const now_in_cinemas = await fetchExploreData("Now_in_cinemas");
 	const trending_tv = await fetchExploreData("Trending_TV");
 	return (
-		<div className="flex flex-col gap-8 lg:p-4 p-0 lg:w-auto w-screen">
+		<div className="flex flex-col gap-8 lg:p-4 p-0 lg:w-auto w-screen py-2 lg:py-0">
 			<div>
-				<div className="flex flex-row gap-2 items-center mb-4">
+				<div className="flex flex-row gap-2 items-center mb-4 lg:p-0 px-2">
 					<img
 						src="/assets/icons/history.svg"
 						alt=""
@@ -77,7 +75,7 @@ const HomeContent = async () => {
 						height={24}
 						className="invert-on-dark"
 					/>
-					<h2 className="text-xl font-bold">Your watch history</h2>
+					<h2 className="text-xl font-bold">Continue watching</h2>
 				</div>
 				<div className="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
 					{watchHistory &&
@@ -97,7 +95,7 @@ const HomeContent = async () => {
 				</div>
 			</div>
 			<div>
-				<div className="flex flex-row items-center justify-between mb-4">
+				<div className="flex flex-row items-center justify-between mb-4 lg:p-0 px-2">
 					<div className="flex flex-row gap-2 items-center">
 						<div className="w-[24px] h-[24px] rounded-full bg-accent "></div>
 						<h2 className="text-xl font-bold">
@@ -106,7 +104,7 @@ const HomeContent = async () => {
 					</div>
 					<ScrollButtons containerId="rotten-posts-one"></ScrollButtons>
 				</div>
-				<div className="relative">
+				<div className="relative lg:p-0 px-2">
 					<div className="gradient-edge absolute w-[5%] h-full top-0 right-0 z-20"></div>
 					<div
 						className="flex flex-row gap-4 overflow-x-auto hidden-scrollbar"
@@ -133,11 +131,11 @@ const HomeContent = async () => {
 				</div>
 			</div>
 			<div>
-				<div className="flex flex-row gap-2 items-center mb-4">
+				<div className="flex flex-row gap-2 items-center mb-4 lg:p-0 px-2">
 					<div className="w-[24px] h-[24px] rounded-full bg-accent "></div>
 					<h2 className="text-xl font-bold">Now in cinemas</h2>
 				</div>
-				<div className="grid 2xl:grid-cols-8 lg:grid-cols-4 grid-cols-2 gap-4">
+				<div className="grid 2xl:grid-cols-8 lg:grid-cols-4 grid-cols-2 gap-4 lg:p-0 px-4">
 					{now_in_cinemas &&
 						now_in_cinemas.results.slice(0, 8).map((media: any) => {
 							return (
@@ -151,7 +149,7 @@ const HomeContent = async () => {
 			</div>
 
 			<div>
-				<div className="flex flex-row gap-2 items-center mb-4">
+				<div className="flex flex-row gap-2 items-center mb-4 lg:p-0 px-2">
 					<img
 						src="/assets/icons/history.svg"
 						alt=""
@@ -162,7 +160,7 @@ const HomeContent = async () => {
 					<h2 className="text-xl font-bold">Recommended</h2>
 				</div>
 				<div className="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
-					{flattenedRecommendations.length >= 20 &&
+					{flattenedRecommendations.length > 0 &&
 						flattenedRecommendations
 							.slice(0, 20)
 							.map((media: any) => {
@@ -176,7 +174,7 @@ const HomeContent = async () => {
 				</div>
 			</div>
 			<div>
-				<div className="flex flex-row items-center justify-between mb-4">
+				<div className="flex flex-row items-center justify-between mb-4 lg:p-0 px-2">
 					<div className="flex flex-row gap-2 items-center">
 						<div className="w-[24px] h-[24px] rounded-full bg-accent "></div>
 						<h2 className="text-xl font-bold">
@@ -185,7 +183,7 @@ const HomeContent = async () => {
 					</div>
 					<ScrollButtons containerId="rotten-posts-two"></ScrollButtons>
 				</div>
-				<div className="relative">
+				<div className="relative lg:p-0 px-2">
 					<div className="gradient-edge absolute w-[5%] h-full top-0 right-0 z-20"></div>
 					<div
 						className="flex flex-row gap-4 overflow-x-auto hidden-scrollbar"
@@ -223,7 +221,7 @@ const HomeContent = async () => {
 					<h2 className="text-xl font-bold">Recommended</h2>
 				</div>
 				<div className="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
-					{flattenedRecommendations.length >= 40 &&
+					{flattenedRecommendations.length > 20 &&
 						flattenedRecommendations
 							.slice(20, 40)
 							.map((media: any) => {
@@ -265,7 +263,7 @@ const HomeContent = async () => {
 					<h2 className="text-xl font-bold">Recommended</h2>
 				</div>
 				<div className="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
-					{flattenedRecommendations.length >= 60 &&
+					{flattenedRecommendations.length > 40 &&
 						flattenedRecommendations
 							.slice(40, 60)
 							.map((media: any) => {

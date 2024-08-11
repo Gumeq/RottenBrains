@@ -211,7 +211,7 @@ const VideoEmbed = ({
 					<p className="truncate pr-1">{media.title || media.name}</p>
 				</span>
 			</div>
-			<div className="flex flex-row items-center gap-6 justify-between lg:overflow-auto overflow-x-auto px-2 lg:px-0">
+			<div className="flex flex-row items-center gap-6 justify-between lg:overflow-auto overflow-x-auto px-2 lg:px-0 hidden-scrollbar">
 				<div className="flex justify-center gap-2 ">
 					<button
 						onClick={() =>

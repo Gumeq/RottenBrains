@@ -82,7 +82,7 @@ export default async function mediaPage({
 					media_duration={media.runtime || 100}
 				/>
 			)}
-			<div className=" lg:max-w-[1700px] lg:w-[95vw] w-screen mx-auto flex flex-col relative z-10 lg:mt-16">
+			<div className=" lg:max-w-[1700px] lg:w-[95vw] w-screen mx-auto flex flex-col relative z-10 lg:mt-16 mb-16">
 				<div className="w-screen h-16 bg-background flex-row gap-4 flex lg:hidden z-20 items-center px-4 fixed">
 					<GoBackArrow />
 					<p className="truncate text-lg">

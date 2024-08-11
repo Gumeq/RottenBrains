@@ -183,7 +183,7 @@ export function HomePostCard({ post, index }: any) {
 
 	return (
 		<motion.div
-			className="relative rounded-[8px] overflow-hidden border border-foreground/20 bg-background"
+			className="relative rounded-[8px] overflow-hidden border border-foreground/10 bg-foreground/5"
 			variants={variants}
 			initial="hidden"
 			animate="visible"

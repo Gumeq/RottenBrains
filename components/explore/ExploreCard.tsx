@@ -18,7 +18,7 @@ const ExploreCard = async (media: any) => {
 			: `/protected/watch/${media_type}/${media.id}/1/1`;
 
 	return (
-		<div className="rounded-[8px]">
+		<div className="">
 			<div className="flex flex-col gap-2">
 				{!media ? (
 					<>
@@ -57,20 +57,12 @@ const ExploreCard = async (media: any) => {
 					<>
 						<Link
 							href={`/protected/media/${media_type}/${media.id}`}
-							className="relative"
+							className="relative hover:scale-125 hover:z-20 hover:drop-shadow-xl transition ease-in-out border-2 border-transparent hover:border-foreground rounded-[8px]"
 						>
 							<div className="aspect-w-2 aspect-h-3 rounded-[8px] overflow-hidden">
 								<picture>
-									<source
-										media="(min-width: 768px)"
-										srcSet={`https://image.tmdb.org/t/p/w342${media.poster_path}`}
-									/>
-									<source
-										media="(max-width: 767px)"
-										srcSet={`https://image.tmdb.org/t/p/w154${media.poster_path}`}
-									/>
 									<img
-										src={`https://image.tmdb.org/t/p/w154${media.poster_path}`}
+										src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
 										alt=""
 										className="w-full h-full bg-background"
 										loading="lazy"

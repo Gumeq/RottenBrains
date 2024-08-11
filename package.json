@@ -32,7 +32,6 @@
     "lodash": "^4.17.21",
     "lucide-react": "^0.395.0",
     "next": "latest",
-    "postcss": "8.4.33",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.52.0",
@@ -55,6 +54,8 @@
     "@types/node": "20.11.5",
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
-    "encoding": "^0.1.13"
+    "encoding": "^0.1.13",
+    "postcss": "^8.4.41",
+    "postcss-nested": "^6.2.0"
   }
 }

@@ -1,4 +1,5 @@
 import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
+import { imageConfigDefault } from "next/dist/shared/lib/image-config";
 import Link from "next/link";
 import React from "react";
 
@@ -136,14 +137,17 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
 
 				<img
 					src={
-						media.backdrop_path || media.still_path
-							? `https://image.tmdb.org/t/p/w500${
-									media.backdrop_path || media.still_path
-							  }`
-							: "/assets/images/placeholder_thumbnail.jpg"
+						media.images &&
+						media.images.backdrops &&
+						media.images.backdrops.length > 0
+							? `https://image.tmdb.org/t/p/w500${media.images.backdrops[0].file_path}`
+							: season_number && episode_number
+							? `https://image.tmdb.org/t/p/w500${media.still_path}`
+							: ""
 					}
 					alt=""
-					className="aspect-[16/9] lg:rounded-[16px]"
+					loading="lazy"
+					className="aspect-[16/9] lg:rounded-[16px] bg-foreground/10"
 				/>
 			</Link>
 			<div className="flex flex-col lg:p-0 px-2">

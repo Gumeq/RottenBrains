@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 interface WatchDurationProps {
 	media_type: string;
@@ -19,12 +19,10 @@ const WatchDuration: React.FC<WatchDurationProps> = ({
 	user_id,
 	media_duration,
 }) => {
-	const [watchTime, setWatchTime] = useState<number>(0);
-
 	useEffect(() => {
-		const startTime = new Date();
+		let startTime = new Date();
 
-		const handleBeforeUnload = () => {
+		const sendWatchData = () => {
 			const endTime = new Date();
 			const timeSpent = Math.floor(
 				(endTime.getTime() - startTime.getTime()) / 1000
@@ -60,17 +58,36 @@ const WatchDuration: React.FC<WatchDurationProps> = ({
 						percentage_watched: percentageWatched.toFixed(2),
 					})
 				);
+
+				// Reset startTime to now
+				startTime = new Date();
 			} else {
 				console.log("Less than a minute has passed. No data sent.");
 			}
 		};
 
-		window.addEventListener("beforeunload", handleBeforeUnload);
+		const handleVisibilityChange = () => {
+			if (document.visibilityState === "hidden") {
+				sendWatchData();
+			}
+		};
+
+		document.addEventListener("visibilitychange", handleVisibilityChange);
 
 		return () => {
-			window.removeEventListener("beforeunload", handleBeforeUnload);
+			document.removeEventListener(
+				"visibilitychange",
+				handleVisibilityChange
+			);
 		};
-	}, [media_type, media_id, user_id, media_duration]);
+	}, [
+		media_type,
+		media_id,
+		user_id,
+		media_duration,
+		season_number,
+		episode_number,
+	]);
 
 	return null;
 };

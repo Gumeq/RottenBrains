@@ -6,6 +6,7 @@ import GenreSelector from "./GenreSelector";
 import SearchBar from "@/components/searchBar/SearchBar";
 import { getAverageColor } from "fast-average-color-node";
 import ScrollButtons from "@/components/explore/ScrollButtons";
+import MediaCarouselNew from "@/components/MediaCarouselNew";
 
 const fetchMoviesWithColors = async (movies: any) => {
 	const moviesWithColors = await Promise.all(
@@ -25,10 +26,10 @@ const page = async () => {
 	return (
 		<div className="w-full flex flex-col items-center">
 			<div className="">
-				<MediaCarousel movies={moviesWithColors}></MediaCarousel>
+				<MediaCarouselNew movies={moviesWithColors}></MediaCarouselNew>
 			</div>
 			<div
-				className="md:max-w-[90vw] w-full flex flex-col gap-8 md:-mt-[15vh] mt-4 z-10 md:px-0 px-2"
+				className="md:max-w-[90vw] w-full flex flex-col gap-8  mt-4 z-10 md:px-0 px-2"
 				id="explore"
 			>
 				<div className="flex md:flex-row flex-col  justify-between md:mt-8 my-4 items-center w-full">
@@ -47,10 +48,6 @@ const page = async () => {
 								Now in cinemas
 							</h1>
 						</div>
-						{/* <ScrollButtons
-							containerId="cinemasNow"
-							scrollPercent={100}
-						></ScrollButtons> */}
 					</div>
 
 					<ExploreTab
@@ -64,10 +61,6 @@ const page = async () => {
 							<div className="w-2 h-2 bg-accent rounded-full"></div>
 							<h1 className="text-xl font-bold">Popular Today</h1>
 						</div>
-						{/* <ScrollButtons
-							containerId="popularToday"
-							scrollPercent={100}
-						></ScrollButtons> */}
 					</div>
 
 					<ExploreTab
@@ -81,10 +74,6 @@ const page = async () => {
 							<div className="w-2 h-2 bg-accent rounded-full"></div>
 							<h1 className="text-xl font-bold">Trending TV</h1>
 						</div>
-						{/* <ScrollButtons
-							containerId="trendngTV"
-							scrollPercent={100}
-						></ScrollButtons> */}
 					</div>
 
 					<ExploreTab
@@ -100,10 +89,6 @@ const page = async () => {
 								Trending Movies
 							</h1>
 						</div>
-						{/* <ScrollButtons
-							containerId="trendngmovies"
-							scrollPercent={100}
-						></ScrollButtons> */}
 					</div>
 
 					<ExploreTab

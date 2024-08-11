@@ -35,11 +35,11 @@ export const getAiringToday = async () => {
 };
 
 export const getMovieDetails = async (movieId: number) => {
-	return fetchFromApi(`movie/${movieId}?language=en-US`);
+	return fetchFromApi(`movie/${movieId}?language=en`, "images");
 };
 
 export const getTVDetails = async (tvId: number) => {
-	return fetchFromApi(`tv/${tvId}?language=en-US`);
+	return fetchFromApi(`tv/${tvId}?language=en`, "images");
 };
 
 export const getMovieCredits = async (movieId: number) => {
