@@ -2,7 +2,6 @@ import {
 	getNewestUsers,
 	getWatchHistoryForUser,
 } from "@/utils/supabase/queries";
-import { fetchVidsrc } from "@/utils/vidsrc";
 import {
 	getCurrentUser,
 	getPostsFromFollowedUsers,
@@ -27,7 +26,11 @@ const HomeContent = async () => {
 		return;
 	}
 
-	const watchHistory = await getWatchHistoryForUser(user.user.id, 10, 0);
+	const watchHistory = await getWatchHistoryForUser(user.user.id, 20, 0);
+	const filteredWatchHistory = watchHistory.filter(
+		(item: any) => item.percentage_watched < 80
+	);
+	console.log(filteredWatchHistory);
 	const allRecommendations = await Promise.all(
 		watchHistory.slice(0, 5).map(async (item: any) => {
 			const recs = await getRecommendations(
@@ -78,8 +81,8 @@ const HomeContent = async () => {
 					<h2 className="text-xl font-bold">Continue watching</h2>
 				</div>
 				<div className="lg:grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 grid-rows-1 gap-4 flex flex-row overflow-x-auto px-2 ">
-					{watchHistory &&
-						watchHistory.slice(0, 10).map((media: any) => {
+					{filteredWatchHistory &&
+						filteredWatchHistory.slice(0, 5).map((media: any) => {
 							return (
 								<div className="w-[80vw] flex-shrink-0 lg:w-auto inline-block lg:inline">
 									<HomeMediaCard
@@ -99,7 +102,11 @@ const HomeContent = async () => {
 			<div>
 				<div className="flex flex-row items-center justify-between mb-4 lg:p-0 px-2">
 					<div className="flex flex-row gap-2 items-center">
-						<div className="w-[24px] h-[24px] rounded-full bg-accent "></div>
+						<img
+							src="/assets/icons/review-outline.svg"
+							alt=""
+							className="invert-on-dark"
+						/>
 						<h2 className="text-xl font-bold">
 							Latest Rotten Brains posts
 						</h2>
@@ -109,7 +116,7 @@ const HomeContent = async () => {
 				<div className="relative lg:p-0 px-2">
 					<div className="gradient-edge absolute w-[5%] h-full top-0 right-0 z-20"></div>
 					<div
-						className="flex flex-row gap-4 overflow-x-auto hidden-scrollbar"
+						className="flex flex-row gap-4 pr-[5%] overflow-x-auto hidden-scrollbar"
 						id={"rotten-posts-one"}
 					>
 						{followed_posts_one &&
@@ -134,7 +141,11 @@ const HomeContent = async () => {
 			</div>
 			<div>
 				<div className="flex flex-row gap-2 items-center mb-4 lg:p-0 px-2">
-					<div className="w-[24px] h-[24px] rounded-full bg-accent "></div>
+					<img
+						src="/assets/icons/movie-outline.svg"
+						alt=""
+						className="invert-on-dark"
+					/>
 					<h2 className="text-xl font-bold">Now in cinemas</h2>
 				</div>
 				<div className="grid 2xl:grid-cols-8 lg:grid-cols-4 grid-cols-2 gap-4 lg:p-0 px-4">
@@ -151,16 +162,6 @@ const HomeContent = async () => {
 			</div>
 
 			<div>
-				<div className="flex flex-row gap-2 items-center mb-4 lg:p-0 px-2">
-					<img
-						src="/assets/icons/history.svg"
-						alt=""
-						width={24}
-						height={24}
-						className="invert-on-dark"
-					/>
-					<h2 className="text-xl font-bold">Recommended</h2>
-				</div>
 				<div className="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
 					{flattenedRecommendations.length > 0 &&
 						flattenedRecommendations
@@ -178,7 +179,11 @@ const HomeContent = async () => {
 			<div>
 				<div className="flex flex-row items-center justify-between mb-4 lg:p-0 px-2">
 					<div className="flex flex-row gap-2 items-center">
-						<div className="w-[24px] h-[24px] rounded-full bg-accent "></div>
+						<img
+							src="/assets/icons/review-outline.svg"
+							alt=""
+							className="invert-on-dark"
+						/>
 						<h2 className="text-xl font-bold">
 							Older Rotten Brains posts
 						</h2>
@@ -188,7 +193,7 @@ const HomeContent = async () => {
 				<div className="relative lg:p-0 px-2">
 					<div className="gradient-edge absolute w-[5%] h-full top-0 right-0 z-20"></div>
 					<div
-						className="flex flex-row gap-4 overflow-x-auto hidden-scrollbar"
+						className="flex flex-row gap-4 pr-[5%] overflow-x-auto hidden-scrollbar"
 						id={"rotten-posts-two"}
 					>
 						{followed_posts_two &&
@@ -212,16 +217,6 @@ const HomeContent = async () => {
 				</div>
 			</div>
 			<div>
-				<div className="flex flex-row gap-2 items-center mb-4">
-					<img
-						src="/assets/icons/history.svg"
-						alt=""
-						width={24}
-						height={24}
-						className="invert-on-dark"
-					/>
-					<h2 className="text-xl font-bold">Recommended</h2>
-				</div>
 				<div className="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
 					{flattenedRecommendations.length > 20 &&
 						flattenedRecommendations
@@ -238,7 +233,11 @@ const HomeContent = async () => {
 			</div>
 			<div>
 				<div className="flex flex-row gap-2 items-center mb-4">
-					<div className="w-[24px] h-[24px] rounded-full bg-accent "></div>
+					<img
+						src="/assets/icons/tv-outline.svg"
+						alt=""
+						className="invert-on-dark"
+					/>
 					<h2 className="text-xl font-bold">Trending tv shows</h2>
 				</div>
 				<div className="grid 2xl:grid-cols-8 lg:grid-cols-4 grid-cols-2 gap-4">
@@ -254,16 +253,6 @@ const HomeContent = async () => {
 				</div>
 			</div>
 			<div>
-				<div className="flex flex-row gap-2 items-center mb-4">
-					<img
-						src="/assets/icons/history.svg"
-						alt=""
-						width={24}
-						height={24}
-						className="invert-on-dark"
-					/>
-					<h2 className="text-xl font-bold">Recommended</h2>
-				</div>
 				<div className="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
 					{flattenedRecommendations.length > 40 &&
 						flattenedRecommendations

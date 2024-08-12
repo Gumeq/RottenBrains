@@ -12,10 +12,16 @@ export const fetchFromApi = async (
 	}
 
 	try {
-		const response = await fetch(url);
+		const response = await fetch(url, {
+			headers: {
+				"Cache-Control": "max-age=60, must-revalidate",
+			},
+		});
+
 		if (!response.ok) {
 			throw new Error(`Error: ${response.status} ${response.statusText}`);
 		}
+
 		const result = await response.json();
 		return result;
 	} catch (error) {

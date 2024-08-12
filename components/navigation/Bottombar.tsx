@@ -43,7 +43,7 @@ const Bottombar = () => {
 					</Link>
 				</li>
 				<Link
-					className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-background flex items-center shadow_plus justify-center"
+					className="absolute top-[30%] left-1/2 border border-foreground/20  transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-background flex items-center shadow_plus justify-center"
 					href={"/protected/create-post"}
 				>
 					<img

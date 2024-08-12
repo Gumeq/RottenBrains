@@ -117,8 +117,13 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
 				}
 			>
 				<div className="absolute bottom-0 right-0 m-2 flex flex-row-reverse gap-2">
+					{media.runtime && (
+						<div className="text-sm px-4 py-1 rounded-[14px] bg-black/50 text-white">
+							{transformRuntime(media.runtime)}
+						</div>
+					)}
 					<div className="text-sm px-4 py-1 rounded-[14px] bg-black/50 text-white">
-						{transformRuntime(media.runtime)}
+						{media.vote_average.toFixed(1)} / 10
 					</div>
 					{quality && (
 						<div className="text-sm px-4 py-1 rounded-[14px] bg-black/50 text-white">
@@ -136,7 +141,17 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
 						}}
 					></div>
 				)}
-
+				<div className=" absolute top-2 right-2 flex-shrink-0 bg-black/50 rounded-full w-[40px] h-[40px] flex items-center justify-center">
+					<img
+						src={
+							media_type === "movie"
+								? "/assets/icons/movie-outline.svg"
+								: "/assets/icons/tv-outline.svg"
+						}
+						alt=""
+						className="invert-on-dark"
+					/>
+				</div>
 				<img
 					src={
 						media.images &&
