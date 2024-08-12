@@ -126,9 +126,9 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
 																	href={"/"}
 																>
 																	<img
-																		src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
+																		src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
 																		alt=""
-																		className=""
+																		className="w-full aspect-[16/9]"
 																	/>
 																	<div className="absolute w-full h-full top-0 left-0 z-10 bg-black/30"></div>
 																	<div className="absolute bottom-0 z-20 flex flex-col gap-2 px-4 py-2 text-white">
