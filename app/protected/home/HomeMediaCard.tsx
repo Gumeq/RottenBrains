@@ -105,13 +105,15 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
 		percentage_watched > 0;
 
 	return (
-		<div className="lg:w-full w-screen flex flex-col gap-2 lg:mb-8 mb-4">
+		<div className="w-full flex flex-col gap-2 lg:mb-8 mb-4">
 			<Link
 				className="relative lg:rounded-[16px] overflow-hidden"
 				href={
 					media_type === "movie"
 						? `/protected/watch/${media_type}/${media_id}`
-						: `/protected/watch/${media_type}/${media_id}/${season_number}/${episode_number}`
+						: season_number && episode_number
+						? `/protected/watch/${media_type}/${media_id}/${season_number}/${episode_number}`
+						: `/protected/watch/${media_type}/${media_id}/1/1`
 				}
 			>
 				<div className="absolute bottom-0 right-0 m-2 flex flex-row-reverse gap-2">
@@ -140,10 +142,10 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
 						media.images &&
 						media.images.backdrops &&
 						media.images.backdrops.length > 0
-							? `https://image.tmdb.org/t/p/w500${media.images.backdrops[0].file_path}`
+							? `https://image.tmdb.org/t/p/w780${media.images.backdrops[0].file_path}`
 							: season_number && episode_number
-							? `https://image.tmdb.org/t/p/w500${media.still_path}`
-							: ""
+							? `https://image.tmdb.org/t/p/w780${media.still_path}`
+							: `https://image.tmdb.org/t/p/w780${media.backdrop_path}`
 					}
 					alt=""
 					loading="lazy"
@@ -151,14 +153,16 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
 				/>
 			</Link>
 			<div className="flex flex-col lg:p-0 px-2">
-				<h2 className="text-lg flex flex-row gap-1 font-medium">
-					{media.title || media.name}
-					{media_type === "tv" && episode_number && (
-						<p>
-							| S{season_number}E{episode_number}
-						</p>
-					)}
-				</h2>
+				<div className="flex flex-row justify-between">
+					<h2 className="text-lg flex flex-row gap-1 font-medium">
+						{media.title || media.name}
+						{media_type === "tv" && episode_number && (
+							<p>
+								| S{season_number}E{episode_number}
+							</p>
+						)}
+					</h2>
+				</div>
 				<p className="text-foreground/50">
 					{formatDate(
 						media.release_date ||

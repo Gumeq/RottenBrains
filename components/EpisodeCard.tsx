@@ -75,25 +75,31 @@ const EpisodeCard = ({
 	}
 
 	return (
-		<div className=" p-2 rounded-[8px] mb-2 hover:border-accent flex flex-row gap-4 hover:bg-foreground/20">
-			<div className="relative">
-				<div className="absolute bottom-0 right-0 m-1 text-sm p-1 py-0 rounded-[4px] bg-black/70 text-white">
-					{transformRuntime(episode.runtime)}
+		<div className=" lg:p-2 lg:rounded-[8px] lg:mb-2 hover:border-accent flex lg:flex-row flex-col gap-4 hover:bg-foreground/20 w-full mb-8">
+			<div className="relative lg:w-1/2 w-full flex-shrink-0 ">
+				<div className="absolute bottom-0 right-0 m-2 flex flex-row-reverse gap-2">
+					<div className="text-sm px-4 py-1 rounded-[14px] bg-black/50 text-white">
+						{transformRuntime(episode.runtime)}
+					</div>
 				</div>
 				<img
-					src={`https://image.tmdb.org/t/p/w200${episode.still_path}`}
+					src={`https://image.tmdb.org/t/p/w300${episode.still_path}`}
 					alt="episode still"
 					loading="lazy"
-					className="w-[200px] min-w-[200px] bg-foreground/10 rounded-[4px]"
+					className="w-full bg-foreground/10 lg:rounded-[4px]"
 				/>
 			</div>
-			<div className="flex flex-col">
-				<h3 className="">
-					{formatEpisodeCode(season_number, episode_number)} -{" "}
+			<div className="flex flex-col gap-2  px-2 lg:px-0">
+				<h3 className="text-lg">
 					{episode.name}
+					{" | "}
+					{formatEpisodeCode(season_number, episode_number)}
 				</h3>
 				<p className="text-foreground/50 text-sm">
 					{getRelativeTime(episode.air_date)}
+				</p>
+				<p className="line-clamp-2 text-foreground/50 lg:hidden">
+					{episode.overview}
 				</p>
 			</div>
 		</div>

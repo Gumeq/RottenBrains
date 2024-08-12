@@ -65,8 +65,8 @@ const HomeContent = async () => {
 	const now_in_cinemas = await fetchExploreData("Now_in_cinemas");
 	const trending_tv = await fetchExploreData("Trending_TV");
 	return (
-		<div className="flex flex-col gap-8 lg:p-4 p-0 lg:w-auto w-screen py-2 lg:py-0">
-			<div>
+		<div className="flex flex-col gap-8 lg:p-4 p-0 lg:w-auto w-screen py-4 lg:py-0 ">
+			<div className="">
 				<div className="flex flex-row gap-2 items-center mb-4 lg:p-0 px-2">
 					<img
 						src="/assets/icons/history.svg"
@@ -77,19 +77,21 @@ const HomeContent = async () => {
 					/>
 					<h2 className="text-xl font-bold">Continue watching</h2>
 				</div>
-				<div className="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
+				<div className="lg:grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 grid-rows-1 gap-4 flex flex-row overflow-x-auto px-2 ">
 					{watchHistory &&
-						watchHistory.map((media: any) => {
+						watchHistory.slice(0, 10).map((media: any) => {
 							return (
-								<HomeMediaCard
-									media_type={media.media_type}
-									media_id={media.media_id}
-									season_number={media.season_number}
-									episode_number={media.episode_number}
-									percentage_watched={parseFloat(
-										media.percentage_watched
-									)}
-								></HomeMediaCard>
+								<div className="w-[80vw] flex-shrink-0 lg:w-auto inline-block lg:inline">
+									<HomeMediaCard
+										media_type={media.media_type}
+										media_id={media.media_id}
+										season_number={media.season_number}
+										episode_number={media.episode_number}
+										percentage_watched={parseFloat(
+											media.percentage_watched
+										)}
+									></HomeMediaCard>
+								</div>
 							);
 						})}
 				</div>
@@ -265,7 +267,7 @@ const HomeContent = async () => {
 				<div className="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
 					{flattenedRecommendations.length > 40 &&
 						flattenedRecommendations
-							.slice(40, 60)
+							.slice(40, flattenedRecommendations.length)
 							.map((media: any) => {
 								return (
 									<HomeMediaCard

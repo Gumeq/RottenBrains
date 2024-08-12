@@ -68,7 +68,7 @@ const TVShowDetails = ({ tv_show_id, season_number }: TVShowDetailsProps) => {
 	};
 
 	return (
-		<div className="">
+		<div className="w-full">
 			{/* <h1 className="text-2xl font-bold mb-2">Seasons</h1> */}
 			<div className="p-2 flex overflow-x-auto gap-2 custom-scrollbar">
 				{seasons.map((season) => (
@@ -86,15 +86,16 @@ const TVShowDetails = ({ tv_show_id, season_number }: TVShowDetailsProps) => {
 				))}
 			</div>
 			{selectedSeason !== null && (
-				<div className="mt-2">
+				<div className="mt-2 w-full ">
 					{/* <h2 className="text-2xl font-bold mb-4">
 						Episodes of Season {selectedSeason}
 					</h2> */}
-					<div className="flex flex-col">
+					<div className="flex flex-col w-full ">
 						{episodes.map((episode) => (
 							<Link
 								key={episode.episode_number}
 								href={`/protected/watch/tv/${tv_show_id}/${selectedSeason}/${episode.episode_number}`}
+								className="w-full"
 							>
 								<EpisodeCard
 									media_id={tv_show_id}

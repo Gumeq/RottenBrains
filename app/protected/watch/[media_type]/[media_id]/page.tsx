@@ -138,8 +138,8 @@ export default async function mediaPage({
 							)}
 						</div>
 					</div>
-					<div className="flex flex-col custom-scrollbar">
-						<p className="text-lg font-bold mb-2">
+					<div className="flex flex-col custom-scrollbar lg:w-[25%]">
+						<p className="text-lg font-bold mb-2 px-2 lg:px-0">
 							Recommendations
 						</p>
 						{recommendations &&
@@ -153,7 +153,8 @@ export default async function mediaPage({
 									className="w-full"
 								>
 									<RecommendedCard
-										media={media}
+										media_id={media.id}
+										media_type={media.media_type}
 									></RecommendedCard>
 								</Link>
 							))}

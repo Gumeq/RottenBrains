@@ -151,15 +151,13 @@ export default async function mediaPage({
 							)}
 						</div>
 					</div>
-					<div className="md:w-[25%]">
-						<div>
-							{media_type === "tv" && season_number && (
-								<TVShowDetails
-									tv_show_id={media_id}
-									season_number={season_number}
-								></TVShowDetails>
-							)}
-						</div>
+					<div className="md:w-[25%]  ">
+						{media_type === "tv" && season_number && (
+							<TVShowDetails
+								tv_show_id={media_id}
+								season_number={season_number}
+							></TVShowDetails>
+						)}
 					</div>
 				</div>
 			</div>

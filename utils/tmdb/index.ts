@@ -130,7 +130,8 @@ export const getRecommendations = async (
 	media_id: number
 ) => {
 	return fetchFromApi(
-		`${media_type}/${media_id}/recommendations?language=en-US`
+		`${media_type}/${media_id}/recommendations?language=en-US`,
+		"images"
 	);
 };
 

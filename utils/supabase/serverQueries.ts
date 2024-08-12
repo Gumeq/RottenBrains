@@ -79,8 +79,8 @@ export const getPostsFromFollowedUsers = async (
 			"fetch_posts_from_followed_users",
 			{
 				current_user_id: userId,
-				result_limit: 5,
-				result_offset: page * 5,
+				result_limit: 10,
+				result_offset: page * 10,
 			}
 		);
 

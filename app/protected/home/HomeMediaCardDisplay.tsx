@@ -1,8 +1,14 @@
 import Link from "next/link";
 import React from "react";
 
-const HomeMediaCardDisplay = (media: any, media_type: string) => {
+const HomeMediaCardDisplay = (media: any) => {
 	media = media.media;
+	let media_type: string;
+	if ("title" in media) {
+		media_type = "movie";
+	} else {
+		media_type = "tv";
+	}
 	return (
 		<div className="">
 			<div className="flex flex-col gap-2">
@@ -13,16 +19,8 @@ const HomeMediaCardDisplay = (media: any, media_type: string) => {
 					>
 						<div className="aspect-w-2 aspect-h-3 rounded-[8px] overflow-hidden">
 							<picture>
-								<source
-									media="(min-width: 768px)"
-									srcSet={`https://image.tmdb.org/t/p/w342${media.poster_path}`}
-								/>
-								<source
-									media="(max-width: 767px)"
-									srcSet={`https://image.tmdb.org/t/p/w154${media.poster_path}`}
-								/>
 								<img
-									src={`https://image.tmdb.org/t/p/w154${media.poster_path}`}
+									src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
 									alt=""
 									className="w-full h-full bg-background"
 									loading="lazy"
