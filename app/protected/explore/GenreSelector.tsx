@@ -127,7 +127,7 @@ const GenreSelector: React.FC = () => {
 					))}
 				</ul>
 			</div>
-			<div className="w-full mx-auto grid 2xl:grid-cols-10 xl:grid-cols-8 lg:grid-cols-6 sm:grid-cols-4 grid-cols-2 gap-4">
+			<div className="w-full mx-auto grid xl:grid-cols-5 lg:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-4">
 				{mediaGenre && mediaGenre.length > 0 ? (
 					mediaGenre.map((media: any) => (
 						<Link

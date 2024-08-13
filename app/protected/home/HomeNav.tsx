@@ -66,7 +66,7 @@ const HomeNav = ({ children }: any) => {
 			</nav>
 			<div className="lg:w-screen lg:h-svh lg:flex flex-row hidden relative">
 				{isSidebarOpen ? (
-					<div className="min-w-[275px] mt-16 bg-primary/10 rounded-tr-[32px]">
+					<div className="min-w-[240px] mt-16 bg-primary/10 rounded-tr-[32px]">
 						<ul className="flex flex-col justify-start gap-2 p-4">
 							<Link
 								href={"/protected/home"}

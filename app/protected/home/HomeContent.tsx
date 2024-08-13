@@ -80,9 +80,9 @@ const HomeContent = async () => {
 					/>
 					<h2 className="text-xl font-bold">Continue watching</h2>
 				</div>
-				<div className="lg:grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 grid-rows-1 gap-4 flex flex-row overflow-x-auto px-2 ">
+				<div className="lg:grid 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-3 grid-rows-1 gap-4 flex flex-row overflow-x-auto px-2 ">
 					{filteredWatchHistory &&
-						filteredWatchHistory.slice(0, 5).map((media: any) => {
+						filteredWatchHistory.slice(0, 4).map((media: any) => {
 							return (
 								<div className="w-[80vw] flex-shrink-0 lg:w-auto inline-block lg:inline">
 									<HomeMediaCard
@@ -148,9 +148,9 @@ const HomeContent = async () => {
 					/>
 					<h2 className="text-xl font-bold">Now in cinemas</h2>
 				</div>
-				<div className="grid 2xl:grid-cols-8 lg:grid-cols-4 grid-cols-2 gap-4 lg:p-0 px-4">
+				<div className="grid 2xl:grid-cols-6 lg:grid-cols-4 grid-cols-2 gap-4 lg:p-0 px-4">
 					{now_in_cinemas &&
-						now_in_cinemas.results.slice(0, 8).map((media: any) => {
+						now_in_cinemas.results.slice(0, 6).map((media: any) => {
 							return (
 								<HomeMediaCardDisplay
 									media={media}
@@ -162,7 +162,7 @@ const HomeContent = async () => {
 			</div>
 
 			<div>
-				<div className="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
+				<div className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
 					{flattenedRecommendations.length > 0 &&
 						flattenedRecommendations
 							.slice(0, 20)
@@ -217,7 +217,7 @@ const HomeContent = async () => {
 				</div>
 			</div>
 			<div>
-				<div className="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
+				<div className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
 					{flattenedRecommendations.length > 20 &&
 						flattenedRecommendations
 							.slice(20, 40)
@@ -232,7 +232,7 @@ const HomeContent = async () => {
 				</div>
 			</div>
 			<div>
-				<div className="flex flex-row gap-2 items-center mb-4">
+				<div className="flex flex-row gap-2 items-center mb-4 px-2 lg:px-0">
 					<img
 						src="/assets/icons/tv-outline.svg"
 						alt=""
@@ -240,9 +240,9 @@ const HomeContent = async () => {
 					/>
 					<h2 className="text-xl font-bold">Trending tv shows</h2>
 				</div>
-				<div className="grid 2xl:grid-cols-8 lg:grid-cols-4 grid-cols-2 gap-4">
+				<div className="grid 2xl:grid-cols-6 lg:grid-cols-4 grid-cols-2 gap-4 lg:p-0 px-4">
 					{trending_tv &&
-						trending_tv.results.slice(0, 8).map((media: any) => {
+						trending_tv.results.slice(0, 6).map((media: any) => {
 							return (
 								<HomeMediaCardDisplay
 									media={media}
@@ -253,7 +253,7 @@ const HomeContent = async () => {
 				</div>
 			</div>
 			<div>
-				<div className="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
+				<div className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
 					{flattenedRecommendations.length > 40 &&
 						flattenedRecommendations
 							.slice(40, flattenedRecommendations.length)

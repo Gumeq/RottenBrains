@@ -90,17 +90,16 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
 								key={index}
 							>
 								<div className="w-full h-full relative">
-									<div className="absolute top-0 right-0 w-full h-full z-20">
-										<div className="w-full h-[40%]"></div>
-										<div className="w-full h-[60%] ">
+									<div className="absolute top-0 right-0 w-full h-full z-20 flex justify-end flex-col">
+										<div className="w-full">
 											<div className="w-[90%] h-full  mx-auto flex flex-col gap-8">
 												<div className="lg:w-1/2 h-full flex flex-col lg:gap-16 gap-4">
 													<div>
-														<h1 className="lg:text-7xl text-2xl text-foreground/80  lg:py-4 lg:pb-8 pb-2 truncate">
+														<h1 className="lg:text-4xl text-2xl text-foreground/80  lg:py-4 lg:pb-8 pb-2 truncate">
 															{media.title ||
 																media.name}
 														</h1>
-														<h2 className="lg:text-3xl text-lg text-foreground/50 line-clamp-2">
+														<h2 className="lg:text-2xl text-lg text-foreground/50 line-clamp-2">
 															{media.overview}
 														</h2>
 													</div>
@@ -108,7 +107,7 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
 														className="flex"
 														href={watchLink}
 													>
-														<div className="lg:px-8 lg:py-4 px-4 py-2 bg-foreground lg:text-4xl text-lg rounded-full text-background font-medium hover:bg-transparent transition ease-in-out hover:text-foreground border-4 border-transparent hover:border-foreground">
+														<div className="lg:px-4 lg:py-2 px-2 py-1 bg-foreground lg:text-2xl text-lg rounded-full text-background font-medium hover:bg-transparent transition ease-in-out hover:text-foreground border-4 border-transparent hover:border-foreground">
 															Watch Now
 														</div>
 													</Link>
@@ -117,7 +116,7 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
 													{movies
 														.slice(
 															index + 1,
-															index + 6
+															index + 5
 														)
 														.map((movie: any) => {
 															return (
@@ -132,7 +131,7 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
 																	/>
 																	<div className="absolute w-full h-full top-0 left-0 z-10 bg-black/30"></div>
 																	<div className="absolute bottom-0 z-20 flex flex-col gap-2 px-4 py-2 text-white">
-																		<p className="text-3xl line-clamp-1">
+																		<p className="text-xl line-clamp-1">
 																			{movie.title ||
 																				movie.name}
 																		</p>

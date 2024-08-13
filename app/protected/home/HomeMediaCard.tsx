@@ -149,7 +149,7 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
 								: "/assets/icons/tv-outline.svg"
 						}
 						alt=""
-						className="invert-on-dark"
+						className="invert"
 					/>
 				</div>
 				<img
@@ -178,14 +178,14 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
 						)}
 					</h2>
 				</div>
-				<p className="text-foreground/50">
+				<p className="text-foreground/50 text-sm mb-1">
 					{formatDate(
 						media.release_date ||
 							media.air_date ||
 							media.first_air_date
 					)}
 				</p>
-				<p className="line-clamp-2 text-foreground/50">
+				<p className="line-clamp-2 text-foreground/50 text-sm">
 					{media.overview}
 				</p>
 			</div>
