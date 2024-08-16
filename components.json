@@ -4,9 +4,9 @@
   "rsc": true,
   "tsx": true,
   "tailwind": {
-    "config": "tailwind.config.ts",
-    "css": "app/globals.css",
-    "baseColor": "slate",
+    "config": "tailwindshadcn.config.ts",
+    "css": "app/shadcn.css",
+    "baseColor": "neutral",
     "cssVariables": true,
     "prefix": ""
   },

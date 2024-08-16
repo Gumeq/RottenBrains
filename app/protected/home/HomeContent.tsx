@@ -13,6 +13,7 @@ import HomeMediaCardDisplay from "./HomeMediaCardDisplay";
 import HomePostCard from "@/components/post/HomePostCard";
 import ScrollButtons from "@/components/explore/ScrollButtons";
 import { getRecommendations } from "@/utils/tmdb";
+import { useToast } from "@/components/ui/use-toast";
 
 // Server component fetching and displaying posts
 const HomeContent = async () => {
