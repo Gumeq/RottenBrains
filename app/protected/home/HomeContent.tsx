@@ -30,7 +30,6 @@ const HomeContent = async () => {
   const filteredWatchHistory = watchHistory.filter(
     (item: any) => item.percentage_watched < 95,
   );
-  console.log(filteredWatchHistory);
   const allRecommendations = await Promise.all(
     watchHistory.slice(0, 5).map(async (item: any) => {
       const recs = await getRecommendations(item.media_type, item.media_id);
@@ -137,9 +136,9 @@ const HomeContent = async () => {
           />
           <h2 className="text-xl font-bold">Now in cinemas</h2>
         </div>
-        <div className="grid grid-cols-2 gap-4 px-4 lg:grid-cols-4 lg:p-0 2xl:grid-cols-6">
+        <div className="grid grid-cols-2 gap-4 px-4 lg:grid-cols-4 lg:p-0 2xl:grid-cols-8">
           {now_in_cinemas &&
-            now_in_cinemas.results.slice(0, 6).map((media: any) => {
+            now_in_cinemas.results.slice(0, 8).map((media: any) => {
               return (
                 <HomeMediaCardDisplay
                   media={media}
@@ -219,9 +218,9 @@ const HomeContent = async () => {
           />
           <h2 className="text-xl font-bold">Trending tv shows</h2>
         </div>
-        <div className="grid grid-cols-2 gap-4 px-4 lg:grid-cols-4 lg:p-0 2xl:grid-cols-6">
+        <div className="grid grid-cols-2 gap-4 px-4 lg:grid-cols-4 lg:p-0 2xl:grid-cols-8">
           {trending_tv &&
-            trending_tv.results.slice(0, 6).map((media: any) => {
+            trending_tv.results.slice(0, 8).map((media: any) => {
               return (
                 <HomeMediaCardDisplay
                   media={media}

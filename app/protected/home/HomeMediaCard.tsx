@@ -101,7 +101,7 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
     percentage_watched > 0;
 
   return (
-    <div className="mb-4 flex w-full flex-col gap-2 lg:mb-8">
+    <div className="mb-4 flex w-full flex-col lg:mb-8">
       <Link
         className="relative overflow-hidden lg:rounded-[16px]"
         href={
@@ -164,7 +164,7 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
         />
       </Link>
       <div className="flex flex-col px-2 lg:p-0">
-        <div className="flex flex-row justify-between">
+        <div className="my-2 flex flex-row justify-between">
           <h2 className="flex flex-row gap-1 text-lg font-medium">
             {media.title || media.name}
             {media_type === "tv" && episode_number && (
@@ -174,13 +174,13 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
             )}
           </h2>
         </div>
-        <p className="mb-1 text-sm text-foreground/50">
+        <p className="line-clamp-2 text-sm text-foreground/50">
+          {media.overview}
+        </p>
+        <p className="mt-2 text-sm text-foreground/50">
           {formatDate(
             media.release_date || media.air_date || media.first_air_date,
           )}
-        </p>
-        <p className="line-clamp-2 text-sm text-foreground/50">
-          {media.overview}
         </p>
       </div>
     </div>

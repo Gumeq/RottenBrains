@@ -3,15 +3,15 @@ import GoBackArrow from "@/components/GoBackArrow";
 import React from "react";
 
 const page = () => {
-	return (
-		<div className="w-screen">
-			<div className="w-screen h-16 bg-white/10 flex-row gap-4 flex lg:hidden z-20 relative items-center px-4">
-				<GoBackArrow />
-				<p className="truncate text-lg">Create post</p>
-			</div>
-			<PostForm action="Create"></PostForm>
-		</div>
-	);
+  return (
+    <div className="w-full">
+      <div className="relative z-20 flex h-16 w-screen flex-row items-center gap-4 bg-background px-4 lg:hidden">
+        <GoBackArrow />
+        <p className="truncate text-lg">Create post</p>
+      </div>
+      <PostForm action="Create"></PostForm>
+    </div>
+  );
 };
 
 export default page;
