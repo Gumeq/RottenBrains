@@ -3,11 +3,7 @@ import HomeNav from "./HomeNav";
 import HomeContent from "./HomeContent";
 
 const page = () => {
-	return (
-		<HomeNav>
-			<HomeContent></HomeContent>
-		</HomeNav>
-	);
+  return <HomeContent></HomeContent>;
 };
 
 export default page;

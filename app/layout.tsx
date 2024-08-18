@@ -7,6 +7,7 @@ import UserProvider from "@/context/UserContext";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import ThemeScript from "@/components/ThemeScript";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
@@ -25,8 +26,9 @@ export default function RootLayout({
         <ThemeScript /> {/* Include ThemeScript in the head */}
       </head>
       <UserProvider>
-        <body className="bg-background text-foreground overflow-x-hidden">
+        <body className="overflow-x-hidden bg-background text-foreground">
           <main className="">{children}</main>
+          <Toaster />
           <Analytics />
           <SpeedInsights />
         </body>
