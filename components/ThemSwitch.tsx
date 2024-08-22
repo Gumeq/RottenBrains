@@ -23,22 +23,22 @@ export default function ThemeSwitch() {
       aria-label="Toggle theme"
     >
       {theme === "light" ? (
-        <div className="flex w-full flex-row items-center justify-between gap-4">
-          <p>Change theme</p>
+        <div className="flex w-full flex-row items-center gap-2">
           <img
             src="/assets/icons/light-mode.svg"
             alt=""
             className="invert-on-dark"
           />
+          <p>Change theme</p>
         </div>
       ) : (
-        <div className="flex w-full flex-row items-center justify-between gap-4">
-          <p>Change theme</p>
+        <div className="flex w-full flex-row items-center gap-2">
           <img
             src="/assets/icons/dark-mode.svg"
             alt=""
             className="invert-on-dark"
           />
+          <p>Change theme</p>
         </div>
       )}
     </button>
