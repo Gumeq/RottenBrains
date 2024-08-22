@@ -9,6 +9,7 @@ import SearchBar from "@/components/searchBar/SearchBar";
 import NotificationButton from "@/components/notifications/RealtimeNotifications";
 import ProfilePicture from "@/components/navigation/ProfilePicture";
 import ThemeSwitch from "@/components/ThemSwitch";
+import VersionDisplay from "@/components/VersionDisplay";
 
 const HomeNav = ({ children }: any) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -275,6 +276,10 @@ const HomeNav = ({ children }: any) => {
                 </div>
               </Link>
             </ul>
+            <div className="absolute bottom-0 flex w-full flex-col gap-2 p-2 text-sm text-foreground/50">
+              <VersionDisplay></VersionDisplay>
+              <p>&copy; {new Date().getFullYear()} GUMEQ INC.</p>
+            </div>
           </div>
         ) : (
           <div className="mt-16 min-w-16 bg-background">
