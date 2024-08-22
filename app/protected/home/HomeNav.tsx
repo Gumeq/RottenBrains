@@ -276,7 +276,7 @@ const HomeNav = ({ children }: any) => {
                 </div>
               </Link>
             </ul>
-            <div className="absolute bottom-0 flex w-full flex-col gap-2 p-2 text-sm text-foreground/50">
+            <div className="absolute bottom-0 flex flex-col gap-2 p-2 text-sm text-foreground/50">
               <VersionDisplay></VersionDisplay>
               <p>&copy; {new Date().getFullYear()} GUMEQ INC.</p>
             </div>

@@ -19,5 +19,5 @@ export default function VersionDisplay() {
     fetchVersion();
   }, []);
 
-  return <p>Version: {version}</p>;
+  return <p className="">Version: {version.slice(-5)}</p>;
 }
