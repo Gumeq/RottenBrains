@@ -35,7 +35,7 @@ const HomeMediaCardDisplay = (media: any) => {
                     alt=""
                     width={20}
                     height={20}
-                    className="invert-on-dark"
+                    className="invert"
                   />
                   {media.vote_average.toFixed(1)}
                 </div>

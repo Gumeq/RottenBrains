@@ -26,7 +26,10 @@ const page = async () => {
   return (
     <div className="flex w-full flex-col items-center">
       <MediaCarouselNew movies={moviesWithColors}></MediaCarouselNew>
-      <div className="z-10 mt-4 flex w-full flex-col gap-8 px-4" id="explore">
+      <div
+        className="z-10 mt-4 flex w-full flex-col gap-8 px-2 lg:px-4"
+        id="explore"
+      >
         <div className="my-4 flex w-full flex-col items-center justify-between md:mt-8 md:flex-row">
           <div>
             <h1 className="text-2xl font-bold">Explore</h1>
