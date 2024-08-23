@@ -1,8 +1,8 @@
 "use client";
 
+import { getRelativeTime } from "@/lib/functions";
 import { getEpisodeDetails } from "@/utils/tmdb";
 import React, { useEffect, useState } from "react";
-import { getRelativeTime } from "./RelativeTime";
 
 type episodeCardProps = {
   media_id: number;
@@ -83,7 +83,7 @@ const EpisodeCard = ({
           </div>
         </div>
         <img
-          src={`https://image.tmdb.org/t/p/w300${episode.still_path}`}
+          src={`https://image.tmdb.org/t/p/w780${episode.still_path}`}
           alt="episode still"
           loading="lazy"
           className="w-full bg-foreground/10 lg:rounded-[4px]"

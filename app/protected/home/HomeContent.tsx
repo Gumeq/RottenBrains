@@ -14,6 +14,7 @@ import HomePostCard from "@/components/post/HomePostCard";
 import ScrollButtons from "@/components/explore/ScrollButtons";
 import { getRecommendations } from "@/utils/tmdb";
 import { useToast } from "@/components/ui/use-toast";
+import MobileTopBarHome from "./MobileTopBarHome";
 
 // Server component fetching and displaying posts
 const HomeContent = async () => {
@@ -28,11 +29,8 @@ const HomeContent = async () => {
   }
 
   const watchHistory = await getWatchHistoryForUser(user.user.id, 20, 0);
-  const filteredWatchHistory = watchHistory.filter(
-    (item: any) => item.percentage_watched < 95,
-  );
   const allRecommendations = await Promise.all(
-    watchHistory.slice(0, 5).map(async (item: any) => {
+    watchHistory.slice(0, 20).map(async (item: any) => {
       const recs = await getRecommendations(item.media_type, item.media_id);
       return recs.results;
     }),
@@ -54,6 +52,9 @@ const HomeContent = async () => {
       flattenedRecommendations[i],
     ];
   }
+  const filteredWatchHistory = watchHistory.filter(
+    (item: any) => item.percentage_watched <= 90,
+  );
   const followed_posts_one = await getPostsFromFollowedUsers(
     user.user.id.toString(),
     0,
@@ -65,24 +66,33 @@ const HomeContent = async () => {
   const now_in_cinemas = await fetchExploreData("Now_in_cinemas");
   const trending_tv = await fetchExploreData("Trending_TV");
   return (
-    <div className="flex w-screen flex-col gap-8 p-0 py-4 lg:w-auto lg:p-4 lg:py-0">
-      <div className="">
-        <div className="mb-4 flex flex-row items-center gap-2 px-2 lg:p-0">
-          <img
-            src="/assets/icons/history.svg"
-            alt=""
-            width={24}
-            height={24}
-            className="invert-on-dark"
-          />
-          <h2 className="text-xl font-bold">Continue watching</h2>
+    <div className="flex w-screen flex-col gap-8 p-0 pb-4 lg:w-auto lg:p-4 lg:py-0">
+      <MobileTopBarHome></MobileTopBarHome>
+      <div className="mt-16 lg:mt-0">
+        <div className="mb-4 flex flex-row items-center justify-between px-2 lg:p-0">
+          <div className="flex flex-row items-center gap-2">
+            <img
+              src="/assets/icons/history.svg"
+              alt=""
+              width={24}
+              height={24}
+              className="invert-on-dark"
+            />
+            <h2 className="text-xl font-bold">Continue watching</h2>
+          </div>
+          <ScrollButtons containerId="watch_history_main"></ScrollButtons>
         </div>
-        <div className="flex grid-rows-1 flex-row gap-4 overflow-x-auto px-2 lg:grid lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4">
+
+        <div
+          className="hidden-scrollbar flex flex-row gap-4 overflow-x-auto px-2 lg:px-0"
+          id={"watch_history_main"}
+        >
           {filteredWatchHistory &&
-            filteredWatchHistory.slice(0, 4).map((media: any) => {
+            filteredWatchHistory.slice(0, 20).map((media: any) => {
               return (
-                <div className="inline-block w-[80vw] flex-shrink-0 lg:inline lg:w-auto">
+                <div className="inline-block h-auto w-[80vw] flex-shrink-0 lg:inline lg:w-[20vw]">
                   <HomeMediaCard
+                    user_id={user.user.id}
                     media_type={media.media_type}
                     media_id={media.media_id}
                     season_number={media.season_number}
@@ -156,6 +166,7 @@ const HomeContent = async () => {
             flattenedRecommendations.slice(0, 20).map((media: any) => {
               return (
                 <HomeMediaCard
+                  user_id={user.user.id}
                   media_type={media.media_type}
                   media_id={media.id}
                 ></HomeMediaCard>
@@ -203,6 +214,7 @@ const HomeContent = async () => {
             flattenedRecommendations.slice(20, 40).map((media: any) => {
               return (
                 <HomeMediaCard
+                  user_id={user.user.id}
                   media_type={media.media_type}
                   media_id={media.id}
                 ></HomeMediaCard>
@@ -239,6 +251,7 @@ const HomeContent = async () => {
               .map((media: any) => {
                 return (
                   <HomeMediaCard
+                    user_id={user.user.id}
                     media_type={media.media_type}
                     media_id={media.id}
                   ></HomeMediaCard>

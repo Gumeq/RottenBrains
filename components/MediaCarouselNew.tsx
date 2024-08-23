@@ -1,39 +1,10 @@
 "use client";
 
 import React, { useEffect, useState, useCallback } from "react";
-import dynamic from "next/dynamic";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
-import MediaCardExploreMain from "./MediaCardExploreMain";
-
-const LazyImage = ({ src, alt, className, ...props }: any) => {
-  const [loaded, setLoaded] = useState(false);
-
-  const handleLoad = () => {
-    setLoaded(true);
-  };
-
-  return (
-    <img
-      src={src}
-      alt={alt}
-      className={`${className} ${loaded ? "loaded" : "loading"}`}
-      onLoad={handleLoad}
-      {...props}
-    />
-  );
-};
-
-function formatNumber(num: number): string {
-  if (num >= 1000000) {
-    return (num / 1000000).toFixed(1).replace(/\.0$/, "") + "m";
-  } else if (num >= 1000) {
-    return (num / 1000).toFixed(1).replace(/\.0$/, "") + "k";
-  }
-  return num.toString();
-}
 
 const TopMoviesCarouselNew = ({ movies }: any) => {
   const settings = {
@@ -48,32 +19,6 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
     autoplaySpeed: 7000, // Increased to reduce frequency of re-renders
     pauseOnHover: false,
   };
-
-  const memoizedMediaCards = useCallback(
-    (index: any, color: any) => (
-      <div className="flex flex-col justify-between gap-2">
-        <div className="h-1/4 w-full">
-          <MediaCardExploreMain
-            media={movies[index + 1] || movies[0]}
-            color={color}
-          />
-        </div>
-        <div className="h-1/4 w-full">
-          <MediaCardExploreMain
-            media={movies[index + 2] || movies[1]}
-            color={color}
-          />
-        </div>
-        <div className="h-1/4 w-full">
-          <MediaCardExploreMain
-            media={movies[index + 3] || movies[2]}
-            color={color}
-          />
-        </div>
-      </div>
-    ),
-    [movies],
-  );
 
   return (
     <div className="h-[50vh] w-full text-foreground lg:h-auto">

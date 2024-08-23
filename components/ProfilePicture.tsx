@@ -37,7 +37,7 @@ const ProfilePicture = ({ user }: any) => {
               alt={"prof-pic"}
               width={50}
               height={50}
-              className="max-h-[40px] max-w-[40px] overflow-hidden rounded-full bg-foreground/20"
+              className="max-h-[40px] max-w-[40px] overflow-hidden rounded-full"
             ></img>
           </Link>
         </div>

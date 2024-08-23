@@ -620,3 +620,25 @@ export const getWatchHistoryForUser = async (
     throw error;
   }
 };
+
+export const getWatchTime = async (
+  user_id: string,
+  media_type: string,
+  media_id: number,
+  season_number?: number | null,
+  episode_number?: number | null,
+) => {
+  try {
+    const { data, error } = await supabase.rpc("get_percentage_watched", {
+      p_user_id: user_id,
+      p_media_type: media_type,
+      p_media_id: media_id,
+      p_season_number: season_number || null,
+      p_episode_number: episode_number || null,
+    });
+
+    return data;
+  } catch (error) {
+    console.log("Error in getWatchTime:", error);
+  }
+};

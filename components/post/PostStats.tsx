@@ -1,11 +1,6 @@
 "use client";
 
-import { useUser } from "@/context/UserContext";
-import {
-  getLikedStatus,
-  likePost,
-  removeLike,
-} from "@/utils/clientFunctions/updatePostData";
+import { likePost, removeLike } from "@/utils/clientFunctions/updatePostData";
 import { createClient } from "@/utils/supabase/client";
 import { getPostComments } from "@/utils/supabase/queries";
 import { useCallback, useEffect, useState } from "react";
@@ -14,42 +9,48 @@ import CommentCard from "./CommentCard";
 
 const PostStats = ({ post, user }: any) => {
   const postId = post.post_id;
-  const supabase = createClient();
   const [state, setState] = useState({
     liked: post.has_liked,
     likes: post.total_likes,
     animate: false,
     isOpen: false,
     comments: [],
-    commentCount: 0,
+    commentCount: post.total_comments || 0,
     loading: true,
   });
   const userId = user?.id.toString();
 
   const handleLike = useCallback(async () => {
     if (userId && user) {
+      // Optimistically update the state
+      const newLikedState = !state.liked;
+      const newLikesCount = newLikedState ? state.likes + 1 : state.likes - 1;
+
       setState((prevState) => ({
         ...prevState,
-        liked: !prevState.liked,
+        liked: newLikedState,
+        likes: newLikesCount,
         animate: true,
       }));
 
       try {
-        if (state.liked) {
-          await removeLike(userId, postId);
-        } else {
+        if (newLikedState) {
           await likePost(userId, postId);
+        } else {
+          await removeLike(userId, postId);
         }
       } catch (error) {
+        // Revert the state in case of an error
         setState((prevState) => ({
           ...prevState,
-          liked: !prevState.liked,
+          liked: !newLikedState,
+          likes: state.likes, // Revert to the previous like count
           animate: false,
         }));
         console.error("Error toggling like:", error);
       }
     }
-  }, [userId, postId, state.liked]);
+  }, [userId, postId, state.liked, state.likes]);
 
   useEffect(() => {
     if (state.animate) {
@@ -59,59 +60,6 @@ const PostStats = ({ post, user }: any) => {
       return () => clearTimeout(timer);
     }
   }, [state.animate]);
-
-  useEffect(() => {
-    const fetchPostData = async () => {
-      try {
-        const [commentsRes, likesRes] = await Promise.all([
-          supabase
-            .from("posts")
-            .select("total_comments")
-            .eq("id", postId)
-            .single(),
-          supabase
-            .from("posts")
-            .select("total_likes")
-            .eq("id", postId)
-            .single(),
-        ]);
-
-        setState((prevState) => ({
-          ...prevState,
-          commentCount: commentsRes.data?.total_comments || 0,
-          likes: likesRes.data?.total_likes || 0,
-        }));
-      } catch (error) {
-        console.error("Error fetching post data:", error);
-      }
-    };
-
-    fetchPostData();
-
-    const channel = supabase
-      .channel(`public:posts:id=eq.${postId}`)
-      .on(
-        "postgres_changes",
-        {
-          event: "UPDATE",
-          schema: "public",
-          table: "posts",
-          filter: `id=eq.${postId}`,
-        },
-        (payload) => {
-          setState((prevState) => ({
-            ...prevState,
-            likes: payload.new.total_likes,
-            commentCount: payload.new.total_comments,
-          }));
-        },
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [postId, supabase]);
 
   const fetchComments = async () => {
     try {

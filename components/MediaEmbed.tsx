@@ -1,5 +1,6 @@
 "use client";
 
+import { formatEpisodeCode } from "@/lib/functions";
 // components/VideoEmbed.js
 import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
 import Link from "next/link";
@@ -85,14 +86,10 @@ const VideoEmbed = ({
   };
 
   if (!media) {
-    return <h1>No Media Found</h1>;
+    return (
+      <div className="relative aspect-[16/9] w-full overflow-hidden bg-foreground/10 text-center drop-shadow-lg lg:rounded-[16px]"></div>
+    );
   }
-
-  const formatEpisodeCode = (seasonNumber: number, episodeNumber: number) => {
-    return `S${String(seasonNumber).padStart(2, "0")}E${String(
-      episodeNumber,
-    ).padStart(2, "0")}`;
-  };
 
   const getNextEpisodeLink = () => {
     if (

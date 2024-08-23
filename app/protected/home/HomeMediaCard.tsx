@@ -1,5 +1,6 @@
+import { formatDate, transformRuntime } from "@/lib/functions";
+import { getWatchTime } from "@/utils/supabase/queries";
 import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
-import { imageConfigDefault } from "next/dist/shared/lib/image-config";
 import Link from "next/link";
 import React from "react";
 
@@ -10,65 +11,7 @@ interface MediaCardProps {
   episode_number?: number;
   quality?: string;
   percentage_watched?: number;
-}
-
-export function transformRuntime(minutes: number): string {
-  const hours: number = Math.floor(minutes / 60);
-  const remainingMinutes: number = minutes % 60;
-
-  if (hours > 0) {
-    return `${hours} h ${remainingMinutes} m`;
-  } else {
-    if (remainingMinutes > 0) {
-      return `${remainingMinutes} m`;
-    } else {
-      return "N/A";
-    }
-  }
-}
-
-export function formatDate(inputDate: string) {
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
-  function getOrdinalSuffix(day: any) {
-    if (day > 3 && day < 21) return "th"; // Covers 11th, 12th, 13th, etc.
-    switch (day % 10) {
-      case 1:
-        return "st";
-      case 2:
-        return "nd";
-      case 3:
-        return "rd";
-      default:
-        return "th";
-    }
-  }
-
-  if (inputDate === null || inputDate === undefined) {
-    return;
-  }
-  // Parse the input date string
-  const dateParts = inputDate.split("-");
-  const year = dateParts[0];
-  const month = months[parseInt(dateParts[1], 10) - 1];
-  const day = parseInt(dateParts[2], 10);
-  const ordinalSuffix = getOrdinalSuffix(day);
-
-  // Format the date
-  return `${day}${ordinalSuffix} ${month} ${year}`;
+  user_id: string;
 }
 
 const HomeMediaCard: React.FC<MediaCardProps> = async ({
@@ -78,6 +21,7 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
   episode_number,
   quality,
   percentage_watched,
+  user_id,
 }) => {
   let media: any;
   if (media_type === "movie") {
@@ -94,11 +38,13 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
     return <p>loading...</p>;
   }
 
-  // Ensure that percentage_watched is a valid number and greater than 0
-  const isValidPercentageWatched =
-    typeof percentage_watched === "number" &&
-    !isNaN(percentage_watched) &&
-    percentage_watched > 0;
+  const watchTime = await getWatchTime(
+    user_id,
+    media_type,
+    media_id,
+    season_number,
+    episode_number,
+  );
 
   return (
     <div className="mb-4 flex w-full flex-col lg:mb-8">
@@ -129,11 +75,11 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
         </div>
 
         {/* Display the progress bar only if percentage_watched is valid */}
-        {isValidPercentageWatched && (
+        {watchTime && (
           <div
             className="absolute bottom-0 left-0 h-1 bg-accent"
             style={{
-              width: `${percentage_watched}%`,
+              width: `${watchTime || 0}%`,
             }}
           ></div>
         )}

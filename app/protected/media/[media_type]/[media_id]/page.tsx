@@ -14,7 +14,6 @@ import {
 } from "@/utils/tmdb";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import Sidebar from "./Sidebar";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import HomePostCardNew from "@/components/post/HomePostCardNew";
 
@@ -165,7 +164,7 @@ export default async function mediaPage({
 
   return (
     <div className="relative lg:w-full">
-      <div className="fixed z-20 flex h-16 w-full flex-row items-center gap-4 bg-white/10 px-4 backdrop-blur-xl lg:hidden">
+      <div className="fixed z-20 flex h-16 w-full flex-row items-center gap-4 bg-background px-4 backdrop-blur-xl lg:hidden">
         <GoBackArrow />
         <p className="truncate text-lg">{media.title || media.name}</p>
       </div>
@@ -178,7 +177,7 @@ export default async function mediaPage({
 			</div> */}
       <div className="relative h-auto w-screen py-4 lg:w-auto">
         <div
-          className="relative mt-16 flex h-auto w-screen lg:w-auto"
+          className="relative mt-16 flex h-auto w-screen lg:mt-0 lg:w-auto"
           id="overview"
         >
           <div className="mx-auto flex h-full w-screen flex-col gap-4 px-2 lg:my-8 lg:w-auto lg:gap-8">
@@ -347,7 +346,7 @@ export default async function mediaPage({
           </div>
         </div>
       </div>
-      <div className="relative mx-auto flex w-screen flex-col gap-8 p-2 lg:w-[75vw] lg:p-0">
+      {/* <div className="relative mx-auto flex w-screen flex-col gap-8 p-2 lg:w-[75vw] lg:p-0">
         <div className="">
           <div className="my-2 flex flex-row items-center gap-2">
             <div className="h-2 w-2 rounded-full bg-accent"></div>
@@ -384,36 +383,8 @@ export default async function mediaPage({
             </div>
           )}
         </div>
-        <div className="">
-          <div className="my-2 flex flex-row items-center gap-2">
-            <div className="h-2 w-2 rounded-full bg-accent"></div>
-            <h1 className="text-xl font-bold">Recommended</h1>
-          </div>
-          <div className="invisible-scroll custom-scrollbar flex flex-row gap-2 overflow-x-auto">
-            {mediaRecommendations &&
-              mediaRecommendations.results.slice(0, 20).map((media: any) => (
-                <div>
-                  <ExploreCard media={media}></ExploreCard>
-                </div>
-              ))}
-          </div>
-        </div>
-        <div className="">
-          <div className="my-2 flex flex-row items-center gap-2">
-            <div className="h-2 w-2 rounded-full bg-accent"></div>
-            <h1 className="text-xl font-bold">You might like</h1>
-          </div>
-          <div className="invisible-scroll custom-scrollbar flex flex-row gap-2 overflow-x-auto">
-            {mediaSimilar &&
-              mediaSimilar.results.slice(0, 20).map((media: any) => (
-                <div>
-                  <ExploreCard media={media}></ExploreCard>
-                </div>
-              ))}
-          </div>
-        </div>
       </div>
-      <div className="h-[500px]"></div>
+      <div className="h-[500px]"></div> */}
     </div>
   );
 }
