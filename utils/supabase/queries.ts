@@ -642,3 +642,47 @@ export const getWatchTime = async (
     console.log("Error in getWatchTime:", error);
   }
 };
+
+export const addToWatchList = async (
+  user_id: string,
+  media_type: string,
+  media_id: number,
+  watch_list_type: string,
+) => {
+  try {
+    // Call the PostgreSQL function instead of direct insert
+    const { data, error } = await supabase.rpc("add_to_watch_list", {
+      p_user_id: user_id,
+      p_media_type: media_type,
+      p_media_id: media_id,
+      p_watch_list_type: watch_list_type,
+    });
+    return data;
+  } catch (error) {
+    console.log("Catch Error:", error);
+  }
+};
+
+export const getWatchLaterForUser = async (
+  user_id: string,
+  limit: number,
+  offset: number,
+) => {
+  try {
+    const { data, error } = await supabase.rpc("get_watch_later", {
+      p_user_id: user_id,
+      p_limit: limit,
+      p_offset: offset,
+    });
+
+    if (error) {
+      console.error("Error fetching watch later:", error);
+      throw new Error(error.message);
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error in getWatchHistoryForUser:", error);
+    throw error;
+  }
+};

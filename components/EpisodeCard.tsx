@@ -1,6 +1,8 @@
 "use client";
 
+import { useUser } from "@/context/UserContext";
 import { getRelativeTime } from "@/lib/functions";
+import { getWatchTime } from "@/utils/supabase/queries";
 import { getEpisodeDetails } from "@/utils/tmdb";
 import React, { useEffect, useState } from "react";
 
@@ -41,6 +43,8 @@ const EpisodeCard = ({
 }: episodeCardProps) => {
   const [episode, setEpisode] = useState<Episode>();
   const [loading, setLoading] = useState(true);
+  const [watchTime, setWatchTime] = useState<number>(0);
+  const { user } = useUser();
 
   useEffect(() => {
     const fetchTVShowDetails = async () => {
@@ -50,6 +54,16 @@ const EpisodeCard = ({
           season_number,
           episode_number,
         );
+        if (user) {
+          const watchTime = await getWatchTime(
+            user.id.toString(),
+            "tv",
+            media_id,
+            season_number,
+            episode_number,
+          );
+          setWatchTime(watchTime);
+        }
         setEpisode(episodeData);
         setLoading(false);
       } catch (error) {
@@ -70,13 +84,21 @@ const EpisodeCard = ({
     return <p>loading...</p>;
   }
 
-  if (!episode) {
+  if (!episode || !user) {
     return <p>No episode</p>;
   }
 
   return (
     <div className="mb-8 flex w-full flex-col gap-4 hover:border-accent hover:bg-foreground/20 lg:mb-2 lg:flex-row lg:rounded-[8px] lg:p-2">
-      <div className="relative w-full flex-shrink-0 lg:w-1/2">
+      <div className="relative w-full flex-shrink-0 overflow-hidden lg:w-1/2 lg:rounded-[4px]">
+        {watchTime > 0 && (
+          <div
+            className="absolute bottom-0 left-0 h-1 bg-accent"
+            style={{
+              width: `${watchTime}%`,
+            }}
+          ></div>
+        )}
         <div className="absolute bottom-0 right-0 m-2 flex flex-row-reverse gap-2">
           <div className="rounded-[14px] bg-black/50 px-4 py-1 text-sm text-white">
             {transformRuntime(episode.runtime)}

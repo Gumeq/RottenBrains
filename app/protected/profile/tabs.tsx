@@ -246,34 +246,6 @@ const Tabs: React.FC<any> = () => {
         <ScrollButtons containerId="user_posts"></ScrollButtons>
       </div>
       <div className="mt-4 w-full">{renderContent("posts")}</div>
-      <div className="mb-4 flex flex-row items-center justify-between px-2 lg:p-0">
-        <div className="flex flex-row items-center gap-2">
-          <img
-            src="/assets/icons/review-outline.svg"
-            alt=""
-            width={24}
-            height={24}
-            className="invert-on-dark"
-          />
-          <h2 className="text-xl font-bold">New posts</h2>
-        </div>
-        <ScrollButtons containerId="user_likes"></ScrollButtons>
-      </div>
-      <div className="mt-4 w-full">{renderContent("likes")}</div>
-      <div className="mb-4 flex flex-row items-center justify-between px-2 lg:p-0">
-        <div className="flex flex-row items-center gap-2">
-          <img
-            src="/assets/icons/review-outline.svg"
-            alt=""
-            width={24}
-            height={24}
-            className="invert-on-dark"
-          />
-          <h2 className="text-xl font-bold">New posts</h2>
-        </div>
-        <ScrollButtons containerId="user_saves"></ScrollButtons>
-      </div>
-      <div className="mt-4 w-full">{renderContent("saves")}</div>
     </div>
   );
 };

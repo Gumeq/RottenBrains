@@ -3,6 +3,7 @@ import { getWatchTime } from "@/utils/supabase/queries";
 import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
 import Link from "next/link";
 import React from "react";
+import MoreOptions from "./MoreOptions";
 
 interface MediaCardProps {
   media_type: string;
@@ -119,6 +120,11 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
               </p>
             )}
           </h2>
+          <MoreOptions
+            user_id={user_id}
+            media_type={media_type}
+            media_id={media_id}
+          ></MoreOptions>
         </div>
         <p className="line-clamp-2 text-sm text-foreground/50">
           {media.overview}

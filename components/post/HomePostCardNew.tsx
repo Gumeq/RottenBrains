@@ -96,7 +96,55 @@ export function HomePostCardNew({ post, index }: any) {
   }
 
   if (loading) {
-    return <p>loading</p>;
+    return (
+      <motion.div
+        className="relative flex max-w-2xl flex-col rounded-[16px] border border-foreground/10 bg-foreground/5 p-4 lg:w-screen"
+        initial="hidden"
+        animate="visible"
+        transition={{
+          delay: index * 0.15,
+          ease: "easeInOut",
+          duration: 0.25,
+        }}
+        viewport={{ amount: 0 }}
+      >
+        <div className="mb-4 flex flex-row items-center justify-between gap-4">
+          <div className="flex flex-row items-center gap-2">
+            <span className="min-h-[35px] min-w-[35px] animate-pulse rounded-full bg-foreground/10" />
+            <div>
+              <div className="mb-2 h-4 w-24 animate-pulse rounded bg-foreground/10"></div>
+              <div className="h-3 w-16 animate-pulse rounded bg-foreground/5"></div>
+            </div>
+          </div>
+          <div className="flex flex-row items-center gap-2">
+            <div className="h-8 w-8 animate-pulse rounded-full bg-foreground/10"></div>
+            <div className="flex w-full justify-end">
+              <div className="h-6 w-12 animate-pulse rounded-[12px] bg-foreground/10"></div>
+            </div>
+          </div>
+        </div>
+        <div className="mb-4 flex w-full flex-row justify-between gap-4">
+          <div className="flex w-full flex-col gap-2">
+            <div className="mb-2 h-4 w-full animate-pulse rounded bg-foreground/10"></div>
+            <div className="mb-2 h-4 w-full animate-pulse rounded bg-foreground/10"></div>
+            <div className="h-4 w-full animate-pulse rounded bg-foreground/10"></div>
+          </div>
+          <div className="h-[231px] w-[154px] animate-pulse rounded-[14px] bg-foreground/10"></div>
+        </div>
+        <div className="flex w-full items-center">
+          <div className="align-center flex h-full w-full flex-row items-center justify-between">
+            <div className="flex flex-row items-center">
+              <div className="h-4 w-16 animate-pulse rounded bg-foreground/10"></div>
+            </div>
+            <div className="flex flex-row items-center gap-4">
+              <div className="h-8 w-8 animate-pulse rounded-full bg-foreground/10"></div>
+              <div className="h-8 w-8 animate-pulse rounded-full bg-foreground/10"></div>
+              <div className="h-8 w-8 animate-pulse rounded-full bg-foreground/10"></div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    );
   }
 
   if (error) {

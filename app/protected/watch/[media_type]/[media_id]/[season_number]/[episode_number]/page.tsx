@@ -63,8 +63,6 @@ export default async function mediaPage({
 
   const media = await getMediaDetails(media_type, media_id);
 
-  console.log(episode_number);
-
   return (
     <>
       {user && (
