@@ -164,7 +164,15 @@ const PostForm = ({ post, action, from_media }: PostFormProps) => {
           .select();
 
         if (error) {
-          throw error;
+          toast({
+            title: error.message,
+          });
+          console.log(error);
+        } else {
+          router.push("/protected/home");
+          toast({
+            title: `${action}d Post`,
+          });
         }
       } catch (error) {
         console.error("Error inserting data:", error);
@@ -186,17 +194,21 @@ const PostForm = ({ post, action, from_media }: PostFormProps) => {
           .select();
 
         if (error) {
-          throw error;
+          console.log(error);
+          toast({
+            title: error.message,
+          });
+        } else {
+          router.push("/protected/home");
+          toast({
+            title: `${action}d Post`,
+          });
         }
+        setLoading(false);
       } catch (error) {
         console.error("Error inserting data:", error);
       }
     }
-    setLoading(false);
-    router.push("/protected/home");
-    toast({
-      title: `${action}d Post`,
-    });
   };
 
   // Handle post deletion
@@ -213,13 +225,16 @@ const PostForm = ({ post, action, from_media }: PostFormProps) => {
         .eq("id", post.id);
 
       if (error) {
-        throw error;
+        console.log(error);
+        toast({
+          title: error.message,
+        });
+      } else {
+        router.push("/protected/home");
+        toast({
+          title: `Deleted Post`,
+        });
       }
-
-      router.push("/protected/home");
-      toast({
-        title: `Deleted Post`,
-      });
     } catch (error) {
       console.error("Error deleting post:", error);
     } finally {
