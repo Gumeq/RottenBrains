@@ -265,6 +265,35 @@ export const getPostComments = async (postId: string): Promise<any | null> => {
   }
 };
 
+export const getCommentReplies = async (
+  comment_id: string,
+): Promise<any | null> => {
+  try {
+    const { data, error } = await supabase
+      .from("comments")
+      .select(
+        `
+                *,
+                users (
+                    id,
+                    username,
+                    name,
+                    email,
+                    image_url
+                )
+            `,
+      )
+      .eq("parent_id", comment_id)
+      .order("created_at", { ascending: false })
+      .limit(10);
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    handleError("getPostComments", error);
+    return null;
+  }
+};
+
 export const uploadProfilePicture = async (
   file: File,
   userId: string | undefined,

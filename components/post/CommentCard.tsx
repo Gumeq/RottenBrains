@@ -1,33 +1,95 @@
 "use client";
-import { getUserFromDB } from "@/utils/supabase/queries";
+import { getCommentReplies, getUserFromDB } from "@/utils/supabase/queries";
 import React, { useEffect, useState } from "react";
 import { timeAgo } from "./TimeAgo";
+import AddComment from "./AddComment";
 
-const CommentCard = ({ comment }: any) => {
+const CommentCard = ({ comment, post, user, fetchComments }: any) => {
+  const [reply, setReply] = useState(false);
+  const [replies, setReplies] = useState<any[]>([]);
   const creator = comment.users;
+
   if (!creator) {
     return <p>loading...</p>;
   }
 
+  useEffect(() => {
+    const fetchReplies = async () => {
+      try {
+        const fetchedReplies = await getCommentReplies(comment.id);
+        setReplies(fetchedReplies);
+      } catch (error) {
+        console.error("Error fetching replies:", error);
+      }
+    };
+
+    fetchReplies();
+  }, [replies]);
+
+  const handleReplyButton = async () => {
+    console.log("Reply to : " + comment.id);
+    setReply(!reply);
+
+    if (!reply) {
+      // Only fetch replies if the reply section is being opened
+      try {
+        const fetchedReplies = await getCommentReplies(comment.id);
+        setReplies(fetchedReplies);
+      } catch (error) {
+        console.error("Error fetching replies:", error);
+      }
+    }
+  };
+
   return (
-    <div className="w-full rounded-[8px] bg-foreground/10">
-      <div className="flex w-11/12 flex-row gap-4 p-2">
-        <div className="">
+    <div className="flex w-full flex-col gap-1 rounded-[8px] bg-foreground/5 p-2">
+      <div className="flex w-full flex-row gap-4">
+        <div>
           <img
             src={creator.image_url}
-            alt={" "}
-            width={30}
-            height={30}
-            className="h-[30px] w-[30px] rounded-full"
-          ></img>
+            alt="User avatar"
+            width={40}
+            height={40}
+            className="min-h-[40px] min-w-[40px] rounded-full"
+          />
         </div>
-        <div className="flex w-10/12 flex-col">
+        <div className="flex w-full flex-col gap-1">
           <div className="flex flex-row items-center gap-2">
             <p className="text-sm font-bold">{creator.username}</p>
-            <p className="text-xs">{timeAgo(comment.created_at)}</p>
           </div>
           <div className="break-words">
             <p className="whitespace-pre-wrap text-sm">{comment.content}</p>
+          </div>
+          <div className="flex flex-row gap-2 text-xs text-foreground/50">
+            <p>{timeAgo(comment.created_at)}</p>
+            <p className="">{comment.total_likes} likes</p>
+            <button onClick={handleReplyButton}>Reply</button>
+          </div>
+          <div>
+            {reply && (
+              <AddComment
+                post={post}
+                user={user}
+                fetchComments={fetchComments}
+                parent_id={comment.id}
+              />
+            )}
+          </div>
+          <div className="flex w-full">
+            {replies && replies.length > 0 && (
+              <div className="flex w-full flex-col gap-2">
+                {replies.map((reply: any) => {
+                  return (
+                    <CommentCard
+                      comment={reply}
+                      post={post}
+                      user={user}
+                      fetchComments={fetchComments}
+                    ></CommentCard>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       </div>

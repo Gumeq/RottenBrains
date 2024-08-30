@@ -149,12 +149,21 @@ const PostStats = ({ post, user }: any) => {
                       <span>No comments yet</span>
                     </div>
                   ) : (
-                    <div className="w-full">
-                      {state.comments.map((comment: any) => (
-                        <div key={comment.id} className="w-full">
-                          <CommentCard comment={comment} />
-                        </div>
-                      ))}
+                    <div className="flex w-full flex-col gap-2">
+                      {state.comments.map((comment: any) => {
+                        if (comment.parent_id === null) {
+                          return (
+                            <div key={comment.id} className="w-full">
+                              <CommentCard
+                                comment={comment}
+                                post={post}
+                                user={user}
+                                fetchComments={fetchComments}
+                              />
+                            </div>
+                          );
+                        }
+                      })}
                     </div>
                   )}
                 </div>
