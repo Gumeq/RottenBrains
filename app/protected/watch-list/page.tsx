@@ -1,29 +1,79 @@
-import { getWatchLaterForUser } from "@/utils/supabase/queries";
+import {
+  getWatchLaterForUser,
+  getWatchListFull,
+  getWatchListSpecific,
+} from "@/utils/supabase/queries";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import React from "react";
-import MediaCard from "../watch-history/media_card";
+import MediaCard from "./MediaCardWatchList";
 
 const page = async () => {
   const user = await getCurrentUser();
-  console.log(user);
   const limit = 10;
   const offset = 0;
-  const watchHistory = await getWatchLaterForUser(user.user.id, limit, offset);
+  // const watchList = await getWatchListFull(user.user.id, limit, offset);
+  const watching = await getWatchListSpecific(
+    user.user.id,
+    limit,
+    offset,
+    "watching",
+  );
+  const planned = await getWatchListSpecific(
+    user.user.id,
+    limit,
+    offset,
+    "planned",
+  );
+  const watched = await getWatchListSpecific(
+    user.user.id,
+    limit,
+    offset,
+    "watched",
+  );
+
   return (
-    <div className="mx-auto mt-16 w-screen max-w-4xl">
-      <h1 className="my-12 text-4xl font-bold">Watch List</h1>
-      <div className="flex w-full flex-col gap-4">
-        {watchHistory.map((media: any) => {
-          console.log(media);
-          return (
-            <MediaCard
-              media_type={media.media_type}
-              media_id={media.media_id}
-              season_number={media.season_number}
-              episode_number={media.episode_number}
-            ></MediaCard>
-          );
-        })}
+    <div className="grid grid-cols-1 p-2 lg:grid-cols-3 lg:gap-8 lg:p-4">
+      <div className="">
+        <h2 className="my-4 text-xl font-semibold">Watching</h2>
+        <div className="grid grid-cols-1 gap-2 xl:grid-cols-2">
+          {watching &&
+            watching.map((media: any) => {
+              return (
+                <MediaCard
+                  media_type={media.media_type}
+                  media_id={media.media_id}
+                ></MediaCard>
+              );
+            })}
+        </div>
+      </div>
+      <div className="">
+        <h2 className="my-4 text-xl font-semibold">Planned</h2>
+        <div className="grid grid-cols-1 gap-2 xl:grid-cols-2">
+          {planned &&
+            planned.map((media: any) => {
+              return (
+                <MediaCard
+                  media_type={media.media_type}
+                  media_id={media.media_id}
+                ></MediaCard>
+              );
+            })}
+        </div>
+      </div>
+      <div className="">
+        <h2 className="my-4 text-xl font-semibold">Watched</h2>
+        <div className="grid grid-cols-1 gap-2 xl:grid-cols-2">
+          {watched &&
+            watched.map((media: any) => {
+              return (
+                <MediaCard
+                  media_type={media.media_type}
+                  media_id={media.media_id}
+                ></MediaCard>
+              );
+            })}
+        </div>
       </div>
     </div>
   );

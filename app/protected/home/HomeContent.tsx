@@ -1,5 +1,7 @@
 import {
   getNewestUsers,
+  getTopMovieGenresForUser,
+  getTopTvGenresForUser,
   getWatchHistoryForUser,
 } from "@/utils/supabase/queries";
 import {
@@ -15,6 +17,10 @@ import ScrollButtons from "@/components/explore/ScrollButtons";
 import { getRecommendations } from "@/utils/tmdb";
 import { useToast } from "@/components/ui/use-toast";
 import MobileTopBarHome from "./MobileTopBarHome";
+import {
+  getMovieRecommendationsForUser,
+  getTvRecommendationsForUser,
+} from "@/lib/recommendations";
 
 // Server component fetching and displaying posts
 const HomeContent = async () => {
@@ -23,35 +29,11 @@ const HomeContent = async () => {
   if (!user) {
     return;
   }
-  // const { movieDetails, tvDetails } = await fetchMoviesAndTvDetails();
   if (!users) {
     return;
   }
 
   const watchHistory = await getWatchHistoryForUser(user.user.id, 20, 0);
-  const allRecommendations = await Promise.all(
-    watchHistory.slice(0, 20).map(async (item: any) => {
-      const recs = await getRecommendations(item.media_type, item.media_id);
-      return recs.results;
-    }),
-  );
-  const flattenedRecommendations = allRecommendations
-    .flat()
-    .reduce((acc, current) => {
-      const x = acc.find((item: any) => item.id === current.id);
-      if (!x) {
-        return acc.concat([current]);
-      } else {
-        return acc;
-      }
-    }, []);
-  for (let i = flattenedRecommendations.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [flattenedRecommendations[i], flattenedRecommendations[j]] = [
-      flattenedRecommendations[j],
-      flattenedRecommendations[i],
-    ];
-  }
   const filteredWatchHistory = watchHistory.filter(
     (item: any) => item.percentage_watched <= 90,
   );
@@ -65,6 +47,15 @@ const HomeContent = async () => {
   );
   const now_in_cinemas = await fetchExploreData("Now_in_cinemas");
   const trending_tv = await fetchExploreData("Trending_TV");
+
+  let movieRecommendations = await getMovieRecommendationsForUser(
+    user.user.id,
+    1,
+  );
+  let tvRecommendations = await getTvRecommendationsForUser(user.user.id, 1);
+  movieRecommendations = movieRecommendations.results;
+  tvRecommendations = tvRecommendations.results;
+
   return (
     <div className="flex w-screen flex-col gap-8 p-0 pb-4 lg:w-auto lg:p-4 lg:py-0">
       <MobileTopBarHome></MobileTopBarHome>
@@ -162,12 +153,12 @@ const HomeContent = async () => {
 
       <div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {flattenedRecommendations.length > 0 &&
-            flattenedRecommendations.slice(0, 20).map((media: any) => {
+          {movieRecommendations.length > 0 &&
+            movieRecommendations.slice(0, 20).map((media: any) => {
               return (
                 <HomeMediaCard
                   user_id={user.user.id}
-                  media_type={media.media_type}
+                  media_type={"movie"}
                   media_id={media.id}
                 ></HomeMediaCard>
               );
@@ -210,12 +201,12 @@ const HomeContent = async () => {
       </div>
       <div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {flattenedRecommendations.length > 20 &&
-            flattenedRecommendations.slice(20, 40).map((media: any) => {
+          {tvRecommendations.length > 0 &&
+            tvRecommendations.slice(0, 20).map((media: any) => {
               return (
                 <HomeMediaCard
                   user_id={user.user.id}
-                  media_type={media.media_type}
+                  media_type={"tv"}
                   media_id={media.id}
                 ></HomeMediaCard>
               );
@@ -243,22 +234,22 @@ const HomeContent = async () => {
             })}
         </div>
       </div>
-      <div>
+      {/* <div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {flattenedRecommendations.length > 40 &&
-            flattenedRecommendations
-              .slice(40, flattenedRecommendations.length)
+          {recommendations.length > 40 &&
+            recommendations
+              .slice(40, recommendations.length)
               .map((media: any) => {
                 return (
                   <HomeMediaCard
                     user_id={user.user.id}
-                    media_type={media.media_type}
+                    media_type={"movie"}
                     media_id={media.id}
                   ></HomeMediaCard>
                 );
               })}
         </div>
-      </div>
+      </div> */}
       <div className="h-16 w-full"></div>
     </div>
   );

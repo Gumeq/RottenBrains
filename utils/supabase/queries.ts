@@ -686,3 +686,90 @@ export const getWatchLaterForUser = async (
     throw error;
   }
 };
+
+export const getWatchListFull = async (
+  user_id: string,
+  limit: number,
+  offset: number,
+) => {
+  try {
+    const { data, error } = await supabase.rpc("get_watch_list_full", {
+      p_user_id: user_id,
+      p_limit: limit,
+      p_offset: offset,
+    });
+
+    if (error) {
+      console.error("Error fetching watch later:", error);
+      throw new Error(error.message);
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error in getWatchHistoryForUser:", error);
+    throw error;
+  }
+};
+
+export const getWatchListSpecific = async (
+  user_id: string,
+  limit: number,
+  offset: number,
+  watch_list_type: string,
+) => {
+  try {
+    const { data, error } = await supabase.rpc("get_watch_list_specific", {
+      p_user_id: user_id,
+      p_limit: limit,
+      p_offset: offset,
+      p_watch_list_type: watch_list_type,
+    });
+
+    if (error) {
+      console.error("Error fetching watch later:", error);
+      throw new Error(error.message);
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error in getWatchHistoryForUser:", error);
+    throw error;
+  }
+};
+
+export const getTopMovieGenresForUser = async (user_id: string) => {
+  try {
+    const { data, error } = await supabase.rpc(
+      "get_top_movie_genres_for_user",
+      {
+        p_user_id: user_id,
+      },
+    );
+
+    if (error) {
+      console.error("Error fetching watch later:", error);
+      throw new Error(error.message);
+    }
+    return data;
+  } catch (error) {
+    console.error("Error in getWatchHistoryForUser:", error);
+    throw error;
+  }
+};
+
+export const getTopTvGenresForUser = async (user_id: string) => {
+  try {
+    const { data, error } = await supabase.rpc("get_top_tv_genres_for_user", {
+      p_user_id: user_id,
+    });
+
+    if (error) {
+      console.error("Error fetching watch later:", error);
+      throw new Error(error.message);
+    }
+    return data;
+  } catch (error) {
+    console.error("Error in getWatchHistoryForUser:", error);
+    throw error;
+  }
+};

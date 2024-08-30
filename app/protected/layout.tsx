@@ -27,7 +27,7 @@ export default async function ProtectedLayout({
         </div>
         {/* <MobileTopNav></MobileTopNav> */}
         <div className="flex lg:hidden">
-          <div className="w-full">{children}</div>
+          <div className="mb-16 w-full">{children}</div>
           <Bottombar />
         </div>
       </div>
