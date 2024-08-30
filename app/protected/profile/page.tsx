@@ -66,7 +66,7 @@ const ProfilePage = async () => {
           {watchHistory &&
             watchHistory.slice(0, 20).map((media: any) => {
               return (
-                <div className="inline-block h-auto w-[80vw] flex-shrink-0 lg:inline lg:w-[20vw]">
+                <div className="inline-block h-auto w-[80vw] flex-shrink-0 lg:inline lg:w-auto">
                   <HomeMediaCard
                     user_id={user.user.id}
                     media_type={media.media_type}
