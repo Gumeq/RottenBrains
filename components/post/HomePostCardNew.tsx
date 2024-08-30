@@ -153,7 +153,7 @@ export function HomePostCardNew({ post, index }: any) {
 
   return (
     <motion.div
-      className="relative flex max-w-2xl flex-col rounded-[16px] border border-foreground/10 bg-foreground/5 p-4 lg:w-screen"
+      className="relative flex flex-col rounded-[16px] border border-foreground/10 bg-foreground/5 p-4 lg:w-screen lg:min-w-[400px] lg:max-w-[550px]"
       variants={variants}
       initial="hidden"
       animate="visible"

@@ -150,11 +150,11 @@ export default async function mediaPage({
   if (user) {
     postsOfMedia = await getPostsOfMedia(user.user.id, media_type, media_id, 0);
   }
-  const mediaVideos = await getVideos(media_type, media_id);
-  const trailers = await getTrailerOrFirstFive(media_type, media_id);
-  const mediaRecommendations = await getRecommendations(media_type, media_id);
-  const mediaSimilar = await getSimilar(media_type, media_id);
-  const mediaReviews = await getReviews(media_type, media_id);
+  // const mediaVideos = await getVideos(media_type, media_id);
+  // const trailers = await getTrailerOrFirstFive(media_type, media_id);
+  // const mediaRecommendations = await getRecommendations(media_type, media_id);
+  // const mediaSimilar = await getSimilar(media_type, media_id);
+  // const mediaReviews = await getReviews(media_type, media_id);
   const mediaCredits = await separateCredits(media_type, media_id);
 
   const watchLink =

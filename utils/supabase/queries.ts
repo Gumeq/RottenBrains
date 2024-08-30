@@ -802,3 +802,30 @@ export const getTopTvGenresForUser = async (user_id: string) => {
     throw error;
   }
 };
+
+interface UpdateGenreStatsParams {
+  genreIds: bigint[];
+  mediaType: string;
+  userId: string;
+}
+
+export async function updateGenreStats({
+  genreIds,
+  mediaType,
+  userId,
+}: UpdateGenreStatsParams) {
+  const { data, error } = await supabase.rpc("update_genre_stats", {
+    genre_ids: genreIds,
+    media_type: mediaType,
+    user_id: userId,
+  });
+
+  if (error) {
+    console.error("Error updating genre stats:", error);
+    throw new Error("Failed to update genre stats");
+  } else {
+    console.log("added genres");
+  }
+
+  return data;
+}

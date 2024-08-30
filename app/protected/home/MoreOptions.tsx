@@ -7,16 +7,22 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { addToWatchList } from "@/utils/supabase/queries";
+import { addToWatchList, updateGenreStats } from "@/utils/supabase/queries";
 import { useToast } from "@/components/ui/use-toast";
 
 type MoreOptionsProps = {
   user_id: string;
   media_type: string;
   media_id: number;
+  genre_ids: bigint[];
 };
 
-const MoreOptions = ({ user_id, media_type, media_id }: MoreOptionsProps) => {
+const MoreOptions = ({
+  user_id,
+  media_type,
+  media_id,
+  genre_ids,
+}: MoreOptionsProps) => {
   const [isSaving, setIsSaving] = useState<string | null>(null); // Set initial state to null
 
   const { toast } = useToast();
@@ -45,6 +51,13 @@ const MoreOptions = ({ user_id, media_type, media_id }: MoreOptionsProps) => {
             media_id,
             isSaving,
           );
+          if (!data.includes("Error")) {
+            await updateGenreStats({
+              genreIds: genre_ids,
+              mediaType: media_type,
+              userId: user_id,
+            });
+          }
           toast({
             title: data,
           });

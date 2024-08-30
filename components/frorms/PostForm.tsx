@@ -10,6 +10,7 @@ import SearchBar from "../searchBar/SearchBar";
 import { getMediaDetails } from "@/utils/tmdb";
 import { useUser } from "@/context/UserContext";
 import { useToast } from "../ui/use-toast";
+import { updateGenreStats } from "@/utils/supabase/queries";
 
 type PostFormProps = {
   post?: any;
@@ -18,7 +19,7 @@ type PostFormProps = {
 };
 
 const PostForm = ({ post, action, from_media }: PostFormProps) => {
-  const [media, setMedia] = useState<IMedia | null>(null);
+  const [media, setMedia] = useState<any | null>(null);
 
   const { user } = useUser();
   const router = useRouter();
@@ -68,6 +69,7 @@ const PostForm = ({ post, action, from_media }: PostFormProps) => {
         vote_user: post.vote_user,
       }));
     } else {
+      console.log(media);
       if (media) {
         setFormValues((prevValues) => ({
           ...prevValues,
@@ -199,6 +201,11 @@ const PostForm = ({ post, action, from_media }: PostFormProps) => {
             title: error.message,
           });
         } else {
+          await updateGenreStats({
+            genreIds: media.genre_ids,
+            mediaType: dbvalues.media_type,
+            userId: dbvalues.creatorId,
+          });
           router.push("/protected/home");
           toast({
             title: `${action}d Post`,

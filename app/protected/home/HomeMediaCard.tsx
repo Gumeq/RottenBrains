@@ -47,6 +47,12 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
     episode_number,
   );
 
+  let genreIds = [];
+
+  if (media?.genres && Array.isArray(media.genres)) {
+    genreIds = media.genres.map((genre: any) => genre.id);
+  }
+
   return (
     <div className="mb-4 flex w-full flex-col lg:mb-8 lg:min-w-[400px] lg:max-w-[550px]">
       <Link
@@ -61,15 +67,15 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
       >
         <div className="absolute bottom-0 right-0 m-2 flex flex-row-reverse gap-2">
           {media.runtime && (
-            <div className="rounded-[14px] bg-black/50 px-4 py-1 text-sm text-white">
+            <div className="rounded-[14px] bg-black/50 px-2 py-1 text-xs text-white">
               {transformRuntime(media.runtime)}
             </div>
           )}
-          <div className="rounded-[14px] bg-black/50 px-4 py-1 text-sm text-white">
+          <div className="rounded-[14px] bg-black/50 px-2 py-1 text-xs text-white">
             {media.vote_average.toFixed(1)} / 10
           </div>
           {quality && (
-            <div className="rounded-[14px] bg-black/50 px-4 py-1 text-sm text-white">
+            <div className="rounded-[14px] bg-black/50 px-2 py-1 text-xs text-white">
               {quality}
             </div>
           )}
@@ -84,7 +90,7 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
             }}
           ></div>
         )}
-        <div className="absolute right-2 top-2 flex h-[40px] w-[40px] flex-shrink-0 items-center justify-center rounded-full bg-black/50">
+        <div className="absolute right-2 top-2 flex h-[30px] w-[30px] flex-shrink-0 items-center justify-center rounded-full bg-black/50">
           <img
             src={
               media_type === "movie"
@@ -92,7 +98,7 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
                 : "/assets/icons/tv-outline.svg"
             }
             alt=""
-            className="invert"
+            className="h-[20px] w-[20px] invert"
           />
         </div>
         <img
@@ -111,7 +117,7 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
         />
       </Link>
       <div className="flex flex-col px-4 lg:p-0">
-        <div className="my-2 flex flex-row justify-between">
+        <div className="mt-2 flex flex-row justify-between">
           <h2 className="flex flex-row gap-1 text-lg font-medium">
             {media.title || media.name}
             {media_type === "tv" && episode_number && (
@@ -124,12 +130,13 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
             user_id={user_id}
             media_type={media_type}
             media_id={media_id}
+            genre_ids={genreIds}
           ></MoreOptions>
         </div>
-        <p className="line-clamp-2 text-sm text-foreground/50">
+        {/* <p className="line-clamp-2 text-sm text-foreground/50">
           {media.overview}
-        </p>
-        <p className="mt-2 text-sm text-foreground/50">
+        </p> */}
+        <p className="text-sm text-foreground/50">
           {formatDate(
             media.release_date || media.air_date || media.first_air_date,
           )}
