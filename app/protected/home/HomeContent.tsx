@@ -233,12 +233,7 @@ const HomeContent = async () => {
           />
           <h2 className="text-xl font-bold">Trending tv shows</h2>
         </div>
-        <div
-          className="grid gap-4"
-          style={{
-            gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
-          }}
-        >
+        <div className="grid grid-cols-2 gap-4 px-4 lg:grid-cols-4 lg:p-0 2xl:grid-cols-8">
           {trending_tv &&
             trending_tv.results.slice(0, 8).map((media: any) => {
               return (
