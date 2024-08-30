@@ -48,7 +48,7 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
   );
 
   return (
-    <div className="mb-4 flex w-full flex-col lg:mb-8">
+    <div className="mb-4 flex w-full flex-col lg:mb-8 lg:min-w-[400px] lg:max-w-[550px]">
       <Link
         className="relative overflow-hidden lg:rounded-[16px]"
         href={
@@ -110,7 +110,7 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
           className="aspect-[16/9] bg-foreground/10 lg:rounded-[16px]"
         />
       </Link>
-      <div className="flex flex-col px-2 lg:p-0">
+      <div className="flex flex-col px-4 lg:p-0">
         <div className="my-2 flex flex-row justify-between">
           <h2 className="flex flex-row gap-1 text-lg font-medium">
             {media.title || media.name}

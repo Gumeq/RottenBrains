@@ -81,7 +81,7 @@ const HomeContent = async () => {
           {filteredWatchHistory &&
             filteredWatchHistory.slice(0, 20).map((media: any) => {
               return (
-                <div className="inline-block h-auto w-[80vw] flex-shrink-0 lg:inline lg:w-[20vw]">
+                <div className="inline-block h-auto w-[80vw] flex-shrink-0 lg:inline lg:w-auto">
                   <HomeMediaCard
                     user_id={user.user.id}
                     media_type={media.media_type}
@@ -152,15 +152,21 @@ const HomeContent = async () => {
       </div>
 
       <div>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div
+          className="grid gap-4"
+          style={{
+            gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
+          }}
+        >
           {movieRecommendations.length > 0 &&
             movieRecommendations.slice(0, 20).map((media: any) => {
               return (
                 <HomeMediaCard
+                  key={media.id}
                   user_id={user.user.id}
                   media_type={"movie"}
                   media_id={media.id}
-                ></HomeMediaCard>
+                />
               );
             })}
         </div>
@@ -200,7 +206,12 @@ const HomeContent = async () => {
         </div>
       </div>
       <div>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div
+          className="grid gap-4"
+          style={{
+            gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
+          }}
+        >
           {tvRecommendations.length > 0 &&
             tvRecommendations.slice(0, 20).map((media: any) => {
               return (
@@ -222,7 +233,12 @@ const HomeContent = async () => {
           />
           <h2 className="text-xl font-bold">Trending tv shows</h2>
         </div>
-        <div className="grid grid-cols-2 gap-4 px-4 lg:grid-cols-4 lg:p-0 2xl:grid-cols-8">
+        <div
+          className="grid gap-4"
+          style={{
+            gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
+          }}
+        >
           {trending_tv &&
             trending_tv.results.slice(0, 8).map((media: any) => {
               return (
