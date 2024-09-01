@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
 
 interface WatchDurationProps {
   media_type: string;
@@ -19,6 +20,8 @@ const WatchDuration: React.FC<WatchDurationProps> = ({
   user_id,
   media_duration,
 }) => {
+  const pathname = usePathname();
+
   useEffect(() => {
     let startTime = new Date();
 
@@ -72,10 +75,19 @@ const WatchDuration: React.FC<WatchDurationProps> = ({
       }
     };
 
+    const handleBeforeUnload = () => {
+      sendWatchData();
+    };
+
     document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("beforeunload", handleBeforeUnload);
 
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+
+      // Trigger data send on component unmount, like when navigating to a different route
+      sendWatchData();
     };
   }, [
     media_type,
@@ -84,6 +96,7 @@ const WatchDuration: React.FC<WatchDurationProps> = ({
     media_duration,
     season_number,
     episode_number,
+    pathname, // This will trigger the effect to run when the route changes
   ]);
 
   return null;
