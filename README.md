@@ -12,11 +12,13 @@ RottenBrains is a vibrant social media website dedicated to movie and TV show re
 ## Features
 
 - **User Profiles**: Create your profile, follow friends, and see what they're watching.
+  ![Profile](public/assets/images/profile_page_screen.png)
 - **Movie and TV Show Reviews**: Write and share reviews for movies and TV shows. Rate them and provide your insights.
-- **Recommendations**: Get personalized recommendations based on your viewing history and reviews.
 - **Social Interactions**: Like, comment, and save reviews. Engage in discussions with other movie and TV show fans.
   ![Review](public/assets/images/review_screen.png)
+- **Recommendations**: Get personalized recommendations based on your viewing history and reviews.
 - **Watchlists**: Create and manage your watchlist of movies and shows you plan to watch.
+  ![Watchlist](public/assets/images/watchlist_page_screen.png)
 
 ## Technologies Used
 
