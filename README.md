@@ -6,14 +6,16 @@ Welcome to **RottenBrains**, the ultimate social media platform for movie and TV
 
 RottenBrains is a vibrant social media website dedicated to movie and TV show reviews. Whether you're looking to share your thoughts on the latest blockbuster, find recommendations from friends, or dive deep into discussions about your favorite series, BingeBuddy is the place for you.
 
+![Home Page](public/assets/images/home_page_screen.png)
+![Explore Page](public/assets/images/explore_page_screen.png)
+
 ## Features
 
 - **User Profiles**: Create your profile, follow friends, and see what they're watching.
 - **Movie and TV Show Reviews**: Write and share reviews for movies and TV shows. Rate them and provide your insights.
 - **Recommendations**: Get personalized recommendations based on your viewing history and reviews.
-  ![Home Page](public/assets/images/home_page_screen.png)
-  ![Explore Page](public/assets/images/explore_page_screen.png)
 - **Social Interactions**: Like, comment, and save reviews. Engage in discussions with other movie and TV show fans.
+  ![Review](public/assets/images/review_screen.png)
 - **Watchlists**: Create and manage your watchlist of movies and shows you plan to watch.
 
 ## Technologies Used
