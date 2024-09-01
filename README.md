@@ -11,6 +11,8 @@ RottenBrains is a vibrant social media website dedicated to movie and TV show re
 - **User Profiles**: Create your profile, follow friends, and see what they're watching.
 - **Movie and TV Show Reviews**: Write and share reviews for movies and TV shows. Rate them and provide your insights.
 - **Recommendations**: Get personalized recommendations based on your viewing history and reviews.
+  ![Home Page](public/assets/images/home_page_screen.png)
+  ![Explore Page](public/assets/images/explore_page_screen.png)
 - **Social Interactions**: Like, comment, and save reviews. Engage in discussions with other movie and TV show fans.
 - **Watchlists**: Create and manage your watchlist of movies and shows you plan to watch.
 
@@ -20,4 +22,3 @@ RottenBrains is a vibrant social media website dedicated to movie and TV show re
 - **TypeScript**: A statically typed superset of JavaScript that adds types for enhanced development experience and robustness.
 - **Tailwind CSS**: A utility-first CSS framework for rapidly building custom user interfaces.
 - **Supabase**: An open-source Firebase alternative for managing our database, authentication, and real-time subscriptions.
-

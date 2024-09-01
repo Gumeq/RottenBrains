@@ -112,18 +112,15 @@ const HomeContent = async () => {
         <div className="relative px-2 lg:p-0">
           <div className="gradient-edge absolute right-0 top-0 z-20 h-full w-[5%]"></div>
           <div
-            className="hidden-scrollbar flex flex-row gap-4 overflow-x-auto pr-[5%]"
+            className="hidden-scrollbar flex flex-row gap-1 overflow-x-auto pr-[5%] lg:gap-4"
             id={"rotten-posts-one"}
           >
             {followed_posts_one &&
               followed_posts_one.map((post: any) => {
                 return (
                   <>
-                    <div className="hidden flex-shrink-0 lg:flex">
+                    <div className="flex w-[400px] flex-shrink-0 lg:w-fit">
                       <HomePostCardNew post={post}></HomePostCardNew>
-                    </div>
-                    <div className="flex flex-shrink-0 lg:hidden">
-                      <HomePostCard post={post}></HomePostCard>
                     </div>
                   </>
                 );
@@ -188,18 +185,15 @@ const HomeContent = async () => {
         <div className="relative px-2 lg:p-0">
           <div className="gradient-edge absolute right-0 top-0 z-20 h-full w-[5%]"></div>
           <div
-            className="hidden-scrollbar flex flex-row gap-4 overflow-x-auto pr-[5%]"
+            className="hidden-scrollbar flex flex-row gap-1 overflow-x-auto pr-[5%] lg:gap-4"
             id={"rotten-posts-two"}
           >
             {followed_posts_two &&
               followed_posts_two.map((post: any) => {
                 return (
                   <>
-                    <div className="hidden flex-shrink-0 lg:flex">
+                    <div className="flex w-[400px] flex-shrink-0 lg:w-fit">
                       <HomePostCardNew post={post}></HomePostCardNew>
-                    </div>
-                    <div className="flex flex-shrink-0 lg:hidden">
-                      <HomePostCard post={post}></HomePostCard>
                     </div>
                   </>
                 );

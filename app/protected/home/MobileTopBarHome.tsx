@@ -33,7 +33,7 @@ const MobileTopBarHome = () => {
 
   return (
     <div
-      className={`fixed left-0 top-0 z-50 flex h-16 w-full items-center justify-between bg-background px-4 transition-transform duration-300 lg:hidden ${
+      className={`fixed left-0 top-0 z-50 flex h-12 w-full items-center justify-between border-b border-foreground/20 bg-background px-4 transition-transform duration-300 lg:hidden ${
         show ? "translate-y-0 transform" : "-translate-y-full transform"
       }`}
     >
