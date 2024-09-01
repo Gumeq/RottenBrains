@@ -17,6 +17,7 @@ RottenBrains is a vibrant social media website dedicated to movie and TV show re
 - **Social Interactions**: Like, comment, and save reviews. Engage in discussions with other movie and TV show fans.
   ![Review](public/assets/images/review_screen.png)
 - **Recommendations**: Get personalized recommendations based on your viewing history and reviews.
+  ![Recommendations](public/assets/images/recommendations_screen.png)
 - **Watchlists**: Create and manage your watchlist of movies and shows you plan to watch.
   ![Watchlist](public/assets/images/watchlist_page_screen.png)
 
