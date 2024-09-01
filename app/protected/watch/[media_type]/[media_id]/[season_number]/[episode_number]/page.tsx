@@ -15,6 +15,8 @@ import { getMediaDetails } from "@/utils/tmdb";
 export async function generateMetadata({ params }: any) {
   const media_id = parseInt(params.media_id, 10);
   const media_type = params.media_type;
+  const season_number = parseInt(params.season_number);
+  const episode_number = parseInt(params.episode_number);
 
   let mediaData;
   try {
@@ -34,7 +36,7 @@ export async function generateMetadata({ params }: any) {
   }
 
   return {
-    title: `${media.title || media.name} - RottenBrains`,
+    title: `${media.title || media.name} Season ${season_number} Episode ${episode_number}  - RottenBrains`,
     description: `${media.overview}`,
   };
 }
