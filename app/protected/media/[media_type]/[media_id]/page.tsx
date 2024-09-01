@@ -16,6 +16,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import HomePostCardNew from "@/components/post/HomePostCardNew";
+import MoreOptions from "@/app/protected/home/MoreOptions";
 
 function transformRuntime(minutes: number): string {
   const hours: number = Math.floor(minutes / 60);
@@ -162,6 +163,11 @@ export default async function mediaPage({
       ? `/protected/watch/${media_type}/${media.id}`
       : `/protected/watch/${media_type}/${media.id}/1/1`;
 
+  let genreIds = [];
+  if (media?.genres && Array.isArray(media.genres)) {
+    genreIds = media.genres.map((genre: any) => genre.id);
+  }
+
   return (
     <div className="relative lg:w-full">
       <div className="fixed z-20 flex h-16 w-full flex-row items-center gap-4 bg-background px-4 backdrop-blur-xl lg:hidden">
@@ -182,7 +188,15 @@ export default async function mediaPage({
         >
           <div className="mx-auto flex h-full w-screen flex-col gap-4 px-2 lg:my-8 lg:w-auto lg:gap-8">
             <div className="flex flex-col gap-4">
-              <p className="text-4xl">{media.title || media.name}</p>
+              <div className="flex w-full flex-row justify-between">
+                <p className="text-4xl">{media.title || media.name}</p>
+                <MoreOptions
+                  user_id={user.user.id}
+                  media_type={media_type}
+                  media_id={media_id}
+                  genre_ids={genreIds}
+                ></MoreOptions>
+              </div>
               {media.tagline && (
                 <p className="italic opacity-50">"{media.tagline}"</p>
               )}

@@ -35,10 +35,6 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
     }
   }
 
-  if (!media) {
-    return <p>loading...</p>;
-  }
-
   const watchTime = await getWatchTime(
     user_id,
     media_type,
@@ -48,13 +44,12 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
   );
 
   let genreIds = [];
-
   if (media?.genres && Array.isArray(media.genres)) {
     genreIds = media.genres.map((genre: any) => genre.id);
   }
 
   return (
-    <div className="mb-4 flex w-full flex-col lg:mb-8 lg:min-w-[400px] lg:max-w-[550px]">
+    <div className="mb-4 flex w-full flex-col lg:mb-0 lg:min-w-[400px] lg:max-w-[550px]">
       <Link
         className="relative overflow-hidden lg:rounded-[16px]"
         href={
@@ -106,14 +101,14 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
             media.images &&
             media.images.backdrops &&
             media.images.backdrops.length > 0
-              ? `https://image.tmdb.org/t/p/w780${media.images.backdrops[0].file_path}`
+              ? `https://image.tmdb.org/t/p/w500${media.images.backdrops[0].file_path}`
               : season_number && episode_number
-                ? `https://image.tmdb.org/t/p/w780${media.still_path}`
-                : `https://image.tmdb.org/t/p/w780${media.backdrop_path}`
+                ? `https://image.tmdb.org/t/p/w500${media.still_path}`
+                : `https://image.tmdb.org/t/p/w500${media.backdrop_path}`
           }
           alt=""
           loading="lazy"
-          className="aspect-[16/9] bg-foreground/10 lg:rounded-[16px]"
+          className="aspect-[16/9] w-full bg-foreground/10 lg:rounded-[16px]"
         />
       </Link>
       <div className="flex flex-col px-4 lg:p-0">

@@ -14,20 +14,9 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { useUser } from "@/context/UserContext";
 import PostStats from "./PostStats";
 import UserReviewTextNew from "./UserReviewTextNew";
+import MoreOptions from "@/app/protected/home/MoreOptions";
 
 const ErrorComponent = () => <div>Error loading post.</div>;
-
-function getColorBasedOnNumber(value: number): string {
-  if (value >= 8 && value <= 10) {
-    return "green";
-  } else if (value >= 4 && value < 8) {
-    return "orange";
-  } else if (value >= 0 && value < 4) {
-    return "red";
-  } else {
-    throw new Error("Input value must be between 0 and 10.");
-  }
-}
 
 export function HomePostCardNew({ post, index }: any) {
   const media_id = post.media_id;
@@ -77,12 +66,6 @@ export function HomePostCardNew({ post, index }: any) {
     [],
   );
 
-  if (!currentUser) {
-    return <p>no current user</p>;
-  }
-
-  const userId = currentUser.id;
-
   const creator = {
     id: post.creatorid,
     email: post.creator_email,
@@ -95,10 +78,10 @@ export function HomePostCardNew({ post, index }: any) {
     return <p>no creator</p>;
   }
 
-  if (loading) {
+  if (loading || !currentUser) {
     return (
       <motion.div
-        className="relative flex max-w-2xl flex-col rounded-[16px] border border-foreground/10 bg-foreground/5 p-4 lg:w-screen"
+        className="relative flex max-w-2xl flex-col rounded-[16px] border border-foreground/10 bg-foreground/5 p-4 lg:min-w-[400px] lg:max-w-[550px]"
         initial="hidden"
         animate="visible"
         transition={{
@@ -147,13 +130,20 @@ export function HomePostCardNew({ post, index }: any) {
     );
   }
 
+  const userId = currentUser.id;
+
+  let genreIds = [];
+  if (media?.genres && Array.isArray(media.genres)) {
+    genreIds = media.genres.map((genre: any) => genre.id);
+  }
+
   if (error) {
     return <ErrorComponent />;
   }
 
   return (
     <motion.div
-      className="relative flex flex-col rounded-[16px] border border-foreground/10 bg-foreground/5 p-4 lg:w-screen lg:min-w-[400px] lg:max-w-[550px]"
+      className="relative flex flex-col rounded-[16px] border border-foreground/10 bg-foreground/5 p-4 lg:min-w-[400px] lg:max-w-[550px]"
       variants={variants}
       initial="hidden"
       animate="visible"
@@ -231,6 +221,12 @@ export function HomePostCardNew({ post, index }: any) {
             <PostStats post={post} user={currentUser}></PostStats>
           </div>
           <div className="flex flex-row items-center gap-4">
+            <MoreOptions
+              user_id={userId.toString()}
+              media_type={media_type}
+              media_id={media_id}
+              genre_ids={genreIds}
+            ></MoreOptions>
             <SaveButton post={post} />
             <Link
               className=""

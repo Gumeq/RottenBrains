@@ -73,13 +73,13 @@ const MoreOptions = ({
   }, [isSaving, user_id, media_type, media_id, toast]);
 
   return (
-    <div>
+    <>
       <DropdownMenu>
         <DropdownMenuTrigger>
           <img
             src="/assets/icons/more-vert.svg"
             alt=""
-            className="invert-on-dark"
+            className="invert-on-dark h-[24px] w-[24px]"
           />
         </DropdownMenuTrigger>
         <DropdownMenuContent
@@ -141,7 +141,7 @@ const MoreOptions = ({
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    </div>
+    </>
   );
 };
 

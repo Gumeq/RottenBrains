@@ -21,6 +21,8 @@ import {
   getMovieRecommendationsForUser,
   getTvRecommendationsForUser,
 } from "@/lib/recommendations";
+import { Suspense } from "react";
+import InfiniteScrollHome from "./InfiniteScrollHome";
 
 // Server component fetching and displaying posts
 const HomeContent = async () => {
@@ -261,6 +263,7 @@ const HomeContent = async () => {
               })}
         </div>
       </div> */}
+      {/* <InfiniteScrollHome user_id={user.user.id}></InfiniteScrollHome> */}
       <div className="h-16 w-full"></div>
     </div>
   );

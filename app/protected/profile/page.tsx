@@ -25,15 +25,17 @@ const ProfilePage = async () => {
   const watchHistory = await getWatchHistoryForUser(user.user.id, 20, 0);
 
   return (
-    <div className="mx-auto mt-16 max-w-7xl lg:mt-0">
+    <div className="mx-auto p-1 lg:mt-0 lg:p-4">
       {user && (
         <div className="mx-auto flex w-full flex-col items-center justify-center gap-4 py-4 lg:py-0">
-          <div className="aspect-[5/1] w-full rounded-[16px] bg-foreground/20"></div>
+          <div className="hidden aspect-[5/1] w-full rounded-[16px] bg-foreground/20 lg:flex"></div>
           <div className="flex w-full flex-col items-center justify-between py-2 md:flex-row">
-            <div className="flex flex-row items-center justify-between gap-4">
+            <div className="flex flex-row items-center gap-4">
               <ProfilePicture></ProfilePicture>
               <div className="flex flex-col gap-2">
-                <p className="text-4xl font-bold">{user.user.username}</p>
+                <p className="text-2xl font-bold lg:text-4xl">
+                  {user.user.username}
+                </p>
                 <FollowInfo user={user.user}></FollowInfo>
                 <p className="text-sm text-foreground/50">
                   Member since {formattedDate}

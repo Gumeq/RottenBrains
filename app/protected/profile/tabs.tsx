@@ -122,8 +122,10 @@ const Tabs: React.FC<any> = () => {
         return (
           <>
             <div
-              className="hidden-scrollbar flex flex-row gap-4 overflow-x-auto"
-              id={"user_posts"}
+              className="grid w-full gap-4"
+              style={{
+                gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
+              }}
             >
               {userPosts.length > 0 && (
                 <>
