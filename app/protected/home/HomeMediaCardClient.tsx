@@ -71,7 +71,7 @@ const HomeMediaCardClient: React.FC<MediaCardProps> = ({
     return (
       <>
         <div className="flex flex-col">
-          <div className="mb-4 flex aspect-[16/9] w-screen flex-col rounded-[16px] bg-foreground/20 lg:mb-0 lg:w-auto lg:min-w-[400px] lg:max-w-[550px]"></div>
+          <div className="mb-4 flex aspect-[16/9] w-screen flex-col bg-foreground/20 lg:mb-0 lg:w-auto lg:min-w-[400px] lg:max-w-[550px] lg:rounded-[16px]"></div>
           <div className="h-14 w-screen lg:w-full lg:min-w-[400px] lg:max-w-[550px]"></div>
         </div>
       </>
