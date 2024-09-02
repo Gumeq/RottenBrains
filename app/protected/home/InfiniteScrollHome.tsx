@@ -110,7 +110,7 @@ const InfiniteScrollHome = ({ user_id }: any) => {
               gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
             }}
           >
-            {Array.from({ length: 8 }).map((_, index) => (
+            {Array.from({ length: 20 }).map((_, index) => (
               <div key={index} className="flex flex-col">
                 <div className="mb-4 flex aspect-[16/9] w-screen flex-col rounded-[16px] bg-foreground/20 lg:mb-0 lg:w-auto lg:min-w-[400px] lg:max-w-[550px]"></div>
                 <div className="h-14 w-screen lg:w-full lg:min-w-[400px] lg:max-w-[550px]"></div>
