@@ -75,7 +75,6 @@ const ProfilePage = async () => {
                     media_id={media.media_id}
                     season_number={media.season_number}
                     episode_number={media.episode_number}
-                    percentage_watched={parseFloat(media.percentage_watched)}
                   ></HomeMediaCard>
                 </div>
               );
