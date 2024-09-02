@@ -1,9 +1,11 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import MoreOptions from "./MoreOptions";
 import { formatDate, transformRuntime } from "@/lib/functions";
 import { getWatchTime } from "@/utils/supabase/queries";
 import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
-import Link from "next/link";
-import React from "react";
-import MoreOptions from "./MoreOptions";
 
 interface MediaCardProps {
   media_type: string;
@@ -14,7 +16,7 @@ interface MediaCardProps {
   user_id: string;
 }
 
-const HomeMediaCard: React.FC<MediaCardProps> = async ({
+const HomeMediaCardClient: React.FC<MediaCardProps> = ({
   media_type,
   media_id,
   season_number,
@@ -22,24 +24,59 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
   quality,
   user_id,
 }) => {
-  let media: any;
-  if (media_type === "movie") {
-    media = await getMediaDetails(media_type, media_id);
-  } else {
-    if (season_number && episode_number) {
-      media = await getEpisodeDetails(media_id, season_number, episode_number);
-    } else {
-      media = await getMediaDetails(media_type, media_id);
-    }
-  }
+  const [media, setMedia] = useState<any>(null);
+  const [watchTime, setWatchTime] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const watchTime = await getWatchTime(
-    user_id,
-    media_type,
-    media_id,
-    season_number,
-    episode_number,
-  );
+  useEffect(() => {
+    const fetchMediaData = async () => {
+      try {
+        let fetchedMedia;
+        if (media_type === "movie") {
+          fetchedMedia = await getMediaDetails(media_type, media_id);
+        } else {
+          if (season_number && episode_number) {
+            fetchedMedia = await getEpisodeDetails(
+              media_id,
+              season_number,
+              episode_number,
+            );
+          } else {
+            fetchedMedia = await getMediaDetails(media_type, media_id);
+          }
+        }
+
+        setMedia(fetchedMedia);
+
+        const fetchedWatchTime = await getWatchTime(
+          user_id,
+          media_type,
+          media_id,
+          season_number,
+          episode_number,
+        );
+        setWatchTime(fetchedWatchTime || 0);
+      } catch (err) {
+        setError("Failed to load media data.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMediaData();
+  }, [media_type, media_id, season_number, episode_number, user_id]);
+
+  if (loading)
+    return (
+      <>
+        <div className="flex flex-col">
+          <div className="mb-4 flex aspect-[16/9] w-screen flex-col rounded-[16px] bg-foreground/20 lg:mb-0 lg:w-auto lg:min-w-[400px] lg:max-w-[550px]"></div>
+          <div className="h-14 w-screen lg:w-full lg:min-w-[400px] lg:max-w-[550px]"></div>
+        </div>
+      </>
+    );
+  if (error) return <div>{error}</div>;
 
   let genreIds = [];
   if (media?.genres && Array.isArray(media.genres)) {
@@ -47,7 +84,7 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
   }
 
   return (
-    <div className="mb-4 flex w-full flex-col lg:mb-0 lg:min-w-[400px] lg:max-w-[550px]">
+    <div className="mb-4 flex w-screen flex-col lg:mb-0 lg:w-full lg:min-w-[400px] lg:max-w-[550px]">
       <Link
         className="relative overflow-hidden lg:rounded-[16px]"
         href={
@@ -59,23 +96,20 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
         }
       >
         <div className="absolute bottom-0 right-0 m-2 flex flex-row-reverse gap-2">
-          {media.runtime && (
+          {media.runtime ? (
             <div className="rounded-[14px] bg-black/50 px-2 py-1 text-xs text-white">
               {transformRuntime(media.runtime)}
             </div>
+          ) : (
+            <div></div>
           )}
           <div className="rounded-[14px] bg-black/50 px-2 py-1 text-xs text-white">
             {media.vote_average.toFixed(1)} / 10
           </div>
-          {quality && (
-            <div className="rounded-[14px] bg-black/50 px-2 py-1 text-xs text-white">
-              {quality}
-            </div>
-          )}
         </div>
 
         {/* Display the progress bar only if percentage_watched is valid */}
-        {watchTime && (
+        {watchTime !== 0 && (
           <div
             className="absolute bottom-0 left-0 h-1 bg-accent"
             style={{
@@ -139,4 +173,4 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
   );
 };
 
-export default HomeMediaCard;
+export default HomeMediaCardClient;

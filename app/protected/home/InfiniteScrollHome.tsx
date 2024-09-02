@@ -13,6 +13,7 @@ import {
   getTvRecommendationsForUser,
 } from "@/lib/recommendations";
 import HomeMediaCard from "./HomeMediaCard";
+import HomeMediaCardClient from "./HomeMediaCardClient";
 
 const InfiniteScrollHome = ({ user_id }: any) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -33,12 +34,38 @@ const InfiniteScrollHome = ({ user_id }: any) => {
       if (inView && hasMore && !loading) {
         setLoading(true);
         try {
-          const result = await getMovieRecommendationsForUser(user_id, page);
-          const res = result.results;
-          if (res.length === 0) {
+          const resultMovies = await getMovieRecommendationsForUser(
+            user_id,
+            page,
+          );
+          const resMovies = resultMovies.results.map((movie: any) => ({
+            ...movie,
+            media_type: "movie", // Add a media_type property to indicate it's a movie
+          }));
+
+          const resultTv = await getTvRecommendationsForUser(user_id, page);
+          const resTv = resultTv.results.map((tvShow: any) => ({
+            ...tvShow,
+            media_type: "tv", // Add a media_type property to indicate it's a tv show
+          }));
+
+          // Combine the two arrays into one
+          const combinedResults = [...resMovies, ...resTv];
+
+          // Fisher-Yates shuffle to shuffle the combined array
+          const shuffleArray = (array: any) => {
+            for (let i = array.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+          };
+
+          const shuffledResults = shuffleArray(combinedResults);
+          if (shuffledResults.length === 0) {
             setHasMore(false); // No more posts to load
           } else {
-            setMedia((prevMedia: any) => [...prevMedia, ...res]);
+            setMedia((prevMedia: any) => [...prevMedia, ...shuffledResults]);
             setPage((prevPage) => prevPage + 1);
           }
         } catch (error) {
@@ -54,25 +81,44 @@ const InfiniteScrollHome = ({ user_id }: any) => {
 
   return (
     <div
-      className="flex w-full flex-col justify-center gap-4 p-2"
+      className="flex w-full flex-col justify-center gap-4 lg:p-2"
       ref={targetRef}
     >
-      <div className="mx-auto grid w-full grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <div
+        className="grid gap-4"
+        style={{
+          gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
+        }}
+      >
         {media && media.length > 0 ? (
           media.map((media: any) => (
-            <Suspense fallback={<Loader></Loader>}>
-              <HomeMediaCard
-                media_type={"movie"}
-                media_id={media.id}
-                user_id={user_id}
-              ></HomeMediaCard>
-            </Suspense>
+            <HomeMediaCardClient
+              media_type={media.media_type}
+              media_id={media.id}
+              user_id={user_id}
+            ></HomeMediaCardClient>
           ))
         ) : (
           <p>Error</p>
         )}
       </div>
-      {loading && <Loader></Loader>}
+      {loading && (
+        <>
+          <div
+            className="grid gap-4"
+            style={{
+              gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
+            }}
+          >
+            {Array.from({ length: 8 }).map((_, index) => (
+              <div key={index} className="flex flex-col">
+                <div className="mb-4 flex aspect-[16/9] w-screen flex-col rounded-[16px] bg-foreground/20 lg:mb-0 lg:w-auto lg:min-w-[400px] lg:max-w-[550px]"></div>
+                <div className="h-14 w-screen lg:w-full lg:min-w-[400px] lg:max-w-[550px]"></div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
       {!loading && hasMore && <div ref={ref}></div>}
     </div>
   );

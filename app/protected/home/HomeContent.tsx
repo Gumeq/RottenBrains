@@ -90,7 +90,6 @@ const HomeContent = async () => {
                     media_id={media.media_id}
                     season_number={media.season_number}
                     episode_number={media.episode_number}
-                    percentage_watched={parseFloat(media.percentage_watched)}
                   ></HomeMediaCard>
                 </div>
               );
@@ -257,7 +256,7 @@ const HomeContent = async () => {
               })}
         </div>
       </div> */}
-      {/* <InfiniteScrollHome user_id={user.user.id}></InfiniteScrollHome> */}
+      <InfiniteScrollHome user_id={user.user.id}></InfiniteScrollHome>
       <div className="h-16 w-full"></div>
     </div>
   );
