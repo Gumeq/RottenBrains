@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 
 interface WatchDurationProps {
   media_type: string;
@@ -21,83 +21,107 @@ const WatchDuration: React.FC<WatchDurationProps> = ({
   media_duration,
 }) => {
   const pathname = usePathname();
+  const [totalTime, setTotalTime] = useState(0);
+  const startTimeRef = useRef<number | null>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
-    let startTime = new Date();
+  const startTracking = () => {
+    startTimeRef.current = Date.now();
+    intervalRef.current = setInterval(() => {
+      setTotalTime((prevTime) => prevTime + 1);
+    }, 1000);
+  };
 
-    const sendWatchData = () => {
-      const endTime = new Date();
-      const timeSpent = Math.floor(
-        (endTime.getTime() - startTime.getTime()) / 1000,
+  const stopTracking = () => {
+    if (startTimeRef.current && intervalRef.current) {
+      const endTime = Date.now();
+      const sessionTime = Math.floor((endTime - startTimeRef.current) / 1000);
+      setTotalTime((prevTime) => prevTime + sessionTime);
+      clearInterval(intervalRef.current);
+      startTimeRef.current = null;
+    }
+  };
+
+  const sendWatchData = () => {
+    if (totalTime >= 60) {
+      // Only send if at least a minute has passed
+      const percentageWatched = Math.min(
+        (totalTime / (media_duration * 60)) * 100,
+        100,
       );
 
-      // Only proceed if at least a minute has passed
-      if (timeSpent >= 60) {
-        // Calculate the percentage watched based on media duration
-        const totalMediaSeconds = media_duration * 60; // Convert media duration from minutes to seconds
-        const percentageWatched = Math.min(
-          (timeSpent / totalMediaSeconds) * 100,
-          100,
-        );
+      console.log("Sending watch time data:", {
+        user_id,
+        media_type,
+        media_id,
+        time_spent: totalTime,
+        percentage_watched: percentageWatched.toFixed(2),
+      });
 
-        console.log("Sending watch time data:", {
+      navigator.sendBeacon(
+        "/api/saveWatchTime",
+        JSON.stringify({
           user_id,
           media_type,
           media_id,
-          time_spent: timeSpent,
+          season_number,
+          episode_number,
+          time_spent: totalTime,
           percentage_watched: percentageWatched.toFixed(2),
-        });
+        }),
+      );
 
-        // Send the data to the server
-        navigator.sendBeacon(
-          "/api/saveWatchTime",
-          JSON.stringify({
-            user_id,
-            media_type,
-            media_id,
-            season_number,
-            episode_number,
-            time_spent: timeSpent,
-            percentage_watched: percentageWatched.toFixed(2),
-          }),
-        );
+      setTotalTime(0); // Reset total time after sending
+    } else {
+      console.log("Less than a minute has passed. No data sent.");
+    }
+  };
 
-        // Reset startTime to now
-        startTime = new Date();
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        stopTracking();
+        sendWatchData();
       } else {
-        console.log("Less than a minute has passed. No data sent.");
+        startTracking();
       }
     };
 
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "hidden") {
-        sendWatchData();
+    const handleFocus = () => {
+      if (!startTimeRef.current) {
+        startTracking();
       }
+    };
+
+    const handleBlur = () => {
+      stopTracking();
+      sendWatchData();
     };
 
     const handleBeforeUnload = () => {
+      stopTracking();
       sendWatchData();
     };
 
+    // Start tracking when component mounts
+    startTracking();
+
+    // Add event listeners
     document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("focus", handleFocus);
+    window.addEventListener("blur", handleBlur);
     window.addEventListener("beforeunload", handleBeforeUnload);
 
+    // Clean up function
     return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-
-      // Trigger data send on component unmount, like when navigating to a different route
+      stopTracking();
       sendWatchData();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("focus", handleFocus);
+      window.removeEventListener("blur", handleBlur);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, [
-    media_type,
-    media_id,
-    user_id,
-    media_duration,
-    season_number,
-    episode_number,
-    pathname, // This will trigger the effect to run when the route changes
-  ]);
+  }, [pathname]); // Re-run effect when the path changes
 
   return null;
 };
