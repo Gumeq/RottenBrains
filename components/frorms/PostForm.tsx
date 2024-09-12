@@ -1,10 +1,7 @@
 "use client";
 
-import { IMedia, IPost } from "@/types";
 import React, { useEffect, useState } from "react";
-import fetchUserData from "@/utils/clientFunctions/fetchUserData";
 import { createClient } from "@/utils/supabase/client";
-import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
 import SearchBar from "../searchBar/SearchBar";
 import { getMediaDetails } from "@/utils/tmdb";

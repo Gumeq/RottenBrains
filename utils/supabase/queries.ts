@@ -343,6 +343,55 @@ export const uploadProfilePicture = async (
   }
 };
 
+export const uploadBackdropPicture = async (
+  file: File,
+  userId: string | undefined,
+) => {
+  if (!userId) {
+    console.error("User not found or not authenticated");
+    return false;
+  }
+
+  // Validate MIME type
+  const validMimeTypes = ["image/jpeg", "image/png", "image/gif"];
+  if (!validMimeTypes.includes(file.type)) {
+    console.error(`Unsupported MIME type: ${file.type}`);
+    return false;
+  }
+
+  try {
+    const fileName = `${userId}/${Date.now()}`;
+    const { data, error } = await supabase.storage
+      .from("backdrop_pictures")
+      .upload(fileName, file, {
+        cacheControl: "3600",
+        upsert: false,
+      });
+
+    if (error) {
+      throw error;
+    }
+
+    const { data: publicURL } = supabase.storage
+      .from("backdrop_pictures")
+      .getPublicUrl(fileName);
+
+    const { data: updateData, error: updateError } = await supabase
+      .from("users")
+      .update({ backdrop_url: publicURL.publicUrl })
+      .eq("id", userId);
+
+    if (updateError) {
+      throw updateError;
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Error uploading profile picture:", error);
+    return false;
+  }
+};
+
 export async function getFollowers(id: string): Promise<any | null> {
   try {
     const {

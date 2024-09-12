@@ -14,7 +14,8 @@ import {
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
-const Tabs: React.FC<any> = () => {
+const Tabs: React.FC<any> = (user: any) => {
+  user = user.user;
   const [activeTab, setActiveTab] = useState("posts");
 
   const [userPosts, setUserPosts] = useState<any[]>([]);
@@ -34,8 +35,6 @@ const Tabs: React.FC<any> = () => {
   const [hasMoreSaves, setHasMoreSaves] = useState<boolean>(true);
   const [loadingSaves, setLoadingSaves] = useState<boolean>(false);
   const { ref: refSaves, inView: inViewSaves } = useInView();
-
-  const { user } = useUser();
 
   useEffect(() => {
     const loadMore = async () => {
@@ -245,7 +244,6 @@ const Tabs: React.FC<any> = () => {
           />
           <h2 className="text-xl font-bold">New posts</h2>
         </div>
-        <ScrollButtons containerId="user_posts"></ScrollButtons>
       </div>
       <div className="mt-4 w-full">{renderContent("posts")}</div>
     </div>
