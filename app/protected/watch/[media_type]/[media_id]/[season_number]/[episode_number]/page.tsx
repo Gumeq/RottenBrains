@@ -7,10 +7,11 @@ import HomePostCard from "@/components/post/HomePostCard";
 import HomePostCardNew from "@/components/post/HomePostCardNew";
 import TVShowDetails from "@/components/TVSeasons";
 import WatchDuration from "@/components/WatchDuration";
+import { getRelativeTime } from "@/lib/functions";
 import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
 import { getPostsOfMedia, upsertWatchHistory } from "@/utils/supabase/queries";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
-import { getMediaDetails } from "@/utils/tmdb";
+import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
 
 export async function generateMetadata({ params }: any) {
   const media_id = parseInt(params.media_id, 10);
@@ -64,6 +65,12 @@ export default async function mediaPage({
   }
 
   const media = await getMediaDetails(media_type, media_id);
+  const episode = await getEpisodeDetails(
+    media_id,
+    season_number,
+    episode_number,
+  );
+  console.log(episode);
 
   return (
     <>
@@ -78,11 +85,11 @@ export default async function mediaPage({
         />
       )}
       <div className="relative z-10 mx-auto mb-16 flex w-screen flex-col lg:w-[95vw] lg:max-w-[1700px]">
-        <div className="fixed z-20 flex h-16 w-screen flex-row items-center gap-4 bg-background px-4 lg:hidden">
+        <div className="fixed z-20 flex h-14 w-screen flex-row items-center gap-4 bg-background px-4 lg:hidden">
           <GoBackArrow />
           <p className="truncate text-lg">Watch {media.title || media.name}</p>
         </div>
-        <div className="mt-16 flex flex-col gap-4 md:flex-row lg:mt-4">
+        <div className="mt-14 flex flex-col gap-4 md:flex-row lg:mt-4">
           <div className="flex flex-col gap-4 lg:w-[75%]">
             <VideoEmbed
               media_type={media_type}
@@ -90,6 +97,12 @@ export default async function mediaPage({
               season_number={season_number}
               episode_number={episode_number}
             ></VideoEmbed>
+            <div className="hidden w-full flex-col gap-2 rounded-[16px] bg-foreground/10 p-4 text-sm lg:flex">
+              <p className="font-semibold">
+                {getRelativeTime(episode.air_date)}
+              </p>
+              <p>{episode.overview}</p>
+            </div>
             <div className="">
               {postsOfMedia && (
                 <div>
@@ -122,8 +135,8 @@ export default async function mediaPage({
                           id="user_posts"
                         >
                           {postsOfMedia?.slice(0, 9).map((post: any) => (
-                            <div>
-                              <HomePostCard post={post}></HomePostCard>
+                            <div className="w-[90vw] flex-shrink-0">
+                              <HomePostCardNew post={post}></HomePostCardNew>
                             </div>
                           ))}
                         </div>

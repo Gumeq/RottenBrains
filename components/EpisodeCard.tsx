@@ -112,12 +112,12 @@ const EpisodeCard = ({
         />
       </div>
       <div className="flex flex-col gap-2 px-2 lg:px-0">
-        <h3 className="text-lg">
+        <h3 className="text-lg lg:text-base">
           {episode.name}
           {" | "}
           {formatEpisodeCode(season_number, episode_number)}
         </h3>
-        <p className="text-sm text-foreground/50">
+        <p className="text-sm text-foreground/50 lg:text-sm">
           {getRelativeTime(episode.air_date)}
         </p>
         <p className="line-clamp-2 text-foreground/50 lg:hidden">

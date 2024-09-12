@@ -16,7 +16,7 @@ const RecommendedCard = async ({ media_id, media_type }: any) => {
         }
       >
         <div className="absolute bottom-0 right-0 m-2 flex flex-row-reverse gap-2">
-          <div className="rounded-[14px] bg-black/50 px-4 py-1 text-sm text-white">
+          <div className="rounded-[14px] bg-black/50 px-4 py-1 text-sm text-white lg:text-xs">
             {transformRuntime(media.runtime)}
           </div>
         </div>
@@ -34,9 +34,11 @@ const RecommendedCard = async ({ media_id, media_type }: any) => {
         />
       </Link>
       <div className="flex flex-col px-2 lg:px-0">
-        <h3 className="line-clamp-2 text-lg">{media.title || media.name}</h3>
+        <h3 className="line-clamp-2 text-lg lg:text-base">
+          {media.title || media.name}
+        </h3>
         <div className="flex flex-row items-center gap-4 opacity-50">
-          <p className="">
+          <p className="lg:text-sm">
             {getRelativeTime(media.release_date || media.first_air_date)}
           </p>
         </div>

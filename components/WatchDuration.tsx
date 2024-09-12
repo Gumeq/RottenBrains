@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 interface WatchDurationProps {
@@ -21,107 +21,74 @@ const WatchDuration: React.FC<WatchDurationProps> = ({
   media_duration,
 }) => {
   const pathname = usePathname();
-  const [totalTime, setTotalTime] = useState(0);
-  const startTimeRef = useRef<number | null>(null);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-
-  const startTracking = () => {
-    startTimeRef.current = Date.now();
-    intervalRef.current = setInterval(() => {
-      setTotalTime((prevTime) => prevTime + 1);
-    }, 1000);
-  };
-
-  const stopTracking = () => {
-    if (startTimeRef.current && intervalRef.current) {
-      const endTime = Date.now();
-      const sessionTime = Math.floor((endTime - startTimeRef.current) / 1000);
-      setTotalTime((prevTime) => prevTime + sessionTime);
-      clearInterval(intervalRef.current);
-      startTimeRef.current = null;
-    }
-  };
-
-  const sendWatchData = () => {
-    if (totalTime >= 60) {
-      // Only send if at least a minute has passed
-      const percentageWatched = Math.min(
-        (totalTime / (media_duration * 60)) * 100,
-        100,
-      );
-
-      console.log("Sending watch time data:", {
-        user_id,
-        media_type,
-        media_id,
-        time_spent: totalTime,
-        percentage_watched: percentageWatched.toFixed(2),
-      });
-
-      navigator.sendBeacon(
-        "/api/saveWatchTime",
-        JSON.stringify({
-          user_id,
-          media_type,
-          media_id,
-          season_number,
-          episode_number,
-          time_spent: totalTime,
-          percentage_watched: percentageWatched.toFixed(2),
-        }),
-      );
-
-      setTotalTime(0); // Reset total time after sending
-    } else {
-      console.log("Less than a minute has passed. No data sent.");
-    }
-  };
 
   useEffect(() => {
+    let startTime = Date.now();
+    let accumulatedTime = 0;
+
+    const sendWatchData = () => {
+      const currentTime = Date.now();
+      const sessionTime = Math.floor((currentTime - startTime) / 1000);
+      accumulatedTime += sessionTime;
+
+      // Only proceed if at least a minute has passed in total
+      if (accumulatedTime >= 60) {
+        const totalMediaSeconds = media_duration * 60;
+        const percentageWatched = Math.min(
+          (accumulatedTime / totalMediaSeconds) * 100,
+          100,
+        );
+
+        navigator.sendBeacon(
+          "/api/saveWatchTime",
+          JSON.stringify({
+            user_id,
+            media_type,
+            media_id,
+            season_number,
+            episode_number,
+            time_spent: accumulatedTime,
+            percentage_watched: percentageWatched.toFixed(2),
+          }),
+        );
+
+        // Reset accumulated time after sending
+        accumulatedTime = 0;
+      }
+
+      // Reset start time for the next session
+      startTime = currentTime;
+    };
+
     const handleVisibilityChange = () => {
-      if (document.hidden) {
-        stopTracking();
+      if (document.visibilityState === "hidden") {
         sendWatchData();
       } else {
-        startTracking();
+        startTime = Date.now(); // Reset start time when becoming visible
       }
     };
 
-    const handleFocus = () => {
-      if (!startTimeRef.current) {
-        startTracking();
-      }
-    };
-
-    const handleBlur = () => {
-      stopTracking();
-      sendWatchData();
-    };
-
-    const handleBeforeUnload = () => {
-      stopTracking();
-      sendWatchData();
-    };
-
-    // Start tracking when component mounts
-    startTracking();
-
-    // Add event listeners
     document.addEventListener("visibilitychange", handleVisibilityChange);
-    window.addEventListener("focus", handleFocus);
-    window.addEventListener("blur", handleBlur);
-    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("beforeunload", sendWatchData);
 
-    // Clean up function
+    // Periodic update every 5 minutes
+    const intervalId = setInterval(sendWatchData, 5 * 60 * 1000);
+
     return () => {
-      stopTracking();
-      sendWatchData();
       document.removeEventListener("visibilitychange", handleVisibilityChange);
-      window.removeEventListener("focus", handleFocus);
-      window.removeEventListener("blur", handleBlur);
-      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("beforeunload", sendWatchData);
+      clearInterval(intervalId);
+      sendWatchData(); // Final update on unmount
     };
-  }, [pathname]); // Re-run effect when the path changes
+  }, [
+    media_type,
+    media_id,
+    user_id,
+    media_duration,
+    season_number,
+    episode_number,
+    pathname,
+  ]);
 
   return null;
 };

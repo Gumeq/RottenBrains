@@ -83,7 +83,7 @@ const HomeContent = async () => {
           {filteredWatchHistory &&
             filteredWatchHistory.slice(0, 20).map((media: any) => {
               return (
-                <div className="inline-block h-auto w-[80vw] flex-shrink-0 lg:inline lg:w-auto">
+                <div className="w-[80vw] flex-shrink-0 lg:inline lg:w-auto">
                   <HomeMediaCard
                     user_id={user.user.id}
                     media_type={media.media_type}
@@ -118,7 +118,7 @@ const HomeContent = async () => {
               followed_posts_one.map((post: any) => {
                 return (
                   <>
-                    <div className="flex w-[400px] flex-shrink-0 lg:w-fit">
+                    <div className="flex w-[90vw] flex-shrink-0 lg:w-fit">
                       <HomePostCardNew post={post}></HomePostCardNew>
                     </div>
                   </>
@@ -127,28 +127,6 @@ const HomeContent = async () => {
           </div>
         </div>
       </div>
-      <div>
-        <div className="mb-4 flex flex-row items-center gap-2 px-2 lg:p-0">
-          <img
-            src="/assets/icons/movie-outline.svg"
-            alt=""
-            className="invert-on-dark"
-          />
-          <h2 className="text-xl font-bold">Now in cinemas</h2>
-        </div>
-        <div className="grid grid-cols-2 gap-4 px-4 lg:grid-cols-4 lg:p-0 2xl:grid-cols-8">
-          {now_in_cinemas &&
-            now_in_cinemas.results.slice(0, 8).map((media: any) => {
-              return (
-                <HomeMediaCardDisplay
-                  media={media}
-                  media_type={"movie"}
-                ></HomeMediaCardDisplay>
-              );
-            })}
-        </div>
-      </div>
-
       <div>
         <div
           className="grid gap-4"
@@ -191,7 +169,7 @@ const HomeContent = async () => {
               followed_posts_two.map((post: any) => {
                 return (
                   <>
-                    <div className="flex w-[400px] flex-shrink-0 lg:w-fit">
+                    <div className="flex w-[90vw] flex-shrink-0 lg:w-fit">
                       <HomePostCardNew post={post}></HomePostCardNew>
                     </div>
                   </>
@@ -219,43 +197,6 @@ const HomeContent = async () => {
             })}
         </div>
       </div>
-      <div>
-        <div className="mb-4 flex flex-row items-center gap-2 px-2 lg:px-0">
-          <img
-            src="/assets/icons/tv-outline.svg"
-            alt=""
-            className="invert-on-dark"
-          />
-          <h2 className="text-xl font-bold">Trending tv shows</h2>
-        </div>
-        <div className="grid grid-cols-2 gap-4 px-4 lg:grid-cols-4 lg:p-0 2xl:grid-cols-8">
-          {trending_tv &&
-            trending_tv.results.slice(0, 8).map((media: any) => {
-              return (
-                <HomeMediaCardDisplay
-                  media={media}
-                  media_type={"movie"}
-                ></HomeMediaCardDisplay>
-              );
-            })}
-        </div>
-      </div>
-      {/* <div>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {recommendations.length > 40 &&
-            recommendations
-              .slice(40, recommendations.length)
-              .map((media: any) => {
-                return (
-                  <HomeMediaCard
-                    user_id={user.user.id}
-                    media_type={"movie"}
-                    media_id={media.id}
-                  ></HomeMediaCard>
-                );
-              })}
-        </div>
-      </div> */}
       <InfiniteScrollHome user_id={user.user.id}></InfiniteScrollHome>
       <div className="h-16 w-full"></div>
     </div>

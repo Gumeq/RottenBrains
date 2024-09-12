@@ -10,8 +10,8 @@ const Bottombar = () => {
   const pathname = usePathname();
 
   return (
-    <div className="fixed bottom-0 z-50 flex w-screen items-center justify-center drop-shadow-xl lg:hidden">
-      <ul className="relative flex h-14 w-full flex-row items-center justify-between border-t border-foreground/20 bg-background px-4 drop-shadow-xl">
+    <div className="fixed bottom-0 z-50 flex h-14 w-screen items-center justify-center drop-shadow-xl lg:hidden">
+      <ul className="relative flex h-14 w-full flex-row items-center justify-between border-t border-foreground/20 bg-background px-8 drop-shadow-xl">
         <li>
           <Link href={"/protected/home"} className="flex flex-col items-center">
             <img
@@ -21,7 +21,7 @@ const Bottombar = () => {
               height={25}
               className="invert-on-dark"
             ></img>
-            <p className="text-sm">Home</p>
+            <p className="text-xs">Home</p>
           </Link>
         </li>
         <li>
@@ -36,39 +36,51 @@ const Bottombar = () => {
               height={25}
               className="invert-on-dark"
             ></img>
-            <p className="text-sm">Explore</p>
+            <p className="text-xs">Explore</p>
           </Link>
         </li>
-        <Link
-          className="shadow_plus absolute left-1/2 top-[30%] flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 transform items-center justify-center rounded-full border border-foreground/20 bg-background"
-          href={"/protected/create-post"}
-        >
-          <img
-            src="/assets/icons/plus.svg"
-            alt="Create Post"
-            className="invert-on-dark h-10 w-10"
-          />
-        </Link>
-
-        <li className="h-full w-[50px]"></li>
-
-        <li className="flex flex-col items-center rounded-full">
-          <NotificationButton />
-          <p className="text-sm">Notifs</p>
+        <li>
+          <Link
+            href={"/protected/create-post"}
+            className="flex flex-col items-center rounded-full border border-foreground"
+          >
+            <img
+              src="/assets/icons/plus.svg"
+              alt="Explore"
+              width={35}
+              height={35}
+              className="invert-on-dark"
+            ></img>
+          </Link>
+        </li>
+        <li>
+          <Link
+            href={"/protected/watch-list"}
+            className="flex flex-col items-center"
+          >
+            <img
+              src="/assets/icons/folder-outline.svg"
+              alt="Explore"
+              width={25}
+              height={25}
+              className="invert-on-dark"
+            ></img>
+            <p className="text-xs">Lists</p>
+          </Link>
         </li>
         <li>
           <Link
             href={"/protected/profile"}
-            className="flex min-h-[45px] min-w-[45px] flex-col items-center"
+            className="flex flex-col items-center"
           >
             <img
               src={user?.image_url}
               alt="You"
               width={25}
               height={25}
-              className="overflow-hidden rounded-full border border-foreground/30 drop-shadow-xl"
+              className="overflow-hidden rounded-full"
             ></img>
-            <p className="text-sm">You</p>
+            <p className="text-xs">You</p>
           </Link>
         </li>
       </ul>

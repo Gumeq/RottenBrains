@@ -12,6 +12,7 @@ import Link from "next/link";
 import WatchDuration from "@/components/WatchDuration";
 import HomePostCardNew from "@/components/post/HomePostCardNew";
 import ScrollButtons from "@/components/explore/ScrollButtons";
+import { getRelativeTime } from "@/lib/functions";
 
 export async function generateMetadata({ params }: any) {
   const media_id = parseInt(params.media_id, 10);
@@ -67,16 +68,22 @@ export default async function mediaPage({
         />
       )}
       <div className="relative z-10 mx-auto mb-16 flex w-screen flex-col lg:w-[95vw] lg:max-w-[1700px]">
-        <div className="fixed z-20 flex h-16 w-screen flex-row items-center gap-4 bg-background px-4 lg:hidden">
+        <div className="fixed z-20 flex h-14 w-screen flex-row items-center gap-4 bg-background px-4 lg:hidden">
           <GoBackArrow />
           <p className="truncate text-lg">Watch {media.title || media.name}</p>
         </div>
-        <div className="mt-16 flex flex-col gap-4 md:flex-row lg:mt-4">
+        <div className="mt-14 flex flex-col gap-4 md:flex-row lg:mt-4">
           <div className="flex flex-col gap-4 lg:w-[75%]">
             <VideoEmbed
               media_type={media_type}
               media_id={media_id}
             ></VideoEmbed>
+            <div className="hidden w-full flex-col gap-2 rounded-[16px] bg-foreground/10 p-4 text-sm lg:flex">
+              <p className="font-semibold">
+                {getRelativeTime(media.release_date)}
+              </p>
+              <p>{media.overview}</p>
+            </div>
             <div className="">
               {postsOfMedia && (
                 <div>
@@ -85,14 +92,16 @@ export default async function mediaPage({
                       <div className="flex flex-row items-center justify-between">
                         <div className="flex flex-row items-center gap-2">
                           {/* <div className="w-[24px] h-[24px] rounded-full bg-accent "></div> */}
-                          <h2 className="text-xl font-bold">User posts</h2>
+                          <h2 className="px-2 text-xl font-bold lg:p-0">
+                            User posts
+                          </h2>
                         </div>
                         <ScrollButtons
                           containerId="user_posts"
                           scrollPercent={30}
                         ></ScrollButtons>
                       </div>
-                      <div className="relative">
+                      <div className="relative px-2 lg:px-0">
                         <div className="gradient-edge absolute right-0 top-0 z-10 h-full w-[5%]"></div>
                         <div
                           className="hidden-scrollbar hidden flex-row flex-nowrap gap-4 overflow-x-auto pb-2 lg:flex"
@@ -109,8 +118,8 @@ export default async function mediaPage({
                           id="user_posts"
                         >
                           {postsOfMedia?.slice(0, 9).map((post: any) => (
-                            <div>
-                              <HomePostCard post={post}></HomePostCard>
+                            <div className="w-[90vw] flex-shrink-0">
+                              <HomePostCardNew post={post}></HomePostCardNew>
                             </div>
                           ))}
                         </div>

@@ -474,18 +474,9 @@ export const upsertWatchHistory = async (
   episode_number: number | null,
 ) => {
   try {
-    console.log("Starting upsertWatchHistory...");
-    console.log("Received parameters:", {
-      user_id,
-      media_type,
-      media_id,
-      new_time_spent,
-      new_percentage_watched,
-      season_number,
-      episode_number,
-    });
+    const newPercentageFloat = parseFloat(new_percentage_watched);
 
-    // Check if the item already exists (do not change this part)
+    // Check if the item already exists
     const { data: exists, error: checkError } = await supabase.rpc(
       "check_watch_history_exists",
       {
@@ -497,18 +488,9 @@ export const upsertWatchHistory = async (
       },
     );
 
-    if (checkError) {
-      console.error("Error checking existence:", checkError.message);
-      throw new Error(checkError.message);
-    }
-
-    console.log("Exists:", exists);
-
-    const newPercentageFloat = parseFloat(new_percentage_watched);
+    if (checkError) throw new Error(checkError.message);
 
     if (exists) {
-      console.log("Record exists. Accumulating values...");
-
       // Fetch the current record to get existing values
       const { data: currentData, error: fetchError } = await supabase
         .from("watch_history")
@@ -517,42 +499,23 @@ export const upsertWatchHistory = async (
           user_id,
           media_type,
           media_id,
-          ...(media_type === "tv" && {
-            season_number,
-            episode_number,
-          }),
+          ...(media_type === "tv" && { season_number, episode_number }),
         })
         .single();
 
-      if (fetchError) {
-        console.error(
-          "Error fetching current watch history:",
-          fetchError.message,
-        );
-        throw new Error(fetchError.message);
-      }
+      if (fetchError) throw new Error(fetchError.message);
 
       const current_time_spent = currentData?.time_spent || 0;
       const current_percentage_watched = parseFloat(
         currentData?.percentage_watched || "0",
       );
 
-      // Check if the percentage change is greater than 5%
-
-      if (newPercentageFloat < 2) {
-        console.log("Percentage change is less than 2%. No update necessary.");
-        return { success: true, action: "no_update" };
-      }
-
       // Accumulate the values
       const updated_time_spent = current_time_spent + new_time_spent;
-      let updated_percentage_watched =
-        current_percentage_watched + newPercentageFloat;
-
-      // Ensure percentage_watched does not exceed 100%
-      if (updated_percentage_watched > 100) {
-        updated_percentage_watched = 100;
-      }
+      const updated_percentage_watched = Math.min(
+        current_percentage_watched + newPercentageFloat,
+        100,
+      );
 
       // Define the update data
       const updateData: any = {
@@ -561,13 +524,12 @@ export const upsertWatchHistory = async (
         created_at: new Date().toISOString(),
       };
 
-      // Conditionally include season_number and episode_number in the update
       if (media_type === "tv") {
         updateData.season_number = season_number;
         updateData.episode_number = episode_number;
       }
 
-      // Perform the update using the updated data
+      // Perform the update
       const { error: updateError } = await supabase
         .from("watch_history")
         .update(updateData)
@@ -575,28 +537,14 @@ export const upsertWatchHistory = async (
           user_id,
           media_type,
           media_id,
-          ...(media_type === "tv" && {
-            season_number,
-            episode_number,
-          }),
+          ...(media_type === "tv" && { season_number, episode_number }),
         });
 
-      if (updateError) {
-        console.error("Error updating watch history:", updateError.message);
-        throw new Error(updateError.message);
-      }
+      if (updateError) throw new Error(updateError.message);
 
-      console.log("Update successful. Values accumulated.");
       return { success: true, action: "updated" };
     } else {
-      // For a new record, check if the new_percentage_watched is greater than 5%
-      if (newPercentageFloat < 2) {
-        console.log("New percentage is less than 2%. No insertion necessary.");
-        return { success: true, action: "no_insert" };
-      }
-
-      console.log("Record does not exist. Inserting new row...");
-      // If the item does not exist, insert a new row with the initial values
+      // Insert a new row with the initial values
       const { error: insertError } = await supabase
         .from("watch_history")
         .insert([
@@ -612,12 +560,8 @@ export const upsertWatchHistory = async (
           },
         ]);
 
-      if (insertError) {
-        console.error("Error inserting watch history:", insertError.message);
-        throw new Error(insertError.message);
-      }
+      if (insertError) throw new Error(insertError.message);
 
-      console.log("Insert successful.");
       return { success: true, action: "inserted" };
     }
   } catch (error) {

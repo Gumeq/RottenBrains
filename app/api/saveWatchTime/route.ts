@@ -1,4 +1,3 @@
-// app/api/saveWatchTime/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { upsertWatchHistory } from "@/utils/supabase/queries";
 
@@ -15,17 +14,15 @@ interface WatchTimeData {
 export async function POST(req: NextRequest) {
   try {
     const data: WatchTimeData = await req.json();
-    console.log("Received data on server:", data);
 
-    // Call the upsert function with appropriate handling for optional fields
     const result = await upsertWatchHistory(
       data.user_id,
       data.media_type,
       data.media_id,
       data.time_spent,
       data.percentage_watched,
-      data.season_number ?? null, // Pass null if season_number is undefined
-      data.episode_number ?? null, // Pass null if episode_number is undefined
+      data.season_number ?? null,
+      data.episode_number ?? null,
     );
 
     return NextResponse.json({
@@ -35,7 +32,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error("Error saving watch time:", error);
     return NextResponse.json(
-      { message: "Error saving watch time", error: error },
+      { message: "Error saving watch time" },
       { status: 500 },
     );
   }
