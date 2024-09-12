@@ -8,6 +8,7 @@ import FollowButton from "@/components/post/FollowButton";
 import { getWatchHistoryForUser } from "@/utils/supabase/queries";
 import ScrollButtons from "@/components/explore/ScrollButtons";
 import HomeMediaCard from "../home/HomeMediaCard";
+import Link from "next/link";
 
 const ProfilePage = async () => {
   const user = await getCurrentUser();
@@ -39,9 +40,19 @@ const ProfilePage = async () => {
             <div className="flex flex-row items-center gap-4">
               <ProfilePicture></ProfilePicture>
               <div className="flex flex-col gap-2">
-                <p className="text-2xl font-bold lg:text-4xl">
-                  {user.user.username}
-                </p>
+                <div className="flex flex-row items-center gap-2">
+                  <p className="text-2xl font-bold lg:text-4xl">
+                    {user.user.username}
+                  </p>
+                  <Link href={"/protected/settings"}>
+                    <img
+                      src="/assets/icons/settings-outline.svg"
+                      alt=""
+                      className="invert-on-dark"
+                    />
+                  </Link>
+                </div>
+
                 <FollowInfo user={user.user}></FollowInfo>
                 <p className="text-sm text-foreground/50">
                   Member since {formattedDate}
