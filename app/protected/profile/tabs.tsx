@@ -130,7 +130,7 @@ const Tabs: React.FC<any> = () => {
               {userPosts.length > 0 && (
                 <>
                   {userPosts.map((post: any) => (
-                    <div key={post.id} className="w-[98vw]">
+                    <div key={post.id} className="w-[98vw] lg:w-fit">
                       <HomePostCardNew post={post} />
                     </div>
                   ))}
