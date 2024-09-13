@@ -137,12 +137,14 @@ const HomeContent = async () => {
           {movieRecommendations.length > 0 &&
             movieRecommendations.slice(0, 20).map((media: any) => {
               return (
-                <HomeMediaCard
-                  key={media.id}
-                  user_id={user.user.id}
-                  media_type={"movie"}
-                  media_id={media.id}
-                />
+                <div className="w-screen lg:w-fit">
+                  <HomeMediaCard
+                    key={media.id}
+                    user_id={user.user.id}
+                    media_type={"movie"}
+                    media_id={media.id}
+                  />
+                </div>
               );
             })}
         </div>
@@ -188,11 +190,14 @@ const HomeContent = async () => {
           {tvRecommendations.length > 0 &&
             tvRecommendations.slice(0, 20).map((media: any) => {
               return (
-                <HomeMediaCard
-                  user_id={user.user.id}
-                  media_type={"tv"}
-                  media_id={media.id}
-                ></HomeMediaCard>
+                <div className="w-screen lg:w-fit">
+                  <HomeMediaCard
+                    key={media.id}
+                    user_id={user.user.id}
+                    media_type={"tv"}
+                    media_id={media.id}
+                  />
+                </div>
               );
             })}
         </div>

@@ -37,7 +37,7 @@ export default async function userProfile({
     <div className="mx-auto max-w-7xl p-1 lg:mt-0 lg:p-4">
       {user && (
         <div className="mx-auto flex w-full flex-col items-center justify-center gap-4 py-4 lg:py-0">
-          <div className="flex aspect-[5/1] w-full overflow-hidden rounded-[16px] bg-foreground/20">
+          <div className="flex aspect-[5/1] w-full overflow-hidden rounded-[16px]">
             <img
               src={user.user.backdrop_url}
               alt=""

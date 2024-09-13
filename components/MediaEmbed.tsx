@@ -5,6 +5,7 @@ import { formatEpisodeCode } from "@/lib/functions";
 import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import ShareButton from "./ShareButton";
 
 type VideoEmbedProps = {
   media_type: string;
@@ -90,50 +91,6 @@ const VideoEmbed = ({
       <div className="relative aspect-[16/9] w-full overflow-hidden bg-foreground/10 text-center drop-shadow-lg lg:rounded-[16px]"></div>
     );
   }
-
-  const getNextEpisodeLink = () => {
-    if (
-      media_type === "tv" &&
-      season_number !== undefined &&
-      episode_number !== undefined
-    ) {
-      const seasonIndex = season_number - 1;
-      const currentSeason = media.seasons[seasonIndex];
-
-      if (currentSeason && episode_number < currentSeason.episode_count) {
-        // Next episode in the same season
-        return `/protected/watch/${media_type}/${media_id}/${season_number}/${
-          Number(episode_number) + 1
-        }`;
-      } else if (seasonIndex + 1 < media.seasons.length) {
-        // First episode of the next season
-        const nextSeason = media.seasons[seasonIndex + 1];
-        return `/protected/watch/${media_type}/${media_id}/${nextSeason.season_number}/1`;
-      }
-    }
-    return null;
-  };
-
-  const getPreviousEpisodeLink = () => {
-    if (
-      media_type === "tv" &&
-      season_number !== undefined &&
-      episode_number !== undefined
-    ) {
-      const seasonIndex = season_number - 1;
-      if (episode_number > 1) {
-        // Previous episode in the same season
-        return `/protected/watch/${media_type}/${media_id}/${season_number}/${
-          Number(episode_number) - 1
-        }`;
-      } else if (seasonIndex > 0) {
-        // Last episode of the previous season
-        const prevSeason = media.seasons[seasonIndex - 1];
-        return `/protected/watch/${media_type}/${media_id}/${prevSeason.season_number}/${prevSeason.episode_count}`;
-      }
-    }
-    return null;
-  };
 
   const handleNextClick = () => {
     setNextClicked(true);
@@ -226,60 +183,6 @@ const VideoEmbed = ({
           </button>
         </div>
         <div className="flex flex-shrink-0 flex-row gap-2">
-          {media_type === "tv" && (
-            <div>
-              {getPreviousEpisodeLink() ? (
-                <Link href={getPreviousEpisodeLink() || "#"}>
-                  <div
-                    className={`z-10 flex flex-row items-center gap-2 rounded-full bg-foreground/10 p-2 px-4 ${
-                      prevClicked ? "border-2 border-accent" : ""
-                    }`}
-                    onClick={handlePrevClick}
-                  >
-                    <img
-                      src="/assets/icons/caret-left-solid.svg"
-                      alt=""
-                      width={10}
-                      height={10}
-                      className="invert-on-dark"
-                    />
-                    <p>Previous</p>
-                  </div>
-                </Link>
-              ) : (
-                <div className="z-10 flex flex-row items-center gap-2 rounded-full bg-foreground/10 p-2 px-4">
-                  No Previous
-                </div>
-              )}
-            </div>
-          )}
-          {media_type === "tv" && (
-            <div>
-              {getNextEpisodeLink() ? (
-                <Link href={getNextEpisodeLink() || "#"}>
-                  <div
-                    className={`z-10 flex flex-row items-center gap-2 rounded-full bg-foreground/10 p-2 px-4 ${
-                      nextClicked ? "border-2 border-accent" : ""
-                    }`}
-                    onClick={handleNextClick}
-                  >
-                    <p>Next</p>
-                    <img
-                      src="/assets/icons/caret-right-solid.svg"
-                      alt=""
-                      width={10}
-                      height={10}
-                      className="invert-on-dark"
-                    />
-                  </div>
-                </Link>
-              ) : (
-                <div className="z-10 flex flex-row items-center gap-2 rounded-full bg-foreground/10 p-2 px-4">
-                  No Next
-                </div>
-              )}
-            </div>
-          )}
           <Link
             href={`/protected/create-post/${media_type}/${media_id}`}
             className="z-10 flex flex-row items-center gap-2 justify-self-end rounded-full bg-foreground/10 p-2 px-4"
@@ -294,7 +197,8 @@ const VideoEmbed = ({
             />
             <p className="">Rate</p>
           </Link>
-          <Link
+          <ShareButton></ShareButton>
+          {/* <Link
             href={`/`}
             className="z-10 flex flex-row items-center gap-2 justify-self-end rounded-full bg-foreground/10 p-2 px-4"
           >
@@ -307,7 +211,7 @@ const VideoEmbed = ({
               loading="lazy"
             />
             <p className="">Share</p>
-          </Link>
+          </Link> */}
         </div>
       </div>
     </div>

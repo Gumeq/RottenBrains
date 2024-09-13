@@ -80,12 +80,28 @@ const EpisodeCard = ({
     ).padStart(2, "0")}`;
   };
 
-  if (loading) {
-    return <p>loading...</p>;
-  }
+  if (loading || !episode || !user) {
+    return (
+      <div className="mb-8 flex w-full flex-col gap-4 hover:border-accent hover:bg-foreground/20 lg:mb-2 lg:flex-row lg:rounded-[8px] lg:p-2">
+        {/* Image Skeleton */}
+        <div className="relative aspect-[16/9] w-full flex-shrink-0 animate-pulse overflow-hidden bg-foreground/10 lg:w-1/2 lg:rounded-[4px]"></div>
 
-  if (!episode || !user) {
-    return <p>No episode</p>;
+        {/* Text Skeleton */}
+        <div className="flex flex-col gap-2 px-2 lg:px-0">
+          {/* Title skeleton */}
+          <div className="h-6 w-3/4 animate-pulse rounded bg-foreground/10 lg:w-1/2"></div>
+
+          {/* Subtitle skeleton */}
+          <div className="h-4 w-1/4 animate-pulse rounded bg-foreground/10 lg:w-1/5"></div>
+
+          {/* Description skeleton */}
+          <div className="hidden lg:block">
+            <div className="mb-2 h-4 w-full animate-pulse rounded bg-foreground/10"></div>
+            <div className="h-4 w-4/5 animate-pulse rounded bg-foreground/10"></div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (

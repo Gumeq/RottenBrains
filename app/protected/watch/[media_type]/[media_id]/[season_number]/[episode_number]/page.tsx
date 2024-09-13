@@ -1,3 +1,4 @@
+import EpisodeCard from "@/components/EpisodeCard";
 import ExploreTab from "@/components/explore/ExploreTab";
 import ScrollButtons from "@/components/explore/ScrollButtons";
 import GoBackArrow from "@/components/GoBackArrow";
@@ -12,6 +13,7 @@ import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
 import { getPostsOfMedia, upsertWatchHistory } from "@/utils/supabase/queries";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
+import Link from "next/link";
 
 export async function generateMetadata({ params }: any) {
   const media_id = parseInt(params.media_id, 10);
@@ -70,7 +72,30 @@ export default async function mediaPage({
     season_number,
     episode_number,
   );
-  console.log(episode);
+
+  let nextEpisode = null;
+
+  if (
+    media_type === "tv" &&
+    season_number !== undefined &&
+    episode_number !== undefined
+  ) {
+    const seasonIndex = season_number;
+    const currentSeason = media.seasons[seasonIndex];
+    if (currentSeason && episode_number < currentSeason.episode_count) {
+      // Next episode in the same season
+      nextEpisode = await getEpisodeDetails(
+        media.id,
+        season_number,
+        Number(episode_number) + 1,
+      );
+    } else if (Number(seasonIndex) + 1 < media.seasons.length) {
+      // First episode of the next season
+      const nextSeason = media.seasons[Number(seasonIndex) + 1].season_number;
+      console.log(nextSeason);
+      nextEpisode = await getEpisodeDetails(media.id, nextSeason, 1);
+    }
+  }
 
   return (
     <>
@@ -147,7 +172,21 @@ export default async function mediaPage({
               )}
             </div>
           </div>
-          <div className="md:w-[25%]">
+          <div className="flex flex-col gap-2 md:w-[25%]">
+            <h3 className="px-2 font-semibold lg:px-0">Next Episode</h3>
+            {nextEpisode && (
+              <Link
+                href={`/protected/watch/${media_type}/${media.id}/${nextEpisode.season_number}/${nextEpisode.episode_number}`}
+              >
+                <EpisodeCard
+                  media_id={media.id}
+                  season_number={nextEpisode.season_number}
+                  episode_number={nextEpisode.episode_number}
+                ></EpisodeCard>
+              </Link>
+            )}
+            <br />
+            <h3 className="px-2 font-semibold lg:px-0">All Episodes</h3>
             {media_type === "tv" && season_number && (
               <TVShowDetails
                 tv_show_id={media_id}
