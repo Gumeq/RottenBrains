@@ -161,7 +161,12 @@ export function HomePostCardNew({ post, index }: any) {
           </span>
           <div>
             <p className="line-clamp-1">
-              <span className="font-bold">{creator.username}</span> watched{" "}
+              <span className="font-bold">
+                <Link href={`/protected/user/${creator.id}`}>
+                  {creator.username}
+                </Link>
+              </span>{" "}
+              watched{" "}
               <span className="font-bold hover:underline">
                 <Link href={`/protected/media/${media_type}/${media_id}`}>
                   {media && (media.title || media.name)}
