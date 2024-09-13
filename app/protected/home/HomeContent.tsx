@@ -80,7 +80,7 @@ const HomeContent = async () => {
           className="hidden-scrollbar flex flex-row gap-4 overflow-x-auto px-2 lg:px-0"
           id={"watch_history_main"}
         >
-          {filteredWatchHistory &&
+          {filteredWatchHistory.length > 0 ? (
             filteredWatchHistory.slice(0, 20).map((media: any) => {
               return (
                 <div className="w-[80vw] flex-shrink-0 lg:inline lg:w-auto">
@@ -93,7 +93,14 @@ const HomeContent = async () => {
                   ></HomeMediaCard>
                 </div>
               );
-            })}
+            })
+          ) : (
+            <div className="flex h-[400px] w-full items-center justify-center rounded-[16px] bg-foreground/10">
+              <h2 className="text-center text-3xl font-bold">
+                Start watching to show history
+              </h2>
+            </div>
+          )}
         </div>
       </div>
       <div>

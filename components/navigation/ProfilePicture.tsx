@@ -2,12 +2,15 @@
 import { useUser } from "@/context/UserContext";
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { signOut } from "@/utils/supabase/signOut";
 import ThemeSwitch from "../ThemSwitch";
+import { useRouter } from "next/navigation";
 
 const ProfilePicture = () => {
   const { user } = useUser();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const router = useRouter(); // Use router for redirection
 
   const handleToggleDropdown = () => {
     setIsOpen((prev) => !prev);
@@ -20,6 +23,11 @@ const ProfilePicture = () => {
     ) {
       setIsOpen(false);
     }
+  };
+
+  const handleSignOut = async () => {
+    await signOut(); // Call the signOut function
+    router.push("/login"); // Redirect to login after signing out
   };
 
   useEffect(() => {
@@ -77,6 +85,17 @@ const ProfilePicture = () => {
             <div className="flex w-full items-center gap-2 px-4 py-2 hover:bg-accent/20">
               <ThemeSwitch />
             </div>
+            <button
+              className="flex w-full flex-row items-center gap-2 px-4 py-2 hover:bg-accent/20"
+              onClick={handleSignOut} // Call handleSignOut on click
+            >
+              <img
+                src="/assets/icons/logout.svg"
+                alt="Settings Icon"
+                className="invert-on-dark"
+              />
+              <p>Sign out</p>
+            </button>
           </div>
         </div>
       )}
