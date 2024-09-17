@@ -50,12 +50,15 @@ const HomeNav = ({ children }: any) => {
                   className="invert-on-dark p-1"
                 />
               </button>
-              <Link href={"/protected/home"} className="">
-                {/* <img
-										src="/assets/images/logo-text-new.svg"
-										alt="text-logo"
-										className="invert-on-dark h-12 w-auto"
-									/> */}
+              <Link
+                href={"/protected/home"}
+                className="flex flex-row items-center gap-2"
+              >
+                <img
+                  src="/assets/images/logo_new.png"
+                  alt="text-logo"
+                  className="h-10 w-auto"
+                />
                 <h1 className="text-lg font-black text-foreground">
                   RottenBrains
                 </h1>
@@ -160,192 +163,8 @@ const HomeNav = ({ children }: any) => {
           {children}
         </div>
       </div>
-      <div className="flex h-auto w-screen lg:hidden">{children}</div>
     </div>
   );
 };
 
 export default HomeNav;
-
-{
-  /* <div
-	className={`fixed top-0 left-0 w-[250px] h-full bg-background shadow-lg z-50 sidebar ${
-		isSidebarOpen ? "sidebar-visible" : "sidebar-hidden"
-	}`}
->
-	<div className="flex flex-row">
-		<button
-			onClick={toggleSidebar}
-			className="p-2 m-1 rounded-full hover:bg-foreground/20"
-		>
-			<img
-				src="/assets/icons/menu.svg"
-				alt="menu-icon"
-				width={30}
-				height={30}
-				className="invert-on-dark p-1"
-			/>
-		</button>
-		<Link href={"/protected/home"} className="p-2 m-1 rounded-[8px]">
-			<img
-				src="/assets/images/logo-text-new.svg"
-				alt="text-logo"
-				width={70}
-				height={70}
-				className="invert p-1"
-			/>
-		</Link>
-	</div>
-	<ul className="flex flex-col justify-start gap-2 mt-4 p-4">
-		{sidebarLinks.map((link: any) => (
-			<Link
-				href={link.route}
-				key={link.route}
-				className="p-2 hover:bg-foreground/20 rounded-[8px]"
-			>
-				<div className="flex flex-row gap-2 items-center">
-					<img
-						src={`${
-							pathname.includes(link.route)
-								? link.image_url_active
-								: link.image_url
-						}`}
-						alt={""}
-						width={25}
-						height={25}
-						className="invert-on-dark w-[25px] h-[25px]"
-					/>
-					<p className="text-md">{link.label}</p>
-				</div>
-			</Link>
-		))}
-		<div className="w-[90%] mx-auto h-[1px] bg-foreground/20 my-2"></div>
-		<Link
-			className="w-full flex flex-row gap-1 p-2 items-center hover:bg-foreground/20 rounded-[8px]"
-			href={"/protected/profile"}
-		>
-			<h3 className=" text-md font-bold">You</h3>
-			<img
-				src="/assets/icons/chevron-forward.svg"
-				alt=""
-				className="invert-on-dark w-[20px] h-[20px] opacity-50"
-			/>
-		</Link>
-		<Link
-			href={"/protected/profile"}
-			className="p-2 hover:bg-foreground/20 rounded-[8px]"
-		>
-			<div className="flex flex-row gap-2 items-center">
-				<img
-					src={`${
-						pathname.includes("profile")
-							? "/assets/icons/person-solid.svg"
-							: "/assets/icons/person-outline.svg"
-					}`}
-					alt={""}
-					width={25}
-					height={25}
-					className="invert-on-dark w-[25px] h-[25px]"
-				/>
-				<p className="text-md">Your profile</p>
-			</div>
-		</Link>
-		<Link
-			href={"/protected/watch-history"}
-			className="p-2 hover:bg-foreground/20 rounded-[8px]"
-		>
-			<div className="flex flex-row gap-2 items-center">
-				<img
-					src={`${
-						pathname.includes("watch-history")
-							? "/assets/icons/history.svg"
-							: "/assets/icons/history.svg"
-					}`}
-					alt={""}
-					width={25}
-					height={25}
-					className="invert-on-dark w-[25px] h-[25px]"
-				/>
-				<p className="text-md">History</p>
-			</div>
-		</Link>
-		<Link
-			href={"/protected/liked"}
-			className="p-2 hover:bg-foreground/20 rounded-[8px]"
-		>
-			<div className="flex flex-row gap-2 items-center">
-				<img
-					src={`${
-						pathname.includes("liked")
-							? "/assets/icons/heart-solid.svg"
-							: "/assets/icons/heart-outline.svg"
-					}`}
-					alt={""}
-					width={25}
-					height={25}
-					className="invert-on-dark w-[25px] h-[25px]"
-				/>
-				<p className="text-md">Liked posts (soon)</p>
-			</div>
-		</Link>
-		<Link
-			href={"/protected/liked"}
-			className="p-2 hover:bg-foreground/20 rounded-[8px]"
-		>
-			<div className="flex flex-row gap-2 items-center">
-				<img
-					src={`${
-						pathname.includes("saved")
-							? "/assets/icons/bookmark-solid.svg"
-							: "/assets/icons/bookmark-outline.svg"
-					}`}
-					alt={""}
-					width={25}
-					height={25}
-					className="invert-on-dark w-[25px] h-[25px]"
-				/>
-				<p className="text-md">Saved posts (soon)</p>
-			</div>
-		</Link>
-		<Link
-			href={"/protected/watch_list"}
-			className="p-2 hover:bg-foreground/20 rounded-[8px]"
-		>
-			<div className="flex flex-row gap-2 items-center">
-				<img
-					src={`${
-						pathname.includes("watch_list")
-							? "/assets/icons/view_list-solid.svg"
-							: "/assets/icons/view_list-outline.svg"
-					}`}
-					alt={""}
-					width={25}
-					height={25}
-					className="invert-on-dark w-[25px] h-[25px]"
-				/>
-				<p className="text-md">Watch list (soon)</p>
-			</div>
-		</Link>
-		<Link
-			href={"/protected/watch_list"}
-			className="p-2 hover:bg-foreground/20 rounded-[8px]"
-		>
-			<div className="flex flex-row gap-2 items-center">
-				<img
-					src={`${
-						pathname.includes("watch_later")
-							? "/assets/icons/schedule-solid.svg"
-							: "/assets/icons/schedule-outline.svg"
-					}`}
-					alt={""}
-					width={25}
-					height={25}
-					className="invert-on-dark w-[25px] h-[25px]"
-				/>
-				<p className="text-md">Watch later (soon)</p>
-			</div>
-		</Link>
-	</ul>
-	<div className="w-[90%] mx-auto h-[1px] bg-foreground/20"></div>
-</div>; */
-}
