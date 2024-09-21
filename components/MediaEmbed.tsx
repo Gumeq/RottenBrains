@@ -163,7 +163,7 @@ const VideoEmbed = ({
       </div>
       <div className="flex flex-row justify-between px-4 py-2 lg:p-0 lg:py-2">
         <h2 className="line-clamp-1 text-lg font-semibold">
-          {season_number && episode_number
+          {episode !== undefined && season_number && episode_number
             ? `${episode.name} | ${formatEpisodeCode(season_number, episode_number)} | ${media.name}`
             : `${media.title || media.name}`}
         </h2>
