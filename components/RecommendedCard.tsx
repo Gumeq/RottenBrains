@@ -1,22 +1,37 @@
 import { getRelativeTime, transformRuntime } from "@/lib/functions";
+import { getWatchTime } from "@/utils/supabase/queries";
+import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import { getMediaDetails } from "@/utils/tmdb";
 import Link from "next/link";
 
 const RecommendedCard = async ({ media_id, media_type }: any) => {
-  let media: any;
-  media = await getMediaDetails(media_type, media_id);
+  const media = await getMediaDetails(media_type, media_id);
+  const user = await getCurrentUser();
+  const watchTime = await getWatchTime(
+    user.user.id.toString(),
+    "movie",
+    media_id,
+  );
   return (
-    <div className="mb-8 flex w-full flex-col gap-2 rounded-[8px] hover:border-accent hover:bg-foreground/20 lg:mb-2 lg:flex-row lg:gap-4 lg:p-2">
+    <div className="mb-4 flex w-full flex-col gap-2 hover:border-accent hover:bg-foreground/20 lg:mb-2 lg:flex-row lg:p-2">
       <Link
-        className="relative w-full flex-shrink-0 overflow-hidden lg:w-1/2 lg:rounded-[16px]"
+        className="relative w-full flex-shrink-0 overflow-hidden lg:w-1/2 lg:rounded-[8px]"
         href={
           media_type === "movie"
             ? `/protected/watch/${media_type}/${media_id}`
             : `/protected/watch/${media_type}/${media_id}/1/1`
         }
       >
+        {watchTime > 0 && (
+          <div
+            className="absolute bottom-0 left-0 h-1 bg-accent"
+            style={{
+              width: `${watchTime}%`,
+            }}
+          ></div>
+        )}
         <div className="absolute bottom-0 right-0 m-2 flex flex-row-reverse gap-2">
-          <div className="rounded-[14px] bg-black/50 px-4 py-1 text-sm text-white lg:text-xs">
+          <div className="rounded-[14px] bg-black/50 px-4 py-1 text-sm text-white">
             {transformRuntime(media.runtime)}
           </div>
         </div>
@@ -30,19 +45,17 @@ const RecommendedCard = async ({ media_id, media_type }: any) => {
           }
           alt=""
           loading="lazy"
-          className="aspect-[16/9] bg-foreground/10 lg:rounded-[16px]"
+          className="aspect-[16/9] bg-foreground/10 lg:rounded-[4px]"
         />
       </Link>
-      <div className="flex flex-col px-2 lg:px-0">
-        <h3 className="line-clamp-2 text-lg lg:text-base">
-          {media.title || media.name}
-        </h3>
-        <div className="flex flex-row items-center gap-4 opacity-50">
-          <p className="lg:text-sm">
-            {getRelativeTime(media.release_date || media.first_air_date)}
-          </p>
-        </div>
-        <h3 className="line-clamp-2 opacity-50 lg:hidden">{media.overview}</h3>
+      <div className="flex flex-col gap-1 px-4 lg:px-0">
+        <h3 className="">{media.title || media.name}</h3>
+        <p className="text-sm text-foreground/50 lg:text-sm">
+          {getRelativeTime(media.release_date || media.first_air_date)}
+        </p>
+        {/* <p className="line-clamp-2 text-foreground/50 lg:hidden">
+          {episode.overview}
+        </p> */}
       </div>
     </div>
   );

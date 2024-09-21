@@ -103,10 +103,25 @@ const VideoEmbed = ({
   };
 
   return (
-    <div className="relative flex flex-col gap-2">
+    <div className="fixed left-0 top-0 z-50 flex w-screen flex-col border-b border-foreground/20 bg-background pb-2 drop-shadow-lg lg:relative lg:w-auto lg:gap-2 lg:border-none lg:pb-0 lg:drop-shadow-none">
+      <div className="z-20 flex h-12 w-full flex-row items-center gap-4 bg-background px-2 lg:hidden">
+        <div className="flex h-full items-center">
+          <Link
+            href={"/protected/home"}
+            className="flex flex-row items-center gap-2"
+          >
+            <img
+              src="/assets/images/logo_new.png"
+              alt="text-logo"
+              className="h-10 w-auto"
+            />
+            <h1 className="text-lg font-black text-foreground">RottenBrains</h1>
+          </Link>
+        </div>
+      </div>
       <div>
         {!showVideo ? (
-          <div className="relative overflow-hidden text-center lg:rounded-[16px]">
+          <div className="relative w-full overflow-hidden text-center lg:rounded-[16px]">
             <img
               src={
                 media_type === "movie"
@@ -115,7 +130,7 @@ const VideoEmbed = ({
                     `https://image.tmdb.org/t/p/original${episode.still_path}`
               }
               alt="Media Poster"
-              className="h-auto w-full bg-foreground/10 drop-shadow-lg"
+              className="h-auto w-full bg-foreground/10 drop-shadow-lg lg:w-full"
             />
             <button
               onClick={handleButtonClick}
@@ -131,13 +146,13 @@ const VideoEmbed = ({
             </button>
           </div>
         ) : (
-          <div className="aspect-h-9 aspect-w-16 relative z-50 overflow-hidden drop-shadow-lg lg:rounded-[16px]">
+          <div className="relative z-50 aspect-[16/9] overflow-hidden drop-shadow-lg lg:rounded-[16px]">
             <iframe
               allowFullScreen
               id="iframe"
               loading="lazy"
               src={link}
-              className="inline-block h-full w-full"
+              className="inline-block h-full w-screen lg:w-full"
               frameBorder="0"
               marginHeight={0}
               marginWidth={0}
@@ -146,8 +161,8 @@ const VideoEmbed = ({
           </div>
         )}
       </div>
-      <div className="flex flex-row justify-between p-2 lg:p-0 lg:py-2">
-        <span className="flex flex-row flex-wrap items-center gap-2 text-xl lg:font-bold">
+      <div className="flex flex-row justify-between px-4 py-2 lg:p-0 lg:py-2">
+        <span className="flex flex-row flex-wrap items-center gap-2 text-lg font-semibold lg:font-bold">
           {season_number !== undefined &&
             episode_number !== undefined &&
             episode && (
@@ -161,7 +176,7 @@ const VideoEmbed = ({
           <p className="truncate pr-1">{media.title || media.name}</p>
         </span>
       </div>
-      <div className="hidden-scrollbar flex flex-row items-center justify-between gap-6 overflow-x-auto px-2 lg:overflow-auto lg:px-0">
+      <div className="hidden-scrollbar flex flex-row items-center justify-between gap-6 overflow-x-auto px-2 text-sm lg:overflow-auto lg:px-0">
         <div className="flex justify-center gap-2">
           <button
             onClick={() => updateLinkStart("https://vidsrc.cc/v2/embed/")}
@@ -198,20 +213,6 @@ const VideoEmbed = ({
             <p className="">Rate</p>
           </Link>
           <ShareButton></ShareButton>
-          {/* <Link
-            href={`/`}
-            className="z-10 flex flex-row items-center gap-2 justify-self-end rounded-full bg-foreground/10 p-2 px-4"
-          >
-            <img
-              src="/assets/icons/share-outline.svg"
-              alt=""
-              width={20}
-              height={20}
-              className="invert-on-dark"
-              loading="lazy"
-            />
-            <p className="">Share</p>
-          </Link> */}
         </div>
       </div>
     </div>

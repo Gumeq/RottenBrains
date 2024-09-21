@@ -110,11 +110,7 @@ export default async function mediaPage({
         />
       )}
       <div className="relative z-10 mx-auto mb-16 flex w-screen flex-col lg:w-[95vw] lg:max-w-[1700px]">
-        <div className="fixed z-20 flex h-14 w-screen flex-row items-center gap-4 bg-background px-4 lg:hidden">
-          <GoBackArrow />
-          <p className="truncate text-lg">Watch {media.title || media.name}</p>
-        </div>
-        <div className="mt-14 flex flex-col gap-4 md:flex-row lg:mt-4">
+        <div className="small-screen-watch-margin flex flex-col gap-4 md:flex-row lg:mt-4">
           <div className="flex flex-col gap-4 lg:w-[75%]">
             <VideoEmbed
               media_type={media_type}
@@ -122,17 +118,17 @@ export default async function mediaPage({
               season_number={season_number}
               episode_number={episode_number}
             ></VideoEmbed>
-            <div className="hidden w-full flex-col gap-2 rounded-[16px] bg-foreground/10 p-4 text-sm lg:flex">
+            <div className="mx-auto flex w-[96vw] flex-col gap-2 rounded-[16px] bg-foreground/10 p-4 text-sm lg:w-full">
               <p className="font-semibold">
                 {getRelativeTime(episode.air_date)}
               </p>
               <p>{episode.overview}</p>
             </div>
-            <div className="">
+            <div className="border-y border-foreground/20 p-2 lg:border-none lg:p-0">
               {postsOfMedia && (
                 <div>
                   {postsOfMedia.length > 0 && (
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-2">
                       <div className="flex flex-row items-center justify-between">
                         <div className="flex flex-row items-center gap-2">
                           {/* <div className="w-[24px] h-[24px] rounded-full bg-accent "></div> */}
@@ -146,21 +142,11 @@ export default async function mediaPage({
                       <div className="relative">
                         <div className="gradient-edge absolute right-0 top-0 z-10 h-full w-[5%]"></div>
                         <div
-                          className="hidden-scrollbar hidden flex-row flex-nowrap gap-4 overflow-x-auto pb-2 lg:flex"
+                          className="hidden-scrollbar flex flex-row flex-nowrap gap-2 overflow-x-auto pb-2"
                           id="user_posts"
                         >
                           {postsOfMedia?.slice(0, 9).map((post: any) => (
-                            <div>
-                              <HomePostCardNew post={post}></HomePostCardNew>
-                            </div>
-                          ))}
-                        </div>
-                        <div
-                          className="hidden-scrollbar flex flex-row flex-nowrap gap-4 overflow-x-auto pb-2 lg:hidden"
-                          id="user_posts"
-                        >
-                          {postsOfMedia?.slice(0, 9).map((post: any) => (
-                            <div className="w-[90vw] flex-shrink-0">
+                            <div className="w-[92vw] flex-shrink-0 lg:w-fit">
                               <HomePostCardNew post={post}></HomePostCardNew>
                             </div>
                           ))}
@@ -185,7 +171,6 @@ export default async function mediaPage({
                 ></EpisodeCard>
               </Link>
             )}
-            <br />
             <h3 className="px-2 font-semibold lg:px-0">All Episodes</h3>
             {media_type === "tv" && season_number && (
               <TVShowDetails

@@ -10,7 +10,9 @@ const Bottombar = () => {
   const pathname = usePathname();
 
   return (
-    <div className="fixed bottom-0 z-50 flex h-14 w-screen items-center justify-center drop-shadow-xl lg:hidden">
+    <div
+      className={`fixed bottom-0 z-50 flex h-14 w-screen items-center justify-center drop-shadow-xl lg:hidden ${pathname.includes("watch") ? "hidden" : ""}`}
+    >
       <ul className="relative flex h-14 w-full flex-row items-center justify-between border-t border-foreground/20 bg-background px-8 drop-shadow-xl">
         <li>
           <Link href={"/protected/home"} className="flex flex-col items-center">

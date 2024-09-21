@@ -105,7 +105,7 @@ const EpisodeCard = ({
   }
 
   return (
-    <div className="mb-8 flex w-full flex-col gap-4 hover:border-accent hover:bg-foreground/20 lg:mb-2 lg:flex-row lg:rounded-[8px] lg:p-2">
+    <div className="mb-4 flex w-full flex-col gap-2 hover:border-accent hover:bg-foreground/20 lg:mb-2 lg:flex-row lg:rounded-[8px] lg:p-2">
       <div className="relative w-full flex-shrink-0 overflow-hidden lg:w-1/2 lg:rounded-[4px]">
         {watchTime > 0 && (
           <div
@@ -127,8 +127,8 @@ const EpisodeCard = ({
           className="w-full bg-foreground/10 lg:rounded-[4px]"
         />
       </div>
-      <div className="flex flex-col gap-2 px-2 lg:px-0">
-        <h3 className="text-lg lg:text-base">
+      <div className="flex flex-col gap-1 px-4 lg:px-0">
+        <h3 className="">
           {episode.name}
           {" | "}
           {formatEpisodeCode(season_number, episode_number)}
@@ -136,9 +136,9 @@ const EpisodeCard = ({
         <p className="text-sm text-foreground/50 lg:text-sm">
           {getRelativeTime(episode.air_date)}
         </p>
-        <p className="line-clamp-2 text-foreground/50 lg:hidden">
+        {/* <p className="line-clamp-2 text-foreground/50 lg:hidden">
           {episode.overview}
-        </p>
+        </p> */}
       </div>
     </div>
   );

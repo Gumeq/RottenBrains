@@ -333,3 +333,9 @@
   -moz-box-shadow: 0px 0px 10px 5px hsla(0, 0%, 0%, 0.2);
   box-shadow: 0px 0px 10px 5px hsla(0, 0%, 0%, 0.2);
 }
+
+@media (max-width: 1024px) {
+  .small-screen-watch-margin {
+    margin-top: calc(56.25vw + 150px);
+  }
+}
