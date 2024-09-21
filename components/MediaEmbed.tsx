@@ -162,19 +162,11 @@ const VideoEmbed = ({
         )}
       </div>
       <div className="flex flex-row justify-between px-4 py-2 lg:p-0 lg:py-2">
-        <span className="flex flex-row flex-wrap items-center gap-2 text-lg font-semibold lg:font-bold">
-          {season_number !== undefined &&
-            episode_number !== undefined &&
-            episode && (
-              <h2 className="">
-                {episode.name}
-                {" | "}
-                {formatEpisodeCode(season_number, episode_number)}
-                {" | "}
-              </h2>
-            )}
-          <p className="truncate pr-1">{media.title || media.name}</p>
-        </span>
+        <h2 className="line-clamp-1 text-lg font-semibold">
+          {season_number && episode_number
+            ? `${episode.name} | ${formatEpisodeCode(season_number, episode_number)} | ${media.name}`
+            : `${media.title || media.name}`}
+        </h2>
       </div>
       <div className="hidden-scrollbar flex flex-row items-center justify-between gap-6 overflow-x-auto px-2 text-sm lg:overflow-auto lg:px-0">
         <div className="flex justify-center gap-2">
