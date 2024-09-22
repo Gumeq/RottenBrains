@@ -4,7 +4,7 @@ Welcome to **RottenBrains**, the ultimate social media platform for movie and TV
 
 ## Overview
 
-RottenBrains is a vibrant social media website dedicated to movie and TV show reviews. Whether you're looking to share your thoughts on the latest blockbuster, find recommendations from friends, or dive deep into discussions about your favorite series, BingeBuddy is the place for you.
+RottenBrains is a vibrant social media website dedicated to movie and TV show reviews. Whether you're looking to share your thoughts on the latest blockbuster, find recommendations from friends, or dive deep into discussions about your favorite series, RottenBrains is the place for you.
 
 ![Home Page](public/assets/images/home_page_screen.png)
 ![Explore Page](public/assets/images/explore_page_screen.png)
