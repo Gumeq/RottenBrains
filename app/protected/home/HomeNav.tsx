@@ -55,13 +55,10 @@ const HomeNav = ({ children }: any) => {
                 className="flex flex-row items-center gap-2"
               >
                 <img
-                  src="/assets/images/logo_new.png"
+                  src="/assets/images/logo_text_new.svg"
                   alt="text-logo"
-                  className="h-10 w-auto"
+                  className="invert-on-dark h-4 w-auto"
                 />
-                <h1 className="text-lg font-black text-foreground">
-                  RottenBrains
-                </h1>
               </Link>
             </div>
 

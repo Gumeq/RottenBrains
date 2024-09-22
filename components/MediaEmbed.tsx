@@ -105,17 +105,16 @@ const VideoEmbed = ({
   return (
     <div className="fixed left-0 top-0 z-50 flex w-screen flex-col border-b border-foreground/20 bg-background pb-2 drop-shadow-lg lg:relative lg:w-auto lg:gap-2 lg:border-none lg:pb-0 lg:drop-shadow-none">
       <div className="z-20 flex h-12 w-full flex-row items-center gap-4 bg-background px-2 lg:hidden">
-        <div className="flex h-full items-center">
+        <div className="flex h-full items-center px-2">
           <Link
             href={"/protected/home"}
             className="flex flex-row items-center gap-2"
           >
             <img
-              src="/assets/images/logo_new.png"
+              src="/assets/images/logo_text_new.svg"
               alt="text-logo"
-              className="h-10 w-auto"
+              className="invert-on-dark h-4 w-auto"
             />
-            <h1 className="text-lg font-black text-foreground">RottenBrains</h1>
           </Link>
         </div>
       </div>

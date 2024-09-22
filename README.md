@@ -1,4 +1,4 @@
-![RottenBrains Logo](public/assets/images/logo-text.png)
+![RottenBrains Logo](public/assets/images/logo_text_new.jpg)
 
 Welcome to **RottenBrains**, the ultimate social media platform for movie and TV show enthusiasts! Connect with friends, share reviews, and discover what to watch next through the collective wisdom of our community.
 

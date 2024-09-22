@@ -1,6 +1,7 @@
 "use client";
 
 import NotificationButton from "@/components/notifications/RealtimeNotifications";
+import Link from "next/link";
 import React, { useState, useEffect } from "react";
 
 const MobileTopBarHome = () => {
@@ -37,7 +38,16 @@ const MobileTopBarHome = () => {
         show ? "translate-y-0 transform" : "-translate-y-full transform"
       }`}
     >
-      <h1 className="text-lg font-black text-foreground">RottenBrains</h1>
+      <Link
+        href={"/protected/home"}
+        className="flex flex-row items-center gap-2"
+      >
+        <img
+          src="/assets/images/logo_text_new.svg"
+          alt="text-logo"
+          className="invert-on-dark h-4 w-auto"
+        />
+      </Link>
       <div className="flex flex-row gap-4">
         <NotificationButton></NotificationButton>
         <svg

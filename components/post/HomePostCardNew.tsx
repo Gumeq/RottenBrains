@@ -206,19 +206,19 @@ export function HomePostCardNew({ post, index }: any) {
         </div>
       </div>
       <div className="mb-4 flex w-full flex-row justify-between gap-4">
+        <Link href={`/protected/media/${media_type}/${media_id}`}>
+          <img
+            src={`https://image.tmdb.org/t/p/w154${media.poster_path}`}
+            alt=""
+            className="aspect-[2/3] min-w-[154px] rounded-[12px]"
+          />
+        </Link>
         <div className="flex w-full flex-col gap-2">
           <UserReviewTextNew
             post_review={post.review_user || "no review"}
             creator_name={creator?.username || "no user"}
           />
         </div>
-        <Link href={`/protected/media/${media_type}/${media_id}`}>
-          <img
-            src={`https://image.tmdb.org/t/p/w154${media.poster_path}`}
-            alt=""
-            className="aspect-[2/3] min-w-[154px] rounded-[14px]"
-          />
-        </Link>
       </div>
       <div className="flex w-full items-center">
         <div className="align-center flex h-full w-full flex-row items-center justify-between">
