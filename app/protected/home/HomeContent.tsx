@@ -138,13 +138,13 @@ const HomeContent = async () => {
         <div
           className="grid gap-4"
           style={{
-            gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
           }}
         >
           {movieRecommendations.length > 0 &&
             movieRecommendations.slice(0, 20).map((media: any) => {
               return (
-                <div className="w-screen lg:w-fit">
+                <div className="w-screen lg:w-full">
                   <HomeMediaCard
                     key={media.id}
                     user_id={user.user.id}
@@ -191,13 +191,13 @@ const HomeContent = async () => {
         <div
           className="grid gap-4"
           style={{
-            gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
           }}
         >
           {tvRecommendations.length > 0 &&
             tvRecommendations.slice(0, 20).map((media: any) => {
               return (
-                <div className="w-screen lg:w-fit">
+                <div className="w-screen lg:w-full">
                   <HomeMediaCard
                     key={media.id}
                     user_id={user.user.id}

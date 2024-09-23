@@ -87,7 +87,7 @@ const InfiniteScrollHome = ({ user_id }: any) => {
       <div
         className="grid gap-4"
         style={{
-          gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
         }}
       >
         {media && media.length > 0 ? (
@@ -107,12 +107,12 @@ const InfiniteScrollHome = ({ user_id }: any) => {
           <div
             className="grid gap-4"
             style={{
-              gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
             }}
           >
             {Array.from({ length: 20 }).map((_, index) => (
               <div key={index} className="flex flex-col">
-                <div className="mb-4 flex aspect-[16/9] w-screen flex-col rounded-[16px] bg-foreground/20 lg:mb-0 lg:w-auto lg:min-w-[400px] lg:max-w-[550px]"></div>
+                <div className="mb-4 flex aspect-[16/9] w-screen flex-col rounded-[16px] bg-foreground/20 lg:mb-0 lg:w-auto lg:min-w-[350px] lg:max-w-[450px]"></div>
                 <div className="h-14 w-screen lg:w-full lg:min-w-[400px] lg:max-w-[550px]"></div>
               </div>
             ))}

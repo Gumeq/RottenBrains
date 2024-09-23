@@ -81,7 +81,7 @@ export function HomePostCardNew({ post, index }: any) {
   if (loading || !currentUser) {
     return (
       <motion.div
-        className="relative flex max-w-2xl flex-col rounded-[16px] border border-foreground/10 bg-foreground/5 p-4 lg:min-w-[400px] lg:max-w-[550px]"
+        className="relative flex h-min flex-col rounded-[8px] border border-foreground/10 bg-white/5 p-2 lg:min-w-[400px] lg:max-w-[550px]"
         initial="hidden"
         animate="visible"
         transition={{
@@ -91,38 +91,40 @@ export function HomePostCardNew({ post, index }: any) {
         }}
         viewport={{ amount: 0 }}
       >
-        <div className="mb-4 flex flex-row items-center justify-between gap-4">
+        <div className="mb-2 flex flex-row items-center justify-between gap-4">
           <div className="flex flex-row items-center gap-2">
-            <span className="min-h-[35px] min-w-[35px] animate-pulse rounded-full bg-foreground/10" />
+            <span className="min-h-[35px] min-w-[35px]">
+              <Skeleton circle={true} height={35} width={35} />
+            </span>
             <div>
-              <div className="mb-2 h-4 w-24 animate-pulse rounded bg-foreground/10"></div>
-              <div className="h-3 w-16 animate-pulse rounded bg-foreground/5"></div>
+              <Skeleton width={120} height={20} />
+              <Skeleton width={80} height={16} />
             </div>
           </div>
-          <div className="flex flex-row items-center gap-2">
-            <div className="h-8 w-8 animate-pulse rounded-full bg-foreground/10"></div>
-            <div className="flex w-full justify-end">
-              <div className="h-6 w-12 animate-pulse rounded-[12px] bg-foreground/10"></div>
-            </div>
+          <div className="flex h-full flex-row items-center gap-2">
+            <Skeleton width={40} height={20} />
+            <Skeleton width={60} height={30} />
           </div>
         </div>
-        <div className="mb-4 flex w-full flex-row justify-between gap-4">
-          <div className="flex w-full flex-col gap-2">
-            <div className="mb-2 h-4 w-full animate-pulse rounded bg-foreground/10"></div>
-            <div className="mb-2 h-4 w-full animate-pulse rounded bg-foreground/10"></div>
-            <div className="h-4 w-full animate-pulse rounded bg-foreground/10"></div>
-          </div>
-          <div className="h-[231px] w-[154px] animate-pulse rounded-[14px] bg-foreground/10"></div>
-        </div>
-        <div className="flex w-full items-center">
-          <div className="align-center flex h-full w-full flex-row items-center justify-between">
-            <div className="flex flex-row items-center">
-              <div className="h-4 w-16 animate-pulse rounded bg-foreground/10"></div>
+        <div className="flex w-full flex-row justify-between gap-4">
+          <Skeleton width={154} height={231} className="rounded-[6px]" />
+          <div className="flex w-full flex-col justify-between">
+            <div className="flex flex-col gap-2">
+              <Skeleton width="100%" height={20} />
+              <Skeleton width="100%" height={20} />
+              <Skeleton width="80%" height={20} />
             </div>
-            <div className="flex flex-row items-center gap-4">
-              <div className="h-8 w-8 animate-pulse rounded-full bg-foreground/10"></div>
-              <div className="h-8 w-8 animate-pulse rounded-full bg-foreground/10"></div>
-              <div className="h-8 w-8 animate-pulse rounded-full bg-foreground/10"></div>
+            <div className="flex w-full items-center">
+              <div className="align-center flex h-full w-full flex-row items-center justify-between">
+                <div className="flex flex-row items-center">
+                  <Skeleton width={60} height={20} />
+                </div>
+                <div className="flex flex-row items-center gap-2">
+                  <Skeleton circle={true} height={32} width={32} />
+                  <Skeleton circle={true} height={32} width={32} />
+                  <Skeleton circle={true} height={32} width={32} />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -143,7 +145,7 @@ export function HomePostCardNew({ post, index }: any) {
 
   return (
     <motion.div
-      className="relative flex flex-col rounded-[16px] border border-foreground/10 bg-foreground/5 p-4 lg:min-w-[400px] lg:max-w-[550px]"
+      className="relative flex h-min flex-col rounded-[8px] border border-foreground/10 bg-white/5 p-2 lg:min-w-[400px] lg:max-w-[550px]"
       variants={variants}
       initial="hidden"
       animate="visible"
@@ -154,7 +156,7 @@ export function HomePostCardNew({ post, index }: any) {
       }}
       viewport={{ amount: 0 }}
     >
-      <div className="mb-4 flex flex-row items-center justify-between gap-4">
+      <div className="mb-2 flex flex-row items-center justify-between gap-4">
         <div className="flex flex-row items-center gap-2">
           <span className="min-h-[35px] min-w-[35px]">
             <ProfilePicture user={creator} />
@@ -176,7 +178,7 @@ export function HomePostCardNew({ post, index }: any) {
             <p className="text-sm opacity-50">{timeAgo(post.created_at)}</p>
           </div>
         </div>
-        <div className="flex flex-row items-center gap-2">
+        <div className="flex h-full flex-row items-center gap-2">
           {post.creatorid === userId && (
             <Link href={`/protected/edit-post/${post.post_id}`}>
               <img
@@ -188,9 +190,9 @@ export function HomePostCardNew({ post, index }: any) {
               />
             </Link>
           )}
-          <div className="flex w-full justify-end">
+          <div className="flex h-full justify-end">
             <p
-              className={`px-8 py-2 ${
+              className={`px-8 py-2 text-sm ${
                 post.vote_user === 10
                   ? "bg-yellow-500/20"
                   : post.vote_user >= 8
@@ -198,65 +200,40 @@ export function HomePostCardNew({ post, index }: any) {
                     : post.vote_user >= 4
                       ? "bg-blue-500/20"
                       : "bg-red-500/20"
-              } rounded-[12px]`}
+              } rounded-[4px]`}
             >
               {post.vote_user}/10
             </p>
           </div>
         </div>
       </div>
-      <div className="mb-4 flex w-full flex-row justify-between gap-4">
+      <div className="flex w-full flex-row justify-between gap-4">
         <Link href={`/protected/media/${media_type}/${media_id}`}>
           <img
             src={`https://image.tmdb.org/t/p/w154${media.poster_path}`}
             alt=""
-            className="aspect-[2/3] min-w-[154px] rounded-[12px]"
+            className="aspect-[2/3] min-w-[154px] rounded-[6px]"
           />
         </Link>
-        <div className="flex w-full flex-col gap-2">
+        <div className="flex w-full flex-col justify-between">
           <UserReviewTextNew
             post_review={post.review_user || "no review"}
             creator_name={creator?.username || "no user"}
           />
-        </div>
-      </div>
-      <div className="flex w-full items-center">
-        <div className="align-center flex h-full w-full flex-row items-center justify-between">
-          <div className="flex flex-row items-center">
-            <PostStats post={post} user={currentUser}></PostStats>
-          </div>
-          <div className="flex flex-row items-center gap-4">
-            <MoreOptions
-              user_id={userId.toString()}
-              media_type={media_type}
-              media_id={media_id}
-              genre_ids={genreIds}
-            ></MoreOptions>
-            <SaveButton post={post} />
-            <Link
-              className=""
-              href={`/protected/create-post/${media_type}/${media_id}`}
-            >
-              <img
-                src="/assets/icons/add-circle-outline.svg"
-                alt=""
-                width={30}
-                height={30}
-                className="invert-on-dark"
-              />
-            </Link>
-            <Link
-              className=""
-              href={`/protected/create-post/${media_type}/${media_id}`}
-            >
-              <img
-                src="/assets/icons/share-solid.svg"
-                alt=""
-                width={30}
-                height={30}
-                className="invert-on-dark"
-              />
-            </Link>
+          <div className="flex w-full items-center">
+            <div className="align-center flex h-full w-full flex-row items-center justify-between">
+              <div className="flex flex-row items-center">
+                <PostStats post={post} user={currentUser}></PostStats>
+              </div>
+              <div className="flex flex-row items-center gap-2">
+                <MoreOptions
+                  user_id={userId.toString()}
+                  media_type={media_type}
+                  media_id={media_id}
+                  genre_ids={genreIds}
+                ></MoreOptions>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -46,10 +46,14 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
     genreIds = media.genres.map((genre: any) => genre.id);
   }
 
+  const imageUrl =
+    media?.images?.backdrops?.[0]?.file_path ||
+    (season_number && episode_number ? media.still_path : media.backdrop_path);
+
   return (
-    <div className="mb-4 flex w-full flex-col lg:mb-0 lg:w-full lg:min-w-[400px] lg:max-w-[550px]">
+    <div className="mb-4 flex w-full flex-col lg:mb-0 lg:w-full lg:min-w-[350px] lg:max-w-[450px]">
       <Link
-        className="relative overflow-hidden lg:rounded-[16px]"
+        className="relative overflow-hidden lg:rounded-[8px]"
         href={
           media_type === "movie"
             ? `/protected/watch/${media_type}/${media_id}`
@@ -60,15 +64,15 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
       >
         <div className="absolute bottom-0 right-0 m-2 flex flex-row-reverse gap-2">
           {media.runtime && (
-            <div className="rounded-[14px] bg-black/50 px-2 py-1 text-xs text-white">
+            <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
               {transformRuntime(media.runtime)}
             </div>
           )}
-          <div className="rounded-[14px] bg-black/50 px-2 py-1 text-xs text-white">
+          <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
             {media.vote_average.toFixed(1)} / 10
           </div>
           {quality && (
-            <div className="rounded-[14px] bg-black/50 px-2 py-1 text-xs text-white">
+            <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
               {quality}
             </div>
           )}
@@ -83,31 +87,23 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
             }}
           ></div>
         )}
-        <div className="absolute right-2 top-2 flex h-[30px] w-[30px] flex-shrink-0 items-center justify-center rounded-full bg-black/50">
+        {imageUrl ? (
           <img
-            src={
-              media_type === "movie"
-                ? "/assets/icons/movie-outline.svg"
-                : "/assets/icons/tv-outline.svg"
-            }
-            alt=""
-            className="h-[20px] w-[20px] invert"
+            src={`https://image.tmdb.org/t/p/w500${imageUrl}`}
+            alt={media.title || media.name}
+            loading="lazy"
+            className="aspect-[16/9] w-full bg-foreground/10 lg:rounded-[8px]"
           />
-        </div>
-        <img
-          src={
-            media.images &&
-            media.images.backdrops &&
-            media.images.backdrops.length > 0
-              ? `https://image.tmdb.org/t/p/w500${media.images.backdrops[0].file_path}`
-              : season_number && episode_number
-                ? `https://image.tmdb.org/t/p/w500${media.still_path}`
-                : `https://image.tmdb.org/t/p/w500${media.backdrop_path}`
-          }
-          alt=""
-          loading="lazy"
-          className="aspect-[16/9] w-full bg-foreground/10 lg:rounded-[16px]"
-        />
+        ) : (
+          <div className="flex aspect-[16/9] w-full flex-col items-center justify-center gap-2 bg-foreground/10 lg:rounded-[8px]">
+            <img
+              src="/assets/images/logo_new_black.svg"
+              alt=""
+              className="invert-on-dark h-10 w-10 opacity-50"
+            />
+            <p className="text-sm text-foreground/50">No image available</p>
+          </div>
+        )}
       </Link>
       <div className="flex flex-col px-4 lg:p-0">
         <div className="mt-2 flex flex-row justify-between">
