@@ -28,6 +28,7 @@
     "autoprefixer": "^10.4.17",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "fast-average-color": "^9.4.0",
     "fast-average-color-node": "^3.0.0",
     "framer-motion": "^11.2.13",

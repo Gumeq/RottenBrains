@@ -86,6 +86,24 @@ const HomeMediaCardClient: React.FC<MediaCardProps> = ({
     media?.images?.backdrops?.[0]?.file_path ||
     (season_number && episode_number ? media.still_path : media.backdrop_path);
 
+  const releaseDate =
+    media.release_date || media.air_date || media.first_air_date;
+
+  let dayDifference;
+  let dayDifferenceTv;
+  if (releaseDate) {
+    const today = new Date();
+    // Convert releaseDate string to a Date object
+    const releaseDateObj = new Date(releaseDate);
+    const timeDiff = today.getTime() - releaseDateObj.getTime();
+    dayDifference = timeDiff / (1000 * 3600 * 24); // Convert milliseconds to days
+    if (media_type === "tv" && media.last_air_date) {
+      const last_air_date_OBJ = new Date(media.last_air_date);
+      const timeDiff = today.getTime() - last_air_date_OBJ.getTime();
+      dayDifferenceTv = timeDiff / (1000 * 3600 * 24);
+    }
+  }
+
   return (
     <div className="mb-4 flex w-screen flex-col lg:mb-0 lg:w-full lg:min-w-[350px] lg:max-w-[450px]">
       <Link
@@ -107,6 +125,27 @@ const HomeMediaCardClient: React.FC<MediaCardProps> = ({
           <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
             {media.vote_average.toFixed(1)} / 10
           </div>
+        </div>
+        <div className="absolute left-0 top-0 m-2">
+          {dayDifference && dayDifference <= 30 && dayDifference > 0 && (
+            <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
+              NEW
+            </div>
+          )}
+          {dayDifference && dayDifference < 0 && (
+            <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
+              SOON
+            </div>
+          )}
+          {media_type === "tv" &&
+            dayDifference &&
+            dayDifference >= 30 &&
+            dayDifferenceTv &&
+            dayDifferenceTv < 30 && (
+              <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
+                NEW EPISODES
+              </div>
+            )}
         </div>
 
         {/* Display the progress bar only if percentage_watched is valid */}

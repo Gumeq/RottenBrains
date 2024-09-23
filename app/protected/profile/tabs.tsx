@@ -16,6 +16,7 @@ import { useInView } from "react-intersection-observer";
 
 const Tabs: React.FC<any> = (user: any) => {
   user = user.user;
+  const { user: currentUser } = useUser();
   const [activeTab, setActiveTab] = useState("posts");
 
   const [userPosts, setUserPosts] = useState<any[]>([]);
@@ -38,12 +39,12 @@ const Tabs: React.FC<any> = (user: any) => {
 
   useEffect(() => {
     const loadMore = async () => {
-      if (inViewPosts && hasMorePosts && !loadingPosts && user) {
+      if (inViewPosts && hasMorePosts && !loadingPosts && user && currentUser) {
         setLoadingPosts(true);
         try {
           const res = await getUserPosts(
             user.id.toString(),
-            user.id.toString(),
+            currentUser.id.toString(),
             postPage,
           );
           if (res.length === 0) {

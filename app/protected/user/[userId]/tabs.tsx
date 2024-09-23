@@ -41,6 +41,7 @@ const Tabs: React.FC<any> = ({ user }) => {
     const loadMore = async () => {
       if (inViewPosts && hasMorePosts && !loadingPosts && user && currentUser) {
         setLoadingPosts(true);
+        console.log(currentUser);
         try {
           const res = await getUserPosts(
             user.id.toString(),

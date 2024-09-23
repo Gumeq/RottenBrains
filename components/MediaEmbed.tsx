@@ -145,7 +145,7 @@ const VideoEmbed = ({
             </button>
           </div>
         ) : (
-          <div className="relative z-50 aspect-[16/9] overflow-hidden drop-shadow-lg lg:rounded-[16px]">
+          <div className="relative z-50 aspect-[16/9] overflow-hidden lg:rounded-[16px]">
             <iframe
               allowFullScreen
               id="iframe"
