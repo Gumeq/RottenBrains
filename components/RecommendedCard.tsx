@@ -15,7 +15,7 @@ const RecommendedCard = async ({ media_id, media_type }: any) => {
   return (
     <div className="mb-4 flex w-full flex-col gap-2 hover:border-accent hover:bg-foreground/20 lg:mb-2 lg:flex-row lg:p-2">
       <Link
-        className="relative w-full flex-shrink-0 overflow-hidden lg:w-1/2 lg:rounded-[8px]"
+        className="relative w-full flex-shrink-0 overflow-hidden lg:w-1/2 lg:rounded-[4px]"
         href={
           media_type === "movie"
             ? `/protected/watch/${media_type}/${media_id}`
@@ -31,8 +31,11 @@ const RecommendedCard = async ({ media_id, media_type }: any) => {
           ></div>
         )}
         <div className="absolute bottom-0 right-0 m-2 flex flex-row-reverse gap-2">
-          <div className="rounded-[14px] bg-black/50 px-4 py-1 text-sm text-white">
+          <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
             {transformRuntime(media.runtime)}
+          </div>
+          <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
+            {media.vote_average.toFixed(1)} / 10
           </div>
         </div>
         <img

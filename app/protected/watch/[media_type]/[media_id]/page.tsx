@@ -74,11 +74,65 @@ export default async function mediaPage({
               media_type={media_type}
               media_id={media_id}
             ></VideoEmbed>
-            <div className="mx-auto flex w-[96vw] flex-col gap-2 rounded-[16px] bg-foreground/10 p-4 text-sm lg:w-full">
+            <div className="mx-auto flex w-[96vw] flex-col gap-2 rounded-[8px] bg-foreground/10 p-4 text-sm lg:w-full">
               <p className="font-semibold">
                 {getRelativeTime(media.release_date)}
               </p>
               <p>{media.overview}</p>
+            </div>
+            <div className="flex w-full flex-col gap-4 px-2 lg:flex-row lg:p-0">
+              <Link
+                href={`/protected/media/${media_type}/${media_id}`}
+                className="flex h-32 w-full flex-row items-center gap-4 overflow-hidden rounded-[8px] bg-foreground/10"
+              >
+                <img
+                  src={`https://image.tmdb.org/t/p/w200${media.poster_path}`}
+                  alt=""
+                  className="h-full"
+                />
+                <div className="flex flex-col gap-1">
+                  <p className="font-semibold">{media.title || media.name}</p>
+                  <p className="text-sm text-foreground/50">
+                    {media.release_date.slice(0, 4) ||
+                      media.first_air_date.slice(0, 4)}
+                  </p>
+                  <div className="flex flex-row items-center gap-1">
+                    <p className="text-sm font-semibold uppercase text-foreground/50">
+                      Browse {media_type}
+                    </p>
+                    <img
+                      src="/assets/icons/chevron-forward.svg"
+                      alt=""
+                      className="invert-on-dark opacity-50"
+                    />
+                  </div>
+                </div>
+              </Link>
+              <Link
+                href={`/protected/discover/${media_type}`}
+                className="flex h-32 w-full flex-row items-center gap-4 rounded-[8px] bg-foreground/10 p-4"
+              >
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-accent">
+                  <img
+                    src={`/assets/icons/${media_type}-outline.svg`}
+                    alt=""
+                    className="h-[70%] w-[70%] opacity-80 invert"
+                  />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <p className="font-semibold uppercase">{media_type}</p>
+                  <div className="flex flex-row items-center gap-1">
+                    <p className="text-sm font-semibold uppercase text-foreground/50">
+                      Browse all {media_type}
+                    </p>
+                    <img
+                      src="/assets/icons/chevron-forward.svg"
+                      alt=""
+                      className="invert-on-dark opacity-50"
+                    />
+                  </div>
+                </div>
+              </Link>
             </div>
             <div className="border-y border-foreground/20 p-2 lg:border-none lg:p-0">
               {postsOfMedia && (

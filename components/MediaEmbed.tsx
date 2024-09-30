@@ -88,7 +88,7 @@ const VideoEmbed = ({
 
   if (!media) {
     return (
-      <div className="relative aspect-[16/9] w-full overflow-hidden bg-foreground/10 text-center drop-shadow-lg lg:rounded-[16px]"></div>
+      <div className="relative aspect-[16/9] w-full overflow-hidden bg-foreground/10 text-center drop-shadow-lg lg:rounded-[8px]"></div>
     );
   }
 
@@ -120,7 +120,7 @@ const VideoEmbed = ({
       </div>
       <div>
         {!showVideo ? (
-          <div className="relative w-full overflow-hidden text-center lg:rounded-[16px]">
+          <div className="relative w-full overflow-hidden text-center lg:rounded-[8px]">
             <img
               src={
                 media_type === "movie"
@@ -145,7 +145,7 @@ const VideoEmbed = ({
             </button>
           </div>
         ) : (
-          <div className="relative z-50 aspect-[16/9] overflow-hidden lg:rounded-[16px]">
+          <div className="relative z-50 aspect-[16/9] overflow-hidden lg:rounded-[8px]">
             <iframe
               allowFullScreen
               id="iframe"

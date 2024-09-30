@@ -7,11 +7,7 @@ export const discoverMovies = async () => {
 };
 
 export const searchMovies = async (query: string) => {
-  return fetchFromApi(
-    `search/multi?query=${encodeURIComponent(
-      query,
-    )}&include_adult=false&language=en-US&page=1`,
-  );
+  return fetchFromApi(`search/multi?query=${encodeURIComponent(query)}`);
 };
 
 export const getNowPlayingMovies = async () => {

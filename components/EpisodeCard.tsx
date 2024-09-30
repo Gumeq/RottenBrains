@@ -19,6 +19,7 @@ type Episode = {
   still_path: string;
   air_date: string;
   runtime: number;
+  vote_average: number;
 };
 
 function transformRuntime(minutes: number): string {
@@ -116,8 +117,11 @@ const EpisodeCard = ({
           ></div>
         )}
         <div className="absolute bottom-0 right-0 m-2 flex flex-row-reverse gap-2">
-          <div className="rounded-[14px] bg-black/50 px-4 py-1 text-sm text-white">
+          <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
             {transformRuntime(episode.runtime)}
+          </div>
+          <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
+            {episode.vote_average.toFixed(1)} / 10
           </div>
         </div>
         <img
@@ -136,9 +140,6 @@ const EpisodeCard = ({
         <p className="text-sm text-foreground/50 lg:text-sm">
           {getRelativeTime(episode.air_date)}
         </p>
-        {/* <p className="line-clamp-2 text-foreground/50 lg:hidden">
-          {episode.overview}
-        </p> */}
       </div>
     </div>
   );

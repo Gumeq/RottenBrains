@@ -22,6 +22,8 @@ const PostForm = ({ post, action, from_media }: PostFormProps) => {
   const router = useRouter();
   const { toast } = useToast();
 
+  const imageUrl = media?.images?.backdrops?.[0]?.file_path;
+  console.log(imageUrl);
   // State to manage input values
   const [formValues, setFormValues] = useState({
     review_user: "Λοιπον είδα το ",

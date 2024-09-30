@@ -23,6 +23,7 @@ import {
 } from "@/lib/recommendations";
 import { Suspense } from "react";
 import InfiniteScrollHome from "./InfiniteScrollHome";
+import GenreSelector from "./GenreSelectorHome";
 
 // Server component fetching and displaying posts
 const HomeContent = async () => {
@@ -47,8 +48,6 @@ const HomeContent = async () => {
     user.user.id.toString(),
     1,
   );
-  const now_in_cinemas = await fetchExploreData("Now_in_cinemas");
-  const trending_tv = await fetchExploreData("Trending_TV");
 
   let movieRecommendations = await getMovieRecommendationsForUser(
     user.user.id,
@@ -59,7 +58,8 @@ const HomeContent = async () => {
   tvRecommendations = tvRecommendations.results;
 
   return (
-    <div className="flex w-screen flex-col gap-8 p-0 pb-4 lg:w-auto lg:p-4 lg:py-0">
+    <div className="flex w-full flex-col gap-8 p-0 pb-4 lg:w-auto lg:p-4 lg:py-0">
+      {/* <GenreSelector user_id={user.user.id}></GenreSelector> */}
       <MobileTopBarHome></MobileTopBarHome>
       <div className="mt-16 lg:mt-0">
         <div className="mb-4 flex flex-row items-center justify-between px-2 lg:p-0">
