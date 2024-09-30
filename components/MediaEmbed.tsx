@@ -1,7 +1,6 @@
 "use client";
 
 import { formatEpisodeCode } from "@/lib/functions";
-// components/VideoEmbed.js
 import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -29,9 +28,20 @@ const VideoEmbed = ({
   const [nextClicked, setNextClicked] = useState(false);
   const [prevClicked, setPrevClicked] = useState(false);
 
+  // Retrieve the selected provider from local storage when the component mounts
+  useEffect(() => {
+    const storedProvider = localStorage.getItem("video_provider");
+    if (storedProvider) {
+      setLinkStart(storedProvider);
+    }
+  }, []);
+
   const updateLinkStart = (newLinkStart: string) => {
     setLinkStart(newLinkStart);
     setShowVideo(false); // Reset the video display when changing the link
+
+    // Save the new provider to local storage
+    localStorage.setItem("video_provider", newLinkStart);
   };
 
   let link = "";
@@ -131,13 +141,16 @@ const VideoEmbed = ({
               alt="Media Poster"
               className="h-auto w-full bg-foreground/10 drop-shadow-lg lg:w-full"
             />
+            <div className="absolute left-4 top-4 text-xl font-bold">
+              {linkStart}
+            </div>
             <button
               onClick={handleButtonClick}
               className="absolute left-1/2 top-1/2 flex h-40 w-40 -translate-x-1/2 -translate-y-1/2 transform items-center justify-center rounded-full bg-black/60 text-lg font-semibold text-white transition-colors duration-300 hover:bg-accent/80"
             >
               <img
                 src="/assets/icons/play-solid.svg"
-                alt=""
+                alt="Play"
                 width={20}
                 height={20}
                 className="min-h-[40px] min-w-[40px] invert"
@@ -160,34 +173,12 @@ const VideoEmbed = ({
           </div>
         )}
       </div>
-      <div className="flex flex-row justify-between px-4 py-2 lg:p-0 lg:py-2">
-        <h2 className="line-clamp-1 text-lg font-semibold">
+      <div className="flex flex-row items-center justify-between overflow-x-auto px-4 py-2 lg:p-0 lg:py-2">
+        <h2 className="mr-1 line-clamp-1 text-lg font-semibold">
           {episode !== undefined && season_number && episode_number
             ? `${episode.name} | ${formatEpisodeCode(season_number, episode_number)} | ${media.name}`
             : `${media.title || media.name}`}
         </h2>
-      </div>
-      <div className="hidden-scrollbar flex flex-row items-center justify-between gap-6 overflow-x-auto px-2 text-sm lg:overflow-auto lg:px-0">
-        <div className="flex justify-center gap-2">
-          <button
-            onClick={() => updateLinkStart("https://vidsrc.cc/v2/embed/")}
-            className="z-10 flex flex-row items-center gap-2 rounded-full bg-foreground/10 px-4 py-2"
-          >
-            vidsrc.cc
-          </button>
-          <button
-            onClick={() => updateLinkStart("https://vidsrc.net/embed/")}
-            className="z-10 flex flex-row items-center gap-2 rounded-full bg-foreground/10 px-4 py-2"
-          >
-            vidsrc.net
-          </button>
-          <button
-            onClick={() => updateLinkStart("https://vidsrc.pro/embed/")}
-            className="z-10 flex flex-row items-center gap-2 rounded-full bg-foreground/10 px-4 py-2"
-          >
-            vidsrc.pro
-          </button>
-        </div>
         <div className="flex flex-shrink-0 flex-row gap-2">
           <Link
             href={`/protected/create-post/${media_type}/${media_id}`}
@@ -195,7 +186,7 @@ const VideoEmbed = ({
           >
             <img
               src="/assets/icons/star-outline.svg"
-              alt=""
+              alt="Rate"
               width={20}
               height={20}
               className="invert-on-dark"

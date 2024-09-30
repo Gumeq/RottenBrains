@@ -2,8 +2,15 @@
 
 import { getSeasonDetails, getTVDetails } from "@/utils/tmdb";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import EpisodeCard from "./EpisodeCard";
+import React, { useEffect, useState, Suspense } from "react";
+import dynamic from "next/dynamic";
+import { useUser } from "@/context/UserContext";
+import MediaCardSmall from "./MediaCardSmall";
+
+// Dynamically import the server-side EpisodeCard component
+const EpisodeCard = dynamic(() => import("./EpisodeCard"), {
+  ssr: true, // Ensure server-side rendering
+});
 
 type Season = {
   season_number: number;
@@ -28,7 +35,7 @@ const TVShowDetails = ({ tv_show_id, season_number }: TVShowDetailsProps) => {
   const [seasons, setSeasons] = useState<Season[]>([]);
   const [selectedSeason, setSelectedSeason] = useState<number | null>(null);
   const [episodes, setEpisodes] = useState<Episode[]>([]);
-
+  const { user } = useUser();
   useEffect(() => {
     const fetchTVShowDetails = async () => {
       try {
@@ -69,7 +76,6 @@ const TVShowDetails = ({ tv_show_id, season_number }: TVShowDetailsProps) => {
 
   return (
     <div className="w-full">
-      {/* <h1 className="text-2xl font-bold mb-2">Seasons</h1> */}
       <div className="custom-scrollbar flex gap-2 overflow-x-auto p-2">
         {seasons.map((season) => (
           <button
@@ -85,24 +91,34 @@ const TVShowDetails = ({ tv_show_id, season_number }: TVShowDetailsProps) => {
           </button>
         ))}
       </div>
+
       {selectedSeason !== null && (
         <div className="mt-2 w-full">
-          {/* <h2 className="text-2xl font-bold mb-4">
-						Episodes of Season {selectedSeason}
-					</h2> */}
           <div className="flex w-full flex-col">
             {episodes.map((episode) => (
-              <Link
+              <Suspense
+                fallback={
+                  <div className="h-[200px] w-full bg-foreground/10">
+                    Loading episode...
+                  </div>
+                }
                 key={episode.episode_number}
-                href={`/protected/watch/tv/${tv_show_id}/${selectedSeason}/${episode.episode_number}`}
-                className="w-full"
               >
-                <EpisodeCard
-                  media_id={tv_show_id}
-                  season_number={selectedSeason}
-                  episode_number={episode.episode_number}
-                ></EpisodeCard>
-              </Link>
+                <Link
+                  key={episode.episode_number}
+                  href={`/protected/watch/tv/${tv_show_id}/${selectedSeason}/${episode.episode_number}`}
+                  className="w-full"
+                >
+                  {/* Server Component (EpisodeCard) */}
+                  <MediaCardSmall
+                    media_type={"tv"}
+                    media_id={tv_show_id}
+                    season_number={selectedSeason}
+                    episode_number={episode.episode_number}
+                    user_id={user?.id.toString()}
+                  />
+                </Link>
+              </Suspense>
             ))}
           </div>
         </div>

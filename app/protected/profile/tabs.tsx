@@ -136,14 +136,22 @@ const Tabs: React.FC<any> = (user: any) => {
                   ))}
                 </>
               )}
-              <div>
-                {loadingPosts && <Loader></Loader>}
-                {!loadingPosts && hasMorePosts && (
-                  <div ref={refPosts} className="h-[100px] w-[100px]"></div>
-                )}
-                {!hasMorePosts && <div>No more posts to load.</div>}
-                <div className="h-[100px] w-[100px]"></div>
-              </div>
+            </div>
+            <div>
+              {loadingPosts && <Loader></Loader>}
+              {!loadingPosts && hasMorePosts && (
+                <div ref={refPosts} className="h-[100px] w-[100px]"></div>
+              )}
+              {!hasMorePosts && (
+                <div className="flex w-full flex-col items-center justify-center gap-4 rounded-[8px] bg-foreground/10 p-4">
+                  <img
+                    src="/assets/images/logo_new_black.svg"
+                    alt=""
+                    className="invert-on-dark h-8 w-8 opacity-50"
+                  />
+                  <p className="text-foreground/50">No more posts</p>
+                </div>
+              )}
             </div>
           </>
         );
