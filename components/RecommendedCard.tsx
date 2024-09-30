@@ -4,14 +4,9 @@ import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import { getMediaDetails } from "@/utils/tmdb";
 import Link from "next/link";
 
-const RecommendedCard = async ({ media_id, media_type }: any) => {
+const RecommendedCard = async ({ media_id, media_type, user_id }: any) => {
   const media = await getMediaDetails(media_type, media_id);
-  const user = await getCurrentUser();
-  const watchTime = await getWatchTime(
-    user.user.id.toString(),
-    "movie",
-    media_id,
-  );
+  const watchTime = await getWatchTime(user_id, "movie", media_id);
   return (
     <div className="mb-4 flex w-full flex-col gap-2 hover:border-accent hover:bg-foreground/20 lg:mb-2 lg:flex-row lg:p-2">
       <Link

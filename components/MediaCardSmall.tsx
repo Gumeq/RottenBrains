@@ -1,11 +1,16 @@
-import { formatEpisodeCode, getRelativeTime, transformRuntime } from "@/lib/functions";
+import {
+  formatEpisodeCode,
+  getRelativeTime,
+  transformRuntime,
+} from "@/lib/functions";
 import { getWatchTime } from "@/utils/supabase/queries";
-import { getEpisodeDetails } from "@/utils/tmdb";
+import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
 
-type EpisodeCardProps = {
+type MediaCardSmallProps = {
+  media_type: string;
   media_id: number;
-  season_number: number;
-  episode_number: number;
+  season_number?: number;
+  episode_number?: number;
   user_id?: string; // Passed as a prop if available on the server
 };
 
@@ -16,19 +21,18 @@ type Episode = {
   still_path: string;
   air_date: string;
   runtime: number;
-  vote_average: number;
 };
 
-
 // Server Component
-const EpisodeCard = async ({
+const MediaCardSmall = async ({
+  media_type,
   media_id,
   season_number,
   episode_number,
   user_id,
-}: EpisodeCardProps) => {
-  // Fetch episode details
-  const episode: Episode = await getEpisodeDetails(
+}: MediaCardSmallProps) => {
+  const media = await getMediaDetails(
+    media_type,
     media_id,
     season_number,
     episode_number,
@@ -39,7 +43,7 @@ const EpisodeCard = async ({
   if (user_id) {
     watchTime = await getWatchTime(
       user_id,
-      "tv",
+      media_type,
       media_id,
       season_number,
       episode_number,
@@ -58,16 +62,19 @@ const EpisodeCard = async ({
           ></div>
         )}
         <div className="absolute bottom-0 right-0 m-2 flex flex-row-reverse gap-2">
-          <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
-            {transformRuntime(episode.runtime)}
-          </div>
-          <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
-            {episode.vote_average.toFixed(1)} / 10
+          <div className="rounded-[14px] bg-black/50 px-4 py-1 text-sm text-white">
+            {transformRuntime(media.runtime)}
           </div>
         </div>
         <img
-          src={`https://image.tmdb.org/t/p/w780${episode.still_path}`}
-          alt={`Still from episode ${episode.name}`}
+          src={
+            media.images &&
+            media.images.backdrops &&
+            media.images.backdrops.length > 0
+              ? `https://image.tmdb.org/t/p/w780${media.images.backdrops[0].file_path}`
+              : `https://image.tmdb.org/t/p/w780${media.backdrop_path || media.still_path}`
+          }
+          alt={`Still from episode ${media.name || media.title}`}
           width={780}
           height={440}
           className="w-full bg-foreground/10 lg:rounded-[4px]"
@@ -75,14 +82,19 @@ const EpisodeCard = async ({
       </div>
       <div className="flex flex-col gap-1 px-4 lg:px-0">
         <h3 className="">
-          {episode.name} | {formatEpisodeCode(season_number, episode_number)}
+          {media.name || media.title} |{" "}
+          {season_number &&
+            episode_number &&
+            formatEpisodeCode(season_number, episode_number)}
         </h3>
         <p className="text-sm text-foreground/50 lg:text-sm">
-          {getRelativeTime(episode.air_date)}
+          {getRelativeTime(
+            media.air_date || media.first_air_date || media.releaseDate,
+          )}
         </p>
       </div>
     </div>
   );
 };
 
-export default EpisodeCard;
+export default MediaCardSmall;

@@ -185,6 +185,7 @@ export default async function mediaPage({
                   <RecommendedCard
                     media_id={media.id}
                     media_type={media.media_type}
+                    user_id={user.user.id.toString()}
                   ></RecommendedCard>
                 </Link>
               ))}

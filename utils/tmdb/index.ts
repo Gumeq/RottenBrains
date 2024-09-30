@@ -58,11 +58,28 @@ export const getEpisodeDetails = async (
   );
 };
 
-export const getMediaDetails = async (media_type: string, media_id: number) => {
-  if (media_type === "movie") {
-    return await getMovieDetails(media_id);
+export const getMediaDetails = async (
+  media_type: string,
+  media_id: number,
+  season_number?: number,
+  episode_number?: number,
+) => {
+  if (season_number && episode_number) {
+    if (media_type === "tv") {
+      return await getEpisodeDetails(media_id, season_number, episode_number);
+    } else {
+      throw new Error(
+        "Can't get episode details for media_type :" + media_type,
+      );
+    }
   } else {
-    return await getTVDetails(media_id);
+    if (media_type === "movie") {
+      return await getMovieDetails(media_id);
+    } else if (media_type === "tv") {
+      return await getTVDetails(media_id);
+    } else {
+      throw new Error("Can't get details for media_type: " + media_type);
+    }
   }
 };
 
