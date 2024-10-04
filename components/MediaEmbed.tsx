@@ -113,7 +113,7 @@ const VideoEmbed = ({
   };
 
   return (
-    <div className="fixed left-0 top-0 z-50 flex w-screen flex-col border-b border-foreground/20 bg-background pb-2 drop-shadow-lg lg:relative lg:w-auto lg:gap-2 lg:border-none lg:pb-0 lg:drop-shadow-none">
+    <div className="fixed left-0 top-0 z-50 flex w-screen flex-col border-b border-foreground/20 bg-background drop-shadow-lg lg:relative lg:w-auto lg:gap-2 lg:border-none lg:pb-0 lg:drop-shadow-none">
       <div className="z-20 flex h-12 w-full flex-row items-center gap-4 bg-background px-2 lg:hidden">
         <div className="flex h-full items-center px-2">
           <Link
@@ -173,13 +173,13 @@ const VideoEmbed = ({
           </div>
         )}
       </div>
-      <div className="flex flex-row items-center justify-between overflow-x-auto px-4 py-2 lg:p-0 lg:py-2">
-        <h2 className="mr-1 line-clamp-1 text-lg font-semibold">
+      <div className="hidden-scrollbar flex flex-row items-center justify-between gap-4 overflow-x-auto px-2 py-1 lg:p-0 lg:py-2">
+        <h2 className="mr-1 whitespace-nowrap text-lg font-semibold">
           {episode !== undefined && season_number && episode_number
             ? `${episode.name} | ${formatEpisodeCode(season_number, episode_number)} | ${media.name}`
             : `${media.title || media.name}`}
         </h2>
-        <div className="flex flex-shrink-0 flex-row gap-2">
+        <div className="flex flex-shrink-0 flex-row gap-2 overflow-x-auto">
           <Link
             href={`/protected/create-post/${media_type}/${media_id}`}
             className="z-10 flex flex-row items-center gap-2 justify-self-end rounded-full bg-foreground/10 p-2 px-4"
@@ -192,9 +192,9 @@ const VideoEmbed = ({
               className="invert-on-dark"
               loading="lazy"
             />
-            <p className="">Rate</p>
+            <p>Rate</p>
           </Link>
-          <ShareButton></ShareButton>
+          <ShareButton />
         </div>
       </div>
     </div>

@@ -336,7 +336,7 @@
 
 @media (max-width: 1024px) {
   .small-screen-watch-margin {
-    margin-top: calc(56.25vw + 150px);
+    margin-top: calc(56.25vw + 104px);
   }
 }
 

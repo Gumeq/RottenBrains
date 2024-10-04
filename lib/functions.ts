@@ -45,15 +45,17 @@ export function formatDate(inputDate: string) {
 export function transformRuntime(minutes: number): string {
   const hours: number = Math.floor(minutes / 60);
   const remainingMinutes: number = minutes % 60;
+  const seconds: number = Math.floor(Math.random() * 60); // Random seconds between 0 and 59
 
+  const formattedMinutes: string = remainingMinutes.toString().padStart(2, "0");
+  const formattedSeconds: string = seconds.toString().padStart(2, "0");
+
+  // Conditionally include hours only if it's greater than 0
   if (hours > 0) {
-    return `${hours} h ${remainingMinutes} m`;
+    const formattedHours: string = hours.toString();
+    return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
   } else {
-    if (remainingMinutes > 0) {
-      return `${remainingMinutes} m`;
-    } else {
-      return "N/A";
-    }
+    return `${formattedMinutes}:${formattedSeconds}`;
   }
 }
 

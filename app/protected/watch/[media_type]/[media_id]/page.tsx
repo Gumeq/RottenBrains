@@ -13,6 +13,7 @@ import WatchDuration from "@/components/WatchDuration";
 import HomePostCardNew from "@/components/post/HomePostCardNew";
 import ScrollButtons from "@/components/explore/ScrollButtons";
 import { getRelativeTime } from "@/lib/functions";
+import MediaCardSmall from "@/components/MediaCardSmall";
 
 export async function generateMetadata({ params }: any) {
   const media_id = parseInt(params.media_id, 10);
@@ -182,11 +183,11 @@ export default async function mediaPage({
                   }
                   className="w-full"
                 >
-                  <RecommendedCard
+                  <MediaCardSmall
                     media_id={media.id}
                     media_type={media.media_type}
                     user_id={user.user.id.toString()}
-                  ></RecommendedCard>
+                  ></MediaCardSmall>
                 </Link>
               ))}
           </div>
