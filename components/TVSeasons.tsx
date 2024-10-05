@@ -6,6 +6,7 @@ import React, { useEffect, useState, Suspense } from "react";
 import dynamic from "next/dynamic";
 import { useUser } from "@/context/UserContext";
 import MediaCardSmall from "./MediaCardSmall";
+import { divide } from "lodash";
 
 // Dynamically import the server-side EpisodeCard component
 const EpisodeCard = dynamic(() => import("./EpisodeCard"), {
@@ -98,8 +99,14 @@ const TVShowDetails = ({ tv_show_id, season_number }: TVShowDetailsProps) => {
             {episodes.map((episode) => (
               <Suspense
                 fallback={
-                  <div className="h-[200px] w-full bg-foreground/10">
-                    Loading episode...
+                  <div className="mb-4 flex w-full flex-col gap-2 hover:border-accent hover:bg-foreground/20 lg:mb-2 lg:flex-row lg:rounded-[8px] lg:p-2">
+                    <div className="relative w-full flex-shrink-0 overflow-hidden lg:w-1/2 lg:rounded-[4px]">
+                      <div className="aspect-[16/9] w-full bg-foreground/10 lg:rounded-[4px]"></div>
+                    </div>
+                    <div className="flex w-full flex-col gap-1 px-4 lg:px-0">
+                      <div className="h-8 w-2/3 rounded-[4px] bg-foreground/10"></div>
+                      <div className="h-4 w-1/3 rounded-[4px] bg-foreground/10"></div>
+                    </div>
                   </div>
                 }
                 key={episode.episode_number}

@@ -2,6 +2,7 @@ import EpisodeCard from "@/components/EpisodeCard";
 import ExploreTab from "@/components/explore/ExploreTab";
 import ScrollButtons from "@/components/explore/ScrollButtons";
 import GoBackArrow from "@/components/GoBackArrow";
+import MediaCardSmall from "@/components/MediaCardSmall";
 import VideoEmbed from "@/components/MediaEmbed";
 import MediaInfoComponent from "@/components/MediaInfoComponent";
 import HomePostCard from "@/components/post/HomePostCard";
@@ -218,11 +219,13 @@ export default async function mediaPage({
               <Link
                 href={`/protected/watch/${media_type}/${media.id}/${nextEpisode.season_number}/${nextEpisode.episode_number}`}
               >
-                <EpisodeCard
+                <MediaCardSmall
+                  media_type={"tv"}
                   media_id={media.id}
                   season_number={nextEpisode.season_number}
                   episode_number={nextEpisode.episode_number}
-                ></EpisodeCard>
+                  user_id={user.user.id}
+                ></MediaCardSmall>
               </Link>
             )}
             <h3 className="px-2 font-semibold lg:px-0">All Episodes</h3>

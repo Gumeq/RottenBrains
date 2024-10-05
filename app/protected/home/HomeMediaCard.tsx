@@ -162,9 +162,6 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
             genre_ids={genreIds}
           ></MoreOptions>
         </div>
-        {/* <p className="line-clamp-2 text-sm text-foreground/50">
-          {media.overview}
-        </p> */}
         <p className="text-sm text-foreground/50">
           {formatDate(
             media.release_date || media.air_date || media.first_air_date,

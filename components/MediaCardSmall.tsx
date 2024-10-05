@@ -61,9 +61,12 @@ const MediaCardSmall = async ({
             }}
           ></div>
         )}
-        <div className="absolute bottom-0 right-0 m-2 flex flex-row-reverse gap-2">
-          <div className="rounded-[14px] bg-black/50 px-4 py-1 text-sm text-white">
+        <div className="absolute bottom-0 right-0 m-1 flex flex-row-reverse gap-1">
+          <div className="rounded-[4px] bg-black/50 px-1 text-xs font-medium text-white">
             {transformRuntime(media.runtime)}
+          </div>
+          <div className="rounded-[4px] bg-black/50 px-1 text-xs font-medium text-white">
+            {media.vote_average.toFixed(1)}/10
           </div>
         </div>
         <img
@@ -75,8 +78,6 @@ const MediaCardSmall = async ({
               : `https://image.tmdb.org/t/p/w780${media.backdrop_path || media.still_path}`
           }
           alt={`Still from episode ${media.name || media.title}`}
-          width={780}
-          height={440}
           className="w-full bg-foreground/10 lg:rounded-[4px]"
         />
       </div>
@@ -89,7 +90,7 @@ const MediaCardSmall = async ({
         </h3>
         <p className="text-sm text-foreground/50 lg:text-sm">
           {getRelativeTime(
-            media.air_date || media.first_air_date || media.releaseDate,
+            media.air_date || media.first_air_date || media.release_date,
           )}
         </p>
       </div>
