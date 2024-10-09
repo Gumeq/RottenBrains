@@ -173,7 +173,7 @@ const VideoEmbed = ({
           </div>
         )}
       </div>
-      <div className="hidden-scrollbar flex flex-row items-center justify-between gap-4 overflow-x-auto px-2 py-1 lg:p-0 lg:py-2">
+      <div className="hidden-scrollbar flex flex-row items-center justify-between gap-4 overflow-x-auto px-2 py-2 lg:p-0 lg:py-2">
         <h2 className="mr-1 whitespace-nowrap text-lg font-semibold">
           {episode !== undefined && season_number && episode_number
             ? `${episode.name} | ${formatEpisodeCode(season_number, episode_number)} | ${media.name}`
@@ -182,13 +182,13 @@ const VideoEmbed = ({
         <div className="flex flex-shrink-0 flex-row gap-2 overflow-x-auto">
           <Link
             href={`/protected/create-post/${media_type}/${media_id}`}
-            className="z-10 flex flex-row items-center gap-2 justify-self-end rounded-full bg-foreground/10 p-2 px-4"
+            className="z-10 flex flex-row items-center gap-2 justify-self-end rounded-full bg-foreground/10 p-1 px-2"
           >
             <img
               src="/assets/icons/star-outline.svg"
               alt="Rate"
-              width={20}
-              height={20}
+              width={16}
+              height={16}
               className="invert-on-dark"
               loading="lazy"
             />

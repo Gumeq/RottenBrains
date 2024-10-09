@@ -46,13 +46,13 @@ const ShareButton: React.FC = () => {
   return (
     <button
       onClick={sharePage}
-      className="z-10 flex flex-row items-center gap-2 justify-self-end rounded-full bg-foreground/10 p-2 px-4"
+      className="z-10 flex flex-row items-center gap-2 justify-self-end rounded-full bg-foreground/10 p-1 px-2"
     >
       <img
         src="/assets/icons/share-outline.svg"
         alt="Share"
-        width={20}
-        height={20}
+        width={16}
+        height={16}
         className="invert-on-dark"
         loading="lazy"
       />
