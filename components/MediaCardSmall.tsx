@@ -51,8 +51,8 @@ const MediaCardSmall = async ({
   }
 
   return (
-    <div className="mb-4 flex w-full flex-col gap-2 hover:border-accent hover:bg-foreground/20 lg:mb-2 lg:flex-row lg:rounded-[8px] lg:p-2">
-      <div className="relative w-full flex-shrink-0 overflow-hidden lg:w-1/2 lg:rounded-[4px]">
+    <div className="mb-4 flex w-full flex-col gap-2 rounded-[8px] hover:border-accent hover:bg-foreground/20 lg:mb-2 lg:flex-row lg:p-2">
+      <div className="relative w-full flex-shrink-0 overflow-hidden rounded-[4px] lg:w-1/2">
         {watchTime > 0 && (
           <div
             className="absolute bottom-0 left-0 h-1 bg-accent"
@@ -78,14 +78,15 @@ const MediaCardSmall = async ({
               : `https://image.tmdb.org/t/p/w780${media.backdrop_path || media.still_path}`
           }
           alt={`Still from episode ${media.name || media.title}`}
-          className="w-full bg-foreground/10 lg:rounded-[4px]"
+          className="w-full rounded-[8px] bg-foreground/10"
         />
       </div>
-      <div className="flex flex-col gap-1 px-4 lg:px-0">
+      <div className="flex flex-col gap-1 px-2 lg:px-0">
         <h3 className="">
-          {media.name || media.title} |{" "}
+          {media.name || media.title}
           {season_number &&
             episode_number &&
+            "| " &&
             formatEpisodeCode(season_number, episode_number)}
         </h3>
         <p className="text-sm text-foreground/50 lg:text-sm">

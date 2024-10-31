@@ -99,7 +99,7 @@ export default async function mediaPage({
                   </p>
                   <div className="flex flex-row items-center gap-1">
                     <p className="text-sm font-semibold uppercase text-foreground/50">
-                      Browse {media_type}
+                      Details
                     </p>
                     <img
                       src="/assets/icons/chevron-forward.svg"
@@ -169,10 +169,8 @@ export default async function mediaPage({
               )}
             </div>
           </div>
-          <div className="custom-scrollbar flex flex-col lg:w-[25%]">
-            <p className="mb-2 px-2 text-lg font-bold lg:px-0">
-              Recommendations
-            </p>
+          <div className="custom-scrollbar flex flex-col px-2 lg:w-[25%]">
+            <p className="mb-2 text-lg font-bold">Recommendations</p>
             {recommendations &&
               recommendations.results.map((media: any) => (
                 <Link

@@ -45,7 +45,7 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
                             </h2>
                           </div>
                           <Link className="flex" href={watchLink}>
-                            <div className="rounded-full border-4 border-transparent bg-foreground px-2 py-1 text-lg font-medium text-background transition ease-in-out hover:border-foreground hover:bg-transparent hover:text-foreground lg:px-4 lg:py-2 lg:text-2xl">
+                            <div className="rounded-full border-4 border-transparent bg-foreground px-8 py-1 text-lg font-medium text-background transition ease-in-out hover:border-foreground hover:bg-transparent hover:text-foreground lg:py-2 lg:text-2xl">
                               Watch Now
                             </div>
                           </Link>

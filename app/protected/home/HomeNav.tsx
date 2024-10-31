@@ -62,7 +62,7 @@ const HomeNav = ({ children }: any) => {
               </Link>
             </div>
 
-            <div className="h-full w-screen p-2 lg:w-[25vw] lg:p-0">
+            <div className="h-full w-screen p-2 lg:max-w-[40vw] lg:p-0">
               <SearchBar link={true} user={true}></SearchBar>
             </div>
 

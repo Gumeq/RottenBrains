@@ -146,14 +146,14 @@ const VideoEmbed = ({
             </div>
             <button
               onClick={handleButtonClick}
-              className="absolute left-1/2 top-1/2 flex h-40 w-40 -translate-x-1/2 -translate-y-1/2 transform items-center justify-center rounded-full bg-black/60 text-lg font-semibold text-white transition-colors duration-300 hover:bg-accent/80"
+              className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 transform items-center justify-center rounded-full bg-black/60 text-lg font-semibold text-white transition-colors duration-300 hover:bg-accent/80"
             >
               <img
                 src="/assets/icons/play-solid.svg"
                 alt="Play"
                 width={20}
                 height={20}
-                className="min-h-[40px] min-w-[40px] invert"
+                className="min-h-[24px] min-w-[24px] invert"
               />
             </button>
           </div>

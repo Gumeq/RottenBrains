@@ -143,7 +143,7 @@ export default async function mediaPage({
                   </p>
                   <div className="flex flex-row items-center gap-1">
                     <p className="text-sm font-semibold uppercase text-foreground/50">
-                      Browse {media_type}
+                      Details
                     </p>
                     <img
                       src="/assets/icons/chevron-forward.svg"
@@ -213,7 +213,7 @@ export default async function mediaPage({
               )}
             </div>
           </div>
-          <div className="flex flex-col gap-2 md:w-[25%]">
+          <div className="flex flex-col gap-2 px-2 md:w-[25%]">
             <h3 className="px-2 font-semibold lg:px-0">Next Episode</h3>
             {nextEpisode && (
               <Link

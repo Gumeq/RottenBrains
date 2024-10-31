@@ -70,7 +70,7 @@ const HomeMediaCardClient: React.FC<MediaCardProps> = ({
   if (loading)
     return (
       <div className="flex flex-col">
-        <div className="mb-4 flex aspect-[16/9] w-screen flex-col bg-foreground/20 lg:mb-0 lg:w-auto lg:min-w-[400px] lg:max-w-[550px] lg:rounded-[16px]"></div>
+        <div className="mb-4 flex aspect-[16/9] w-full flex-col rounded-[8px] bg-foreground/20 lg:mb-0 lg:w-auto lg:min-w-[400px] lg:max-w-[550px]"></div>
         <div className="h-14 w-screen lg:w-full lg:min-w-[400px] lg:max-w-[550px]"></div>
       </div>
     );
@@ -105,9 +105,9 @@ const HomeMediaCardClient: React.FC<MediaCardProps> = ({
   }
 
   return (
-    <div className="mb-4 flex w-screen flex-col lg:mb-0 lg:w-full lg:min-w-[350px] lg:max-w-[450px]">
+    <div className="mb-4 flex w-full flex-col lg:mb-0 lg:w-full lg:min-w-[350px] lg:max-w-[450px]">
       <Link
-        className="relative overflow-hidden lg:rounded-[8px]"
+        className="relative overflow-hidden rounded-[8px]"
         href={
           media_type === "movie"
             ? `/protected/watch/${media_type}/${media_id}`
@@ -162,10 +162,10 @@ const HomeMediaCardClient: React.FC<MediaCardProps> = ({
             src={`https://image.tmdb.org/t/p/w500${imageUrl}`}
             alt={media.title || media.name}
             loading="lazy"
-            className="aspect-[16/9] w-full bg-foreground/10 lg:rounded-[8px]"
+            className="aspect-[16/9] w-full rounded-[8px] bg-foreground/10"
           />
         ) : (
-          <div className="flex aspect-[16/9] w-full flex-col items-center justify-center gap-2 bg-foreground/10 lg:rounded-[8px]">
+          <div className="flex aspect-[16/9] w-full flex-col items-center justify-center gap-2 rounded-[8px] bg-foreground/10">
             <img
               src="/assets/images/logo_new_black.svg"
               alt=""
@@ -175,7 +175,7 @@ const HomeMediaCardClient: React.FC<MediaCardProps> = ({
           </div>
         )}
       </Link>
-      <div className="flex flex-col px-4 lg:p-0">
+      <div className="flex flex-col px-2 lg:p-0">
         <div className="mt-2 flex flex-row justify-between">
           <h2 className="flex flex-row gap-1 text-lg font-medium">
             {media.title || media.name}

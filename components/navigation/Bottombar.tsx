@@ -11,7 +11,11 @@ const Bottombar = () => {
 
   return (
     <div
-      className={`fixed bottom-0 z-50 flex h-14 w-screen items-center justify-center drop-shadow-xl lg:hidden ${pathname.includes("watch/tv" || "watch/movie") ? "hidden" : ""}`}
+      className={`fixed bottom-0 z-50 flex h-14 w-screen items-center justify-center drop-shadow-xl lg:hidden ${
+        pathname.includes("watch/tv") || pathname.includes("watch/movie")
+          ? "hidden"
+          : ""
+      }`}
     >
       <ul className="relative flex h-14 w-full flex-row items-center justify-between border-t border-foreground/20 bg-background drop-shadow-xl">
         <Link
@@ -51,6 +55,7 @@ const Bottombar = () => {
             height={24}
             className="invert-on-dark"
           ></img>
+          <p className="text-xs">Create</p>
         </Link>
         <Link
           href={"/protected/watch-list"}
