@@ -130,7 +130,7 @@ const VideoEmbed = ({
       </div>
       <div>
         {!showVideo ? (
-          <div className="relative w-full overflow-hidden text-center lg:rounded-[8px]">
+          <div className="relative aspect-[16/9] w-full overflow-hidden text-center lg:rounded-[8px]">
             <img
               src={
                 media_type === "movie"

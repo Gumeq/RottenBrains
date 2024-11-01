@@ -1,10 +1,12 @@
+// HomeMediaCard.tsx
+
+import React from "react";
 import { formatDate, transformRuntime } from "@/lib/functions";
 import { getWatchTime } from "@/utils/supabase/queries";
 import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
 import Link from "next/link";
-import React from "react";
 import MoreOptions from "./MoreOptions";
-import { differenceInDays } from "date-fns";
+import HoverImage from "./HoverImage"; // Import the HoverImage component
 
 interface MediaCardProps {
   media_type: string;
@@ -58,10 +60,9 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
   let dayDifferenceTv;
   if (releaseDate) {
     const today = new Date();
-    // Convert releaseDate string to a Date object
     const releaseDateObj = new Date(releaseDate);
     const timeDiff = today.getTime() - releaseDateObj.getTime();
-    dayDifference = timeDiff / (1000 * 3600 * 24); // Convert milliseconds to days
+    dayDifference = timeDiff / (1000 * 3600 * 24);
     if (media_type === "tv" && media.last_air_date) {
       const last_air_date_OBJ = new Date(media.last_air_date);
       const timeDiff = today.getTime() - last_air_date_OBJ.getTime();
@@ -72,7 +73,7 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
   return (
     <div className="mb-4 flex w-full flex-col lg:mb-0 lg:w-full lg:min-w-[350px] lg:max-w-[450px]">
       <Link
-        className="relative overflow-hidden rounded-[8px]"
+        className="relative overflow-hidden"
         href={
           media_type === "movie"
             ? `/protected/watch/${media_type}/${media_id}`
@@ -81,69 +82,60 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
               : `/protected/watch/${media_type}/${media_id}/1/1`
         }
       >
-        <div className="absolute bottom-0 right-0 m-2 flex flex-row-reverse gap-2">
-          {media.runtime && (
-            <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
-              {transformRuntime(media.runtime)}
-            </div>
-          )}
-          <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
-            {media.vote_average.toFixed(1)} / 10
-          </div>
-          {quality && (
-            <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
-              {quality}
-            </div>
-          )}
-        </div>
-        <div className="absolute left-0 top-0 m-2">
-          {dayDifference && dayDifference <= 30 && dayDifference > 0 && (
-            <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
-              NEW
-            </div>
-          )}
-          {dayDifference && dayDifference < 0 && (
-            <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
-              SOON
-            </div>
-          )}
-          {media_type === "tv" &&
-            dayDifference &&
-            dayDifference >= 30 &&
-            dayDifferenceTv &&
-            dayDifferenceTv < 30 && (
+        <HoverImage
+          imageUrl={imageUrl}
+          altText={media.title || media.name}
+          media_type={media_type}
+          media_id={media_id}
+        >
+          {/* Include any additional elements that need to be overlaid on hover */}
+          {/* Absolute positioned elements */}
+          <div className="absolute bottom-0 right-0 m-2 flex flex-row-reverse gap-2">
+            {media.runtime && (
               <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
-                NEW EPISODES
+                {transformRuntime(media.runtime)}
               </div>
             )}
-        </div>
-
-        {/* Display the progress bar only if percentage_watched is valid */}
-        {watchTime && (
-          <div
-            className="absolute bottom-0 left-0 h-1 bg-accent"
-            style={{
-              width: `${watchTime || 0}%`,
-            }}
-          ></div>
-        )}
-        {imageUrl ? (
-          <img
-            src={`https://image.tmdb.org/t/p/w500${imageUrl}`}
-            alt={media.title || media.name}
-            loading="lazy"
-            className="aspect-[16/9] w-full bg-foreground/10 lg:rounded-[8px]"
-          />
-        ) : (
-          <div className="flex aspect-[16/9] w-full flex-col items-center justify-center gap-2 rounded-[8px] bg-foreground/10">
-            <img
-              src="/assets/images/logo_new_black.svg"
-              alt=""
-              className="invert-on-dark h-10 w-10 opacity-50"
-            />
-            <p className="text-sm text-foreground/50">No image available</p>
+            <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
+              {media.vote_average.toFixed(1)} / 10
+            </div>
+            {quality && (
+              <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
+                {quality}
+              </div>
+            )}
           </div>
-        )}
+          <div className="absolute left-0 top-0 m-2">
+            {dayDifference && dayDifference <= 30 && dayDifference > 0 && (
+              <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
+                NEW
+              </div>
+            )}
+            {dayDifference && dayDifference < 0 && (
+              <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
+                SOON
+              </div>
+            )}
+            {media_type === "tv" &&
+              dayDifference &&
+              dayDifference >= 30 &&
+              dayDifferenceTv &&
+              dayDifferenceTv < 30 && (
+                <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
+                  NEW EPISODES
+                </div>
+              )}
+          </div>
+          {/* Display the progress bar only if percentage_watched is valid */}
+          {watchTime && (
+            <div
+              className="absolute bottom-0 left-0 h-1 bg-accent"
+              style={{
+                width: `${watchTime || 0}%`,
+              }}
+            ></div>
+          )}
+        </HoverImage>
       </Link>
       <div className="flex flex-col px-2 lg:p-0">
         <div className="mt-2 flex flex-row justify-between">
@@ -160,7 +152,7 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
             media_type={media_type}
             media_id={media_id}
             genre_ids={genreIds}
-          ></MoreOptions>
+          />
         </div>
         <p className="text-sm text-foreground/50">
           {formatDate(
