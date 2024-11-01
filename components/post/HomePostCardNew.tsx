@@ -77,84 +77,116 @@ export function HomePostCardNew({ post, index }: any) {
   if (!creator) {
     return <p>no creator</p>;
   }
-if (loading || !currentUser) {
-  return (
-    <motion.div
-      className="relative flex h-min flex-col rounded-[8px] border border-foreground/10 bg-white/5 p-2 lg:min-w-[400px] lg:max-w-[550px]"
-      initial="hidden"
-      animate="visible"
-      transition={{
-        delay: index * 0.15,
-        ease: "easeInOut",
-        duration: 0.25,
-      }}
-      viewport={{ amount: 0 }}
-    >
-      <div className="mb-2 flex flex-row items-center justify-between gap-4">
-        <div className="flex flex-row items-center gap-2">
-          <span className="min-h-[35px] min-w-[35px]">
+  if (loading || !currentUser) {
+    return (
+      <motion.div
+        className="relative flex h-min flex-col rounded-[8px] border border-foreground/10 bg-white/5 p-2 lg:min-w-[400px] lg:max-w-[550px]"
+        initial="hidden"
+        animate="visible"
+        transition={{
+          delay: index * 0.15,
+          ease: "easeInOut",
+          duration: 0.25,
+        }}
+        viewport={{ amount: 0 }}
+      >
+        <div className="mb-2 flex flex-row items-center justify-between gap-4">
+          <div className="flex flex-row items-center gap-2">
+            <span className="min-h-[35px] min-w-[35px]">
+              <Skeleton
+                circle={true}
+                height={35}
+                width={35}
+                baseColor="rgba(255, 255, 255, 0.1)" // Custom opacity color
+              />
+            </span>
+            <div>
+              <Skeleton
+                width={120}
+                height={20}
+                baseColor="rgba(255, 255, 255, 0.1)"
+              />
+              <Skeleton
+                width={80}
+                height={16}
+                baseColor="rgba(255, 255, 255, 0.1)"
+              />
+            </div>
+          </div>
+          <div className="flex h-full flex-row items-center gap-2">
             <Skeleton
-              circle={true}
-              height={35}
-              width={35}
-              className="bg-foreground/10"
+              width={40}
+              height={20}
+              baseColor="rgba(255, 255, 255, 0.1)"
             />
-          </span>
-          <div>
-            <Skeleton width={120} height={20} className="bg-foreground/10" />
-            <Skeleton width={80} height={16} className="bg-foreground/10" />
+            <Skeleton
+              width={60}
+              height={30}
+              baseColor="rgba(255, 255, 255, 0.1)"
+            />
           </div>
         </div>
-        <div className="flex h-full flex-row items-center gap-2">
-          <Skeleton width={40} height={20} className="bg-foreground/10" />
-          <Skeleton width={60} height={30} className="bg-foreground/10" />
-        </div>
-      </div>
-      <div className="flex w-full flex-row justify-between gap-4">
-        <Skeleton
-          width={154}
-          height={231}
-          className="rounded-[6px] bg-foreground/10"
-        />
-        <div className="flex w-full flex-col justify-between">
-          <div className="flex flex-col gap-2">
-            <Skeleton width="100%" height={20} className="bg-foreground/10" />
-            <Skeleton width="100%" height={20} className="bg-foreground/10" />
-            <Skeleton width="80%" height={20} className="bg-foreground/10" />
-          </div>
-          <div className="flex w-full items-center">
-            <div className="align-center flex h-full w-full flex-row items-center justify-between">
-              <div className="flex flex-row items-center">
-                <Skeleton width={60} height={20} className="bg-foreground/10" />
-              </div>
-              <div className="flex flex-row items-center gap-2">
-                <Skeleton
-                  circle={true}
-                  height={32}
-                  width={32}
-                  className="bg-foreground/10"
-                />
-                <Skeleton
-                  circle={true}
-                  height={32}
-                  width={32}
-                  className="bg-foreground/10"
-                />
-                <Skeleton
-                  circle={true}
-                  height={32}
-                  width={32}
-                  className="bg-foreground/10"
-                />
+        <div className="flex w-full flex-row justify-between gap-4">
+          <Skeleton
+            width={154}
+            height={231}
+            className="rounded-[6px]"
+            baseColor="rgba(255, 255, 255, 0.1)"
+          />
+          <div className="flex w-full flex-col justify-between">
+            <div className="flex flex-col gap-2">
+              <Skeleton
+                width="100%"
+                height={20}
+                baseColor="rgba(255, 255, 255, 0.1)"
+              />
+              <Skeleton
+                width="100%"
+                height={20}
+                baseColor="rgba(255, 255, 255, 0.1)"
+              />
+              <Skeleton
+                width="80%"
+                height={20}
+                baseColor="rgba(255, 255, 255, 0.1)"
+              />
+            </div>
+            <div className="flex w-full items-center">
+              <div className="align-center flex h-full w-full flex-row items-center justify-between">
+                <div className="flex flex-row items-center">
+                  <Skeleton
+                    width={60}
+                    height={20}
+                    baseColor="rgba(255, 255, 255, 0.1)"
+                  />
+                </div>
+                <div className="flex flex-row items-center gap-2">
+                  <Skeleton
+                    circle={true}
+                    height={32}
+                    width={32}
+                    baseColor="rgba(255, 255, 255, 0.1)"
+                  />
+                  <Skeleton
+                    circle={true}
+                    height={32}
+                    width={32}
+                    baseColor="rgba(255, 255, 255, 0.1)"
+                  />
+                  <Skeleton
+                    circle={true}
+                    height={32}
+                    width={32}
+                    baseColor="rgba(255, 255, 255, 0.1)"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </motion.div>
-  );
-}
-
+      </motion.div>
+    );
+  }
 
   const userId = currentUser.id;
 
