@@ -9,6 +9,7 @@ interface HoverImageProps {
   altText: string;
   media_type: string; // "movie" or "tv"
   media_id: number;
+
   children?: React.ReactNode;
 }
 
@@ -201,6 +202,7 @@ const HoverImage: React.FC<HoverImageProps> = ({
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               ></iframe>
+              <div className="absolute inset-0"></div>
             </>
           ) : (
             <div className="text-white"></div>
