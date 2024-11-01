@@ -9,7 +9,6 @@ interface HoverImageProps {
   altText: string;
   media_type: string; // "movie" or "tv"
   media_id: number;
-
   children?: React.ReactNode;
 }
 
@@ -24,11 +23,16 @@ const HoverImage: React.FC<HoverImageProps> = ({
   const [showOverlay, setShowOverlay] = useState(false);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [iframeVisible, setIframeVisible] = useState(false); // Control iframe visibility
   const [isMobileDevice, setIsMobileDevice] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  const { mobileVideoPlaying, setMobileVideoPlaying } =
-    useContext(MobileVideoContext);
+  const {
+    mobileVideoPlaying,
+    setMobileVideoPlaying,
+    mobileVideoLoading,
+    setMobileVideoLoading,
+  } = useContext(MobileVideoContext);
 
   // Detect if the device is mobile
   useEffect(() => {
@@ -38,10 +42,7 @@ const HoverImage: React.FC<HoverImageProps> = ({
 
   // Fetch the video
   const fetchVideo = async () => {
-    let isCancelled = false;
-
     try {
-      setIsLoading(true); // Start loading
       const data = await getVideos(media_type, media_id);
 
       if (data && Array.isArray(data.results) && data.results.length > 0) {
@@ -53,33 +54,23 @@ const HoverImage: React.FC<HoverImageProps> = ({
 
         if (trailer && trailer.key && trailer.site === "YouTube") {
           const videoUrl = `https://www.youtube.com/embed/${trailer.key}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&cc_load_policy=1&cc_lang_pref=en`;
-          if (!isCancelled) {
-            setVideoUrl(videoUrl);
-          }
+          setVideoUrl(videoUrl);
         } else {
-          if (!isCancelled) {
-            setVideoUrl(null); // No video found
-          }
+          setVideoUrl(null); // No video found
+          setIsLoading(false); // Stop loading if no video is available
+          setMobileVideoLoading(false);
         }
       } else {
-        if (!isCancelled) {
-          setVideoUrl(null); // No video found
-        }
+        setVideoUrl(null); // No video found
+        setIsLoading(false); // Stop loading if no video is available
+        setMobileVideoLoading(false);
       }
     } catch (error) {
       console.error("Failed to fetch video:", error);
-      if (!isCancelled) {
-        setVideoUrl(null);
-      }
-    } finally {
-      if (!isCancelled) {
-        setIsLoading(false); // Stop loading
-      }
+      setVideoUrl(null);
+      setIsLoading(false); // Stop loading on error
+      setMobileVideoLoading(false);
     }
-
-    return () => {
-      isCancelled = true;
-    };
   };
 
   // Desktop Hover Effect
@@ -89,16 +80,22 @@ const HoverImage: React.FC<HoverImageProps> = ({
     let hoverTimeout: NodeJS.Timeout | null = null;
 
     if (isHovered) {
+      setIsLoading(true); // Show loading bar immediately on hover
+      setTimeout(() => {
+        setMobileVideoLoading(true), 1500;
+      });
       hoverTimeout = setTimeout(() => {
         setShowOverlay(true);
         fetchVideo();
-      }, 1000); // Delay of 1 second
+      }, 1000); // Delay showing the overlay only
     } else {
       if (hoverTimeout) {
         clearTimeout(hoverTimeout);
       }
       setShowOverlay(false);
       setIsLoading(false); // Reset loading state when hover ends
+      setMobileVideoLoading(false);
+      setIframeVisible(false); // Reset iframe visibility
       setVideoUrl(null); // Reset video URL when hover ends
     }
 
@@ -120,6 +117,10 @@ const HoverImage: React.FC<HoverImageProps> = ({
       entries.forEach((entry) => {
         if (entry.isIntersecting && entry.intersectionRatio === 1) {
           if (!mobileVideoPlaying) {
+            setIsLoading(true); // Show loading bar immediately when visible
+            setTimeout(() => {
+              setMobileVideoLoading(true), 1500;
+            });
             visibilityTimeout = setTimeout(() => {
               setShowOverlay(true);
               fetchVideo();
@@ -135,6 +136,8 @@ const HoverImage: React.FC<HoverImageProps> = ({
             setShowOverlay(false);
             setMobileVideoPlaying(false);
             setIsLoading(false);
+            setMobileVideoLoading(false);
+            setIframeVisible(false); // Reset iframe visibility
             setVideoUrl(null);
           }
         }
@@ -159,9 +162,20 @@ const HoverImage: React.FC<HoverImageProps> = ({
     };
   }, [isMobileDevice, mobileVideoPlaying]);
 
+  // Handle iframe load and add 0.2-second delay with fade-in effect
+  const handleIframeLoad = () => {
+    setTimeout(() => {
+      setIframeVisible(true); // Start fade-in after 0.2 seconds
+      setTimeout(() => {
+        setIsLoading(false); // Stop loading after iframe is fully visible
+        setMobileVideoLoading(false);
+      }, 500); // Additional delay for fade-in transition
+    }, 200);
+  };
+
   return (
     <div
-      className="relative"
+      className="relative overflow-hidden rounded-[8px]"
       onMouseEnter={!isMobileDevice ? () => setIsHovered(true) : undefined}
       onMouseLeave={!isMobileDevice ? () => setIsHovered(false) : undefined}
       ref={ref}
@@ -171,7 +185,7 @@ const HoverImage: React.FC<HoverImageProps> = ({
           src={`https://image.tmdb.org/t/p/w500${imageUrl}`}
           alt={altText}
           loading="lazy"
-          className="aspect-[16/9] w-full rounded-[8px] bg-foreground/10"
+          className="aspect-[16/9] w-full overflow-hidden bg-foreground/10"
         />
       ) : (
         <div className="flex aspect-[16/9] w-full flex-col items-center justify-center gap-2 rounded-[8px] bg-foreground/10">
@@ -186,7 +200,7 @@ const HoverImage: React.FC<HoverImageProps> = ({
       {children}
 
       {/* Loading Bar */}
-      {isLoading && (
+      {isLoading && !isMobileDevice && (
         <div className="animate-loading absolute left-0 top-0 z-50 h-1 w-full bg-accent"></div>
       )}
 
@@ -201,6 +215,10 @@ const HoverImage: React.FC<HoverImageProps> = ({
                 title="Media Trailer"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
+                onLoad={handleIframeLoad} // Set iframe as loaded when it finishes loading
+                className={`transition-opacity delay-200 duration-500 ${
+                  iframeVisible ? "opacity-100" : "opacity-0"
+                }`} // Apply fade-in effect
               ></iframe>
               <div className="absolute inset-0"></div>
             </>
