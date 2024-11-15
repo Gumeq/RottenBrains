@@ -3,12 +3,10 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { sidebarLinks } from "@/constants";
 import { usePathname } from "next/navigation";
 import SearchBar from "@/components/searchBar/SearchBar";
 import NotificationButton from "@/components/notifications/RealtimeNotifications";
 import ProfilePicture from "@/components/navigation/ProfilePicture";
-import ThemeSwitch from "@/components/ThemSwitch";
 import VersionDisplay from "@/components/VersionDisplay";
 import NavLink from "./NavLink";
 import {
