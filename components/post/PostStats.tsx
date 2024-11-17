@@ -97,9 +97,9 @@ const PostStats = ({ post, user }: any) => {
           {state.liked ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              height="30px"
+              height="24px"
               viewBox="0 -960 960 960"
-              width="30px"
+              width="24px"
               fill="0000000"
               className={`heart-icon ${state.animate ? "pop" : ""} fill-accent`}
             >
@@ -109,15 +109,15 @@ const PostStats = ({ post, user }: any) => {
             <img
               src={"/assets/icons/heart-outline.svg"}
               alt="Not Liked"
-              width={30}
-              height={30}
+              width="24px"
+              height="24px"
               className={`heart-icon invert-on-dark ${
                 state.animate ? "pop" : ""
               }`}
             />
           )}
         </button>
-        <p className="text-xl font-bold">{state.likes}</p>
+        <p className="font-bold">{state.likes}</p>
       </div>
       <div className="flex flex-row items-center gap-2">
         <div>
@@ -125,9 +125,9 @@ const PostStats = ({ post, user }: any) => {
             <img
               src="/assets/icons/comment-outline.svg"
               alt="Comment"
-              width={30}
-              height={30}
-              className="invert-on-dark -mb-2 max-h-[30px] min-h-[30px] min-w-[30px] max-w-[30px]"
+              width={24}
+              height={24}
+              className="invert-on-dark -mb-2 max-h-[24px] min-h-[24px] min-w-[24px] max-w-[24px]"
             />
           </button>
           {state.isOpen && (
@@ -178,7 +178,7 @@ const PostStats = ({ post, user }: any) => {
             </div>
           )}
         </div>
-        <p className="text-xl font-bold">{state.commentCount}</p>
+        <p className="font-bold">{state.commentCount}</p>
       </div>
     </div>
   );

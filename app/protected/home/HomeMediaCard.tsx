@@ -71,7 +71,7 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
   }
 
   return (
-    <div className="mb-4 flex w-full flex-col lg:mb-0 lg:w-full lg:min-w-[350px] lg:max-w-[450px]">
+    <div className="mb-4 flex w-full flex-col lg:w-full lg:min-w-[350px] lg:max-w-[450px]">
       <Link
         className="relative overflow-hidden"
         href={

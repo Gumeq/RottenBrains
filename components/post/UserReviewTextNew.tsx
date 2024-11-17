@@ -30,13 +30,13 @@ const UserReviewTextNew = ({
   };
 
   return (
-    <div>
+    <div className="min-h-[60px]">
       <div
         ref={textRef}
         className={classNames(
           "overflow-hidden opacity-80",
           { "line-clamp-none": isExpanded },
-          { "line-clamp-[6]": !isExpanded },
+          { "line-clamp-[1]": !isExpanded },
         )}
       >
         {post_review}

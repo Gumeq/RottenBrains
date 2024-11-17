@@ -115,13 +115,15 @@ const HoverImage: React.FC<HoverImageProps> = ({
 
     const handleVisibilityChange = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting && entry.intersectionRatio === 1) {
+        const rect = entry.boundingClientRect;
+        const isInTopHalf =
+          rect.top >= 0 && rect.bottom <= window.innerHeight * 0.5; // Fully visible in top 50%
+
+        if (isInTopHalf) {
           if (!mobileVideoPlaying) {
             setIsLoading(true); // Show loading bar immediately when visible
-            setTimeout(() => {
-              setMobileVideoLoading(true), 1500;
-            });
             visibilityTimeout = setTimeout(() => {
+              setMobileVideoLoading(true);
               setShowOverlay(true);
               fetchVideo();
               setMobileVideoPlaying(true);
@@ -145,7 +147,7 @@ const HoverImage: React.FC<HoverImageProps> = ({
     };
 
     observer = new IntersectionObserver(handleVisibilityChange, {
-      threshold: 1.0,
+      threshold: 0.0, // Trigger callback as soon as any part of the element is visible
     });
 
     if (ref.current) {

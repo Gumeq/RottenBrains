@@ -56,16 +56,7 @@ const HomeContent = async () => {
         <MobileTopBarHome></MobileTopBarHome>
         <div className="mt-16 lg:mt-0">
           <div className="mb-4 flex flex-row items-center justify-between px-2 lg:p-0">
-            <div className="flex flex-row items-center gap-2">
-              <img
-                src="/assets/icons/history.svg"
-                alt=""
-                width={24}
-                height={24}
-                className="invert-on-dark"
-              />
-              <h2 className="text-xl font-bold">Continue watching</h2>
-            </div>
+            <div></div>
             <ScrollButtons containerId="watch_history_main"></ScrollButtons>
           </div>
 
@@ -104,21 +95,21 @@ const HomeContent = async () => {
                 alt=""
                 className="invert-on-dark"
               />
-              <h2 className="text-xl font-bold">Latest Rotten Brains posts</h2>
+              <h2 className="text-xl font-bold">Posts</h2>
             </div>
             <ScrollButtons containerId="rotten-posts-one"></ScrollButtons>
           </div>
           <div className="relative px-2 lg:p-0">
             <div className="gradient-edge absolute right-0 top-0 z-20 h-full w-[5%]"></div>
             <div
-              className="hidden-scrollbar flex flex-row gap-1 overflow-x-auto pr-[5%] lg:gap-4"
+              className="hidden-scrollbar flex flex-row gap-2 overflow-x-auto pr-[5%] lg:gap-4"
               id={"rotten-posts-one"}
             >
               {followed_posts_one &&
                 followed_posts_one.map((post: any) => {
                   return (
                     <>
-                      <div className="flex w-[90vw] flex-shrink-0 lg:w-fit">
+                      <div className="flex w-[80vw] flex-shrink-0 lg:w-fit">
                         <HomePostCardNew post={post}></HomePostCardNew>
                       </div>
                     </>
@@ -157,21 +148,21 @@ const HomeContent = async () => {
                 alt=""
                 className="invert-on-dark"
               />
-              <h2 className="text-xl font-bold">Older Rotten Brains posts</h2>
+              <h2 className="text-xl font-bold">Posts</h2>
             </div>
             <ScrollButtons containerId="rotten-posts-two"></ScrollButtons>
           </div>
           <div className="relative px-2 lg:p-0">
             <div className="gradient-edge absolute right-0 top-0 z-20 h-full w-[5%]"></div>
             <div
-              className="hidden-scrollbar flex flex-row gap-1 overflow-x-auto pr-[5%] lg:gap-4"
+              className="hidden-scrollbar flex flex-row gap-2 overflow-x-auto pr-[5%] lg:gap-4"
               id={"rotten-posts-two"}
             >
               {followed_posts_two &&
                 followed_posts_two.map((post: any) => {
                   return (
                     <>
-                      <div className="flex w-[90vw] flex-shrink-0 lg:w-fit">
+                      <div className="flex w-[80vw] flex-shrink-0 lg:w-fit">
                         <HomePostCardNew post={post}></HomePostCardNew>
                       </div>
                     </>

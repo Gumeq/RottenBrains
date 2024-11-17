@@ -77,8 +77,7 @@ export function HomePostCardNewNew({ post, index }: any) {
   if (loading || !currentUser) {
     return (
       <motion.div
-        className="relative flex h-min flex-col overflow-hidden rounded-[8px] border border-foreground/10 bg-white/5 lg:max-w-[400px]"
-        variants={variants}
+        className="relative flex h-min flex-col rounded-[8px] border border-foreground/10 bg-white/5 p-2 lg:min-w-[400px] lg:max-w-[550px]"
         initial="hidden"
         animate="visible"
         transition={{
@@ -88,54 +87,95 @@ export function HomePostCardNewNew({ post, index }: any) {
         }}
         viewport={{ amount: 0 }}
       >
-        {/* Header Section */}
-        <div className="flex flex-row items-center justify-between gap-4 px-4 py-2">
+        <div className="mb-2 flex flex-row items-center justify-between gap-4">
           <div className="flex flex-row items-center gap-2">
-            {/* Profile Picture Skeleton */}
-            <div className="h-[32px] w-[32px] rounded-full bg-foreground/10" />
+            <span className="min-h-[35px] min-w-[35px]">
+              <Skeleton
+                circle={true}
+                height={35}
+                width={35}
+                baseColor="rgba(255, 255, 255, 0.1)" // Custom opacity color
+              />
+            </span>
             <div>
-              {/* Username and Time Skeleton */}
-              <div className="mb-1 h-[16px] w-[120px] bg-foreground/10" />
-              <div className="h-[12px] w-[80px] bg-foreground/10" />
+              <Skeleton
+                width={120}
+                height={20}
+                baseColor="rgba(255, 255, 255, 0.1)"
+              />
+              <Skeleton
+                width={80}
+                height={16}
+                baseColor="rgba(255, 255, 255, 0.1)"
+              />
             </div>
           </div>
           <div className="flex h-full flex-row items-center gap-2">
-            {/* Edit Button Skeleton */}
-            <div className="h-[20px] w-[20px] bg-foreground/10" />
+            <Skeleton
+              width={40}
+              height={20}
+              baseColor="rgba(255, 255, 255, 0.1)"
+            />
+            <Skeleton
+              width={60}
+              height={30}
+              baseColor="rgba(255, 255, 255, 0.1)"
+            />
           </div>
         </div>
-
-        {/* Main Content Section */}
-        <div className="flex w-full flex-col justify-between">
-          <div className="relative w-full">
-            {/* Image Skeleton */}
-            <div className="aspect-[16/9] h-auto w-[500px] bg-foreground/10" />
-            <div className="absolute bottom-2 right-2">
-              {/* Vote Skeleton */}
-              <div className="h-[20px] w-[50px] bg-foreground/10" />
+        <div className="flex w-full flex-row justify-between gap-4">
+          <Skeleton
+            width={154}
+            height={231}
+            className="rounded-[6px]"
+            baseColor="rgba(255, 255, 255, 0.1)"
+          />
+          <div className="flex w-full flex-col justify-between">
+            <div className="flex flex-col gap-2">
+              <Skeleton
+                width="100%"
+                height={20}
+                baseColor="rgba(255, 255, 255, 0.1)"
+              />
+              <Skeleton
+                width="100%"
+                height={20}
+                baseColor="rgba(255, 255, 255, 0.1)"
+              />
+              <Skeleton
+                width="80%"
+                height={20}
+                baseColor="rgba(255, 255, 255, 0.1)"
+              />
             </div>
-          </div>
-
-          <div className="flex flex-col px-2 lg:px-4">
-            <div className="flex flex-col gap-2 py-4">
-              <div className="flex w-full flex-row gap-2">
-                {/* Media Icon Skeleton */}
-                <div className="h-[20px] w-[20px] bg-foreground/10" />
-                {/* Media Title Skeleton */}
-                <div className="h-[16px] w-[150px] bg-foreground/10" />
-              </div>
-              {/* Review Text Skeleton */}
-              <div className="h-[60px] w-full bg-foreground/10" />
-            </div>
-            <div className="flex w-full flex-col justify-between py-2">
-              <div className="flex w-full items-center">
-                <div className="align-center flex h-full w-full flex-row items-center justify-between">
-                  {/* Post Stats Skeleton */}
-                  <div className="h-[20px] w-[60px] bg-foreground/10" />
+            <div className="flex w-full items-center">
+              <div className="align-center flex h-full w-full flex-row items-center justify-between">
+                <div className="flex flex-row items-center">
+                  <Skeleton
+                    width={60}
+                    height={20}
+                    baseColor="rgba(255, 255, 255, 0.1)"
+                  />
                 </div>
                 <div className="flex flex-row items-center gap-2">
-                  {/* More Options Skeleton */}
-                  <div className="h-[20px] w-[100px] bg-foreground/10" />
+                  <Skeleton
+                    circle={true}
+                    height={32}
+                    width={32}
+                    baseColor="rgba(255, 255, 255, 0.1)"
+                  />
+                  <Skeleton
+                    circle={true}
+                    height={32}
+                    width={32}
+                    baseColor="rgba(255, 255, 255, 0.1)"
+                  />
+                  <Skeleton
+                    circle={true}
+                    height={32}
+                    width={32}
+                    baseColor="rgba(255, 255, 255, 0.1)"
+                  />
                 </div>
               </div>
             </div>
