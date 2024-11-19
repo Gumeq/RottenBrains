@@ -87,7 +87,7 @@ export default async function userProfile({
           {watchHistory &&
             watchHistory.slice(0, 20).map((media: any) => {
               return (
-                <div className="inline-block h-auto w-[80vw] flex-shrink-0 lg:inline lg:w-auto">
+                <div className="inline-block h-auto w-[85vw] flex-shrink-0 lg:inline lg:w-auto">
                   <HomeMediaCard
                     user_id={currentUser.user.id}
                     media_type={media.media_type}

@@ -143,7 +143,7 @@ export const getRecommendations = async (
   media_id: number,
 ) => {
   return fetchFromApi(
-    `${media_type}/${media_id}/recommendations?language=en-US`,
+    `${media_type}/${media_id}/recommendations?language=en-US&page=1`,
     "images",
   );
 };
@@ -172,4 +172,16 @@ export const getFromGenres = async (
   return fetchFromApi(
     `discover/${media_type}?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc&with_genres=${genre}`,
   );
+};
+
+export const getGenreInfo = async (genreId: number) => {
+  try {
+    return fetchFromApi(`genre/movie/${genreId}`);
+  } catch (error) {
+    try {
+      return fetchFromApi(`genre/tv/${genreId}`);
+    } catch (error) {
+      console.log("GenreId isnt movie or TV genre ");
+    }
+  }
 };

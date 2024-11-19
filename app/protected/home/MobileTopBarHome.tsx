@@ -6,31 +6,51 @@ import Link from "next/link";
 import React, { useState, useEffect, useRef } from "react";
 
 const MobileTopBarHome = () => {
-  const [show, setShow] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const searchBarRef = useRef<HTMLInputElement>(null); // Specify HTMLInputElement type
+  const searchBarRef = useRef<HTMLInputElement>(null);
+  const topBarRef = useRef<HTMLDivElement>(null);
+
+  const lastScrollY = useRef(0);
+  const ticking = useRef(false);
+
+  const topBarHeight = 48; // Adjust this if your top bar height is different
 
   const controlNavbar = () => {
     if (typeof window !== "undefined") {
-      if (window.scrollY > lastScrollY) {
-        setShow(false);
-      } else {
-        setShow(true);
+      const deltaY = window.scrollY - lastScrollY.current;
+
+      if (topBarRef.current) {
+        const currentTransform = topBarRef.current.style.transform;
+        const match = currentTransform.match(/translateY\((-?\d+)px\)/);
+        let currentTranslateY = match ? parseInt(match[1]) : 0;
+
+        let newTranslateY = currentTranslateY - deltaY;
+        newTranslateY = Math.min(0, Math.max(-topBarHeight, newTranslateY));
+
+        topBarRef.current.style.transform = `translateY(${newTranslateY}px)`;
+        topBarRef.current.style.transition = "transform 0.1s ease-out";
       }
-      setLastScrollY(window.scrollY);
+
+      lastScrollY.current = window.scrollY;
+      ticking.current = false;
+    }
+  };
+
+  const onScroll = () => {
+    if (!ticking.current) {
+      window.requestAnimationFrame(controlNavbar);
+      ticking.current = true;
     }
   };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      window.addEventListener("scroll", controlNavbar);
-      return () => window.removeEventListener("scroll", controlNavbar);
+      window.addEventListener("scroll", onScroll);
+      return () => window.removeEventListener("scroll", onScroll);
     }
-  }, [lastScrollY]);
+  }, []); // Empty dependency array ensures this runs once on mount
 
   useEffect(() => {
-    // Focus the SearchBar input when the overlay is opened
     if (isSearchOpen && searchBarRef.current) {
       searchBarRef.current.focus();
     }
@@ -40,9 +60,12 @@ const MobileTopBarHome = () => {
     <>
       {/* Top bar */}
       <div
-        className={`fixed left-0 top-0 z-50 flex h-12 w-full items-center justify-between border-b border-foreground/20 bg-background px-4 transition-transform duration-100 lg:hidden ${
-          show ? "translate-y-0 transform" : "-translate-y-full transform"
-        }`}
+        ref={topBarRef}
+        className="fixed left-0 top-0 z-50 flex h-12 w-full items-center justify-between border-b border-foreground/20 bg-background px-4 lg:hidden"
+        style={{
+          transform: "translateY(0)",
+          willChange: "transform",
+        }}
       >
         <Link
           href={"/protected/home"}

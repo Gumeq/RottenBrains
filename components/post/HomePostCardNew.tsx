@@ -1,29 +1,67 @@
 "use client";
-import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
+
 import React, { useEffect, useState, useMemo } from "react";
-import Link from "next/link";
-import ProfilePicture from "../ProfilePicture";
-import { timeAgo } from "./TimeAgo";
 import { motion } from "framer-motion";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 import { useUser } from "@/context/UserContext";
-import PostStats from "./PostStats";
-import UserReviewTextNew from "./UserReviewTextNew";
-import MoreOptions from "@/app/protected/home/MoreOptions";
+import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
+import PostSkeleton from "./PostSkeleton";
+import PostHeader from "./PostHeader";
+import PostMedia from "./PostMedia";
+import PostContent from "./PostContent";
+import PostFooter from "./PostFooter";
+
+interface Media {
+  id: number;
+  title?: string;
+  name?: string;
+  backdrop_path?: string;
+  images?: {
+    backdrops?: { file_path: string }[];
+  };
+  genres?: { id: bigint; name: string }[];
+}
+
+interface Creator {
+  id: number;
+  email: string;
+  image_url: string;
+  name: string;
+  username: string;
+}
+
+interface Post {
+  post_id: number;
+  media_id: number;
+  media_type: string;
+  creatorid: number;
+  creator_email: string;
+  creator_image_url: string;
+  creator_name: string;
+  creator_username: string;
+  created_at: string;
+  vote_user: number;
+  review_user: string;
+  total_likes: number;
+  has_liked: boolean;
+  total_comments: number;
+}
+
+interface HomePostCardProps {
+  post: Post;
+}
 
 const ErrorComponent = () => <div>Error loading post.</div>;
 
-export function HomePostCardNewNew({ post, index }: any) {
-  const media_id = post.media_id;
-  const media_type = post.media_type;
-  const [media, setMedia] = useState<any>(null);
+const HomePostCard = ({ post }: HomePostCardProps) => {
+  const { media_id, media_type } = post;
+  const [media, setMedia] = useState<Media | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const { user: currentUser } = useUser();
 
   useEffect(() => {
-    let isMounted = true;
+    const controller = new AbortController();
+    const signal = controller.signal;
 
     const fetchData = async () => {
       setLoading(true);
@@ -31,19 +69,13 @@ export function HomePostCardNewNew({ post, index }: any) {
 
       try {
         const fetchedMediaData = await fetchMediaData(media_type, media_id);
-        if (isMounted) {
-          setMedia(fetchedMediaData);
-          console.log(fetchedMediaData);
-        }
-      } catch (error) {
-        console.error("Error fetching media data:", error);
-        if (isMounted) {
+        setMedia(fetchedMediaData);
+      } catch (error: any) {
+        if (error.name !== "AbortError") {
+          console.error("Error fetching media data:", error);
           setError("Error fetching media data");
-          setMedia(null);
         }
-      }
-
-      if (isMounted) {
+      } finally {
         setLoading(false);
       }
     };
@@ -51,7 +83,7 @@ export function HomePostCardNewNew({ post, index }: any) {
     fetchData();
 
     return () => {
-      isMounted = false;
+      controller.abort();
     };
   }, [media_type, media_id]);
 
@@ -63,7 +95,7 @@ export function HomePostCardNewNew({ post, index }: any) {
     [],
   );
 
-  const creator = {
+  const creator: Creator = {
     id: post.creatorid,
     email: post.creator_email,
     image_url: post.creator_image_url,
@@ -72,88 +104,19 @@ export function HomePostCardNewNew({ post, index }: any) {
   };
 
   if (!creator) {
-    return <p>no creator</p>;
+    return <p>No creator</p>;
   }
+
   if (loading || !currentUser) {
-    return (
-      <motion.div
-        className="relative flex h-min flex-col overflow-hidden rounded-[8px] border border-foreground/10 bg-white/5 lg:max-w-[400px]"
-        variants={variants}
-        initial="hidden"
-        animate="visible"
-        transition={{
-          delay: index * 0.15,
-          ease: "easeInOut",
-          duration: 0.25,
-        }}
-        viewport={{ amount: 0 }}
-      >
-        {/* Header Section */}
-        <div className="flex flex-row items-center justify-between gap-4 px-4 py-2">
-          <div className="flex flex-row items-center gap-2">
-            {/* Profile Picture Skeleton */}
-            <div className="h-[32px] w-[32px] rounded-full bg-foreground/10" />
-            <div>
-              {/* Username and Time Skeleton */}
-              <div className="mb-1 h-[16px] w-[120px] bg-foreground/10" />
-              <div className="h-[12px] w-[80px] bg-foreground/10" />
-            </div>
-          </div>
-          <div className="flex h-full flex-row items-center gap-2">
-            {/* Edit Button Skeleton */}
-            <div className="h-[20px] w-[20px] bg-foreground/10" />
-          </div>
-        </div>
-
-        {/* Main Content Section */}
-        <div className="flex w-full flex-col justify-between">
-          <div className="relative w-full">
-            {/* Image Skeleton */}
-            <div className="aspect-[16/9] h-auto w-[500px] bg-foreground/10" />
-            <div className="absolute bottom-2 right-2">
-              {/* Vote Skeleton */}
-              <div className="h-[20px] w-[50px] bg-foreground/10" />
-            </div>
-          </div>
-
-          <div className="flex flex-col px-2 lg:px-4">
-            <div className="flex flex-col gap-2 py-4">
-              <div className="flex w-full flex-row gap-2">
-                {/* Media Icon Skeleton */}
-                <div className="h-[20px] w-[20px] bg-foreground/10" />
-                {/* Media Title Skeleton */}
-                <div className="h-[16px] w-[150px] bg-foreground/10" />
-              </div>
-              {/* Review Text Skeleton */}
-              <div className="h-[60px] w-full bg-foreground/10" />
-            </div>
-            <div className="flex w-full flex-col justify-between py-2">
-              <div className="flex w-full items-center">
-                <div className="align-center flex h-full w-full flex-row items-center justify-between">
-                  {/* Post Stats Skeleton */}
-                  <div className="h-[20px] w-[60px] bg-foreground/10" />
-                </div>
-                <div className="flex flex-row items-center gap-2">
-                  {/* More Options Skeleton */}
-                  <div className="h-[20px] w-[100px] bg-foreground/10" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-    );
+    return <PostSkeleton variants={variants} />;
   }
 
-  const userId = currentUser.id;
+  const userId = currentUser.id.toString();
 
   const imageUrl =
-    media?.images?.backdrops?.[0]?.file_path || media.backdrop_path;
+    media?.images?.backdrops?.[0]?.file_path || media?.backdrop_path || "";
 
-  let genreIds = [];
-  if (media?.genres && Array.isArray(media.genres)) {
-    genreIds = media.genres.map((genre: any) => genre.id);
-  }
+  const genreIds = media?.genres?.map((genre) => genre.id) || [];
 
   if (error) {
     return <ErrorComponent />;
@@ -166,99 +129,36 @@ export function HomePostCardNewNew({ post, index }: any) {
       initial="hidden"
       animate="visible"
       transition={{
-        delay: index * 0.15,
         ease: "easeInOut",
         duration: 0.25,
       }}
       viewport={{ amount: 0 }}
     >
-      <div className="flex flex-row items-center justify-between gap-4 px-4 py-2">
-        <div className="flex flex-row items-center gap-2">
-          <span className="min-h-[32px] min-w-[32px]">
-            <ProfilePicture user={creator} />
-          </span>
-          <div>
-            <p className="line-clamp-1 font-bold">
-              <Link href={`/protected/user/${creator.id}`}>
-                {creator.username}
-              </Link>
-            </p>
-            <p className="text-xs opacity-50">{timeAgo(post.created_at)}</p>
-          </div>
-        </div>
-        <div className="flex h-full flex-row items-center gap-2">
-          {post.creatorid === userId && (
-            <Link href={`/protected/edit-post/${post.post_id}`}>
-              <img
-                src="/assets/icons/ellipsis-solid.svg"
-                alt=""
-                width={20}
-                height={20}
-                className="invert-on-dark mr-2 min-h-[20px] min-w-[20px] justify-self-end"
-              />
-            </Link>
-          )}
-        </div>
-      </div>
-      <div className="flex w-full flex-col justify-between">
-        <div className="relative w-full">
-          <Link href={`/protected/media/${media_type}/${media_id}`}>
-            <img
-              src={`https://image.tmdb.org/t/p/w500${imageUrl}`}
-              alt=""
-              className="aspect-[16/9] w-full"
-            />
-          </Link>
-          <div className="absolute bottom-2 right-2">
-            <p
-              className={`rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white`}
-            >
-              {post.vote_user}/10
-            </p>
-          </div>
-        </div>
-
-        <div className="flex flex-col px-2 lg:px-4">
-          <div className="flex flex-col gap-2 py-4">
-            <div className="flex w-full flex-row gap-2">
-              <img
-                src={`/assets/icons/${media_type}-outline.svg`}
-                alt=""
-                className="invert-on-dark"
-              />
-              <Link
-                href={`/protected/media/${media_type}/${media_id}`}
-                className="font-bold"
-              >
-                {media && (media.title || media.name)}
-              </Link>
-            </div>
-            <UserReviewTextNew
-              post_review={post.review_user || "no review"}
-              creator_name={creator?.username || "no user"}
-            />
-          </div>
-          <div className="flex w-full flex-col justify-between py-2">
-            <div className="flex w-full items-center">
-              <div className="align-center flex h-full w-full flex-row items-center justify-between">
-                <div className="flex flex-row items-center">
-                  <PostStats post={post} user={currentUser}></PostStats>
-                </div>
-                <div className="flex flex-row items-center gap-2">
-                  <MoreOptions
-                    user_id={userId.toString()}
-                    media_type={media_type}
-                    media_id={media_id}
-                    genre_ids={genreIds}
-                  ></MoreOptions>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <PostHeader creator={creator} post={post} userId={userId} />
+      <PostMedia
+        media={media}
+        media_type={media_type}
+        media_id={media_id}
+        imageUrl={imageUrl}
+        post={post}
+      />
+      <PostContent
+        media={media}
+        media_type={media_type}
+        media_id={media_id}
+        post={post}
+        creator={creator}
+      />
+      <PostFooter
+        post={post}
+        userId={userId}
+        currentUser={currentUser}
+        media_type={media_type}
+        media_id={media_id}
+        genreIds={genreIds}
+      />
     </motion.div>
   );
-}
+};
 
-export default HomePostCardNewNew;
+export default HomePostCard;

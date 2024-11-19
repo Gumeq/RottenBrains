@@ -1,6 +1,8 @@
 import {
   getNewestUsers,
-  getWatchHistoryForUser,
+  getNextEpisodes,
+  getTopMovieGenresForUser,
+  getTopTvGenresForUser,
 } from "@/utils/supabase/queries";
 import {
   getCurrentUser,
@@ -16,188 +18,270 @@ import {
 } from "@/lib/recommendations";
 import InfiniteScrollHome from "./InfiniteScrollHome";
 import { MobileVideoProvider } from "@/context/MobileVideoContext";
+import { getGenreNameById } from "@/lib/functions";
+import { getFromGenres, getMediaDetails } from "@/utils/tmdb";
+import { AlignVerticalJustifyEnd } from "lucide-react";
 
-// Server component fetching and displaying posts
 const HomeContent = async () => {
-  const users = await getNewestUsers();
-  const user = await getCurrentUser();
-  if (!user) {
-    return;
-  }
-  if (!users) {
-    return;
-  }
+  try {
+    // Parallelize initial data fetching
+    const [users, user] = await Promise.all([
+      getNewestUsers(),
+      getCurrentUser(),
+    ]);
 
-  const watchHistory = await getWatchHistoryForUser(user.user.id, 20, 0);
-  const filteredWatchHistory = watchHistory.filter(
-    (item: any) => item.percentage_watched <= 90,
-  );
-  const followed_posts_one = await getPostsFromFollowedUsers(
-    user.user.id.toString(),
-    0,
-  );
-  const followed_posts_two = await getPostsFromFollowedUsers(
-    user.user.id.toString(),
-    1,
-  );
+    if (!user || !users) {
+      return null;
+    }
 
-  let movieRecommendations = await getMovieRecommendationsForUser(
-    user.user.id,
-    1,
-  );
-  let tvRecommendations = await getTvRecommendationsForUser(user.user.id, 1);
-  movieRecommendations = movieRecommendations.results;
-  tvRecommendations = tvRecommendations.results;
+    const userId = user.user.id.toString();
 
-  return (
-    <MobileVideoProvider>
-      <div className="flex w-full flex-col gap-8 p-0 px-2 pb-4 lg:w-auto lg:p-4 lg:py-0">
-        {/* <GenreSelector user_id={user.user.id}></GenreSelector> */}
-        <MobileTopBarHome></MobileTopBarHome>
-        <div className="mt-16 lg:mt-0">
-          <div className="mb-4 flex flex-row items-center justify-between px-2 lg:p-0">
-            <div></div>
-            <ScrollButtons containerId="watch_history_main"></ScrollButtons>
-          </div>
+    // Fetch other data in parallel
+    const [
+      followedPosts,
+      movieRecsData,
+      topMovieGenres,
+      topTvGenres,
+      tvRecsData,
+      nextEpisodes,
+    ] = await Promise.all([
+      getPostsFromFollowedUsers(userId, 0),
+      getMovieRecommendationsForUser(userId, 1),
+      getTopMovieGenresForUser(userId),
+      getTopTvGenresForUser(userId),
+      getTvRecommendationsForUser(userId, 1),
+      getNextEpisodes(userId),
+    ]);
 
-          <div
-            className="hidden-scrollbar flex flex-row gap-4 overflow-x-auto px-2 lg:px-0"
-            id={"watch_history_main"}
-          >
-            {filteredWatchHistory.length > 0 ? (
-              filteredWatchHistory.slice(0, 20).map((media: any) => {
-                return (
-                  <div className="w-[85vw] flex-shrink-0 lg:inline lg:w-auto">
-                    <HomeMediaCard
-                      user_id={user.user.id}
-                      media_type={media.media_type}
-                      media_id={media.media_id}
-                      season_number={media.season_number}
-                      episode_number={media.episode_number}
-                    ></HomeMediaCard>
-                  </div>
-                );
-              })
-            ) : (
-              <div className="flex h-[400px] w-full items-center justify-center rounded-[16px] bg-foreground/10">
-                <h2 className="text-center text-3xl font-bold">
-                  Start watching to show history
-                </h2>
+    const movieRecommendations = movieRecsData.results;
+    const tvRecommendations = tvRecsData.results;
+
+    const topMovieGenreCode = topMovieGenres[0]?.genre_code;
+    const topTvGenreCode = topTvGenres[0]?.genre_code;
+
+    // Fetch genre media in parallel
+    const [topMovieGenreMedia, topTvGenreMedia] = await Promise.all([
+      getFromGenres("movie", 1, topMovieGenreCode),
+      getFromGenres("tv", 1, topTvGenreCode),
+    ]);
+
+    const topMovieGenreName = getGenreNameById(Number(topMovieGenreCode));
+    const topTvGenreName = getGenreNameById(Number(topTvGenreCode));
+
+    // Optimize nextEpisodes processing
+    const processedEpisodes = await Promise.all(
+      nextEpisodes.map(async (episode) => {
+        if (episode.episode_number && episode.next_episode) {
+          // Fetch media details
+          const details = await getMediaDetails(
+            episode.media_type,
+            episode.media_id,
+          );
+
+          if (
+            episode.season_number ===
+              details.last_episode_to_air.season_number &&
+            episode.episode_number ===
+              details.last_episode_to_air.episode_number
+          ) {
+            // Series finished, no more episodes
+            episode.next_season_number = null;
+            episode.next_episode_number = null;
+          } else {
+            const seasonNumber = episode.season_number;
+            const currentSeason = details.seasons.find(
+              (season: any) => season.season_number === seasonNumber,
+            );
+
+            if (
+              currentSeason &&
+              episode.episode_number < currentSeason.episode_count
+            ) {
+              // Next episode in the same season
+              episode.next_season_number = episode.season_number;
+              episode.next_episode_number = Number(episode.episode_number) + 1;
+            } else if (
+              currentSeason &&
+              episode.episode_number === currentSeason.episode_count &&
+              Number(episode.season_number) + 1 <=
+                details.last_episode_to_air.season_number
+            ) {
+              // First episode of the next season
+              episode.next_season_number = Number(episode.season_number) + 1;
+              episode.next_episode_number = 1;
+            }
+          }
+        }
+        return episode;
+      }),
+    );
+
+    return (
+      <MobileVideoProvider>
+        <div className="flex w-full flex-col gap-8 p-0 px-2 pb-4 lg:w-auto lg:p-4 lg:py-0">
+          <MobileTopBarHome />
+          {/* Watch History Section */}
+          <div className="mt-16 lg:mt-0">
+            <div className="mb-4 flex flex-row items-center justify-between px-2 lg:p-0">
+              <div></div>
+              <ScrollButtons containerId="watch_history_main" />
+            </div>
+            <div className="w-full">
+              <div
+                className="hidden-scrollbar flex flex-row gap-4 overflow-x-auto"
+                id="watch_history_main"
+              >
+                {processedEpisodes.length > 0 &&
+                  processedEpisodes.map((media) => {
+                    if (
+                      (media.media_type === "movie" &&
+                        media.next_episode === true) ||
+                      (media.media_type === "tv" &&
+                        !media.next_episode_number &&
+                        media.next_episode === true)
+                    ) {
+                      return null; // Skip rendering for watched movies
+                    }
+
+                    const isNextEpisodeAvailable =
+                      media.media_type === "tv" && media.next_episode === true;
+
+                    const episodeNumber = isNextEpisodeAvailable
+                      ? media.next_episode_number
+                      : media.episode_number;
+
+                    const seasonNumber = isNextEpisodeAvailable
+                      ? media.next_season_number
+                      : media.season_number;
+
+                    return (
+                      <div key={media.media_id} className="h-auto w-screen">
+                        <HomeMediaCard
+                          user_id={user.user.id}
+                          media_type={media.media_type}
+                          media_id={media.media_id}
+                          episode_number={episodeNumber || undefined}
+                          season_number={seasonNumber || undefined}
+                        />
+                      </div>
+                    );
+                  })}
               </div>
-            )}
-          </div>
-        </div>
-        <div>
-          <div className="mb-4 flex flex-row items-center justify-between px-2 lg:p-0">
-            <div className="flex flex-row items-center gap-2">
-              <img
-                src="/assets/icons/review-outline.svg"
-                alt=""
-                className="invert-on-dark"
-              />
-              <h2 className="text-xl font-bold">Posts</h2>
             </div>
-            <ScrollButtons containerId="rotten-posts-one"></ScrollButtons>
           </div>
-          <div className="relative px-2 lg:p-0">
-            <div className="gradient-edge absolute right-0 top-0 z-20 h-full w-[5%]"></div>
+          {/* Posts Section */}
+          <div>
+            <div className="mb-4 flex flex-row items-center justify-between px-2 lg:p-0">
+              <div className="flex flex-row items-center gap-2">
+                <img
+                  src="/assets/icons/review-outline.svg"
+                  alt="Posts Icon"
+                  className="invert-on-dark"
+                />
+                <h2 className="text-xl font-bold">Posts</h2>
+              </div>
+              <ScrollButtons containerId="rotten-posts-one" />
+            </div>
+            <div className="relative px-2 lg:p-0">
+              <div className="gradient-edge absolute right-0 top-0 z-20 h-full w-[5%]" />
+              <div
+                className="hidden-scrollbar flex flex-row gap-2 overflow-x-auto pr-[5%] lg:gap-4"
+                id="rotten-posts-one"
+              >
+                {followedPosts &&
+                  followedPosts.map((post: any) => (
+                    <div
+                      key={post.id}
+                      className="flex w-[80vw] flex-shrink-0 lg:w-fit"
+                    >
+                      <HomePostCardNew post={post} />
+                    </div>
+                  ))}
+              </div>
+            </div>
+          </div>
+          {/* Top Movie Genre Section */}
+          <div>
+            <div className="flex flex-col gap-4">
+              <h2 className="text-xl font-bold">
+                Because you like {topMovieGenreName} movies
+              </h2>
+              <div
+                className="grid gap-4"
+                style={{
+                  gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
+                }}
+              >
+                {topMovieGenreMedia.results.length > 0 &&
+                  topMovieGenreMedia.results.slice(0, 8).map((media: any) => (
+                    <div key={media.id}>
+                      <HomeMediaCard
+                        user_id={user.user.id}
+                        media_type="movie"
+                        media_id={media.id}
+                      />
+                    </div>
+                  ))}
+              </div>
+            </div>
+          </div>
+          {/* Top TV Genre Section */}
+          <div>
+            <div className="flex flex-col gap-4">
+              <h2 className="text-xl font-bold">
+                Because you like {topTvGenreName} TV
+              </h2>
+              <div
+                className="grid gap-4"
+                style={{
+                  gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
+                }}
+              >
+                {topTvGenreMedia.results.length > 0 &&
+                  topTvGenreMedia.results.slice(0, 8).map((media: any) => (
+                    <div key={media.id}>
+                      <HomeMediaCard
+                        user_id={user.user.id}
+                        media_type="tv"
+                        media_id={media.id}
+                      />
+                    </div>
+                  ))}
+              </div>
+            </div>
+          </div>
+          {/* TV Recommendations Section */}
+          <div className="flex flex-col gap-4">
+            <h2 className="text-xl font-bold">More you might like</h2>
             <div
-              className="hidden-scrollbar flex flex-row gap-2 overflow-x-auto pr-[5%] lg:gap-4"
-              id={"rotten-posts-one"}
+              className="grid gap-4"
+              style={{
+                gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
+              }}
             >
-              {followed_posts_one &&
-                followed_posts_one.map((post: any) => {
-                  return (
-                    <>
-                      <div className="flex w-[80vw] flex-shrink-0 lg:w-fit">
-                        <HomePostCardNew post={post}></HomePostCardNew>
-                      </div>
-                    </>
-                  );
-                })}
-            </div>
-          </div>
-        </div>
-        <div>
-          <div
-            className="grid gap-4"
-            style={{
-              gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
-            }}
-          >
-            {movieRecommendations.length > 0 &&
-              movieRecommendations.slice(0, 20).map((media: any) => {
-                return (
-                  <div className="">
+              {tvRecommendations.length > 0 &&
+                tvRecommendations.slice(0, 20).map((media: any) => (
+                  <div key={media.id}>
                     <HomeMediaCard
-                      key={media.id}
                       user_id={user.user.id}
-                      media_type={"movie"}
+                      media_type="tv"
                       media_id={media.id}
                     />
                   </div>
-                );
-              })}
-          </div>
-        </div>
-        <div>
-          <div className="mb-4 flex flex-row items-center justify-between px-2 lg:p-0">
-            <div className="flex flex-row items-center gap-2">
-              <img
-                src="/assets/icons/review-outline.svg"
-                alt=""
-                className="invert-on-dark"
-              />
-              <h2 className="text-xl font-bold">Posts</h2>
-            </div>
-            <ScrollButtons containerId="rotten-posts-two"></ScrollButtons>
-          </div>
-          <div className="relative px-2 lg:p-0">
-            <div className="gradient-edge absolute right-0 top-0 z-20 h-full w-[5%]"></div>
-            <div
-              className="hidden-scrollbar flex flex-row gap-2 overflow-x-auto pr-[5%] lg:gap-4"
-              id={"rotten-posts-two"}
-            >
-              {followed_posts_two &&
-                followed_posts_two.map((post: any) => {
-                  return (
-                    <>
-                      <div className="flex w-[80vw] flex-shrink-0 lg:w-fit">
-                        <HomePostCardNew post={post}></HomePostCardNew>
-                      </div>
-                    </>
-                  );
-                })}
+                ))}
             </div>
           </div>
+          {/* Infinite Scroll Section */}
+          <InfiniteScrollHome user_id={user.user.id} />
+          <div className="h-16 w-full" />
         </div>
-        <div>
-          <div
-            className="grid gap-4"
-            style={{
-              gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
-            }}
-          >
-            {tvRecommendations.length > 0 &&
-              tvRecommendations.slice(0, 20).map((media: any) => {
-                return (
-                  <div className="">
-                    <HomeMediaCard
-                      key={media.id}
-                      user_id={user.user.id}
-                      media_type={"tv"}
-                      media_id={media.id}
-                    />
-                  </div>
-                );
-              })}
-          </div>
-        </div>
-        <InfiniteScrollHome user_id={user.user.id}></InfiniteScrollHome>
-        <div className="h-16 w-full"></div>
-      </div>
-    </MobileVideoProvider>
-  );
+      </MobileVideoProvider>
+    );
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    // Display an error message or component
+    return <div>Something went wrong. Please try again later.</div>;
+  }
 };
 
 export default HomeContent;

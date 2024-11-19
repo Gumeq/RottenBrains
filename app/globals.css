@@ -389,3 +389,23 @@
 .animate-loading {
   animation: loading 2s linear;
 }
+
+.bottombar {
+  @apply fixed bottom-0 left-0 right-0 z-50 flex items-center justify-center lg:hidden;
+  height: calc(
+    env(safe-area-inset-bottom) + 56px
+  ); /* Adjust the height accordingly */
+}
+
+.bottombar-inner {
+  @apply relative flex h-full w-full flex-row items-center justify-between border-t border-foreground/20 bg-background;
+}
+
+.bottombar-link {
+  @apply flex flex-1 flex-col items-center justify-center;
+}
+
+/* Adjust the padding to account for the safe area inset */
+.bottombar-inner {
+  padding-bottom: env(safe-area-inset-bottom);
+}

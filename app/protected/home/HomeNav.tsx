@@ -13,6 +13,7 @@ import {
   ExploreIcon,
   HistoryIcon,
   HomeIcon,
+  HomeIconFill,
   LikedPostsIcon,
   ProfileIcon,
   SavedPostsIcon,
@@ -31,7 +32,7 @@ const HomeNav = ({ children }: any) => {
   return (
     <div>
       <nav
-        className={`fixed top-0 z-30 hidden h-16 w-screen items-center justify-center bg-background/50 p-1 lg:flex`}
+        className={`fixed top-0 z-30 hidden h-16 w-screen items-center justify-center bg-background p-1 lg:flex`}
       >
         <div className="flex flex-col items-center">
           <div className="flex w-screen flex-row items-center justify-between gap-10 pr-8">
@@ -94,8 +95,13 @@ const HomeNav = ({ children }: any) => {
       <div className="relative hidden flex-row lg:flex lg:h-svh lg:w-screen">
         {isSidebarOpen ? (
           <div className="mt-16 min-w-[220px] bg-background">
-            <ul className="flex flex-col justify-start gap-2 p-2">
-              <NavLink href="/protected/home" icon={HomeIcon} label="Home" />
+            <ul className="flex flex-col justify-start px-4 py-2">
+              <NavLink
+                href="/protected/home"
+                icon={HomeIcon}
+                icon_fill={HomeIconFill}
+                label="Home"
+              />
               <NavLink
                 href="/protected/explore"
                 icon={ExploreIcon}
@@ -140,8 +146,8 @@ const HomeNav = ({ children }: any) => {
             </div>
           </div>
         ) : (
-          <div className="mt-16 min-w-16 bg-background">
-            <ul className="flex flex-col justify-center gap-2 p-1 py-4">
+          <div className="mt-16 min-w-16 bg-background p-2">
+            <ul className="flex flex-col justify-center">
               <NavLink href="/protected/home" icon={HomeIcon} />
               <NavLink href="/protected/explore" icon={ExploreIcon} />
               <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
@@ -154,7 +160,7 @@ const HomeNav = ({ children }: any) => {
             </ul>
           </div>
         )}
-        <div className="custom-scrollbar mt-16 w-full overflow-y-auto overflow-x-hidden">
+        <div className="custom-scrollbar mt-16 w-full overflow-y-auto overflow-x-hidden py-2">
           {children}
         </div>
       </div>

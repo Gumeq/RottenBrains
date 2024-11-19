@@ -3,84 +3,81 @@
 import { useUser } from "@/context/UserContext";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import NotificationButton from "../notifications/RealtimeNotifications";
+import Image from "next/image";
 
 const Bottombar = () => {
   const { user } = useUser();
   const pathname = usePathname();
 
+  // Hide the bottom bar on specific routes
+  if (pathname.includes("watch/tv") || pathname.includes("watch/movie")) {
+    return null;
+  }
+
   return (
-    <div
-      className={`fixed bottom-0 z-50 flex h-14 w-screen items-center justify-center drop-shadow-xl lg:hidden ${
-        pathname.includes("watch/tv") || pathname.includes("watch/movie")
-          ? "hidden"
-          : ""
-      }`}
-    >
-      <ul className="relative flex h-14 w-full flex-row items-center justify-between border-t border-foreground/20 bg-background drop-shadow-xl">
-        <Link
-          href={"/protected/home"}
-          className="flex h-full w-full flex-col items-center justify-center"
-        >
-          <img
+    <div className="bottombar">
+      <ul className="bottombar-inner">
+        {/* Home Link */}
+        <Link href="/protected/home" className="bottombar-link">
+          <Image
             src="/assets/icons/home-outline.svg"
             alt="Home"
             width={24}
             height={24}
-            className="invert-on-dark bg"
-          ></img>
+            className="invert-on-dark"
+          />
           <p className="text-xs">Home</p>
         </Link>
-        <Link
-          href={"/protected/explore"}
-          className="flex h-full w-full flex-col items-center justify-center"
-        >
-          <img
+
+        {/* Explore Link */}
+        <Link href="/protected/explore" className="bottombar-link">
+          <Image
             src="/assets/icons/explore-outline.svg"
             alt="Explore"
             width={24}
             height={24}
             className="invert-on-dark"
-          ></img>
+          />
           <p className="text-xs">Explore</p>
         </Link>
-        <Link
-          href={"/protected/create-post"}
-          className="flex h-full w-full flex-col items-center justify-center"
-        >
-          <img
+
+        {/* Create Post Link */}
+        <Link href="/protected/create-post" className="bottombar-link">
+          <Image
             src="/assets/icons/plus.svg"
-            alt="Explore"
+            alt="Create"
             width={24}
             height={24}
             className="invert-on-dark"
-          ></img>
+          />
           <p className="text-xs">Create</p>
         </Link>
-        <Link
-          href={"/protected/watch-list"}
-          className="flex h-full w-full flex-col items-center justify-center"
-        >
-          <img
+
+        {/* Watch List Link */}
+        <Link href="/protected/watch-list" className="bottombar-link">
+          <Image
             src="/assets/icons/folder-outline.svg"
-            alt="Explore"
+            alt="Lists"
             width={24}
             height={24}
             className="invert-on-dark"
-          ></img>
+          />
           <p className="text-xs">Lists</p>
         </Link>
-        <Link
-          href={"/protected/profile"}
-          className="flex h-full w-full flex-col items-center justify-center"
-        >
-          <img
-            src={user?.image_url}
-            alt="You"
-            width={24}
-            height={24}
-            className="overflow-hidden rounded-full"
-          ></img>
+
+        {/* Profile Link */}
+        <Link href="/protected/profile" className="bottombar-link">
+          {user?.image_url ? (
+            <Image
+              src={user.image_url}
+              alt="You"
+              width={24}
+              height={24}
+              className="rounded-full"
+            />
+          ) : (
+            <div className="h-6 w-6 rounded-full bg-gray-300"></div>
+          )}
           <p className="text-xs">You</p>
         </Link>
       </ul>

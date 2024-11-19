@@ -23,22 +23,34 @@ const HoverImage: React.FC<HoverImageProps> = ({
   const [showOverlay, setShowOverlay] = useState(false);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [iframeVisible, setIframeVisible] = useState(false); // Control iframe visibility
+  const [iframeVisible, setIframeVisible] = useState(false);
   const [isMobileDevice, setIsMobileDevice] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  const {
-    mobileVideoPlaying,
-    setMobileVideoPlaying,
-    mobileVideoLoading,
-    setMobileVideoLoading,
-  } = useContext(MobileVideoContext);
+  const { currentPlayingMediaId, registerHoverImage, unregisterHoverImage } =
+    useContext(MobileVideoContext);
 
   // Detect if the device is mobile
   useEffect(() => {
-    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    const isMobile =
+      /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent,
+      );
     setIsMobileDevice(isMobile);
   }, []);
+
+  // Register and unregister the element with the context
+  useEffect(() => {
+    if (isMobileDevice && ref.current) {
+      registerHoverImage(media_id, ref.current);
+    }
+
+    return () => {
+      if (isMobileDevice) {
+        unregisterHoverImage(media_id);
+      }
+    };
+  }, [media_id, registerHoverImage, unregisterHoverImage, isMobileDevice]);
 
   // Fetch the video
   const fetchVideo = async () => {
@@ -56,22 +68,46 @@ const HoverImage: React.FC<HoverImageProps> = ({
           const videoUrl = `https://www.youtube.com/embed/${trailer.key}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&cc_load_policy=1&cc_lang_pref=en`;
           setVideoUrl(videoUrl);
         } else {
-          setVideoUrl(null); // No video found
-          setIsLoading(false); // Stop loading if no video is available
-          setMobileVideoLoading(false);
+          setVideoUrl(null);
+          setIsLoading(false);
         }
       } else {
-        setVideoUrl(null); // No video found
-        setIsLoading(false); // Stop loading if no video is available
-        setMobileVideoLoading(false);
+        setVideoUrl(null);
+        setIsLoading(false);
       }
     } catch (error) {
       console.error("Failed to fetch video:", error);
       setVideoUrl(null);
-      setIsLoading(false); // Stop loading on error
-      setMobileVideoLoading(false);
+      setIsLoading(false);
     }
   };
+
+  // Handle playing and stopping video based on currentPlayingMediaId
+  useEffect(() => {
+    if (isMobileDevice) {
+      if (currentPlayingMediaId === media_id) {
+        // This component should play the video
+        if (!showOverlay) {
+          setIsLoading(true);
+          const timeoutId = setTimeout(() => {
+            setShowOverlay(true);
+            fetchVideo();
+          }, 1000);
+          return () => {
+            clearTimeout(timeoutId);
+          };
+        }
+      } else {
+        // This component should stop playing
+        if (showOverlay || isLoading) {
+          setShowOverlay(false);
+          setIsLoading(false);
+          setIframeVisible(false);
+          setVideoUrl(null);
+        }
+      }
+    }
+  }, [currentPlayingMediaId, isMobileDevice, media_id]);
 
   // Desktop Hover Effect
   useEffect(() => {
@@ -80,23 +116,19 @@ const HoverImage: React.FC<HoverImageProps> = ({
     let hoverTimeout: NodeJS.Timeout | null = null;
 
     if (isHovered) {
-      setIsLoading(true); // Show loading bar immediately on hover
-      setTimeout(() => {
-        setMobileVideoLoading(true), 1500;
-      });
+      setIsLoading(true);
       hoverTimeout = setTimeout(() => {
         setShowOverlay(true);
         fetchVideo();
-      }, 1000); // Delay showing the overlay only
+      }, 1000);
     } else {
       if (hoverTimeout) {
         clearTimeout(hoverTimeout);
       }
       setShowOverlay(false);
-      setIsLoading(false); // Reset loading state when hover ends
-      setMobileVideoLoading(false);
-      setIframeVisible(false); // Reset iframe visibility
-      setVideoUrl(null); // Reset video URL when hover ends
+      setIsLoading(false);
+      setIframeVisible(false);
+      setVideoUrl(null);
     }
 
     return () => {
@@ -106,72 +138,13 @@ const HoverImage: React.FC<HoverImageProps> = ({
     };
   }, [isHovered, isMobileDevice]);
 
-  // Mobile Visibility Effect
-  useEffect(() => {
-    if (!isMobileDevice) return;
-
-    let observer: IntersectionObserver | null = null;
-    let visibilityTimeout: NodeJS.Timeout | null = null;
-
-    const handleVisibilityChange = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        const rect = entry.boundingClientRect;
-        const isInTopHalf =
-          rect.top >= 0 && rect.bottom <= window.innerHeight * 0.5; // Fully visible in top 50%
-
-        if (isInTopHalf) {
-          if (!mobileVideoPlaying) {
-            setIsLoading(true); // Show loading bar immediately when visible
-            visibilityTimeout = setTimeout(() => {
-              setMobileVideoLoading(true);
-              setShowOverlay(true);
-              fetchVideo();
-              setMobileVideoPlaying(true);
-            }, 1000);
-          }
-        } else {
-          if (visibilityTimeout) {
-            clearTimeout(visibilityTimeout);
-            visibilityTimeout = null;
-          }
-          if (showOverlay) {
-            setShowOverlay(false);
-            setMobileVideoPlaying(false);
-            setIsLoading(false);
-            setMobileVideoLoading(false);
-            setIframeVisible(false); // Reset iframe visibility
-            setVideoUrl(null);
-          }
-        }
-      });
-    };
-
-    observer = new IntersectionObserver(handleVisibilityChange, {
-      threshold: 0.0, // Trigger callback as soon as any part of the element is visible
-    });
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => {
-      if (observer && ref.current) {
-        observer.unobserve(ref.current);
-      }
-      if (visibilityTimeout) {
-        clearTimeout(visibilityTimeout);
-      }
-    };
-  }, [isMobileDevice, mobileVideoPlaying]);
-
   // Handle iframe load and add 0.2-second delay with fade-in effect
   const handleIframeLoad = () => {
     setTimeout(() => {
-      setIframeVisible(true); // Start fade-in after 0.2 seconds
+      setIframeVisible(true);
       setTimeout(() => {
-        setIsLoading(false); // Stop loading after iframe is fully visible
-        setMobileVideoLoading(false);
-      }, 500); // Additional delay for fade-in transition
+        setIsLoading(false);
+      }, 500);
     }, 200);
   };
 
@@ -181,6 +154,7 @@ const HoverImage: React.FC<HoverImageProps> = ({
       onMouseEnter={!isMobileDevice ? () => setIsHovered(true) : undefined}
       onMouseLeave={!isMobileDevice ? () => setIsHovered(false) : undefined}
       ref={ref}
+      data-media-id={media_id}
     >
       {imageUrl ? (
         <img
@@ -202,7 +176,7 @@ const HoverImage: React.FC<HoverImageProps> = ({
       {children}
 
       {/* Loading Bar */}
-      {isLoading && !isMobileDevice && (
+      {isLoading && (
         <div className="animate-loading absolute left-0 top-0 z-50 h-1 w-full bg-accent"></div>
       )}
 
@@ -217,11 +191,12 @@ const HoverImage: React.FC<HoverImageProps> = ({
                 title="Media Trailer"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
-                onLoad={handleIframeLoad} // Set iframe as loaded when it finishes loading
+                onLoad={handleIframeLoad}
                 className={`transition-opacity delay-200 duration-500 ${
                   iframeVisible ? "opacity-100" : "opacity-0"
-                }`} // Apply fade-in effect
+                }`}
               ></iframe>
+              {/* Do not remove this div */}
               <div className="absolute inset-0"></div>
             </>
           ) : (

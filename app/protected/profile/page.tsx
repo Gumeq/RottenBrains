@@ -26,7 +26,7 @@ const ProfilePage = async () => {
   const watchHistory = await getWatchHistoryForUser(user.user.id, 20, 0);
 
   return (
-    <div className="mx-auto max-w-7xl p-1 lg:mt-0 lg:p-4">
+    <div className="mx-auto max-w-7xl lg:mt-0 lg:p-4">
       {user && (
         <div className="mx-auto flex w-full flex-col items-center justify-center gap-4 py-4 lg:py-0">
           <div className="flex aspect-[5/1] w-full overflow-hidden rounded-[16px]">
@@ -85,7 +85,7 @@ const ProfilePage = async () => {
           {watchHistory &&
             watchHistory.slice(0, 20).map((media: any) => {
               return (
-                <div className="inline-block h-auto w-[80vw] flex-shrink-0 lg:inline lg:w-auto">
+                <div className="inline-block h-auto w-[85vw] flex-shrink-0 lg:inline lg:w-auto">
                   <HomeMediaCard
                     user_id={user.user.id}
                     media_type={media.media_type}

@@ -1,3 +1,6 @@
+import movieGenres from "../constants/movie_genres.json";
+import tvGenres from "../constants/tv_genres.json";
+
 export function formatDate(inputDate: string) {
   const months = [
     "January",
@@ -111,3 +114,38 @@ export const formatEpisodeCode = (
     episodeNumber,
   ).padStart(2, "0")}`;
 };
+
+type Genre = {
+  id: number;
+  name: string;
+};
+
+export function getGenreNameById(genreId: number): string {
+  // Combine genres into one array
+  const combinedGenres: Genre[] = [...movieGenres.genres, ...tvGenres.genres];
+
+  console.log("Combined Genres:", combinedGenres);
+
+  // Verify the genreId type
+  if (typeof genreId !== "number") {
+    throw new Error(
+      `Invalid genreId type: ${typeof genreId}. Expected a number.`,
+    );
+  }
+
+  // Find the genre by ID
+  const genre = combinedGenres.find((g) => {
+    console.log(`Checking genre ID: ${g.id}, Expected: ${genreId}`);
+    return g.id === genreId;
+  });
+
+  // Handle missing genre
+  if (!genre) {
+    throw new Error(`Genre with ID ${genreId} not found.`);
+  }
+
+  console.log("Found Genre:", genre);
+
+  // Return the genre name
+  return genre.name;
+}

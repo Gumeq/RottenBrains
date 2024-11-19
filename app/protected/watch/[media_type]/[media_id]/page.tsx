@@ -1,23 +1,18 @@
-import ExploreTab from "@/components/explore/ExploreTab";
-import GoBackArrow from "@/components/GoBackArrow";
-import VideoEmbed from "@/components/MediaEmbed";
-import MediaInfoComponent from "@/components/MediaInfoComponent";
-import HomePostCard from "@/components/post/HomePostCard";
-import RecommendedCard from "@/components/RecommendedCard";
-import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
-import { getPostsOfMedia, upsertWatchHistory } from "@/utils/supabase/queries";
-import { getCurrentUser } from "@/utils/supabase/serverQueries";
-import { getMediaDetails, getRecommendations } from "@/utils/tmdb";
 import Link from "next/link";
+import VideoEmbed from "@/components/MediaEmbed";
 import WatchDuration from "@/components/WatchDuration";
 import HomePostCardNew from "@/components/post/HomePostCardNew";
 import ScrollButtons from "@/components/explore/ScrollButtons";
 import { getRelativeTime } from "@/lib/functions";
 import MediaCardSmall from "@/components/MediaCardSmall";
+import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
+import { getPostsOfMedia } from "@/utils/supabase/queries";
+import { getCurrentUser } from "@/utils/supabase/serverQueries";
+import { getMediaDetails, getRecommendations } from "@/utils/tmdb";
 
 export async function generateMetadata({ params }: any) {
   const media_id = parseInt(params.media_id, 10);
-  const media_type = params.media_type;
+  const media_type = "movie";
 
   let mediaData;
   try {
@@ -45,10 +40,10 @@ export async function generateMetadata({ params }: any) {
 export default async function mediaPage({
   params,
 }: {
-  params: { media_type: string; media_id: number };
+  params: { media_id: number };
 }) {
   const media_id = params.media_id;
-  const media_type = params.media_type;
+  const media_type = "movie";
 
   const user = await getCurrentUser();
 
@@ -56,8 +51,17 @@ export default async function mediaPage({
   if (user) {
     postsOfMedia = await getPostsOfMedia(user.user.id, media_type, media_id, 0);
   }
+
   const recommendations = await getRecommendations(media_type, media_id);
   const media = await getMediaDetails(media_type, media_id);
+
+  // Fetch media details for recommendations
+  const recommendationMediaDetails = await Promise.all(
+    recommendations.results.map((rec: any) =>
+      getMediaDetails(rec.media_type || "movie", rec.id),
+    ),
+  );
+
   return (
     <>
       {user && (
@@ -74,7 +78,8 @@ export default async function mediaPage({
             <VideoEmbed
               media_type={media_type}
               media_id={media_id}
-            ></VideoEmbed>
+              media={media}
+            />
             <div className="mx-auto flex w-[96vw] flex-col gap-2 rounded-[8px] bg-foreground/10 p-4 text-sm lg:w-full">
               <p className="font-semibold">
                 {getRelativeTime(media.release_date)}
@@ -88,7 +93,7 @@ export default async function mediaPage({
               >
                 <img
                   src={`https://image.tmdb.org/t/p/w200${media.poster_path}`}
-                  alt=""
+                  alt={`${media.title || media.name} Poster`}
                   className="h-full"
                 />
                 <div className="flex flex-col gap-1">
@@ -103,7 +108,7 @@ export default async function mediaPage({
                     </p>
                     <img
                       src="/assets/icons/chevron-forward.svg"
-                      alt=""
+                      alt="Details"
                       className="invert-on-dark opacity-50"
                     />
                   </div>
@@ -116,7 +121,7 @@ export default async function mediaPage({
                 <div className="flex h-16 w-16 items-center justify-center rounded-full bg-accent">
                   <img
                     src={`/assets/icons/${media_type}-outline.svg`}
-                    alt=""
+                    alt={`${media_type} Icon`}
                     className="h-[70%] w-[70%] opacity-80 invert"
                   />
                 </div>
@@ -128,7 +133,7 @@ export default async function mediaPage({
                     </p>
                     <img
                       src="/assets/icons/chevron-forward.svg"
-                      alt=""
+                      alt="Browse"
                       className="invert-on-dark opacity-50"
                     />
                   </div>
@@ -136,58 +141,57 @@ export default async function mediaPage({
               </Link>
             </div>
             <div className="border-y border-foreground/20 p-2 lg:border-none lg:p-0">
-              {postsOfMedia && (
-                <div>
-                  {postsOfMedia.length > 0 && (
-                    <div className="flex flex-col gap-2">
-                      <div className="flex flex-row items-center justify-between">
-                        <div className="flex flex-row items-center gap-2">
-                          {/* <div className="w-[24px] h-[24px] rounded-full bg-accent "></div> */}
-                          <h2 className="text-xl font-bold">User posts</h2>
-                        </div>
-                        <ScrollButtons
-                          containerId="user_posts"
-                          scrollPercent={30}
-                        ></ScrollButtons>
-                      </div>
-                      <div className="relative">
-                        <div className="gradient-edge absolute right-0 top-0 z-10 h-full w-[5%]"></div>
-                        <div
-                          className="hidden-scrollbar flex flex-row flex-nowrap gap-2 overflow-x-auto pb-2"
-                          id="user_posts"
-                        >
-                          {postsOfMedia?.slice(0, 9).map((post: any) => (
-                            <div className="w-[92vw] flex-shrink-0 lg:w-fit">
-                              <HomePostCardNew post={post}></HomePostCardNew>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
+              {postsOfMedia && postsOfMedia.length > 0 && (
+                <div className="flex flex-col gap-2">
+                  <div className="flex flex-row items-center justify-between">
+                    <div className="flex flex-row items-center gap-2">
+                      <h2 className="text-xl font-bold">User posts</h2>
                     </div>
-                  )}
+                    <ScrollButtons
+                      containerId="user_posts"
+                      scrollPercent={30}
+                    />
+                  </div>
+                  <div className="relative">
+                    <div className="gradient-edge absolute right-0 top-0 z-10 h-full w-[5%]"></div>
+                    <div
+                      className="hidden-scrollbar flex flex-row flex-nowrap gap-2 overflow-x-auto pb-2"
+                      id="user_posts"
+                    >
+                      {postsOfMedia.slice(0, 9).map((post: any) => (
+                        <div
+                          className="w-[92vw] flex-shrink-0 lg:w-fit"
+                          key={post.id}
+                        >
+                          <HomePostCardNew post={post} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
           </div>
           <div className="custom-scrollbar flex flex-col px-2 lg:w-[25%]">
             <p className="mb-2 text-lg font-bold">Recommendations</p>
-            {recommendations &&
-              recommendations.results.map((media: any) => (
-                <Link
-                  href={
-                    media.media_type === "movie"
-                      ? `/protected/watch/${media.media_type}/${media.id}`
-                      : `/protected/watch/${media.media_type}/${media.id}/1/1`
-                  }
-                  className="w-full"
-                >
-                  <MediaCardSmall
-                    media_id={media.id}
-                    media_type={media.media_type}
-                    user_id={user.user.id.toString()}
-                  ></MediaCardSmall>
-                </Link>
-              ))}
+            {recommendationMediaDetails.map((mediaDetail: any) => (
+              <Link
+                href={
+                  mediaDetail.media_type === "movie"
+                    ? `/protected/watch/${mediaDetail.media_type}/${mediaDetail.id}`
+                    : `/protected/watch/${mediaDetail.media_type}/${mediaDetail.id}/1/1`
+                }
+                className="w-full"
+                key={mediaDetail.id}
+              >
+                <MediaCardSmall
+                  media_type={mediaDetail.media_type || "movie"}
+                  media_id={mediaDetail.id}
+                  user_id={user?.user.id.toString()}
+                  media={mediaDetail}
+                />
+              </Link>
+            ))}
           </div>
         </div>
       </div>

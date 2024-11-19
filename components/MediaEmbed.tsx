@@ -1,16 +1,17 @@
 "use client";
 
-import { formatEpisodeCode } from "@/lib/functions";
-import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
 import ShareButton from "./ShareButton";
+import { formatEpisodeCode } from "@/lib/functions";
 
 type VideoEmbedProps = {
   media_type: string;
   media_id: number;
   season_number?: number;
   episode_number?: number;
+  media: any;
+  episode?: any;
 };
 
 const VideoEmbed = ({
@@ -18,15 +19,13 @@ const VideoEmbed = ({
   media_id,
   season_number,
   episode_number,
+  media,
+  episode,
 }: VideoEmbedProps) => {
   const [linkStart, setLinkStart] = useState<string>(
     "https://vidsrc.net/embed/",
   );
-  const [media, setMedia] = useState<any>();
-  const [episode, setEpisode] = useState<any>();
   const [showVideo, setShowVideo] = useState(false);
-  const [nextClicked, setNextClicked] = useState(false);
-  const [prevClicked, setPrevClicked] = useState(false);
 
   // Retrieve the selected provider from local storage when the component mounts
   useEffect(() => {
@@ -36,81 +35,20 @@ const VideoEmbed = ({
     }
   }, []);
 
-  const updateLinkStart = (newLinkStart: string) => {
-    setLinkStart(newLinkStart);
-    setShowVideo(false); // Reset the video display when changing the link
-
-    // Save the new provider to local storage
-    localStorage.setItem("video_provider", newLinkStart);
-  };
-
-  let link = "";
-  if (media_type === "movie") {
-    link = `${linkStart}${media_type}/${media_id}`;
-  } else {
-    link = `${linkStart}${media_type}/${media_id}/${season_number}/${episode_number}`;
-  }
-
-  useEffect(() => {
-    const fetchMediaDetails = async () => {
-      try {
-        const mediaData = await getMediaDetails(media_type, media_id);
-        if (mediaData && mediaData.seasons) {
-          mediaData.seasons = mediaData.seasons.filter(
-            (season: { season_number: number }) => season.season_number !== 0,
-          );
-        }
-        setMedia(mediaData);
-      } catch (error) {
-        console.error("Error fetching media data:", error);
-        setMedia(null);
-      }
-    };
-
-    fetchMediaDetails();
-  }, [media_type, media_id]);
-
-  useEffect(() => {
-    const fetchEpisodeDetails = async () => {
-      if (season_number && episode_number) {
-        try {
-          const episodeData = await getEpisodeDetails(
-            media_id,
-            season_number,
-            episode_number,
-          );
-          setEpisode(episodeData);
-        } catch (error) {
-          console.error("Error fetching episode data:", error);
-          setEpisode(null);
-        }
-      }
-    };
-
-    if (media_type === "tv") {
-      fetchEpisodeDetails();
-    }
-  }, [media_type, media_id, season_number, episode_number]);
-
   const handleButtonClick = () => {
     setShowVideo(true);
   };
+
+  const link =
+    media_type === "movie"
+      ? `${linkStart}${media_type}/${media_id}`
+      : `${linkStart}${media_type}/${media_id}/${season_number}/${episode_number}`;
 
   if (!media) {
     return (
       <div className="relative aspect-[16/9] w-full overflow-hidden bg-foreground/10 text-center drop-shadow-lg lg:rounded-[8px]"></div>
     );
   }
-
-  const handleNextClick = () => {
-    setNextClicked(true);
-    setPrevClicked(false);
-  };
-
-  const handlePrevClick = () => {
-    setPrevClicked(true);
-    setNextClicked(false);
-  };
 
   return (
     <div className="fixed left-0 top-0 z-50 flex w-screen flex-col border-b border-foreground/20 bg-background drop-shadow-lg lg:relative lg:w-auto lg:gap-2 lg:border-none lg:pb-0 lg:drop-shadow-none">
@@ -122,7 +60,7 @@ const VideoEmbed = ({
           >
             <img
               src="/assets/images/logo_text_new.svg"
-              alt="text-logo"
+              alt="RottenBrains Logo"
               className="invert-on-dark h-4 w-auto"
             />
           </Link>
@@ -138,7 +76,7 @@ const VideoEmbed = ({
                   : episode &&
                     `https://image.tmdb.org/t/p/original${episode.still_path}`
               }
-              alt="Media Poster"
+              alt={`${media.title || media.name} Backdrop`}
               className="h-auto w-full bg-foreground/10 drop-shadow-lg lg:w-full"
             />
             <div className="absolute left-4 top-4 text-xl font-bold">
@@ -175,8 +113,11 @@ const VideoEmbed = ({
       </div>
       <div className="hidden-scrollbar flex flex-row items-center justify-between gap-4 overflow-x-auto px-2 py-2 lg:p-0 lg:py-2">
         <h2 className="mr-1 whitespace-nowrap text-lg font-semibold">
-          {episode !== undefined && season_number && episode_number
-            ? `${episode.name} | ${formatEpisodeCode(season_number, episode_number)} | ${media.name}`
+          {episode && season_number && episode_number
+            ? `${episode.name} | ${formatEpisodeCode(
+                season_number,
+                episode_number,
+              )} | ${media.name}`
             : `${media.title || media.name}`}
         </h2>
         <div className="flex flex-shrink-0 flex-row gap-2 overflow-x-auto">

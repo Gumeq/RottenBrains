@@ -822,3 +822,26 @@ export async function updateGenreStats({
 
   return data;
 }
+
+type Episode = {
+  media_id: number;
+  media_type: string;
+  season_number: number;
+  episode_number: number;
+  next_episode: boolean; // Indicates if this is the next episode
+  next_season_number?: number | null;
+  next_episode_number?: number | null;
+};
+
+export const getNextEpisodes = async (userId: string): Promise<Episode[]> => {
+  const { data, error } = await supabase.rpc("get_next_episodes", {
+    user_id_input: userId,
+  });
+
+  if (error) {
+    console.error("Error fetching next episodes:", error);
+    throw new Error("Failed to fetch next episodes");
+  }
+
+  return data as Episode[];
+};
