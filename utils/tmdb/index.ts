@@ -170,7 +170,12 @@ export const getFromGenres = async (
   genre: string,
 ) => {
   return fetchFromApi(
-    `discover/${media_type}?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc&with_genres=${genre}`,
+    `discover/${media_type}?include_adult=false&include_video=false&language=en-US&with_original_language=en${
+      media_type === "tv"
+        ? `&without_genres
+=10763%7C10767`
+        : ""
+    }&page=${page}&sort_by=popularity.desc&with_genres=${genre}`,
   );
 };
 

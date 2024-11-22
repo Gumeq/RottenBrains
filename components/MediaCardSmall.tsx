@@ -4,6 +4,7 @@ import {
   transformRuntime,
 } from "@/lib/functions";
 import { getWatchTime } from "@/utils/supabase/queries";
+import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
 
 type MediaCardSmallProps = {
   media_type: string;
@@ -11,7 +12,7 @@ type MediaCardSmallProps = {
   season_number?: number;
   episode_number?: number;
   user_id?: string;
-  media: any;
+  media?: any;
 };
 
 const MediaCardSmall = async ({
@@ -22,8 +23,16 @@ const MediaCardSmall = async ({
   user_id,
   media,
 }: MediaCardSmallProps) => {
+  if (!media) {
+    if (season_number && episode_number) {
+      media = await getEpisodeDetails(media_id, season_number, episode_number);
+    } else {
+      media = await getMediaDetails(media_type, media_id);
+    }
+  }
   // Fetch watch time if user is authenticated
   let watchTime = 0;
+
   if (user_id) {
     watchTime = await getWatchTime(
       user_id,
@@ -80,12 +89,13 @@ const MediaCardSmall = async ({
         )}
       </div>
       <div className="flex flex-col gap-1 px-2 lg:px-0">
-        <h3 className="">
-          {media.title || media.name}
+        <h3 className="flex items-center space-x-2">
+          <span>{media.title || media.name}</span>
           {media_type === "tv" && episode_number && season_number && (
-            <p>| {formatEpisodeCode(season_number, episode_number)}</p>
+            <span>| {formatEpisodeCode(season_number, episode_number)}</span>
           )}
         </h3>
+
         <p className="text-sm text-foreground/50 lg:text-sm">
           {getRelativeTime(
             media.air_date || media.first_air_date || media.release_date,

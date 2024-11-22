@@ -2,6 +2,7 @@ import { getWatchHistoryForUser } from "@/utils/supabase/queries";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import React from "react";
 import MediaCard from "./media_card";
+import MediaCardSmall from "@/components/MediaCardSmall";
 
 const page = async () => {
   const user = await getCurrentUser();
@@ -14,18 +15,18 @@ const page = async () => {
     offset,
   );
   return (
-    <div className="w-screen mt-16 max-w-4xl mx-auto">
-      <h1 className="font-bold text-4xl my-12">Watch History</h1>
-      <div className="w-full flex flex-col gap-4">
+    <div className="mx-auto mt-16 w-screen max-w-4xl">
+      <h1 className="my-12 text-4xl font-bold">Watch History</h1>
+      <div className="flex w-full flex-col gap-4">
         {watchHistory.map((media: any) => {
           console.log(media);
           return (
-            <MediaCard
+            <MediaCardSmall
               media_type={media.media_type}
               media_id={media.media_id}
               season_number={media.season_number}
               episode_number={media.episode_number}
-            ></MediaCard>
+            ></MediaCardSmall>
           );
         })}
       </div>

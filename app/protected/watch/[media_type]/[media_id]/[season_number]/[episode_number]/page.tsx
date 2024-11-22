@@ -52,7 +52,7 @@ export default async function mediaPage({
   const media_id = params.media_id;
   const media_type = "tv";
   const season_number = params.season_number;
-  const episode_number = params.episode_number;
+  const episode_number = Number(params.episode_number);
 
   const user = await getCurrentUser();
 
@@ -78,10 +78,10 @@ export default async function mediaPage({
 
     const currentSeasonIndex = seasons.findIndex(
       (season: { season_number: number }) =>
-        season.season_number === season_number,
+        season.season_number === Number(season_number),
     );
 
-    const currentSeason = seasons[currentSeasonIndex];
+    const currentSeason = seasons[Number(currentSeasonIndex)];
 
     if (currentSeason && episode_number < currentSeason.episode_count) {
       // Next episode in the same season

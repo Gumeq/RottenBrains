@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useInView } from "react-intersection-observer";
-// import Loader from "@/components/Loader"; // Removed unused import
 import {
   getMovieRecommendationsForUser,
   getTvRecommendationsForUser,

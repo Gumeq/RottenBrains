@@ -88,10 +88,10 @@ const page = async () => {
           ></ExploreTab>
         </div>
       </div>
-      <div className="mx-auto flex w-screen flex-col items-center lg:max-w-[90vw]">
+      {/* <div className="mx-auto flex w-screen flex-col items-center lg:max-w-[90vw]">
         <h1 className="mt-16 text-4xl font-bold">Explore More!</h1>
         <GenreSelector></GenreSelector>
-      </div>
+      </div> */}
     </div>
   );
 };

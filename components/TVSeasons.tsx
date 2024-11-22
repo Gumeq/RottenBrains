@@ -2,13 +2,6 @@ import { getSeasonDetails, getTVDetails } from "@/utils/tmdb";
 import Link from "next/link";
 import MediaCardSmall from "./MediaCardSmall";
 
-type Season = {
-  season_number: number;
-  name: string;
-  episode_count: number;
-  poster_path: string;
-};
-
 type TVShowDetailsProps = {
   tv_show_id: number;
   season_number: number;
@@ -20,12 +13,13 @@ const TVShowDetails = async ({
 }: TVShowDetailsProps) => {
   const tvShowData = await getTVDetails(tv_show_id);
   const filteredSeasons = tvShowData.seasons.filter(
-    (season: Season) => season.season_number !== 0,
+    (season: any) => season.season_number !== 0,
   );
 
+  console.log(filteredSeasons);
   const selectedSeason =
     filteredSeasons.find(
-      (season: Season) => season.season_number === season_number,
+      (season: any) => season.season_number === Number(season_number),
     ) || filteredSeasons[0];
 
   const seasonData = await getSeasonDetails(
@@ -34,6 +28,7 @@ const TVShowDetails = async ({
   );
   const episodes = seasonData.episodes;
 
+  console.log(season_number);
   return (
     <div className="w-full">
       <div className="custom-scrollbar flex gap-2 overflow-x-auto p-2">
