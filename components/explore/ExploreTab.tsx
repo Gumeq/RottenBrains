@@ -16,18 +16,13 @@ export async function ExploreTab({
   }
 
   return (
-    <div className="relative">
-      <div
-        id={containerId}
-        className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4 lg:gap-4 xl:grid-cols-8"
-      >
-        {exploreData &&
-          exploreData.results.map((media: any) => (
-            <div key={media.id} className="">
-              <ExploreCard media={media} />
-            </div>
-          ))}
-      </div>
+    <div className="relative flex flex-row gap-4 overflow-x-auto">
+      {exploreData &&
+        exploreData.results.map((media: any) => (
+          <div key={media.id} className="min-h-[200px] w-auto">
+            <ExploreCard media={media} />
+          </div>
+        ))}
     </div>
   );
 }
