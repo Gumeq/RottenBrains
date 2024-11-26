@@ -16,13 +16,9 @@ export async function ExploreTab({
   }
 
   return (
-    <div className="relative flex flex-row gap-4 overflow-x-auto">
+    <div className="flex flex-row gap-4 overflow-x-auto">
       {exploreData &&
-        exploreData.results.map((media: any) => (
-          <div key={media.id} className="min-h-[200px] w-auto">
-            <ExploreCard media={media} />
-          </div>
-        ))}
+        exploreData.results.map((media: any) => <ExploreCard media={media} />)}
     </div>
   );
 }

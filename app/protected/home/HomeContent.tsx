@@ -21,6 +21,7 @@ import { MobileVideoProvider } from "@/context/MobileVideoContext";
 import { getGenreNameById } from "@/lib/functions";
 import { getFromGenres, getMediaDetails } from "@/utils/tmdb";
 import { AlignVerticalJustifyEnd } from "lucide-react";
+import GenreSelector from "./GenreSelectorHome";
 
 const HomeContent = async () => {
   try {
@@ -118,17 +119,18 @@ const HomeContent = async () => {
 
     return (
       <MobileVideoProvider>
+        <GenreSelector user_id={userId}></GenreSelector>
         <div className="flex w-full flex-col gap-8 p-0 px-2 pb-4 lg:w-auto lg:p-4 lg:py-0">
           <MobileTopBarHome />
           {/* Watch History Section */}
-          <div className="mt-16 lg:mt-0">
+          <div className="">
             <div className="mb-4 flex flex-row items-center justify-between px-2 lg:p-0">
               <div></div>
               <ScrollButtons containerId="watch_history_main" />
             </div>
             <div className="w-full">
               <div
-                className="hidden-scrollbar flex flex-row gap-4 overflow-x-auto"
+                className="hidden-scrollbar -mb-8 flex flex-row gap-4 overflow-x-auto"
                 id="watch_history_main"
               >
                 {processedEpisodes.length > 0 &&
@@ -203,17 +205,20 @@ const HomeContent = async () => {
           {/* Top Movie Genre Section */}
           <div>
             <div className="flex flex-col gap-4">
-              <h2 className="text-xl font-bold">
-                Because you like {topMovieGenreName} movies
-              </h2>
+              <div className="flex flex-row items-center justify-between px-2 lg:p-0">
+                <div className="flex flex-row items-center gap-2">
+                  <h2 className="text-xl font-bold">
+                    Because you like {topMovieGenreName} movies
+                  </h2>
+                </div>
+                <ScrollButtons containerId="top-genre-movies" />
+              </div>
               <div
-                className="grid gap-4"
-                style={{
-                  gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
-                }}
+                className="hidden-scrollbar relative flex flex-row gap-4 overflow-x-auto"
+                id={"top-genre-movies"}
               >
                 {topMovieGenreMedia.results.length > 0 &&
-                  topMovieGenreMedia.results.slice(0, 8).map((media: any) => (
+                  topMovieGenreMedia.results.slice(0, 20).map((media: any) => (
                     <div key={media.id}>
                       <HomeMediaCard
                         user_id={user.user.id}
@@ -228,17 +233,20 @@ const HomeContent = async () => {
           {/* Top TV Genre Section */}
           <div>
             <div className="flex flex-col gap-4">
-              <h2 className="text-xl font-bold">
-                Because you like {topTvGenreName} TV
-              </h2>
+              <div className="flex flex-row items-center justify-between px-2 lg:p-0">
+                <div className="flex flex-row items-center gap-2">
+                  <h2 className="text-xl font-bold">
+                    Because you like {topTvGenreName} shows
+                  </h2>
+                </div>
+                <ScrollButtons containerId="top-genre-tv" />
+              </div>
               <div
-                className="grid gap-4"
-                style={{
-                  gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
-                }}
+                className="hidden-scrollbar relative flex flex-row gap-4 overflow-x-auto"
+                id={"top-genre-tv"}
               >
                 {topTvGenreMedia.results.length > 0 &&
-                  topTvGenreMedia.results.slice(0, 8).map((media: any) => (
+                  topTvGenreMedia.results.slice(0, 20).map((media: any) => (
                     <div key={media.id}>
                       <HomeMediaCard
                         user_id={user.user.id}
@@ -250,7 +258,7 @@ const HomeContent = async () => {
               </div>
             </div>
           </div>
-          {/* TV Recommendations Section */}
+          {/* TV Recommendations Section
           <div className="flex flex-col gap-4">
             <h2 className="text-xl font-bold">More you might like</h2>
             <div
@@ -270,8 +278,9 @@ const HomeContent = async () => {
                   </div>
                 ))}
             </div>
-          </div>
+          </div> */}
           {/* Infinite Scroll Section */}
+          <h2 className="text-xl font-bold">More you might like</h2>
           <InfiniteScrollHome user_id={user.user.id} />
           <div className="h-16 w-full" />
         </div>
