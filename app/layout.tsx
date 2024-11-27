@@ -9,6 +9,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import ThemeScript from "@/components/ThemeScript";
 import { Toaster } from "@/components/ui/toaster";
 import CookieConsent from "@/components/CookieConsent"; // Import the CookieConsent component
+import Head from "next/head";
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
@@ -23,9 +24,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={GeistSans.className}>
-      <head>
+      <Head>
         <ThemeScript /> {/* Include ThemeScript in the head */}
-      </head>
+      </Head>
       <UserProvider>
         <body className="overflow-x-hidden bg-background text-foreground">
           <main>{children}</main>
