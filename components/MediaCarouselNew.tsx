@@ -41,7 +41,7 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
   }));
 
   return (
-    <div className="w-full lg:px-4">
+    <div className="z-30 w-full lg:px-4">
       <Slider {...settings} className="h-full w-full">
         {movies &&
           movies.slice(0, 5).map((media: any, index: number) => {
@@ -59,9 +59,6 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
                   <div className="relative h-full w-full">
                     <div className="absolute left-0 top-0 z-20 flex h-full w-full flex-col justify-between p-4 lg:p-16">
                       <div className="flex flex-row gap-4">
-                        <div className="self-start rounded-full bg-black/20 px-3 py-1 backdrop-blur-xl">
-                          🔥Now Popular
-                        </div>
                         <div className="relative">
                           <button
                             onClick={toggleDropdown}
@@ -75,7 +72,7 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
                             />
                           </button>
                           {isDropdownOpen && (
-                            <div className="backdrop-blur/xl absolute left-0 top-full z-30 mt-2 flex w-max flex-row rounded-lg bg-background p-2 shadow-lg">
+                            <div className="backdrop-blur/xl custom-scrollbar absolute left-0 top-full z-50 mt-2 flex max-h-[60vh] w-max flex-col overflow-y-auto rounded-lg bg-background p-2 shadow-lg lg:flex-row">
                               <div>
                                 <h3 className="border-b border-foreground/10 px-4 py-2">
                                   Movies
@@ -110,6 +107,9 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
                               </div>
                             </div>
                           )}
+                        </div>
+                        <div className="self-start rounded-full bg-black/20 px-3 py-1 backdrop-blur-xl">
+                          🔥Now Popular
                         </div>
                       </div>
 
