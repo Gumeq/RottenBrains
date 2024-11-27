@@ -8,6 +8,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import ThemeScript from "@/components/ThemeScript";
 import { Toaster } from "@/components/ui/toaster";
+import CookieConsent from "@/components/CookieConsent"; // Import the CookieConsent component
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
@@ -27,10 +28,11 @@ export default function RootLayout({
       </head>
       <UserProvider>
         <body className="overflow-x-hidden bg-background text-foreground">
-          <main className="">{children}</main>
+          <main>{children}</main>
           <Toaster />
           <Analytics />
           <SpeedInsights />
+          <CookieConsent /> {/* Add the CookieConsent component here */}
         </body>
       </UserProvider>
     </html>
