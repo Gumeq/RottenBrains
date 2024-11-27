@@ -323,8 +323,8 @@
   background: linear-gradient(
     180deg,
     rgba(0, 0, 0, 0) 0%,
-    hsl(var(--background)) 90%,
-    hsl(var(--background)) 100%
+    rgba(0, 0, 0, 30%) 65%,
+    rgba(0, 0, 0, 60%) 100%
   );
 }
 

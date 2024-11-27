@@ -3,6 +3,7 @@ import React from "react";
 import InfiniteScrollByGenre from "./InfiniteScrollGenre";
 import GenreSelector from "../../GenreSelectorHome";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
+import MobileTopBarHome from "../../MobileTopBarHome";
 
 const page = async ({
   params,
@@ -22,6 +23,7 @@ const page = async ({
   return (
     <div className="flex flex-col gap-2">
       <GenreSelector user_id={userId}></GenreSelector>
+      <MobileTopBarHome />
       <InfiniteScrollByGenre
         genre_id={genre_id}
         media_type={media_type}

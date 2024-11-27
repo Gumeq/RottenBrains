@@ -137,33 +137,33 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({ user_id }) => {
   };
 
   return (
-    <div className="mt-16 flex flex-row items-center gap-2 overflow-x-auto bg-background px-2 lg:mt-0 lg:px-4 lg:py-2 lg:pb-4">
+    <div className="hidden-scrollbar mt-14 flex flex-row items-center gap-2 overflow-x-auto px-2 text-sm lg:mt-0 lg:px-4 lg:py-1">
       {/* Category buttons */}
       <button
-        className={`rounded-[8px] px-4 py-2 ${
+        className={`rounded-[4px] px-3 py-1 ${
           selectedCategory === "Recommended"
-            ? "border border-red-500 bg-foreground text-background"
-            : "bg-foreground/10"
+            ? "bg-foreground text-background"
+            : "bg-foreground/5"
         }`}
         onClick={handleRecommendedClick}
       >
         Recommended
       </button>
       <button
-        className={`rounded-[8px] px-4 py-2 ${
+        className={`rounded-[4px] px-3 py-1 ${
           selectedCategory === "movie"
-            ? "border border-red-500 bg-foreground text-background"
-            : "bg-foreground/10"
+            ? "bg-foreground text-background"
+            : "bg-foreground/5"
         }`}
         onClick={() => setSelectedCategory("movie")}
       >
         Movies
       </button>
       <button
-        className={`rounded-[8px] px-4 py-2 ${
+        className={`rounded-[4px] px-3 py-1 ${
           selectedCategory === "tv"
-            ? "border border-red-500 bg-foreground text-background"
-            : "bg-foreground/10"
+            ? "bg-foreground text-background"
+            : "bg-foreground/5"
         }`}
         onClick={() => setSelectedCategory("tv")}
       >
@@ -197,8 +197,10 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({ user_id }) => {
             return (
               <button
                 key={`${mediaType}-${genreId}`}
-                className={`flex flex-shrink-0 rounded-[8px] px-4 py-2 ${
-                  isSelected ? "border border-red-500" : "bg-foreground/10"
+                className={`flex flex-shrink-0 rounded-[4px] px-3 py-1 ${
+                  isSelected
+                    ? "bg-foreground text-background"
+                    : "bg-foreground/5"
                 }`}
                 onClick={() => handleGenreClick(genreId, mediaType)}
               >

@@ -5,6 +5,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
+import { divide } from "lodash";
+import { getGenreNameById } from "@/lib/functions";
 
 const TopMoviesCarouselNew = ({ movies }: any) => {
   const settings = {
@@ -18,76 +20,71 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
     autoplay: true,
     autoplaySpeed: 7000, // Increased to reduce frequency of re-renders
     pauseOnHover: false,
+    arrows: false,
   };
 
   return (
-    <div className="h-[50vh] w-full text-foreground lg:h-auto">
-      <Slider {...settings}>
+    <div className="w-full lg:px-4">
+      <Slider {...settings} className="h-full w-full">
         {movies &&
           movies.slice(0, 5).map((media: any, index: number) => {
             const watchLink =
               media.media_type === "movie"
                 ? `/protected/watch/${media.media_type}/${media.id}`
                 : `/protected/watch/${media.media_type}/${media.id}/1/1`;
+            console.log(media);
             return (
-              <div className="h-[50vh] w-full md:h-[90vh]" key={index}>
-                <div className="relative h-full w-full">
-                  <div className="absolute right-0 top-0 z-20 flex h-full w-full flex-col justify-end">
-                    <div className="w-full">
-                      <div className="mx-auto flex h-full w-[90%] flex-col gap-8">
-                        <div className="flex h-full flex-col gap-4 lg:w-1/2 lg:gap-16">
-                          <div>
-                            <h1 className="truncate pb-2 text-2xl text-foreground/80 lg:py-4 lg:pb-8 lg:text-4xl">
-                              {media.title || media.name}
-                            </h1>
-                            <h2 className="line-clamp-2 text-lg text-foreground/50 lg:text-2xl">
-                              {media.overview}
-                            </h2>
-                          </div>
-                          <Link className="flex" href={watchLink}>
-                            <div className="rounded-full border-4 border-transparent bg-foreground px-8 py-1 text-lg font-medium text-background transition ease-in-out hover:border-foreground hover:bg-transparent hover:text-foreground lg:py-2 lg:text-2xl">
-                              Watch Now
-                            </div>
-                          </Link>
+              <Link
+                href={watchLink}
+                className="h-[80vh] w-full overflow-hidden lg:rounded-[16px]"
+                key={index}
+              >
+                <div className="h-full w-full">
+                  <div className="relative h-full w-full">
+                    <div className="absolute left-0 top-0 z-20 flex h-full w-full flex-col justify-between p-4 lg:p-8">
+                      <div className="self-start rounded-full bg-black/20 px-3 py-1 backdrop-blur-xl">
+                        🔥Now Popular
+                      </div>
+                      <div className="flex flex-col gap-4">
+                        <div className="flex flex-row gap-2">
+                          {media.genre_ids.slice(0, 2).map((genre: any) => {
+                            return (
+                              <div className="rounded-full bg-black/20 px-3 py-1 text-sm backdrop-blur-xl">
+                                {getGenreNameById(genre)}
+                              </div>
+                            );
+                          })}
                         </div>
-                        <div className="hidden flex-row justify-between gap-8 p-2 lg:flex lg:w-full">
-                          {movies
-                            .slice(index + 1, index + 5)
-                            .map((movie: any) => {
-                              return (
-                                <Link
-                                  className="relative overflow-hidden rounded-[16px] border-4 border-foreground/0 drop-shadow-lg transition ease-in-out hover:scale-110 hover:border-white/80"
-                                  href={"/"}
-                                >
-                                  <img
-                                    src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
-                                    alt=""
-                                    className="aspect-[16/9] w-full"
-                                  />
-                                  <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/30"></div>
-                                  <div className="absolute bottom-0 z-20 flex flex-col gap-2 px-4 py-2 text-white">
-                                    <p className="line-clamp-1 text-xl">
-                                      {movie.title || movie.name}
-                                    </p>
-                                    <p className="line-clamp-2 text-white/80">
-                                      {movie.overview}
-                                    </p>
-                                  </div>
-                                </Link>
-                              );
-                            })}
+                        <h2 className="text-4xl font-bold">
+                          {media.title || media.name}
+                        </h2>
+                        <h3 className="line-clamp-[4] lg:w-1/3">
+                          {media.overview}
+                        </h3>
+                        <div className="flex flex-col gap-4 lg:flex-row">
+                          <div className="flex flex-row items-center gap-2 rounded-full bg-white px-6 py-3 text-lg text-black">
+                            <img
+                              src="/assets/icons/play-solid.svg"
+                              alt=""
+                              className="h-[20px] w-[20px]"
+                            />
+                            <p>Watch Now</p>
+                          </div>
+                          <div className="rounded-full bg-black/20 px-6 py-3 text-lg backdrop-blur-xl">
+                            View Details
+                          </div>
                         </div>
                       </div>
                     </div>
+                    <div className="gradient-explore absolute right-0 top-0 z-10 h-full w-full"></div>
+                    <img
+                      src={`https://image.tmdb.org/t/p/original${media.backdrop_path}`}
+                      alt=""
+                      className="h-full w-full bg-background object-cover object-center"
+                    />
                   </div>
-                  <div className="gradient-explore absolute right-0 top-0 z-10 h-full w-full"></div>
-                  <img
-                    src={`https://image.tmdb.org/t/p/original${media.backdrop_path}`}
-                    alt=""
-                    className="h-full object-cover lg:w-full"
-                  />
                 </div>
-              </div>
+              </Link>
             );
           })}
       </Slider>
