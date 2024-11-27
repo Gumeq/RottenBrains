@@ -278,7 +278,7 @@ export default async function mediaPage({
                 <img
                   src={`https://image.tmdb.org/t/p/w1280${media.backdrop_path}`}
                   alt=""
-                  className="h-full rounded-[4px] drop-shadow-lg"
+                  className="aspect-[16/9] h-full rounded-[4px] bg-foreground/10 drop-shadow-lg"
                 />
               </div>
             </div>

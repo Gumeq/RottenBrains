@@ -23,7 +23,7 @@ import {
 } from "./Icon";
 
 const HomeNav = ({ children }: any) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const pathname = usePathname();
 
   const toggleSidebar = () => {

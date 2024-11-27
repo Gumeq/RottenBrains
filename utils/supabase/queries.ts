@@ -523,96 +523,45 @@ export const upsertWatchHistory = async (
   episode_number: number | null,
 ) => {
   try {
+    // Parse percentage_watched to a float
     const newPercentageFloat = parseFloat(new_percentage_watched);
 
-    // Check if the item already exists
-    const { data: exists, error: checkError } = await supabase.rpc(
-      "check_watch_history_exists",
-      {
-        p_user_id: user_id,
-        p_media_type: media_type,
-        p_media_id: media_id,
-        p_season_number: season_number,
-        p_episode_number: episode_number,
-      },
-    );
+    // Prepare the data to upsert
+    const watchHistoryData: any = {
+      user_id,
+      media_type,
+      media_id,
+      time_spent: new_time_spent,
+      percentage_watched: newPercentageFloat,
+    };
 
-    if (checkError) throw new Error(checkError.message);
-
-    if (exists) {
-      // Fetch the current record to get existing values
-      const { data: currentData, error: fetchError } = await supabase
-        .from("watch_history")
-        .select("time_spent, percentage_watched")
-        .match({
-          user_id,
-          media_type,
-          media_id,
-          ...(media_type === "tv" && { season_number, episode_number }),
-        })
-        .single();
-
-      if (fetchError) throw new Error(fetchError.message);
-
-      const current_time_spent = currentData?.time_spent || 0;
-      const current_percentage_watched = parseFloat(
-        currentData?.percentage_watched || "0",
-      );
-
-      // Accumulate the values
-      const updated_time_spent = current_time_spent + new_time_spent;
-      const updated_percentage_watched = Math.min(
-        current_percentage_watched + newPercentageFloat,
-        100,
-      );
-
-      // Define the update data
-      const updateData: any = {
-        time_spent: updated_time_spent,
-        percentage_watched: updated_percentage_watched.toFixed(2),
-        created_at: new Date().toISOString(),
-      };
-
-      if (media_type === "tv") {
-        updateData.season_number = season_number;
-        updateData.episode_number = episode_number;
-      }
-
-      // Perform the update
-      const { error: updateError } = await supabase
-        .from("watch_history")
-        .update(updateData)
-        .match({
-          user_id,
-          media_type,
-          media_id,
-          ...(media_type === "tv" && { season_number, episode_number }),
-        });
-
-      if (updateError) throw new Error(updateError.message);
-
-      return { success: true, action: "updated" };
-    } else {
-      // Insert a new row with the initial values
-      const { error: insertError } = await supabase
-        .from("watch_history")
-        .insert([
-          {
-            user_id,
-            media_type,
-            media_id,
-            time_spent: new_time_spent,
-            percentage_watched: newPercentageFloat.toFixed(2),
-            season_number: media_type === "tv" ? season_number : null,
-            episode_number: media_type === "tv" ? episode_number : null,
-            created_at: new Date().toISOString(),
-          },
-        ]);
-
-      if (insertError) throw new Error(insertError.message);
-
-      return { success: true, action: "inserted" };
+    // Include season and episode numbers for TV media types
+    if (media_type === "tv") {
+      watchHistoryData.season_number = season_number;
+      watchHistoryData.episode_number = episode_number;
     }
+
+    // Define conflict target based on media type
+    const conflictTarget =
+      media_type === "tv"
+        ? [
+            "user_id",
+            "media_type",
+            "media_id",
+            "season_number",
+            "episode_number",
+          ]
+        : ["user_id", "media_type", "media_id"];
+
+    // Perform upsert operation
+    const { data, error } = await supabase
+      .from("watch_history")
+      .upsert(watchHistoryData, { onConflict: conflictTarget.join(",") })
+      .select();
+
+    if (error) throw new Error(error.message);
+
+    return { success: true, action: "upserted", data };
   } catch (error) {
     console.error("Error in upsertWatchHistory:", error);
     throw error;

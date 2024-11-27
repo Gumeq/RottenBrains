@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { useEffect, useRef, useCallback } from "react";
 
 interface WatchDurationProps {
   media_type: string;
@@ -20,75 +19,73 @@ const WatchDuration: React.FC<WatchDurationProps> = ({
   user_id,
   media_duration,
 }) => {
-  const pathname = usePathname();
+  const startTimeRef = useRef(Date.now());
+  const accumulatedTimeRef = useRef(0);
+
+  const sendWatchData = useCallback(() => {
+    const currentTime = Date.now();
+    const sessionTime = Math.floor((currentTime - startTimeRef.current) / 1000);
+    accumulatedTimeRef.current += sessionTime;
+
+    if (accumulatedTimeRef.current >= 60) {
+      const totalMediaSeconds = media_duration * 60;
+      const percentageWatched = Math.min(
+        (accumulatedTimeRef.current / totalMediaSeconds) * 100,
+        100,
+      );
+
+      navigator.sendBeacon(
+        "/api/saveWatchTime",
+        JSON.stringify({
+          user_id,
+          media_type,
+          media_id,
+          season_number,
+          episode_number,
+          time_spent: accumulatedTimeRef.current,
+          percentage_watched: percentageWatched.toFixed(2),
+        }),
+      );
+
+      accumulatedTimeRef.current = 0;
+    }
+
+    startTimeRef.current = currentTime;
+  }, [
+    user_id,
+    media_type,
+    media_id,
+    season_number,
+    episode_number,
+    media_duration,
+  ]);
+
+  const handleVisibilityChange = useCallback(() => {
+    if (document.visibilityState === "hidden") {
+      sendWatchData();
+    } else {
+      startTimeRef.current = Date.now();
+    }
+  }, [sendWatchData]);
 
   useEffect(() => {
-    let startTime = Date.now();
-    let accumulatedTime = 0;
-
-    const sendWatchData = () => {
-      const currentTime = Date.now();
-      const sessionTime = Math.floor((currentTime - startTime) / 1000);
-      accumulatedTime += sessionTime;
-
-      // Only proceed if at least a minute has passed in total
-      if (accumulatedTime >= 60) {
-        const totalMediaSeconds = media_duration * 60;
-        const percentageWatched = Math.min(
-          (accumulatedTime / totalMediaSeconds) * 100,
-          100,
-        );
-
-        navigator.sendBeacon(
-          "/api/saveWatchTime",
-          JSON.stringify({
-            user_id,
-            media_type,
-            media_id,
-            season_number,
-            episode_number,
-            time_spent: accumulatedTime,
-            percentage_watched: percentageWatched.toFixed(2),
-          }),
-        );
-
-        // Reset accumulated time after sending
-        accumulatedTime = 0;
-      }
-
-      // Reset start time for the next session
-      startTime = currentTime;
-    };
-
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "hidden") {
-        sendWatchData();
-      } else {
-        startTime = Date.now(); // Reset start time when becoming visible
-      }
-    };
-
     document.addEventListener("visibilitychange", handleVisibilityChange);
     window.addEventListener("beforeunload", sendWatchData);
 
-    // Periodic update every 5 minutes
     const intervalId = setInterval(sendWatchData, 5 * 60 * 1000);
 
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener("beforeunload", sendWatchData);
       clearInterval(intervalId);
-      sendWatchData(); // Final update on unmount
+      sendWatchData();
     };
-  }, [
-    media_type,
-    media_id,
-    user_id,
-    media_duration,
-    season_number,
-    episode_number,
-    pathname,
-  ]);
+  }, [handleVisibilityChange, sendWatchData]);
+
+  useEffect(() => {
+    startTimeRef.current = Date.now();
+    accumulatedTimeRef.current = 0;
+  }, [media_type, media_id, season_number, episode_number, media_duration]);
 
   return null;
 };
