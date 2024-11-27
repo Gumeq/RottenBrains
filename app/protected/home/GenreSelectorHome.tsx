@@ -9,7 +9,7 @@ import {
   getTopTvGenresForUser,
 } from "@/utils/supabase/queries";
 
-interface Genre {
+export interface Genre {
   id: number;
   name: string;
   media_type: "movie" | "tv";

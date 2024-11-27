@@ -1,14 +1,22 @@
 "use client";
 
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
-import { divide } from "lodash";
 import { getGenreNameById } from "@/lib/functions";
+import { Genre } from "@/app/protected/home/GenreSelectorHome";
+import movie_genres from "../constants/movie_genres.json";
+import tv_genres from "../constants/tv_genres.json";
 
 const TopMoviesCarouselNew = ({ movies }: any) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prev) => !prev);
+  };
+
   const settings = {
     dots: false,
     infinite: true,
@@ -18,10 +26,19 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 7000, // Increased to reduce frequency of re-renders
+    autoplaySpeed: 7000,
     pauseOnHover: false,
     arrows: false,
   };
+
+  const movieGenres: Genre[] = movie_genres.genres.map((genre: any) => ({
+    ...genre,
+    media_type: "movie",
+  }));
+  const tvGenres: Genre[] = tv_genres.genres.map((genre: any) => ({
+    ...genre,
+    media_type: "tv",
+  }));
 
   return (
     <div className="w-full lg:px-4">
@@ -32,24 +49,78 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
               media.media_type === "movie"
                 ? `/protected/watch/${media.media_type}/${media.id}`
                 : `/protected/watch/${media.media_type}/${media.id}/1/1`;
-            console.log(media);
+
             return (
-              <Link
-                href={watchLink}
+              <div
                 className="h-[80vh] w-full overflow-hidden lg:rounded-[16px]"
                 key={index}
               >
                 <div className="h-full w-full">
                   <div className="relative h-full w-full">
-                    <div className="absolute left-0 top-0 z-20 flex h-full w-full flex-col justify-between p-4 lg:p-8">
-                      <div className="self-start rounded-full bg-black/20 px-3 py-1 backdrop-blur-xl">
-                        🔥Now Popular
+                    <div className="absolute left-0 top-0 z-20 flex h-full w-full flex-col justify-between p-4 lg:p-16">
+                      <div className="flex flex-row gap-4">
+                        <div className="self-start rounded-full bg-black/20 px-3 py-1 backdrop-blur-xl">
+                          🔥Now Popular
+                        </div>
+                        <div className="relative">
+                          <button
+                            onClick={toggleDropdown}
+                            className="flex flex-row items-center gap-2 rounded-full bg-black/20 px-3 py-1 backdrop-blur-xl"
+                          >
+                            <p>Categories</p>
+                            <img
+                              src="/assets/icons/drop_down_arrow_solid.svg"
+                              alt="dropdown arrow"
+                              className=""
+                            />
+                          </button>
+                          {isDropdownOpen && (
+                            <div className="backdrop-blur/xl absolute left-0 top-full z-30 mt-2 flex w-max flex-row rounded-lg bg-background p-2 shadow-lg">
+                              <div>
+                                <h3 className="border-b border-foreground/10 px-4 py-2">
+                                  Movies
+                                </h3>
+                                <ul className="grid grid-cols-2 gap-2 p-2 text-foreground">
+                                  {movieGenres.map((genre: any) => (
+                                    <Link
+                                      href={`/protected/home/movie/${genre.id}`}
+                                      key={genre.id}
+                                      className="cursor-pointer rounded-[4px] px-2 py-1 hover:bg-foreground/10"
+                                    >
+                                      {genre.name}
+                                    </Link>
+                                  ))}
+                                </ul>
+                              </div>
+                              <div>
+                                <h3 className="border-b border-foreground/10 px-4 py-2">
+                                  TV
+                                </h3>
+                                <ul className="grid grid-cols-2 gap-2 p-2 text-foreground">
+                                  {tvGenres.map((genre: any) => (
+                                    <Link
+                                      href={`/protected/home/tv/${genre.id}`}
+                                      key={genre.id}
+                                      className="cursor-pointer rounded-[4px] px-2 py-1 hover:bg-foreground/10"
+                                    >
+                                      {genre.name}
+                                    </Link>
+                                  ))}
+                                </ul>
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       </div>
+
                       <div className="flex flex-col gap-4">
                         <div className="flex flex-row gap-2">
                           {media.genre_ids.slice(0, 2).map((genre: any) => {
                             return (
-                              <div className="rounded-full bg-black/20 px-3 py-1 text-sm backdrop-blur-xl">
+                              <div
+                                key={genre}
+                                className="rounded-full bg-black/20 px-3 py-1 text-sm backdrop-blur-xl"
+                              >
                                 {getGenreNameById(genre)}
                               </div>
                             );
@@ -62,17 +133,23 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
                           {media.overview}
                         </h3>
                         <div className="flex flex-col gap-4 lg:flex-row">
-                          <div className="flex flex-row items-center gap-2 rounded-full bg-white px-6 py-3 text-lg text-black">
+                          <Link
+                            href={watchLink}
+                            className="flex flex-row items-center gap-2 rounded-full bg-white px-6 py-3 text-lg text-black"
+                          >
                             <img
                               src="/assets/icons/play-solid.svg"
                               alt=""
                               className="h-[20px] w-[20px]"
                             />
                             <p>Watch Now</p>
-                          </div>
-                          <div className="rounded-full bg-black/20 px-6 py-3 text-lg backdrop-blur-xl">
+                          </Link>
+                          <Link
+                            href={`/protected/media/${media.media_type}/${media.id}`}
+                            className="rounded-full bg-black/20 px-6 py-3 text-lg backdrop-blur-xl"
+                          >
                             View Details
-                          </div>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -84,7 +161,7 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
                     />
                   </div>
                 </div>
-              </Link>
+              </div>
             );
           })}
       </Slider>
