@@ -15,12 +15,7 @@ export const metadata = {
   title: "RottenBrains",
   description: "Your Hub for Movie Reviews and Streaming!",
 };
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: any) {
   return (
     <html lang="en" className={GeistSans.className}>
       <head>
@@ -28,10 +23,10 @@ export default function RootLayout({
       </head>
       <UserProvider>
         <body className="overflow-x-hidden bg-background text-foreground">
-          <main className="">{children}</main>
+          <main>{children}</main>
           <Toaster />
           <Analytics />
-          <CookieConsent></CookieConsent>
+          <CookieConsent />
           <SpeedInsights />
         </body>
       </UserProvider>
