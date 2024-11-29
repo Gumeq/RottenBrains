@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: "class", // Enable class-based dark mode
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -7,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       boxShadow: {
-        "dark-grey": "0 4px 8px rgba(255, 255, 255, 0.1)", // Customize the color and blur as needed
+        "dark-grey": "0 4px 8px rgba(255, 255, 255, 0.1)", // Customize as needed
       },
       colors: {
         background: "hsl(var(--background))",

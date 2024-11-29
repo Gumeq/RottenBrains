@@ -4,11 +4,12 @@ const ThemeScript = () => {
   const themeScript = `
     (function() {
       const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
-        document.documentElement.setAttribute('data-theme', savedTheme);
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const isDark = savedTheme ? (savedTheme === 'dark') : prefersDark;
+      if (isDark) {
+        document.documentElement.classList.add('dark');
       } else {
-        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', systemTheme);
+        document.documentElement.classList.remove('dark');
       }
     })();
   `;

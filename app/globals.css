@@ -5,23 +5,31 @@
 @tailwind utilities;
 
 @layer base {
-  [data-theme="light"] {
-    --background: 200 20% 96%;
-    --foreground: 0 0% 6%;
+  /* Light theme (default) */
+  :root {
+    --background: 200 20% 96%; /* hsl(200, 20%, 96%) */
+    --foreground: 0 0% 6%; /* hsl(0, 0%, 6%) */
     --accent: 347 100% 40%;
     --primary: 0 55% 29%;
     --secondary: 0 72% 69%;
   }
 
-  [data-theme="dark"] {
-    --background: 0 0% 6%;
-    --foreground: 200 20% 96%;
+  /* Dark theme */
+  .dark {
+    --background: 0 0% 6%; /* hsl(0, 0%, 6%) */
+    --foreground: 200 20% 96%; /* hsl(200, 20%, 96%) */
     --accent: 347 100% 50%;
     --primary: 0 55% 71%;
     --secondary: 0 73% 31%;
-    .invert-on-dark {
-      filter: invert(1);
-    }
+  }
+
+  /* Invert images on dark mode */
+  .invert-on-dark {
+    /* No filter by default */
+  }
+
+  .dark .invert-on-dark {
+    filter: invert(1);
   }
 }
 
