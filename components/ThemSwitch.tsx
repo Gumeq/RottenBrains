@@ -1,56 +1,23 @@
-"use client";
+// components/ThemeSwitch.tsx
 
-import { useState, useEffect } from "react";
+"use client"; // This is a client-side component
+
+import { useTheme } from "@/context/ThemeContext";
+import React from "react";
 
 export default function ThemeSwitch() {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const savedTheme = localStorage.getItem("theme");
-      const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)",
-      ).matches;
-      const initialTheme = savedTheme
-        ? (savedTheme as "light" | "dark")
-        : prefersDark
-          ? "dark"
-          : "light";
-      setTheme(initialTheme);
-
-      if (initialTheme === "dark") {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (theme === "dark") {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
-      localStorage.setItem("theme", theme);
-    }
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
-  };
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <button
       onClick={toggleTheme}
-      className="flex w-full items-center text-foreground focus:outline-none"
+      className="flex items-center text-foreground focus:outline-none"
       aria-label="Toggle theme"
     >
-      <div className="flex w-full flex-row items-center gap-2">
+      <div className="flex items-center gap-2">
         <img
           src={`/assets/icons/${theme}-mode.svg`}
-          alt=""
+          alt={`${theme} mode icon`}
           className="invert-on-dark"
         />
         <p>Change theme</p>

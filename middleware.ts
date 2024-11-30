@@ -1,33 +1,46 @@
-import { type NextRequest } from "next/server";
+// middleware.ts
+
+import { type NextRequest, NextResponse } from "next/server";
 import { updateSession } from "@/utils/supabase/middleware";
 
 export async function middleware(request: NextRequest) {
-	return await updateSession(request);
+  // Call updateSession
+  let response = await updateSession(request);
+
+  // If updateSession doesn't return a response, create a new one
+  if (!response) {
+    response = NextResponse.next();
+  }
+
+  // Set x-pathname header
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-pathname", request.nextUrl.pathname);
+
+  // Set the modified headers to the request
+  response.headers.set("x-pathname", request.nextUrl.pathname);
+
+  // **Theme Detection Logic Starts Here**
+
+  // Check if theme cookie exists
+  const themeCookie = request.cookies.get("theme");
+
+  if (!themeCookie) {
+    // Detect system preference
+    const prefersDark =
+      request.headers.get("sec-ch-prefers-color-scheme") === "dark";
+
+    // Set theme cookie
+    response.cookies.set("theme", prefersDark ? "dark" : "light", {
+      path: "/",
+      maxAge: 60 * 60 * 24 * 365, // 1 year
+    });
+  }
+
+  return response;
 }
 
 export const config = {
-	matcher: [
-		/*
-		 * Match all request paths except:
-		 * - _next/static (static files)
-		 * - _next/image (image optimization files)
-		 * - favicon.ico (favicon file)
-		 * - images - .svg, .png, .jpg, .jpeg, .gif, .webp
-		 * Feel free to modify this pattern to include more paths.
-		 */
-		"/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
-	],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  ],
 };
-
-import { NextResponse } from "next/server";
-
-export function middleware2(request: NextRequest) {
-	const requestHeaders = new Headers(request.headers);
-	requestHeaders.set("x-pathname", request.nextUrl.pathname);
-
-	return NextResponse.next({
-		request: {
-			headers: requestHeaders,
-		},
-	});
-}

@@ -1,56 +1,30 @@
-/** @type {import('tailwindcss').Config} */
+// tailwind.config.js
+
 module.exports = {
-  darkMode: "class", // Enable class-based dark mode
+  darkMode: "class", // Use class-based dark mode
   content: [
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{js,ts,jsx,tsx}", // For Next.js pages directory
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./app/**/*.{js,ts,jsx,tsx}", // For Next.js 13 app directory
   ],
   theme: {
     extend: {
-      boxShadow: {
-        "dark-grey": "0 4px 8px rgba(255, 255, 255, 0.1)", // Customize as needed
-      },
-      colors: {
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        accent: "hsl(var(--accent))",
-        primary: "hsl(var(--primary))",
-        secondary: "hsl(var(--secondary))",
-        btn: {
-          background: "hsl(var(--btn-background))",
-          "background-hover": "hsl(var(--btn-background-hover))",
-        },
-      },
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
       },
-      height: {
-        dvh: "100dvh",
-        svh: "100svh",
-        lvh: "100lvh",
-      },
-      minHeight: {
-        dvh: "100dvh",
-        svh: "100svh",
-        lvh: "100lvh",
-      },
-      maxHeight: {
-        dvh: "100dvh",
-        svh: "100svh",
-        lvh: "100lvh",
-      },
-      padding: {
-        "safe-top": "env(safe-area-inset-top)",
-        "safe-bottom": "env(safe-area-inset-bottom)",
-      },
-      margin: {
-        "safe-top": "env(safe-area-inset-top)",
-        "safe-bottom": "env(safe-area-inset-bottom)",
+      colors: {
+        background: "hsl(var(--background) / <alpha-value>)",
+        foreground: "hsl(var(--foreground) / <alpha-value>)",
+        accent: "hsl(var(--accent) / <alpha-value>)",
+        primary: "hsl(var(--primary) / <alpha-value>)",
+        secondary: "hsl(var(--secondary) / <alpha-value>)",
+        btn: {
+          background: "hsl(var(--btn-background) / <alpha-value>)",
+          "background-hover":
+            "hsl(var(--btn-background-hover) / <alpha-value>)",
+        },
       },
     },
   },
-  plugins: [
-    require("@tailwindcss/aspect-ratio"),
-    // other plugins...
-  ],
+  plugins: [],
 };
