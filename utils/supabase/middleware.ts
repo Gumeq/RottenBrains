@@ -1,29 +1,37 @@
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
+import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
+import { cookies } from "next/headers";
 
 export const updateSession = async (request: NextRequest) => {
   try {
+    // Initialize the response
     let response = NextResponse.next({
       request: {
         headers: request.headers,
       },
     });
 
+    // Get the cookie store
+    const cookieStore = cookies();
+
+    // Create Supabase client
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
       {
         cookies: {
-          get(name: string) {
-            const cookieValue = request.cookies.get(name)?.value;
-            return cookieValue ? decodeURIComponent(cookieValue) : undefined;
+          getAll() {
+            return cookieStore.getAll(); // Retrieve all cookies
           },
-          set(name: string, value: string, options: CookieOptions) {
-            const encodedValue = encodeURIComponent(value);
-            response.cookies.set({ name, value: encodedValue, ...options });
-          },
-          remove(name: string, options: CookieOptions) {
-            response.cookies.set({ name, value: "", ...options });
+          setAll(cookiesToSet) {
+            try {
+              cookiesToSet.forEach(({ name, value, options }) =>
+                cookieStore.set(name, value, options),
+              );
+            } catch {
+              // The `setAll` method was called from a Server Component.
+              // This can be ignored if middleware refreshes sessions.
+            }
           },
         },
       },
@@ -36,7 +44,7 @@ export const updateSession = async (request: NextRequest) => {
   } catch (e) {
     console.error("Error in updateSession:", e);
 
-    // Optionally handle cookie cleanup here if the session fails
+    // Return the original response on failure
     return NextResponse.next({
       request: {
         headers: request.headers,
