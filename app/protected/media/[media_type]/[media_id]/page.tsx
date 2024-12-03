@@ -1,19 +1,8 @@
-import ExploreCard from "@/components/explore/ExploreCard";
 import GoBackArrow from "@/components/GoBackArrow";
-import HomePostCard from "@/components/post/HomePostCard";
-import YouTubeEmbed from "@/components/YoutubeEmbed";
 import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
 import { getPostsOfMedia } from "@/utils/supabase/queries";
-import {
-  getMediaCredits,
-  getMediaDetails,
-  getRecommendations,
-  getReviews,
-  getSimilar,
-  getVideos,
-} from "@/utils/tmdb";
+import { getMediaCredits, getMediaDetails, getVideos } from "@/utils/tmdb";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import HomePostCardNew from "@/components/post/HomePostCardNew";
 import MoreOptions from "@/app/protected/home/MoreOptions";
@@ -151,11 +140,6 @@ export default async function mediaPage({
   if (user) {
     postsOfMedia = await getPostsOfMedia(user.user.id, media_type, media_id, 0);
   }
-  // const mediaVideos = await getVideos(media_type, media_id);
-  // const trailers = await getTrailerOrFirstFive(media_type, media_id);
-  // const mediaRecommendations = await getRecommendations(media_type, media_id);
-  // const mediaSimilar = await getSimilar(media_type, media_id);
-  // const mediaReviews = await getReviews(media_type, media_id);
   const mediaCredits = await separateCredits(media_type, media_id);
 
   const watchLink =
@@ -174,13 +158,6 @@ export default async function mediaPage({
         <GoBackArrow />
         <p className="truncate text-lg">{media.title || media.name}</p>
       </div>
-      {/* <div className="">
-				<img
-					src={`https://image.tmdb.org/t/p/w200${media.poster_path}`}
-					alt=""
-					className="w-screen h-[300vh] object-cover blur-[100px] absolute top-0 mask2 opacity-30 overflow-hidden bg-black"
-				/>
-			</div> */}
       <div className="relative h-auto w-screen py-4 lg:w-auto">
         <div
           className="relative mt-16 flex h-auto w-screen lg:mt-0 lg:w-auto"
@@ -357,48 +334,22 @@ export default async function mediaPage({
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      {/* <div className="relative mx-auto flex w-screen flex-col gap-8 p-2 lg:w-[75vw] lg:p-0">
-        <div className="">
-          <div className="my-2 flex flex-row items-center gap-2">
-            <div className="h-2 w-2 rounded-full bg-accent"></div>
-            <h1 className="text-xl font-bold">Videos</h1>
-          </div>
-          <div className="custom-scrollbar flex items-center gap-4 overflow-x-auto whitespace-nowrap py-4">
-            {mediaVideos &&
-              mediaVideos.results.slice(0, 10).map((video: any) => (
-                <div className="inline-block">
-                  <YouTubeEmbed
-                    videoId={video.key}
-                    key={video.key}
-                  ></YouTubeEmbed>
-                </div>
-              ))}
-          </div>
-        </div>
-        <div className="">
-          {postsOfMedia && (
-            <div>
-              {postsOfMedia.length > 0 && (
-                <div className="my-2 flex flex-row items-center gap-2">
-                  <div className="h-2 w-2 rounded-full bg-accent"></div>
-                  <h1 className="text-xl font-bold">User Posts</h1>
+            <div className="">
+              {postsOfMedia && (
+                <div>
+                  <div className="flex flex-row flex-wrap gap-4">
+                    {postsOfMedia?.slice(0, 9).map((post: any) => (
+                      <div>
+                        <HomePostCardNew post={post}></HomePostCardNew>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
-              <div className="flex flex-row flex-wrap gap-4">
-                {postsOfMedia?.slice(0, 9).map((post: any) => (
-                  <div>
-                    <HomePostCardNew post={post}></HomePostCardNew>
-                  </div>
-                ))}
-              </div>
             </div>
-          )}
+          </div>
         </div>
       </div>
-      <div className="h-[500px]"></div> */}
     </div>
   );
 }
