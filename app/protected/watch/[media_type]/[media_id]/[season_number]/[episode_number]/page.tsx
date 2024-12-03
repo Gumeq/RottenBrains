@@ -120,10 +120,19 @@ export default async function mediaPage({
               media={media}
               episode={episode}
             />
-            <div className="mx-auto flex w-[96vw] flex-col gap-2 rounded-[8px] bg-foreground/10 p-4 text-sm lg:w-full">
+            <div className="mx-auto flex w-[96vw] flex-col gap-4 rounded-[8px] bg-foreground/10 p-4 text-sm lg:w-full">
               <p className="font-semibold">
                 {getRelativeTime(episode.air_date)}
               </p>
+              <div className="flew-warp flex flex-row gap-2">
+                {media.genres.map((genre: any) => {
+                  return (
+                    <div className="rounded-4 bg-foreground/10 px-2 py-1 text-foreground/80">
+                      {genre.name}
+                    </div>
+                  );
+                })}
+              </div>
               <p>{episode.overview}</p>
             </div>
             <div className="flex w-full flex-col gap-4 px-2 lg:flex-row lg:p-0">

@@ -72,7 +72,7 @@ export default async function mediaPage({
           media_duration={media.runtime || 100}
         />
       )}
-      <div className="relative z-10 mx-auto mb-16 flex w-screen flex-col lg:w-[95vw] lg:max-w-[1700px]">
+      <div className="relative z-10 mx-auto mb-16 flex w-screen flex-col lg:w-[96vw] lg:max-w-[1700px]">
         <div className="small-screen-watch-margin flex flex-col gap-4 md:flex-row lg:mt-4">
           <div className="flex flex-col gap-4 lg:w-[75%]">
             <VideoEmbed
@@ -80,10 +80,19 @@ export default async function mediaPage({
               media_id={media_id}
               media={media}
             />
-            <div className="mx-auto flex w-[96vw] flex-col gap-2 rounded-[8px] bg-foreground/10 p-4 text-sm lg:w-full">
+            <div className="mx-auto flex w-[96vw] flex-col gap-4 rounded-[8px] bg-foreground/10 p-4 text-sm lg:w-full">
               <p className="font-semibold">
                 {getRelativeTime(media.release_date)}
               </p>
+              <div className="flew-warp flex flex-row gap-2">
+                {media.genres.map((genre: any) => {
+                  return (
+                    <div className="rounded-4 bg-foreground/10 px-2 py-1 text-foreground/80">
+                      {genre.name}
+                    </div>
+                  );
+                })}
+              </div>
               <p>{media.overview}</p>
             </div>
             <div className="flex w-full flex-col gap-4 px-2 lg:flex-row lg:p-0">
@@ -140,7 +149,7 @@ export default async function mediaPage({
                 </div>
               </Link>
             </div>
-            <div className="border-y border-foreground/20 p-2 lg:border-none lg:p-0">
+            <div className="border-foreground/20 p-2 lg:border-none lg:p-0">
               {postsOfMedia && postsOfMedia.length > 0 && (
                 <div className="flex flex-col gap-2">
                   <div className="flex flex-row items-center justify-between">

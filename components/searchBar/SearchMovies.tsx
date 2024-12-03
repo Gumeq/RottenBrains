@@ -100,7 +100,7 @@ const SearchMovies = forwardRef<HTMLInputElement, any>(
         return <div className="text-sm/6 text-white">Loading movies...</div>;
       }
       if (dataUsers) {
-        return dataUsers.slice(0, 4).map((user: any) => (
+        return dataUsers.slice(0, 10).map((user: any) => (
           <ComboboxOption
             key={user.id}
             value={user}
@@ -112,7 +112,7 @@ const SearchMovies = forwardRef<HTMLInputElement, any>(
           </ComboboxOption>
         ));
       }
-      return data?.results.slice(0, 4).map((media: any) => (
+      return data?.results.slice(0, 10).map((media: any) => (
         <ComboboxOption
           key={media.id}
           value={media}
@@ -163,7 +163,7 @@ const SearchMovies = forwardRef<HTMLInputElement, any>(
           >
             <ComboboxOptions
               anchor="bottom"
-              className="z-50 w-[var(--input-width)] rounded-xl border border-white/5 bg-background p-1 [--anchor-gap:var(--spacing-1)] empty:hidden"
+              className="z-50 w-screen rounded-xl border border-white/5 bg-background p-1 [--anchor-gap:var(--spacing-1)] empty:hidden lg:w-[var(--input-width)]"
             >
               {renderOptions()}
             </ComboboxOptions>
