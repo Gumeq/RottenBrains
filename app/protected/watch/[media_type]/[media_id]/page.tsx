@@ -80,7 +80,7 @@ export default async function mediaPage({
               media_id={media_id}
               media={media}
             />
-            <div className="mx-auto flex w-[96vw] flex-col gap-4 rounded-[8px] bg-foreground/10 p-4 text-sm lg:w-full">
+            <div className="mx-auto flex w-[96vw] flex-col gap-4 rounded-[8px] bg-foreground/5 p-4 text-sm lg:w-full">
               <p className="font-semibold">
                 {getRelativeTime(media.release_date)}
               </p>
@@ -98,7 +98,7 @@ export default async function mediaPage({
             <div className="flex w-full flex-col gap-4 px-2 lg:flex-row lg:p-0">
               <Link
                 href={`/protected/media/${media_type}/${media_id}`}
-                className="flex h-32 w-full flex-row items-center gap-4 overflow-hidden rounded-[8px] bg-foreground/10"
+                className="flex h-32 w-full flex-row items-center gap-4 overflow-hidden rounded-[8px] bg-foreground/5"
               >
                 <img
                   src={`https://image.tmdb.org/t/p/w200${media.poster_path}`}
@@ -125,7 +125,7 @@ export default async function mediaPage({
               </Link>
               <Link
                 href={`/protected/discover/${media_type}`}
-                className="flex h-32 w-full flex-row items-center gap-4 rounded-[8px] bg-foreground/10 p-4"
+                className="flex h-32 w-full flex-row items-center gap-4 rounded-[8px] bg-foreground/5 p-4"
               >
                 <div className="flex h-16 w-16 items-center justify-center rounded-full bg-accent">
                   <img

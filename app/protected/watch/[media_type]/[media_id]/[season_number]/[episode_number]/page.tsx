@@ -127,7 +127,7 @@ export default async function mediaPage({
               <div className="flew-warp flex flex-row gap-2">
                 {media.genres.map((genre: any) => {
                   return (
-                    <div className="rounded-4 bg-foreground/10 px-2 py-1 text-foreground/80">
+                    <div className="rounded-4 bg-foreground/5 px-2 py-1 text-foreground/80">
                       {genre.name}
                     </div>
                   );
@@ -138,7 +138,7 @@ export default async function mediaPage({
             <div className="flex w-full flex-col gap-4 px-2 lg:flex-row lg:p-0">
               <Link
                 href={`/protected/media/${media_type}/${media_id}`}
-                className="flex h-32 w-full flex-row items-center gap-4 overflow-hidden rounded-[8px] bg-foreground/10"
+                className="flex h-32 w-full flex-row items-center gap-4 overflow-hidden rounded-[8px] bg-foreground/5"
               >
                 <img
                   src={`https://image.tmdb.org/t/p/w200${media.poster_path}`}
@@ -165,7 +165,7 @@ export default async function mediaPage({
               </Link>
               <Link
                 href={`/protected/discover/${media_type}`}
-                className="flex h-32 w-full flex-row items-center gap-4 rounded-[8px] bg-foreground/10 p-4"
+                className="flex h-32 w-full flex-row items-center gap-4 rounded-[8px] bg-foreground/5 p-4"
               >
                 <div className="flex h-16 w-16 items-center justify-center rounded-full bg-accent">
                   <img
