@@ -74,28 +74,26 @@ export default async function mediaPage({
       )}
       <div className="relative z-10 mx-auto mb-16 flex w-screen flex-col lg:w-[96vw] lg:max-w-[1700px]">
         <div className="small-screen-watch-margin flex flex-col gap-4 md:flex-row lg:mt-4">
-          <div className="flex flex-col gap-4 lg:w-[75%]">
+          <div className="flex flex-col gap-4 lg:w-[70%]">
             <VideoEmbed
               media_type={media_type}
               media_id={media_id}
               media={media}
             />
-            <div className="mx-auto flex w-[96vw] flex-col gap-4 rounded-[8px] bg-foreground/5 p-4 text-sm lg:w-full">
-              <p className="font-semibold">
-                {getRelativeTime(media.release_date)}
-              </p>
+            <div className="mx-auto flex w-[92vw] flex-col gap-4 rounded-[8px] bg-foreground/5 p-4 text-sm lg:w-full">
+              <p>{media.overview}</p>
               <div className="flew-warp flex flex-row gap-2">
                 {media.genres.map((genre: any) => {
                   return (
-                    <div className="rounded-4 bg-foreground/10 px-2 py-1 text-foreground/80">
+                    <div className="rounded-[4px] bg-foreground/10 px-2 py-1 text-foreground/80">
                       {genre.name}
                     </div>
                   );
                 })}
               </div>
-              <p>{media.overview}</p>
-            </div>
-            <div className="flex w-full flex-col gap-4 px-2 lg:flex-row lg:p-0">
+              <p className="text-foreground/50">
+                {getRelativeTime(media.release_date)}
+              </p>
               <Link
                 href={`/protected/media/${media_type}/${media_id}`}
                 className="flex h-32 w-full flex-row items-center gap-4 overflow-hidden rounded-[8px] bg-foreground/5"
@@ -123,7 +121,9 @@ export default async function mediaPage({
                   </div>
                 </div>
               </Link>
-              <Link
+            </div>
+            <div className="flex w-full flex-col gap-4 px-4 lg:flex-row lg:p-0">
+              {/* <Link
                 href={`/protected/discover/${media_type}`}
                 className="flex h-32 w-full flex-row items-center gap-4 rounded-[8px] bg-foreground/5 p-4"
               >
@@ -147,9 +147,9 @@ export default async function mediaPage({
                     />
                   </div>
                 </div>
-              </Link>
+              </Link> */}
             </div>
-            <div className="border-foreground/20 p-2 lg:border-none lg:p-0">
+            <div className="border-foreground/20 px-4 lg:border-none lg:p-0">
               {postsOfMedia && postsOfMedia.length > 0 && (
                 <div className="flex flex-col gap-2">
                   <div className="flex flex-row items-center justify-between">
@@ -169,7 +169,7 @@ export default async function mediaPage({
                     >
                       {postsOfMedia.slice(0, 9).map((post: any) => (
                         <div
-                          className="w-[92vw] flex-shrink-0 lg:w-fit"
+                          className="w-[80vw] flex-shrink-0 lg:w-fit"
                           key={post.id}
                         >
                           <HomePostCardNew post={post} />
@@ -181,7 +181,7 @@ export default async function mediaPage({
               )}
             </div>
           </div>
-          <div className="custom-scrollbar flex flex-col px-2 lg:w-[25%]">
+          <div className="custom-scrollbar flex flex-col px-4 lg:w-[25%]">
             <p className="mb-2 text-lg font-bold">Recommendations</p>
             {recommendationMediaDetails.map((mediaDetail: any) => (
               <Link

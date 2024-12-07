@@ -61,7 +61,7 @@ const MobileTopBarHome = () => {
       {/* Top bar */}
       <div
         ref={topBarRef}
-        className="fixed left-0 top-0 z-50 flex h-12 w-full items-center justify-between border-b border-foreground/20 bg-background px-4 lg:hidden"
+        className="fixed left-0 top-0 z-50 flex h-12 w-full items-center justify-between border-b border-foreground/20 bg-background/60 px-4 backdrop-blur-xl lg:hidden"
         style={{
           transform: "translateY(0)",
           willChange: "transform",

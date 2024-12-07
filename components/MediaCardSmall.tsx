@@ -47,6 +47,12 @@ const MediaCardSmall = async ({
     media?.images?.backdrops?.[0]?.file_path ||
     (season_number && episode_number ? media.still_path : media.backdrop_path);
 
+  const mediaTitle = media.title || media.name;
+  const formattedEpisodeCode =
+    media_type === "tv" && season_number && episode_number
+      ? ` | ${formatEpisodeCode(season_number, episode_number)}`
+      : "";
+
   return (
     <div className="mb-4 flex w-full flex-col gap-2 rounded-[8px] hover:border-accent hover:bg-foreground/20 lg:mb-2 lg:flex-row lg:p-2">
       <div className="relative w-full flex-shrink-0 overflow-hidden rounded-[4px] lg:w-1/2">
@@ -90,10 +96,8 @@ const MediaCardSmall = async ({
       </div>
       <div className="flex flex-col gap-1 px-2 lg:px-0">
         <h3 className="flex items-center space-x-2">
-          <span>{media.title || media.name}</span>
-          {media_type === "tv" && episode_number && season_number && (
-            <span>| {formatEpisodeCode(season_number, episode_number)}</span>
-          )}
+          {mediaTitle}
+          {formattedEpisodeCode}
         </h3>
 
         <p className="text-sm text-foreground/50 lg:text-sm">

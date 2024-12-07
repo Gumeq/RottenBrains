@@ -26,7 +26,7 @@ export default async function ProtectedLayout({
           <HomeNav>{children}</HomeNav>
         </div>
         {/* <MobileTopNav></MobileTopNav> */}
-        <div className="flex lg:hidden">
+        <div className="flex w-full lg:hidden">
           <Bottombar />
           <div className="mb-16 w-full">{children}</div>
         </div>

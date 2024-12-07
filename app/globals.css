@@ -16,7 +16,7 @@
 
   /* Dark theme */
   .dark {
-    --background: 0 0% 6%; /* hsl(0, 0%, 6%) */
+    --background: 0 0% 2%; /* hsl(0, 0%, 6%) */
     --foreground: 200 20% 96%; /* hsl(200, 20%, 96%) */
     --accent: 347 100% 50%;
     --primary: 0 55% 71%;
@@ -344,7 +344,7 @@
 
 @media (max-width: 1024px) {
   .small-screen-watch-margin {
-    margin-top: calc(56.25vw + 112px);
+    margin-top: calc(56.25vw + 100px);
   }
 }
 
@@ -406,7 +406,7 @@
 }
 
 .bottombar-inner {
-  @apply relative flex h-full w-full flex-row items-center justify-between border-t border-foreground/20 bg-background;
+  @apply relative flex h-full w-full flex-row items-center justify-between border-t border-foreground/20 bg-background/60 backdrop-blur-xl;
 }
 
 .bottombar-link {

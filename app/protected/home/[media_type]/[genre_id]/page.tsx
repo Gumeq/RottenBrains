@@ -21,13 +21,15 @@ const page = async ({
   const userId = user.user.id.toString();
   console.log(userId);
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex w-full flex-col gap-2">
       <GenreSelector user_id={userId}></GenreSelector>
       <MobileTopBarHome />
-      <InfiniteScrollByGenre
-        genre_id={genre_id}
-        media_type={media_type}
-      ></InfiniteScrollByGenre>
+      <div className="mt-4 w-full px-4">
+        <InfiniteScrollByGenre
+          genre_id={genre_id}
+          media_type={media_type}
+        ></InfiniteScrollByGenre>
+      </div>
     </div>
   );
 };

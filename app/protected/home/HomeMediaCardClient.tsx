@@ -156,7 +156,7 @@ const HomeMediaCardClient: React.FC<MediaCardProps> = React.memo(
     };
 
     return (
-      <div className="mb-4 flex w-full flex-col lg:w-full lg:min-w-[350px] lg:max-w-[450px]">
+      <div className="mb-2 flex flex-col lg:w-full lg:min-w-[350px] lg:max-w-[450px]">
         <Link
           className="relative overflow-hidden rounded-[8px]"
           href={getHref()}
@@ -212,7 +212,7 @@ const HomeMediaCardClient: React.FC<MediaCardProps> = React.memo(
         </Link>
         <div className="flex flex-col gap-2 px-2 lg:p-0">
           <div className="mt-2 flex flex-row justify-between">
-            <h2 className="text-lg font-medium">{getMediaTitle()}</h2>
+            <h2 className="font-medium">{getMediaTitle()}</h2>
             <MoreOptions
               user_id={user_id}
               media_type={media_type}

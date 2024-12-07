@@ -97,8 +97,8 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
         : `/protected/watch/${media_type}/${media_id}/1/1`;
 
   return (
-    <div className="mb-4 flex min-w-[85vw] max-w-[95vw] flex-col lg:w-full lg:min-w-[350px] lg:max-w-[450px]">
-      <Link className="relative overflow-hidden" href={href}>
+    <div className="mb-2 flex w-full min-w-[75vw] max-w-[95vw] flex-col lg:w-full lg:min-w-[350px] lg:max-w-[450px]">
+      <Link className="relative w-full overflow-hidden" href={href}>
         <HoverImage
           imageUrl={imageUrl}
           altText={mediaTitle}
@@ -153,7 +153,7 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
       </Link>
       <div className="flex flex-col gap-2 px-2 lg:p-0">
         <div className="mt-2 flex flex-row justify-between">
-          <h2 className="text-lg font-medium">
+          <h2 className="font-medium">
             {mediaTitle}
             {formattedEpisodeCode}
           </h2>

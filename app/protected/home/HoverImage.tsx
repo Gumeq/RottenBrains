@@ -150,7 +150,7 @@ const HoverImage: React.FC<HoverImageProps> = ({
 
   return (
     <div
-      className="relative overflow-hidden rounded-[8px]"
+      className="relative w-full overflow-hidden rounded-[8px]"
       onMouseEnter={!isMobileDevice ? () => setIsHovered(true) : undefined}
       onMouseLeave={!isMobileDevice ? () => setIsHovered(false) : undefined}
       ref={ref}

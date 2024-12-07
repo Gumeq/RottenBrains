@@ -52,7 +52,7 @@ const VideoEmbed = ({
 
   return (
     <div className="fixed left-0 top-0 z-50 flex w-screen flex-col border-b border-foreground/20 bg-background drop-shadow-lg lg:relative lg:w-auto lg:gap-2 lg:border-none lg:pb-0 lg:drop-shadow-none">
-      <div className="z-20 flex h-12 w-full flex-row items-center gap-4 bg-background px-2 lg:hidden">
+      <div className="z-20 flex h-10 w-full flex-row items-center gap-4 bg-background px-2 lg:hidden">
         <div className="flex h-full items-center px-2">
           <Link
             href={"/protected/home"}
@@ -61,7 +61,7 @@ const VideoEmbed = ({
             <img
               src="/assets/images/logo_text_new.svg"
               alt="RottenBrains Logo"
-              className="invert-on-dark h-4 w-auto"
+              className="invert-on-dark h-3 w-auto"
             />
           </Link>
         </div>
@@ -79,9 +79,9 @@ const VideoEmbed = ({
               alt={`${media.title || media.name} Backdrop`}
               className="h-auto w-full bg-foreground/10 drop-shadow-lg lg:w-full"
             />
-            <div className="absolute left-4 top-4 text-xl font-bold">
+            {/* <div className="absolute bottom-4 left-4 text-foreground/50">
               {linkStart}
-            </div>
+            </div> */}
             <button
               onClick={handleButtonClick}
               className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 transform items-center justify-center rounded-full bg-black/60 text-lg font-semibold text-white transition-colors duration-300 hover:bg-accent/80"
@@ -112,7 +112,7 @@ const VideoEmbed = ({
         )}
       </div>
       <div className="hidden-scrollbar text-md flex flex-row items-center justify-between gap-4 overflow-x-auto px-2 py-2 lg:p-0 lg:py-2">
-        <h2 className="mr-1 whitespace-nowrap text-xl font-semibold">
+        <h2 className="mr-1 whitespace-nowrap text-lg font-semibold">
           {episode && season_number && episode_number
             ? `${episode.name} | ${formatEpisodeCode(
                 season_number,
