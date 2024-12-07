@@ -80,7 +80,7 @@ export default async function mediaPage({
               media_id={media_id}
               media={media}
             />
-            <div className="mx-auto flex w-[92vw] flex-col gap-4 rounded-[8px] bg-foreground/5 p-4 text-sm lg:w-full">
+            <div className="mx-auto flex w-[98vw] flex-col gap-4 rounded-[8px] bg-foreground/5 p-4 text-sm lg:w-full">
               <p>{media.overview}</p>
               <div className="flew-warp flex flex-row gap-2">
                 {media.genres.map((genre: any) => {
@@ -149,7 +149,7 @@ export default async function mediaPage({
                 </div>
               </Link> */}
             </div>
-            <div className="border-foreground/20 px-4 lg:border-none lg:p-0">
+            <div className="border-foreground/20 lg:border-none lg:p-0">
               {postsOfMedia && postsOfMedia.length > 0 && (
                 <div className="flex flex-col gap-2">
                   <div className="flex flex-row items-center justify-between">
@@ -181,7 +181,7 @@ export default async function mediaPage({
               )}
             </div>
           </div>
-          <div className="custom-scrollbar flex flex-col px-4 lg:w-[25%]">
+          <div className="custom-scrollbar flex flex-col lg:w-[25%]">
             <p className="mb-2 text-lg font-bold">Recommendations</p>
             {recommendationMediaDetails.map((mediaDetail: any) => (
               <Link

@@ -120,7 +120,7 @@ const HomeContent = async () => {
     return (
       <MobileVideoProvider>
         <GenreSelector user_id={userId}></GenreSelector>
-        <div className="flex w-full flex-col gap-8 p-0 px-4 pb-4 lg:w-auto lg:p-4 lg:py-0">
+        <div className="flex w-full flex-col gap-8 p-0 pb-4 lg:w-auto lg:p-4 lg:py-0">
           <MobileTopBarHome />
           {/* Watch History Section */}
           <div className="">

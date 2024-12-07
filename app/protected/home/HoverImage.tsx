@@ -150,7 +150,7 @@ const HoverImage: React.FC<HoverImageProps> = ({
 
   return (
     <div
-      className="relative w-full overflow-hidden rounded-[8px]"
+      className="relative w-full overflow-hidden"
       onMouseEnter={!isMobileDevice ? () => setIsHovered(true) : undefined}
       onMouseLeave={!isMobileDevice ? () => setIsHovered(false) : undefined}
       ref={ref}
@@ -164,7 +164,7 @@ const HoverImage: React.FC<HoverImageProps> = ({
           className="aspect-[16/9] w-full overflow-hidden bg-foreground/10"
         />
       ) : (
-        <div className="flex aspect-[16/9] w-full flex-col items-center justify-center gap-2 rounded-[8px] bg-foreground/10">
+        <div className="flex aspect-[16/9] w-full flex-col items-center justify-center gap-2 bg-foreground/10">
           <img
             src="/assets/images/logo_new_black.svg"
             alt=""

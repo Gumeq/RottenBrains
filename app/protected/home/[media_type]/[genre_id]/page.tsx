@@ -24,7 +24,7 @@ const page = async ({
     <div className="flex w-full flex-col gap-2">
       <GenreSelector user_id={userId}></GenreSelector>
       <MobileTopBarHome />
-      <div className="mt-4 w-full px-4">
+      <div className="mt-4 w-full">
         <InfiniteScrollByGenre
           genre_id={genre_id}
           media_type={media_type}

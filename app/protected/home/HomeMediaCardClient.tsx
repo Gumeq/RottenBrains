@@ -96,7 +96,7 @@ const HomeMediaCardClient: React.FC<MediaCardProps> = React.memo(
     if (loading)
       return (
         <div className="flex flex-col">
-          <div className="mb-4 aspect-[16/9] w-full rounded-[8px] bg-foreground/20"></div>
+          <div className="mb-4 aspect-[16/9] w-full bg-foreground/20"></div>
           <div className="h-14 w-screen lg:w-full lg:min-w-[400px] lg:max-w-[550px]"></div>
         </div>
       );
@@ -157,10 +157,7 @@ const HomeMediaCardClient: React.FC<MediaCardProps> = React.memo(
 
     return (
       <div className="mb-2 flex flex-col lg:w-full lg:min-w-[350px] lg:max-w-[450px]">
-        <Link
-          className="relative overflow-hidden rounded-[8px]"
-          href={getHref()}
-        >
+        <Link className="relative overflow-hidden" href={getHref()}>
           <HoverImage
             imageUrl={imageUrl}
             altText={media.title || media.name || "Media Image"}

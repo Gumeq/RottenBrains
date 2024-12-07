@@ -54,8 +54,8 @@ const MediaCardSmall = async ({
       : "";
 
   return (
-    <div className="mb-4 flex w-full flex-col gap-2 rounded-[8px] hover:border-accent hover:bg-foreground/20 lg:mb-2 lg:flex-row lg:p-2">
-      <div className="relative w-full flex-shrink-0 overflow-hidden rounded-[4px] lg:w-1/2">
+    <div className="mb-4 flex w-full flex-col gap-2 hover:border-accent hover:bg-foreground/20 lg:mb-2 lg:flex-row lg:p-2">
+      <div className="relative w-full flex-shrink-0 overflow-hidden lg:w-1/2">
         {watchTime > 0 && (
           <div
             className="absolute bottom-0 left-0 h-1 bg-accent"
@@ -84,7 +84,7 @@ const MediaCardSmall = async ({
             className="aspect-[16/9] w-full overflow-hidden bg-foreground/10"
           />
         ) : (
-          <div className="flex aspect-[16/9] w-full flex-col items-center justify-center gap-2 rounded-[4px] bg-foreground/10">
+          <div className="flex aspect-[16/9] w-full flex-col items-center justify-center gap-2 bg-foreground/10">
             <img
               src="/assets/images/logo_new_black.svg"
               alt="No image available"

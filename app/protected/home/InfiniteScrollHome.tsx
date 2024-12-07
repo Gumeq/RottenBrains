@@ -92,7 +92,7 @@ const InfiniteScrollHome = ({ user_id }: any) => {
         <div className="grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4">
           {Array.from({ length: 20 }).map((_, index) => (
             <div key={index} className="flex flex-col">
-              <div className="mb-4 aspect-[16/9] w-full rounded-[8px] bg-foreground/20"></div>
+              <div className="mb-4 aspect-[16/9] w-full bg-foreground/20"></div>
               <div className="h-14 w-screen lg:w-full lg:min-w-[400px] lg:max-w-[550px]"></div>
             </div>
           ))}
