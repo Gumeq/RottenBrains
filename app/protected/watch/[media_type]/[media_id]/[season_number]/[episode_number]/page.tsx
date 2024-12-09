@@ -110,7 +110,7 @@ export default async function mediaPage({
         />
       )}
       <div className="relative z-10 mx-auto mb-16 flex w-screen flex-col lg:w-[95vw] lg:max-w-[1700px]">
-        <div className="small-screen-watch-margin flex flex-col md:flex-row lg:mt-4">
+        <div className="small-screen-watch-margin flex flex-col lg:mt-4 lg:flex-row lg:gap-4">
           <div className="flex flex-col gap-4 lg:w-[75%]">
             <VideoEmbed
               media_type={media_type}

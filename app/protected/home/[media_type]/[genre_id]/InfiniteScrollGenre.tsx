@@ -86,9 +86,11 @@ const InfiniteScrollByGenre: React.FC<InfiniteScrollByGenreProps> = ({
       {loading && (
         <div className="grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4">
           {Array.from({ length: 20 }).map((_, index) => (
-            <div key={index} className="flex flex-col">
-              <div className="mb-4 aspect-[16/9] w-full bg-foreground/20"></div>
-              <div className="h-14 w-screen lg:w-full lg:min-w-[400px] lg:max-w-[550px]"></div>
+            <div key={index} className="flex flex-col gap-4">
+              <div className="aspect-[16/9] w-full bg-foreground/10"></div>
+              {/* <div className="h-16 w-screen lg:w-full lg:min-w-[400px] lg:max-w-[550px]"></div> */}
+              <div className="h-6 w-2/3 bg-foreground/10"></div>
+              <div className="h-6 w-1/3 bg-foreground/10"></div>
             </div>
           ))}
         </div>
