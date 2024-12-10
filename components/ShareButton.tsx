@@ -51,8 +51,8 @@ const ShareButton: React.FC = () => {
       <img
         src="/assets/icons/share-outline.svg"
         alt="Share"
-        width={16}
-        height={16}
+        width={12}
+        height={12}
         className="invert-on-dark"
         loading="lazy"
       />

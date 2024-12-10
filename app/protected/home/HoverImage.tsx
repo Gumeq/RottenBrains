@@ -117,10 +117,8 @@ const HoverImage: React.FC<HoverImageProps> = ({
 
     if (isHovered) {
       setIsLoading(true);
-      hoverTimeout = setTimeout(() => {
-        setShowOverlay(true);
-        fetchVideo();
-      }, 1000);
+      setShowOverlay(true);
+      fetchVideo();
     } else {
       if (hoverTimeout) {
         clearTimeout(hoverTimeout);
@@ -140,12 +138,8 @@ const HoverImage: React.FC<HoverImageProps> = ({
 
   // Handle iframe load and add 0.2-second delay with fade-in effect
   const handleIframeLoad = () => {
-    setTimeout(() => {
-      setIframeVisible(true);
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 500);
-    }, 200);
+    setIframeVisible(true);
+    setIsLoading(false);
   };
 
   return (

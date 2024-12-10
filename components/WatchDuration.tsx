@@ -27,7 +27,7 @@ const WatchDuration: React.FC<WatchDurationProps> = ({
     const sessionTime = Math.floor((currentTime - startTimeRef.current) / 1000);
     accumulatedTimeRef.current += sessionTime;
 
-    if (accumulatedTimeRef.current >= 60) {
+    if (accumulatedTimeRef.current >= 0) {
       const totalMediaSeconds = media_duration * 60;
       const percentageWatched = Math.min(
         (accumulatedTimeRef.current / totalMediaSeconds) * 100,

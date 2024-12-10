@@ -64,15 +64,15 @@ const MediaCardSmall = async ({
             }}
           ></div>
         )}
-        <div className="absolute bottom-0 right-0 m-1 flex flex-row-reverse gap-1">
+        <div className="absolute bottom-1 right-1 m-1 flex flex-row-reverse gap-1">
           {media.runtime && (
-            <div className="rounded-[4px] bg-black/50 px-1 text-xs font-medium text-white">
+            <div className="rounded-[4px] bg-black/50 px-2 py-1 text-xs font-medium text-white">
               {transformRuntime(media.runtime)}
             </div>
           )}
           {media.vote_average && (
-            <div className="rounded-[4px] bg-black/50 px-1 text-xs font-medium text-white">
-              {media.vote_average.toFixed(1)}/10
+            <div className="rounded-[4px] bg-black/50 px-2 py-1 text-xs font-medium text-white">
+              {media.vote_average.toFixed(1)}
             </div>
           )}
         </div>

@@ -114,7 +114,7 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
             )}
             {typeof media.vote_average === "number" && (
               <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
-                {media.vote_average.toFixed(1)} / 10
+                {media.vote_average.toFixed(1)}
               </div>
             )}
             {quality && (

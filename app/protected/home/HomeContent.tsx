@@ -124,11 +124,11 @@ const HomeContent = async () => {
           <MobileTopBarHome />
           {/* Watch History Section */}
           <div className="">
-            <div className="mb-4 flex flex-row items-center justify-between px-2 lg:p-0">
+            <div className="mb-4 flex flex-row items-center justify-between">
               <div></div>
               <ScrollButtons containerId="watch_history_main" />
             </div>
-            <div className="w-full">
+            <div className="w-full pl-4 lg:pl-0">
               <div
                 className="hidden-scrollbar -mb-8 flex flex-row gap-4 overflow-x-auto"
                 id="watch_history_main"
@@ -172,8 +172,8 @@ const HomeContent = async () => {
             </div>
           </div>
           {/* Posts Section */}
-          <div>
-            <div className="mb-4 flex flex-row items-center justify-between px-2 lg:p-0">
+          <div className="">
+            <div className="mb-4 flex flex-row items-center justify-between pl-4 lg:pl-0">
               <div className="flex flex-row items-center gap-2">
                 <img
                   src="/assets/icons/review-outline.svg"
@@ -204,10 +204,10 @@ const HomeContent = async () => {
           </div>
           {/* Top Movie Genre Section */}
           <div>
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-row items-center justify-between px-2 lg:p-0">
+            <div className="flex flex-col gap-4 pl-4 lg:pl-0">
+              <div className="flex flex-row items-center justify-between lg:p-0">
                 <div className="flex flex-row items-center gap-2">
-                  <h2 className="text-xl font-bold">
+                  <h2 className="font-bold">
                     Because you like {topMovieGenreName} movies
                   </h2>
                 </div>
@@ -232,10 +232,10 @@ const HomeContent = async () => {
           </div>
           {/* Top TV Genre Section */}
           <div>
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-row items-center justify-between px-2 lg:p-0">
+            <div className="flex flex-col gap-4 pl-4 lg:pl-0">
+              <div className="flex flex-row items-center justify-between lg:p-0">
                 <div className="flex flex-row items-center gap-2">
-                  <h2 className="text-xl font-bold">
+                  <h2 className="font-bold">
                     Because you like {topTvGenreName} shows
                   </h2>
                 </div>
@@ -280,7 +280,7 @@ const HomeContent = async () => {
             </div>
           </div> */}
           {/* Infinite Scroll Section */}
-          <h2 className="text-xl font-bold">More you might like</h2>
+          <h2 className="pl-4 font-semibold">More you might like</h2>
           <InfiniteScrollHome user_id={user.user.id} />
           <div className="h-16 w-full" />
         </div>

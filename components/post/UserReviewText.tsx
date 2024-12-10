@@ -30,7 +30,7 @@ const UserReviewText = ({
   };
 
   return (
-    <div className="min-h-[60px]">
+    <div className="min-h-[50px] text-sm">
       <div
         ref={textRef}
         className={classNames(

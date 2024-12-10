@@ -541,22 +541,10 @@ export const upsertWatchHistory = async (
       watchHistoryData.episode_number = episode_number;
     }
 
-    // Define conflict target based on media type
-    const conflictTarget =
-      media_type === "tv"
-        ? [
-            "user_id",
-            "media_type",
-            "media_id",
-            "season_number",
-            "episode_number",
-          ]
-        : ["user_id", "media_type", "media_id"];
-
     // Perform upsert operation
     const { data, error } = await supabase
       .from("watch_history")
-      .upsert(watchHistoryData, { onConflict: conflictTarget.join(",") })
+      .upsert(watchHistoryData, { onConflict: undefined }) // No conflict targets in upsert
       .select();
 
     if (error) throw new Error(error.message);
