@@ -32,7 +32,7 @@ const WatchDuration: React.FC<WatchDurationProps> = ({
     }
 
     // Only send data if there's meaningful accumulated time
-    if (accumulatedTimeRef.current > 2) {
+    if (accumulatedTimeRef.current > 60) {
       const totalMediaSeconds = media_duration * 60;
       const percentageWatched = Math.min(
         (accumulatedTimeRef.current / totalMediaSeconds) * 100,
