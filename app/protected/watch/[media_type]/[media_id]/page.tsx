@@ -70,11 +70,11 @@ export default async function mediaPage({
           media_type={media_type}
           media_id={media_id}
           user_id={user.user.id}
-          media_duration={media.runtime || 100}
+          media_duration={media.runtime || 24}
         />
       )}
-      <div className="relative z-10 mx-auto mb-16 flex w-screen flex-col lg:w-[96vw] lg:max-w-[1700px]">
-        <div className="small-screen-watch-margin flex flex-col gap-4 md:flex-row lg:mt-4 lg:gap-4">
+      <div className="relative z-10 mx-auto mb-16 flex w-screen flex-col lg:w-full lg:max-w-[1500px]">
+        <div className="small-screen-watch-margin flex w-full flex-col lg:mt-4 lg:flex-row lg:gap-4">
           <div className="flex flex-col gap-4 lg:w-[70%]">
             <VideoEmbed
               media_type={media_type}

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import ShareButton from "./ShareButton";
 import { formatEpisodeCode } from "@/lib/functions";
+import ImageWithFallback from "./ImageWithFallback";
 
 type VideoEmbedProps = {
   media_type: string;
@@ -50,6 +51,9 @@ const VideoEmbed = ({
     );
   }
 
+  const imageUrl =
+    media_type === "movie" ? media.backdrop_path : episode.still_path;
+
   return (
     <div className="fixed left-0 top-0 z-50 flex w-screen flex-col border-b border-foreground/20 bg-background drop-shadow-xl lg:relative lg:w-auto lg:gap-2 lg:border-none lg:pb-0 lg:drop-shadow-none">
       <div className="z-20 flex h-10 w-full flex-row items-center gap-4 bg-background px-2 lg:hidden">
@@ -69,15 +73,10 @@ const VideoEmbed = ({
       <div>
         {!showVideo ? (
           <div className="relative aspect-[16/9] w-full overflow-hidden text-center lg:rounded-[8px]">
-            <img
-              src={
-                media_type === "movie"
-                  ? `https://image.tmdb.org/t/p/original${media.backdrop_path}`
-                  : episode &&
-                    `https://image.tmdb.org/t/p/original${episode.still_path}`
-              }
-              alt={`${media.title || media.name} Backdrop`}
-              className="h-auto w-full bg-foreground/10 drop-shadow-lg lg:w-full"
+            <ImageWithFallback
+              imageUrl={imageUrl}
+              altText={media.title || episode.name}
+              quality={"original"}
             />
             <button
               onClick={handleButtonClick}

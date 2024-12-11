@@ -70,12 +70,12 @@ const MediaCardSmall = async ({
         />
       </div>
       <div className="flex flex-col gap-1 px-2 lg:px-0">
-        <h3 className="flex items-center space-x-2">
+        <h3 className="flex items-center space-x-2 lg:text-sm">
           {mediaTitle}
           {formattedEpisodeCode}
         </h3>
 
-        <p className="text-sm text-foreground/50 lg:text-sm">
+        <p className="text-xs text-foreground/50">
           {getRelativeTime(
             media.air_date || media.first_air_date || media.release_date,
           )}

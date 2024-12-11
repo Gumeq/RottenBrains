@@ -6,6 +6,7 @@ import Link from "next/link";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import HomePostCardNew from "@/components/post/HomePostCardNew";
 import MoreOptions from "@/app/protected/home/MoreOptions";
+import ImageWithFallback from "@/components/ImageWithFallback";
 
 function transformRuntime(minutes: number): string {
   const hours: number = Math.floor(minutes / 60);
@@ -154,19 +155,19 @@ export default async function mediaPage({
 
   return (
     <div className="relative lg:w-full">
-      <div className="fixed z-20 flex h-16 w-full flex-row items-center gap-4 bg-background px-4 backdrop-blur-xl lg:hidden">
+      <div className="fixed z-20 flex h-10 w-full flex-row items-center gap-4 bg-background px-4 backdrop-blur-xl lg:hidden">
         <GoBackArrow />
-        <p className="truncate text-lg">{media.title || media.name}</p>
+        <p className="truncate">{media.title || media.name}</p>
       </div>
       <div className="relative h-auto w-screen py-4 lg:w-auto">
         <div
-          className="relative mt-16 flex h-auto w-screen lg:mt-0 lg:w-auto"
+          className="relative mt-10 flex h-auto w-screen lg:mt-0 lg:w-auto"
           id="overview"
         >
           <div className="mx-auto flex h-full w-screen flex-col gap-4 px-2 lg:my-8 lg:w-auto lg:gap-8">
             <div className="flex flex-col gap-4">
               <div className="flex w-full flex-row justify-between">
-                <p className="text-4xl">{media.title || media.name}</p>
+                <p className="text-2xl">{media.title || media.name}</p>
                 <MoreOptions
                   user_id={user.user.id}
                   media_type={media_type}
@@ -175,11 +176,11 @@ export default async function mediaPage({
                 ></MoreOptions>
               </div>
               {media.tagline && (
-                <p className="italic opacity-50">"{media.tagline}"</p>
+                <p className="text-sm italic opacity-50">"{media.tagline}"</p>
               )}
               <div className="">
                 <div className="flex h-full flex-col justify-between gap-2 lg:flex-row lg:items-center">
-                  <div className="flex flex-row items-center gap-4 opacity-50">
+                  <div className="flex flex-row items-center gap-4 text-sm opacity-50">
                     <p className="">
                       {(media.release_date && media.release_date.slice(0, 4)) ||
                         media.first_air_date.slice(0, 4)}
@@ -210,7 +211,7 @@ export default async function mediaPage({
                         className="invert-on-dark"
                         loading="lazy"
                       />
-                      <p className="text-lg">Rate</p>
+                      <p className="text-sm">Rate</p>
                     </Link>
                     <div className="flex flex-row items-center gap-2 rounded-[8px] bg-foreground/20 px-6 py-2 drop-shadow-lg">
                       <img
@@ -221,8 +222,8 @@ export default async function mediaPage({
                         className="invert-on-dark"
                         loading="lazy"
                       />
-                      <p className="text-foreground/50">
-                        <span className="text-lg text-foreground/100">
+                      <p className="text-sm text-foreground/50">
+                        <span className="text-foreground/100">
                           {media.vote_average.toFixed(1)}
                         </span>
                         /10 <span>({formatNumber(media.vote_count)})</span>
@@ -232,7 +233,7 @@ export default async function mediaPage({
                 </div>
               </div>
             </div>
-            <div className="flex h-auto flex-col gap-4 lg:h-[45vh] lg:flex-row lg:gap-8">
+            <div className="flex h-auto flex-col gap-4 lg:h-[50vh] lg:flex-row lg:gap-8">
               <div className="h-full">
                 <img
                   src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
@@ -252,41 +253,43 @@ export default async function mediaPage({
                   />
                   <p className="text-white">Watch</p>
                 </Link>
-                <img
-                  src={`https://image.tmdb.org/t/p/w1280${media.backdrop_path}`}
-                  alt=""
-                  className="aspect-[16/9] h-full rounded-[4px] bg-foreground/10 drop-shadow-lg"
-                />
+                <div className="h-full">
+                  <ImageWithFallback
+                    imageUrl={media.backdrop_path}
+                    altText={media.title || media.name}
+                    quality={"original"}
+                  />
+                </div>
               </div>
             </div>
             <div className="flex w-full flex-row gap-4 px-2 lg:w-auto">
               <div className="flex flex-col gap-4">
                 <div className="flex flex-row items-center gap-4">
-                  <p className="w-[100px] text-xl font-bold text-foreground/50">
+                  <p className="w-[100px] font-bold text-foreground/50">
                     Genre
                   </p>
-                  <div className="flex w-[60vw] flex-row flex-wrap gap-2 lg:w-[300px] xl:w-[600px]">
+                  <div className="flex w-[60vw] flex-row flex-wrap gap-2 text-sm lg:w-[300px] xl:w-[600px]">
                     {mediaData.genres.map((genre: any) => (
-                      <div className="flex items-center rounded-full bg-foreground/20 px-6 py-2 text-center">
+                      <div className="flex items-center rounded-[4px] bg-foreground/20 px-4 py-1 text-center">
                         {genre.name}
                       </div>
                     ))}
                   </div>
                 </div>
                 <div className="flex flex-row gap-4">
-                  <p className="w-[100px] text-wrap text-xl font-bold text-foreground/50">
+                  <p className="w-[100px] text-wrap font-bold text-foreground/50">
                     Plot
                   </p>
-                  <p className="w-[60vw] lg:w-[300px] xl:w-[600px]">
+                  <p className="w-[60vw] text-sm lg:w-[300px] xl:w-[600px]">
                     {mediaData.overview}
                   </p>
                 </div>
 
                 <div className="flex flex-row gap-4">
-                  <p className="w-[100px] text-xl font-bold text-foreground/50">
+                  <p className="w-[100px] font-bold text-foreground/50">
                     {media_type === "movie" ? "Director" : "Creator"}
                   </p>
-                  <div className="w-[60vw] lg:w-[300px] xl:w-[600px]">
+                  <div className="w-[60vw] text-sm lg:w-[300px] xl:w-[600px]">
                     {media_type === "movie"
                       ? mediaCredits.directorOrCreator?.name
                       : mediaData.created_by[0]?.name}
@@ -294,11 +297,11 @@ export default async function mediaPage({
                 </div>
 
                 <div className="flex flex-row gap-4">
-                  <p className="w-[100px] text-xl font-bold text-foreground/50">
+                  <p className="w-[100px] font-bold text-foreground/50">
                     Writers
                   </p>
                   <span className="w-[60vw] lg:w-[300px] xl:w-[600px]">
-                    <div className="flex flex-row flex-wrap">
+                    <div className="flex flex-row flex-wrap text-sm">
                       {mediaCredits.writers
                         ? mediaCredits.writers
                             .slice(0, 5)
@@ -316,10 +319,10 @@ export default async function mediaPage({
                 </div>
 
                 <div className="flex flex-row gap-4">
-                  <p className="w-[100px] text-xl font-bold text-foreground/50">
+                  <p className="w-[100px] font-bold text-foreground/50">
                     Stars
                   </p>
-                  <div className="w-[60vw] lg:w-[300px] xl:w-[600px]">
+                  <div className="w-[60vw] text-sm lg:w-[300px] xl:w-[600px]">
                     {mediaCredits.actors
                       ? mediaCredits.actors.slice(0, 5).map((actor, index) => (
                           <Link

@@ -110,8 +110,8 @@ export default async function mediaPage({
           media_duration={episode.runtime || 100}
         />
       )}
-      <div className="relative z-10 mx-auto mb-16 flex w-screen flex-col lg:w-[95vw] lg:max-w-[1500px]">
-        <div className="small-screen-watch-margin flex flex-col lg:mt-4 lg:flex-row lg:gap-4">
+      <div className="relative z-10 mx-auto mb-16 flex w-screen flex-col lg:w-full lg:max-w-[1500px]">
+        <div className="small-screen-watch-margin flex w-full flex-col lg:mt-4 lg:flex-row lg:gap-4">
           <div className="flex flex-col gap-4 lg:w-[75%]">
             <VideoEmbed
               media_type={media_type}

@@ -31,22 +31,24 @@ const TVShowDetails = async ({
   console.log(season_number);
   return (
     <div className="w-full">
-      <div className="custom-scrollbar flex gap-2 overflow-x-auto p-2">
-        {filteredSeasons.map((season: any) => (
-          <Link
-            key={season.season_number}
-            href={`/protected/watch/tv/${tv_show_id}/${season.season_number}/1`}
-            className={`z-10 flex flex-row items-center gap-2 whitespace-nowrap rounded-[8px] bg-foreground/10 px-2 py-1 text-foreground drop-shadow-lg hover:scale-105 ${
-              season.season_number === selectedSeason.season_number
-                ? "border-2 border-foreground/20"
-                : ""
-            }`}
-          >
-            {season.name}
-          </Link>
-        ))}
+      <div className="relative">
+        <div className="gradient-edge absolute right-0 top-0 z-20 h-full w-[10%]" />
+        <div className="custom-scrollbar flex gap-2 overflow-x-auto p-2 text-sm">
+          {filteredSeasons.map((season: any) => (
+            <Link
+              key={season.season_number}
+              href={`/protected/watch/tv/${tv_show_id}/${season.season_number}/1`}
+              className={`z-10 flex flex-row items-center gap-2 whitespace-nowrap rounded-[8px] bg-foreground/10 px-2 py-1 text-foreground drop-shadow-lg hover:scale-105 ${
+                season.season_number === selectedSeason.season_number
+                  ? "border-2 border-foreground/20"
+                  : ""
+              }`}
+            >
+              {season.name}
+            </Link>
+          ))}
+        </div>
       </div>
-
       <div className="mt-2 w-full">
         <div className="flex w-full flex-col">
           {episodes.map((episode: any) => (

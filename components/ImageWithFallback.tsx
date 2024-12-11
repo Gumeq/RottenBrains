@@ -20,16 +20,16 @@ const ImageWithFallback: FC<ImageWithFallbackProps> = ({
       src={`https://image.tmdb.org/t/p/${quality}${imageUrl}`}
       alt={altText}
       loading="lazy"
-      className="aspect-[16/9] w-full overflow-hidden bg-foreground/10"
+      className="aspect-[16/9] h-full w-full overflow-hidden bg-foreground/10"
     />
   ) : (
-    <div className="flex aspect-[16/9] w-full flex-col items-center justify-center gap-2 bg-foreground/10">
+    <div className="flex aspect-[16/9] h-full w-full flex-col items-center justify-center gap-2 bg-foreground/10">
       <img
         src={fallbackIcon}
         alt="Fallback Icon"
-        className="invert-on-dark h-10 w-10 opacity-50"
+        className="invert-on-dark h-8 w-8 opacity-50"
       />
-      <p className="text-sm text-foreground/50">{fallbackText}</p>
+      <p className="text-xs text-foreground/50">{fallbackText}</p>
     </div>
   );
 };

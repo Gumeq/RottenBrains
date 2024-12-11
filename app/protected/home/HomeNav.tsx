@@ -94,7 +94,7 @@ const HomeNav = ({ children }: any) => {
       </nav>
       <div className="relative hidden flex-row lg:flex lg:h-svh lg:w-screen">
         {isSidebarOpen ? (
-          <div className="mt-16 min-w-[220px] bg-background">
+          <div className="mt-16 bg-background">
             <ul className="flex flex-col justify-start px-4 py-2">
               <NavLink
                 href="/protected/home"
@@ -146,7 +146,7 @@ const HomeNav = ({ children }: any) => {
             </div>
           </div>
         ) : (
-          <div className="mt-16 min-w-16 bg-background p-2">
+          <div className="mt-16 bg-background p-2">
             <ul className="flex flex-col justify-center">
               <NavLink href="/protected/home" icon={HomeIcon} />
               <NavLink href="/protected/explore" icon={ExploreIcon} />

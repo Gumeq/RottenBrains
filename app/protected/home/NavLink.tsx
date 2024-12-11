@@ -21,7 +21,7 @@ const NavLink: FC<NavLinkProps> = ({
   return (
     <Link
       href={href}
-      className={`rounded-[8px] px-4 py-2 hover:bg-foreground/10 ${
+      className={`rounded-[8px] p-2 hover:bg-foreground/10 ${
         isActive ? `bg-primary/10 text-primary` : `text-foreground`
       }`}
     >
@@ -31,7 +31,7 @@ const NavLink: FC<NavLinkProps> = ({
         ) : (
           <Icon className="fill-current" width={24} height={24} />
         )}
-        {label && <p className="text-sm">{label}</p>}
+        {label && <p className="w-max text-sm">{label}</p>}
       </div>
     </Link>
   );
