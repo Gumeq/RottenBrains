@@ -533,18 +533,16 @@ export const upsertWatchHistory = async (
       media_id,
       time_spent: new_time_spent,
       percentage_watched: newPercentageFloat,
+      season_number,
+      episode_number,
     };
 
-    // Include season and episode numbers for TV media types
-    if (media_type === "tv") {
-      watchHistoryData.season_number = season_number;
-      watchHistoryData.episode_number = episode_number;
-    }
-
-    // Perform upsert operation
+    // Perform upsert operation using the unique constraint
     const { data, error } = await supabase
       .from("watch_history")
-      .upsert(watchHistoryData, { onConflict: undefined }) // No conflict targets in upsert
+      .upsert(watchHistoryData, {
+        onConflict: "user_id,media_type,media_id,season_number,episode_number",
+      })
       .select();
 
     if (error) throw new Error(error.message);

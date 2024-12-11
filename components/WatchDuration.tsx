@@ -19,34 +19,40 @@ const WatchDuration: React.FC<WatchDurationProps> = ({
   user_id,
   media_duration,
 }) => {
-  const startTimeRef = useRef(Date.now());
-  const accumulatedTimeRef = useRef(0);
+  const startTimeRef = useRef<number>(Date.now());
+  const accumulatedTimeRef = useRef<number>(0);
 
   const sendWatchData = useCallback(() => {
     const currentTime = Date.now();
+    // Calculate how much time (in seconds) has elapsed since the last checkpoint
     const sessionTime = Math.floor((currentTime - startTimeRef.current) / 1000);
-    accumulatedTimeRef.current += sessionTime;
 
-    if (accumulatedTimeRef.current >= 0) {
+    if (sessionTime > 0) {
+      accumulatedTimeRef.current += sessionTime;
+    }
+
+    // Only send data if there's meaningful accumulated time
+    if (accumulatedTimeRef.current > 2) {
       const totalMediaSeconds = media_duration * 60;
       const percentageWatched = Math.min(
         (accumulatedTimeRef.current / totalMediaSeconds) * 100,
         100,
       );
 
-      navigator.sendBeacon(
-        "/api/saveWatchTime",
-        JSON.stringify({
-          user_id,
-          media_type,
-          media_id,
-          season_number,
-          episode_number,
-          time_spent: accumulatedTimeRef.current,
-          percentage_watched: percentageWatched.toFixed(2),
-        }),
-      );
+      const payload = {
+        user_id,
+        media_type,
+        media_id,
+        season_number: season_number ?? null,
+        episode_number: episode_number ?? null,
+        time_spent: accumulatedTimeRef.current,
+        percentage_watched: percentageWatched.toFixed(2),
+      };
 
+      // Use sendBeacon to send data reliably during unload or visibility change
+      navigator.sendBeacon("/api/saveWatchTime", JSON.stringify(payload));
+
+      // Reset after sending
       accumulatedTimeRef.current = 0;
     }
 
@@ -62,30 +68,51 @@ const WatchDuration: React.FC<WatchDurationProps> = ({
 
   const handleVisibilityChange = useCallback(() => {
     if (document.visibilityState === "hidden") {
+      // When the tab goes hidden, send data if we have any
       sendWatchData();
-    } else {
+    } else if (document.visibilityState === "visible") {
+      // When the tab becomes visible again, reset startTime for a fresh session
       startTimeRef.current = Date.now();
     }
   }, [sendWatchData]);
 
   useEffect(() => {
+    // Start tracking as soon as component mounts or media changes
+    startTimeRef.current = Date.now();
+    accumulatedTimeRef.current = 0;
+
+    // Handle tab visibility changes
     document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    // Handle page unload to send last chunk of data
     window.addEventListener("beforeunload", sendWatchData);
 
-    const intervalId = setInterval(sendWatchData, 5 * 60 * 1000);
+    // Also send data every 5 minutes (300000 ms)
+    const intervalId = setInterval(
+      () => {
+        sendWatchData();
+      },
+      5 * 60 * 1000,
+    );
 
     return () => {
+      // Cleanup: remove event listeners
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener("beforeunload", sendWatchData);
       clearInterval(intervalId);
+
+      // Send last data chunk if any before unmounting
       sendWatchData();
     };
-  }, [handleVisibilityChange, sendWatchData]);
-
-  useEffect(() => {
-    startTimeRef.current = Date.now();
-    accumulatedTimeRef.current = 0;
-  }, [media_type, media_id, season_number, episode_number, media_duration]);
+  }, [
+    handleVisibilityChange,
+    sendWatchData,
+    media_type,
+    media_id,
+    season_number,
+    episode_number,
+    media_duration,
+  ]);
 
   return null;
 };
