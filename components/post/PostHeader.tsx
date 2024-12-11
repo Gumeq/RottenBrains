@@ -12,7 +12,7 @@ interface Creator {
 }
 
 interface Post {
-  post_id: number;
+  post_id: string;
   creatorid: number;
   created_at: string;
 }

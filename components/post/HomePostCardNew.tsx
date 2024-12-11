@@ -30,7 +30,7 @@ interface Creator {
 }
 
 interface Post {
-  post_id: number;
+  post_id: string;
   media_id: number;
   media_type: string;
   creatorid: number;

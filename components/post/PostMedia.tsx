@@ -11,7 +11,7 @@ interface Media {
 
 interface Post {
   vote_user: number;
-  id: string;
+  post_id: string;
 }
 
 interface PostMediaProps {
@@ -35,7 +35,7 @@ const PostMedia = ({
         href={`/protected/media/${media_type}/${media_id}`}
         className="w-full"
       >
-        <ImageWithFallback imageUrl={imageUrl} altText={post.id} />
+        <ImageWithFallback imageUrl={imageUrl} altText={post.post_id} />
       </Link>
       <div className="absolute bottom-2 right-2">
         <p className="rounded-[4px] bg-secondary px-2 py-1 text-xs text-white">
