@@ -11,6 +11,9 @@ import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
 import Link from "next/link";
 import MoreOptions from "./MoreOptions";
 import HoverImage from "./HoverImage";
+import MediaInfoText from "@/components/MediaInfoText";
+import ProgressBar from "@/components/ProgressBar";
+import MediaCardOverlay from "@/components/MediaCardOverlay";
 
 interface MediaCardProps {
   media_type: string;
@@ -105,50 +108,16 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
           media_type={media_type}
           media_id={media_id}
         >
-          {/* Overlay elements */}
-          <div className="absolute bottom-0 right-0 m-2 flex flex-row-reverse gap-2">
-            {media.runtime && (
-              <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
-                {transformRuntime(media.runtime)}
-              </div>
-            )}
-            {typeof media.vote_average === "number" && (
-              <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
-                {media.vote_average.toFixed(1)}
-              </div>
-            )}
-            {quality && (
-              <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
-                {quality}
-              </div>
-            )}
-          </div>
-          <div className="absolute left-0 top-0 m-2">
-            {isNew && (
-              <div className="rounded-[4px] bg-secondary px-2 py-1 text-xs text-white">
-                NEW
-              </div>
-            )}
-            {isSoon && (
-              <div className="rounded-[4px] bg-secondary px-2 py-1 text-xs text-white">
-                SOON
-              </div>
-            )}
-            {isNewEpisodes && (
-              <div className="rounded-[4px] bg-secondary px-2 py-1 text-xs text-white">
-                NEW EPISODES
-              </div>
-            )}
-          </div>
-          {/* Progress bar */}
-          {typeof watchTime === "number" && (
-            <div className="absolute bottom-0 left-0 h-1 w-full bg-white/20">
-              <div
-                className="h-full bg-accent"
-                style={{ width: `${watchTime}%` }}
-              ></div>
-            </div>
-          )}
+          <MediaCardOverlay
+            runtime={media.runtime}
+            voteAverage={media.vote_average}
+            quality={quality}
+            isNew={isNew}
+            isSoon={isSoon}
+            isNewEpisodes={isNewEpisodes}
+            watchTime={watchTime}
+            transformRuntime={transformRuntime}
+          />
         </HoverImage>
       </Link>
       <div className="flex flex-col gap-2 px-2 lg:p-0">

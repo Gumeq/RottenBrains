@@ -11,6 +11,7 @@ import {
 import { getWatchTime } from "@/utils/supabase/queries";
 import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
 import HoverImage from "./HoverImage";
+import MediaCardOverlay from "@/components/MediaCardOverlay";
 
 interface MediaCardProps {
   media_type: string;
@@ -111,107 +112,80 @@ const HomeMediaCardClient: React.FC<MediaCardProps> = React.memo(
       return null;
     }
 
-    const genreIds = media?.genres?.map((genre: any) => genre.id) || [];
+    // Extract genre IDs
+    const genreIds: bigint[] =
+      media?.genres?.map((genre: any) => genre.id) || [];
 
+    // Determine image URL
     const imageUrl =
       media?.images?.backdrops?.[0]?.file_path ||
       (season_number && episode_number
         ? media.still_path
         : media.backdrop_path);
 
+    // Calculate day differences
     const releaseDate =
       media.release_date || media.air_date || media.first_air_date;
 
-    let dayDifference;
-    let dayDifferenceTv;
-    if (releaseDate) {
-      const today = new Date();
-      const releaseDateObj = new Date(releaseDate);
-      const timeDiff = today.getTime() - releaseDateObj.getTime();
-      dayDifference = timeDiff / (1000 * 3600 * 24);
+    const dayDifference = releaseDate
+      ? (new Date().getTime() - new Date(releaseDate).getTime()) /
+        (1000 * 3600 * 24)
+      : undefined;
 
-      if (media_type === "tv" && media.last_air_date) {
-        const lastAirDateObj = new Date(media.last_air_date);
-        const timeDiffTv = today.getTime() - lastAirDateObj.getTime();
-        dayDifferenceTv = timeDiffTv / (1000 * 3600 * 24);
-      }
-    }
+    const dayDifferenceTv =
+      media_type === "tv" && media.last_air_date
+        ? (new Date().getTime() - new Date(media.last_air_date).getTime()) /
+          (1000 * 3600 * 24)
+        : undefined;
 
-    // Function to generate the href link
-    const getHref = () => {
-      if (media_type === "movie") {
-        return `/protected/watch/${media_type}/${media_id}`;
-      } else if (season_number && episode_number) {
-        return `/protected/watch/${media_type}/${media_id}/${season_number}/${episode_number}`;
-      } else {
-        return `/protected/watch/${media_type}/${media_id}/1/1`;
-      }
-    };
+    const isNew =
+      dayDifference !== undefined && dayDifference > 0 && dayDifference <= 30;
+    const isSoon = dayDifference !== undefined && dayDifference < 0;
+    const isNewEpisodes =
+      media_type === "tv" &&
+      dayDifference !== undefined &&
+      dayDifference >= 30 &&
+      dayDifferenceTv !== undefined &&
+      dayDifferenceTv < 30;
 
-    // Function to get media title
-    const getMediaTitle = () => {
-      const baseTitle = media.title || media.name;
-      if (media_type === "tv" && episode_number && season_number) {
-        return `${baseTitle} | ${formatEpisodeCode(season_number, episode_number)}`;
-      }
-      return baseTitle;
-    };
+    // Prepare display variables
+    const mediaTitle = media.title || media.name;
+    const formattedEpisodeCode =
+      media_type === "tv" && season_number && episode_number
+        ? ` | ${formatEpisodeCode(season_number, episode_number)}`
+        : "";
+
+    const href =
+      media_type === "movie"
+        ? `/protected/watch/${media_type}/${media_id}`
+        : season_number && episode_number
+          ? `/protected/watch/${media_type}/${media_id}/${season_number}/${episode_number}`
+          : `/protected/watch/${media_type}/${media_id}/1/1`;
 
     return (
       <div className="mb-2 flex flex-col lg:w-full lg:min-w-[350px] lg:max-w-[450px]">
-        <Link className="relative overflow-hidden" href={getHref()}>
+        <Link className="relative overflow-hidden" href={href}>
           <HoverImage
             imageUrl={imageUrl}
-            altText={media.title || media.name || "Media Image"}
+            altText={mediaTitle}
             media_type={media_type}
             media_id={media_id}
           >
-            <div className="absolute bottom-0 right-0 m-2 flex flex-row-reverse gap-2">
-              {media.runtime && (
-                <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
-                  {transformRuntime(media.runtime)}
-                </div>
-              )}
-              <div className="rounded-[4px] bg-black/60 px-2 py-1 text-xs text-white">
-                {media.vote_average.toFixed(1)} / 10
-              </div>
-            </div>
-            <div className="absolute left-0 top-0 m-2">
-              {dayDifference && dayDifference <= 30 && dayDifference > 0 && (
-                <div className="rounded-[4px] bg-secondary px-2 py-1 text-xs text-white">
-                  NEW
-                </div>
-              )}
-              {dayDifference && dayDifference < 0 && (
-                <div className="rounded-[4px] bg-secondary px-2 py-1 text-xs text-white">
-                  SOON
-                </div>
-              )}
-              {media_type === "tv" &&
-                dayDifference &&
-                dayDifference >= 30 &&
-                dayDifferenceTv &&
-                dayDifferenceTv < 30 && (
-                  <div className="rounded-[4px] bg-secondary px-2 py-1 text-xs text-white">
-                    NEW EPISODES
-                  </div>
-                )}
-            </div>
-
-            {/* Display the progress bar only if watchTime is greater than 0 */}
-            {watchTime !== 0 && (
-              <div className="absolute bottom-0 left-0 h-1 w-full bg-white/20">
-                <div
-                  className="h-full bg-accent"
-                  style={{ width: `${watchTime}%` }}
-                ></div>
-              </div>
-            )}
+            <MediaCardOverlay
+              runtime={media.runtime}
+              voteAverage={media.vote_average}
+              quality={quality}
+              isNew={isNew}
+              isSoon={isSoon}
+              isNewEpisodes={isNewEpisodes}
+              watchTime={watchTime}
+              transformRuntime={transformRuntime}
+            />
           </HoverImage>
         </Link>
         <div className="flex flex-col gap-2 px-2 lg:p-0">
           <div className="mt-2 flex flex-row justify-between">
-            <h2 className="font-medium">{getMediaTitle()}</h2>
+            <h2 className="font-medium">{mediaTitle}</h2>
             <MoreOptions
               user_id={user_id}
               media_type={media_type}

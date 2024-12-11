@@ -41,7 +41,7 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
   }));
 
   return (
-    <div className="z-30 w-full lg:px-4">
+    <div className="w-full lg:px-4">
       <Slider {...settings} className="h-full w-full">
         {movies &&
           movies.slice(0, 5).map((media: any, index: number) => {
