@@ -15,6 +15,7 @@ type MediaCardSmallProps = {
   episode_number?: number;
   user_id?: string;
   media?: any;
+  rounded?: boolean;
 };
 
 const MediaCardSmall = async ({
@@ -24,6 +25,7 @@ const MediaCardSmall = async ({
   episode_number,
   user_id,
   media,
+  rounded,
 }: MediaCardSmallProps) => {
   if (!media) {
     if (season_number && episode_number) {
@@ -57,7 +59,9 @@ const MediaCardSmall = async ({
 
   return (
     <div className="mb-4 flex w-full flex-col gap-2 hover:border-accent hover:bg-foreground/20 lg:mb-2 lg:flex-row lg:p-2">
-      <div className="relative w-full flex-shrink-0 overflow-hidden lg:w-1/2">
+      <div
+        className={`relative w-full flex-shrink-0 overflow-hidden lg:w-1/2 lg:rounded-[8px] ${rounded === true ? "rounded-[8px]" : ""}`}
+      >
         <MediaCardOverlay
           runtime={media.runtime}
           voteAverage={media.vote_average}

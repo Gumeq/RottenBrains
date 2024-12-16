@@ -110,8 +110,8 @@ export default async function mediaPage({
           media_duration={episode.runtime || 100}
         />
       )}
-      <div className="relative z-10 mx-auto mb-16 flex w-screen flex-col lg:w-full lg:max-w-[1500px]">
-        <div className="small-screen-watch-margin flex w-full flex-col lg:mt-4 lg:flex-row lg:gap-4">
+      <div className="relative z-10 mx-auto mb-16 flex w-screen flex-col lg:w-full lg:px-4">
+        <div className="small-screen-watch-margin flex w-full flex-col lg:flex-row lg:gap-4">
           <div className="flex flex-col gap-4 lg:w-[75%]">
             <VideoEmbed
               media_type={media_type}
@@ -158,8 +158,8 @@ export default async function mediaPage({
           </div>
           <div className="mt-2 flex flex-col gap-2 lg:w-[25%]">
             {nextEpisode && (
-              <>
-                <h3 className="px-2 font-semibold lg:px-0">Next Episode</h3>
+              <div className="flex flex-col gap-2 bg-foreground/10 p-4 lg:rounded-[8px] lg:p-2">
+                <h3 className="px-2 font-semibold">Next Episode</h3>
                 <Link
                   href={`/protected/watch/tv/${media.id}/${nextEpisode.season_number}/${nextEpisode.episode_number}`}
                 >
@@ -170,9 +170,10 @@ export default async function mediaPage({
                     episode_number={nextEpisode.episode_number}
                     user_id={user?.user.id.toString()}
                     media={nextEpisode}
+                    rounded={true}
                   />
                 </Link>
-              </>
+              </div>
             )}
             <h3 className="px-2 font-semibold lg:px-0">All Episodes</h3>
             {media_type === "tv" && season_number && (

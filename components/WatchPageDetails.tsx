@@ -54,7 +54,7 @@ const WatchPageDetails: React.FC<WatchPageDetailsProps> = ({
   return (
     <div className="mx-auto flex w-full flex-col gap-4 rounded-[8px] p-4 lg:p-0">
       <div className="flex flex-col gap-1">
-        <h2 className="font-semibold">
+        <h2 className="font-semibold lg:text-lg">
           {episode && season_number && episode_number
             ? `${episode.name} | ${
                 formatEpisodeCode
@@ -85,17 +85,9 @@ const WatchPageDetails: React.FC<WatchPageDetailsProps> = ({
         </Link>
         <ShareButton />
       </div>
-      <p className="text-sm text-foreground/50">{media_overview}</p>
-      <div className="flew-warp flex flex-row gap-2 text-sm">
-        {media.genres.slice(0, 2).map((genre) => (
-          <div
-            key={genre.id}
-            className="rounded-[4px] bg-foreground/10 px-2 py-1 text-foreground/80"
-          >
-            {genre.name}
-          </div>
-        ))}
-      </div>
+      <p className="line-clamp-2 text-sm text-foreground/50">
+        {media_overview}
+      </p>
       <Link
         href={`/protected/media/${media_type}/${media_id}`}
         className="flex h-32 w-full flex-row items-center gap-4 overflow-hidden rounded-[8px] bg-foreground/5"
@@ -105,8 +97,18 @@ const WatchPageDetails: React.FC<WatchPageDetailsProps> = ({
           alt={`${media.title || media.name} Poster`}
           className="h-full"
         />
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-2">
           <p className="font-semibold">{media.title || media.name}</p>
+          <div className="flew-warp flex flex-row gap-2 text-sm">
+            {media.genres.slice(0, 2).map((genre) => (
+              <div
+                key={genre.id}
+                className="rounded-[4px] bg-foreground/10 px-2 py-1 text-foreground/80"
+              >
+                {genre.name}
+              </div>
+            ))}
+          </div>
           <p className="text-sm text-foreground/50">
             {media_type === "movie"
               ? media.release_date
@@ -116,7 +118,7 @@ const WatchPageDetails: React.FC<WatchPageDetailsProps> = ({
                 ? media.first_air_date.slice(0, 4)
                 : 0}
           </p>
-          <div className="flex flex-row items-center gap-1">
+          {/* <div className="flex flex-row items-center gap-1">
             <p className="text-sm font-semibold uppercase text-foreground/50">
               Details
             </p>
@@ -125,7 +127,7 @@ const WatchPageDetails: React.FC<WatchPageDetailsProps> = ({
               alt="Details"
               className="invert-on-dark opacity-50"
             />
-          </div>
+          </div> */}
         </div>
       </Link>
     </div>

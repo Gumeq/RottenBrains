@@ -22,7 +22,7 @@ const NavLink: FC<NavLinkProps> = ({
     <Link
       href={href}
       className={`rounded-[8px] p-2 hover:bg-foreground/10 ${
-        isActive ? `bg-primary/10 text-primary` : `text-foreground`
+        isActive ? `bg-secondary/20 text-accent` : `text-foreground`
       }`}
     >
       <div className="flex flex-row items-center gap-6">
@@ -31,7 +31,7 @@ const NavLink: FC<NavLinkProps> = ({
         ) : (
           <Icon className="fill-current" width={24} height={24} />
         )}
-        {label && <p className="w-max text-sm">{label}</p>}
+        {label && <p className="w-max pr-4 text-sm text-foreground">{label}</p>}
       </div>
     </Link>
   );

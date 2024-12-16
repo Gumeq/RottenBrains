@@ -20,6 +20,7 @@ interface MediaCardProps {
   episode_number?: number;
   quality?: string;
   user_id: string;
+  rounded?: boolean;
 }
 
 const HomeMediaCardClient: React.FC<MediaCardProps> = React.memo(
@@ -30,6 +31,7 @@ const HomeMediaCardClient: React.FC<MediaCardProps> = React.memo(
     episode_number,
     quality,
     user_id,
+    rounded,
   }) => {
     const [media, setMedia] = useState<any>(null);
     const [watchTime, setWatchTime] = useState<number | null>(null);
@@ -164,7 +166,10 @@ const HomeMediaCardClient: React.FC<MediaCardProps> = React.memo(
 
     return (
       <div className="mb-2 flex flex-col lg:w-full lg:min-w-[350px] lg:max-w-[450px]">
-        <Link className="relative overflow-hidden" href={href}>
+        <Link
+          className={`relative w-full overflow-hidden lg:rounded-[8px] ${rounded === true ? "rounded-[8px]" : ""}`}
+          href={href}
+        >
           <HoverImage
             imageUrl={imageUrl}
             altText={mediaTitle}

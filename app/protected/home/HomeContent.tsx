@@ -123,14 +123,16 @@ const HomeContent = async () => {
         <div className="flex w-full flex-col gap-8 p-0 pb-4 lg:w-auto lg:p-4 lg:py-0">
           <MobileTopBarHome />
           {/* Watch History Section */}
-          <div className="">
+          <div className="mt-4 rounded-[16px] pl-2 lg:bg-foreground/10 lg:p-4">
             <div className="mb-4 flex flex-row items-center justify-between">
-              <div></div>
+              <h2 className="px-2 font-semibold lg:text-lg">
+                Continue Watching
+              </h2>
               <ScrollButtons containerId="watch_history_main" />
             </div>
             <div className="w-full pl-4 lg:pl-0">
               <div
-                className="hidden-scrollbar -mb-8 flex flex-row gap-4 overflow-x-auto"
+                className="hidden-scrollbar flex flex-row gap-4 overflow-x-auto"
                 id="watch_history_main"
               >
                 {processedEpisodes.length > 0 &&
@@ -164,6 +166,7 @@ const HomeContent = async () => {
                           media_id={media.media_id}
                           episode_number={episodeNumber || undefined}
                           season_number={seasonNumber || undefined}
+                          rounded={true}
                         />
                       </div>
                     );
@@ -224,6 +227,7 @@ const HomeContent = async () => {
                         user_id={user.user.id}
                         media_type="movie"
                         media_id={media.id}
+                        rounded={true}
                       />
                     </div>
                   ))}
@@ -252,6 +256,7 @@ const HomeContent = async () => {
                         user_id={user.user.id}
                         media_type="tv"
                         media_id={media.id}
+                        rounded={true}
                       />
                     </div>
                   ))}

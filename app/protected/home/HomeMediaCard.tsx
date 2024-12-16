@@ -22,6 +22,7 @@ interface MediaCardProps {
   episode_number?: number;
   quality?: string;
   user_id: string;
+  rounded?: boolean;
 }
 
 const HomeMediaCard: React.FC<MediaCardProps> = async ({
@@ -31,6 +32,7 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
   episode_number,
   quality,
   user_id,
+  rounded,
 }) => {
   // Fetch media details based on type
   let media: any;
@@ -101,7 +103,10 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
 
   return (
     <div className="mb-2 flex w-full min-w-[75vw] max-w-[95vw] flex-col lg:w-full lg:min-w-[350px] lg:max-w-[450px]">
-      <Link className="relative w-full overflow-hidden" href={href}>
+      <Link
+        className={`relative w-full overflow-hidden lg:rounded-[8px] ${rounded === true ? "rounded-[8px]" : ""}`}
+        href={href}
+      >
         <HoverImage
           imageUrl={imageUrl}
           altText={mediaTitle}
