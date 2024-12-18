@@ -15,11 +15,7 @@ interface WatchHistoryItem {
 const page = async () => {
   // Fetch the user and watch history
   const user = await getCurrentUser();
-<<<<<<< HEAD
   const limit = 20;
-=======
-  const limit = 10;
->>>>>>> 18ede367538bbac30a0b3828c018a86eb9241261
   const offset = 0;
 
   // Type the result of the watch history call
@@ -60,7 +56,6 @@ const page = async () => {
   };
 
   return (
-<<<<<<< HEAD
     <div className="my-4 mb-12 w-full px-4">
       <h1 className="px-4 text-lg font-semibold">History</h1>
       <div className="my-4 w-full border-b-2 border-foreground/5"></div>
@@ -97,22 +92,6 @@ const page = async () => {
           </div>
         );
       })}
-=======
-    <div className="mx-auto mt-16 w-screen max-w-4xl">
-      <h1 className="my-12 text-4xl font-bold">Watch History</h1>
-      <div className="flex w-full flex-col gap-4">
-        {watchHistory.map((media: any) => {
-          return (
-            <MediaCardSmall
-              media_type={media.media_type}
-              media_id={media.media_id}
-              season_number={media.season_number}
-              episode_number={media.episode_number}
-            ></MediaCardSmall>
-          );
-        })}
-      </div>
->>>>>>> 18ede367538bbac30a0b3828c018a86eb9241261
     </div>
   );
 };
