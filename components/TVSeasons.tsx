@@ -5,18 +5,19 @@ import MediaCardSmall from "./MediaCardSmall";
 type TVShowDetailsProps = {
   tv_show_id: number;
   season_number: number;
+  user_id: string;
 };
 
 const TVShowDetails = async ({
   tv_show_id,
   season_number,
+  user_id,
 }: TVShowDetailsProps) => {
   const tvShowData = await getTVDetails(tv_show_id);
   const filteredSeasons = tvShowData.seasons.filter(
     (season: any) => season.season_number !== 0,
   );
 
-  console.log(filteredSeasons);
   const selectedSeason =
     filteredSeasons.find(
       (season: any) => season.season_number === Number(season_number),
@@ -28,7 +29,6 @@ const TVShowDetails = async ({
   );
   const episodes = seasonData.episodes;
 
-  console.log(season_number);
   return (
     <div className="w-full">
       <div className="relative">
@@ -50,7 +50,7 @@ const TVShowDetails = async ({
         </div>
       </div>
       <div className="mt-2 w-full">
-        <div className="flex w-full flex-col">
+        <div className="flex w-full flex-col gap-2">
           {episodes.map((episode: any) => (
             <Link
               key={episode.episode_number}
@@ -60,6 +60,7 @@ const TVShowDetails = async ({
               <MediaCardSmall
                 media_type={"tv"}
                 media_id={tv_show_id}
+                user_id={user_id}
                 season_number={selectedSeason.season_number}
                 episode_number={episode.episode_number}
                 media={episode}

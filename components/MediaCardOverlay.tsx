@@ -26,7 +26,7 @@ const MediaCardOverlay: FC<MediaCardOverlayProps> = ({
   return (
     <>
       {/* Bottom right media info */}
-      <div className="absolute bottom-0 right-0 m-2 flex flex-row-reverse gap-2">
+      <div className="absolute bottom-0 right-0 z-20 m-2 flex flex-row-reverse gap-2">
         {runtime && <MediaInfoText text={transformRuntime(runtime)} />}
         {typeof voteAverage === "number" && (
           <MediaInfoText text={voteAverage.toFixed(1)} />
@@ -52,10 +52,12 @@ const MediaCardOverlay: FC<MediaCardOverlayProps> = ({
         )}
       </div>
       {/* Progress bar */}
-      {watchTime != null && watchTime > 0 && (
+      {watchTime != null && watchTime > 0 ? (
         <div className="absolute bottom-0 left-0 h-1 w-full">
           <ProgressBar progress={watchTime} />
         </div>
+      ) : (
+        <div></div>
       )}
     </>
   );

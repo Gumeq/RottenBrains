@@ -43,8 +43,6 @@ const MediaCard: React.FC<MediaCardProps> = async ({
   if (!media) {
     return <p>loading...</p>;
   }
-  console.log(media);
-
   return (
     <div className="flex w-full flex-row gap-4">
       <Link

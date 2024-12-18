@@ -124,8 +124,6 @@ export function getGenreNameById(genreId: number): string {
   // Combine genres into one array
   const combinedGenres: Genre[] = [...movieGenres.genres, ...tvGenres.genres];
 
-  console.log("Combined Genres:", combinedGenres);
-
   // Verify the genreId type
   if (typeof genreId !== "number") {
     throw new Error(
@@ -135,7 +133,6 @@ export function getGenreNameById(genreId: number): string {
 
   // Find the genre by ID
   const genre = combinedGenres.find((g) => {
-    console.log(`Checking genre ID: ${g.id}, Expected: ${genreId}`);
     return g.id === genreId;
   });
 
@@ -143,8 +140,6 @@ export function getGenreNameById(genreId: number): string {
   if (!genre) {
     throw new Error(`Genre with ID ${genreId} not found.`);
   }
-
-  console.log("Found Genre:", genre);
 
   // Return the genre name
   return genre.name;
