@@ -56,7 +56,7 @@ const Bottombar = () => {
         {/* Watch List Link */}
         <Link href="/protected/watch-list" className="bottombar-link">
           <Image
-            src="/assets/icons/folder-outline.svg"
+            src="/assets/icons/library-svg.svg"
             alt="Lists"
             width={24}
             height={24}
