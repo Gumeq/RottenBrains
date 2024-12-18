@@ -123,9 +123,9 @@ const HomeContent = async () => {
         <div className="flex w-full flex-col gap-8 p-0 pb-4 lg:w-auto lg:p-4 lg:py-0">
           <MobileTopBarHome />
           {/* Watch History Section */}
-          <div className="mt-4 rounded-[16px] pl-2 lg:bg-foreground/10 lg:p-4">
+          <div className="mt-4 rounded-[16px] pl-2 lg:p-0">
             <div className="mb-4 flex flex-row items-center justify-between">
-              <h2 className="px-2 font-semibold lg:text-lg">
+              <h2 className="px-2 font-semibold lg:px-0 lg:text-lg">
                 Continue Watching
               </h2>
               <ScrollButtons containerId="watch_history_main" />

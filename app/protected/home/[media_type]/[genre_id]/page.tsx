@@ -19,7 +19,6 @@ const page = async ({
     return null;
   }
   const userId = user.user.id.toString();
-  console.log(userId);
   return (
     <div className="flex w-full flex-col gap-2">
       <GenreSelector user_id={userId}></GenreSelector>

@@ -46,7 +46,7 @@ const WatchPageDetails: React.FC<WatchPageDetailsProps> = ({
         ? media.release_date.slice(0, 4)
         : "0"
       : episode?.air_date
-        ? episode.air_date.slice(0, 4)
+        ? episode.air_date
         : "0";
 
   const media_overview =

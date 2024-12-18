@@ -98,6 +98,7 @@ const VideoEmbed = ({
               id="iframe"
               loading="lazy"
               src={link}
+              // src={"/api/testapi?video_id=1419&tmdb=1&season=4&episode=22"}
               className="inline-block h-full w-screen lg:w-full"
               frameBorder="0"
               marginHeight={0}
