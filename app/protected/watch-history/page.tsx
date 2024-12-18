@@ -6,7 +6,6 @@ import MediaCardSmall from "@/components/MediaCardSmall";
 
 const page = async () => {
   const user = await getCurrentUser();
-  console.log(user);
   const limit = 10;
   const offset = 0;
   const watchHistory = await getWatchHistoryForUser(
@@ -19,7 +18,6 @@ const page = async () => {
       <h1 className="my-12 text-4xl font-bold">Watch History</h1>
       <div className="flex w-full flex-col gap-4">
         {watchHistory.map((media: any) => {
-          console.log(media);
           return (
             <MediaCardSmall
               media_type={media.media_type}

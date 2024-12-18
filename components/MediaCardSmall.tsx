@@ -27,63 +27,86 @@ const MediaCardSmall = async ({
   media,
   rounded,
 }: MediaCardSmallProps) => {
-  if (!media) {
-    if (season_number && episode_number) {
-      media = await getEpisodeDetails(media_id, season_number, episode_number);
-    } else {
-      media = await getMediaDetails(media_type, media_id);
-    }
-  }
-  // Fetch watch time if user is authenticated
-  let watchTime;
+  let fetchedWatchTime = null;
 
-  if (user_id) {
-    watchTime = await getWatchTime(
-      user_id,
-      media_type,
-      media_id,
-      season_number,
-      episode_number,
-    );
-  }
+  const fetchMedia = async () => {
+    if (!media) {
+      if (season_number && episode_number) {
+        return getEpisodeDetails(media_id, season_number, episode_number);
+      }
+      return getMediaDetails(media_type, media_id);
+    }
+    return media;
+  };
+
+  const fetchWatchTime = async () => {
+    if (user_id) {
+      return getWatchTime(
+        user_id,
+        media_type,
+        media_id,
+        season_number,
+        episode_number,
+      );
+    }
+    return null;
+  };
+
+  // Fetch media and watch time in parallel
+  const [fetchedMedia, watchTime] = await Promise.all([
+    fetchMedia(),
+    fetchWatchTime(),
+  ]);
+
+  media = fetchedMedia;
+  fetchedWatchTime = watchTime;
+
+  const {
+    runtime,
+    vote_average,
+    title,
+    name,
+    images,
+    air_date,
+    first_air_date,
+    release_date,
+  } = media;
 
   const imageUrl =
-    media?.images?.backdrops?.[0]?.file_path ||
+    images?.backdrops?.[0]?.file_path ||
     (season_number && episode_number ? media.still_path : media.backdrop_path);
 
-  const mediaTitle = media.title || media.name;
-  const formattedEpisodeCode =
+  const mediaTitle = title || name || "Unknown Title";
+  const episodeCode =
     media_type === "tv" && season_number && episode_number
       ? ` | ${formatEpisodeCode(season_number, episode_number)}`
       : "";
 
+  const relativeTime = getRelativeTime(
+    air_date || first_air_date || release_date,
+  );
+
   return (
-    <div className="mb-4 flex w-full flex-col gap-2 hover:border-accent hover:bg-foreground/20 lg:mb-2 lg:flex-row lg:p-2">
+    <div className="flex w-full flex-col gap-2 hover:border-accent lg:flex-row lg:p-2">
       <div
-        className={`relative w-full flex-shrink-0 overflow-hidden lg:w-1/2 lg:rounded-[8px] ${rounded === true ? "rounded-[8px]" : ""}`}
+        className={`relative w-full flex-shrink-0 overflow-hidden lg:w-1/2 ${
+          rounded ? "rounded-[8px]" : "lg:rounded-[8px]"
+        }`}
       >
         <MediaCardOverlay
-          runtime={media.runtime}
-          voteAverage={media.vote_average}
-          watchTime={watchTime}
+          runtime={runtime}
+          voteAverage={vote_average}
+          watchTime={fetchedWatchTime}
           transformRuntime={transformRuntime}
         />
-        <ImageWithFallback
-          imageUrl={imageUrl}
-          altText={media.title || media.name}
-        />
+        <ImageWithFallback imageUrl={imageUrl} altText={mediaTitle} />
       </div>
       <div className="flex flex-col gap-1 px-2 lg:px-0">
         <h3 className="flex items-center space-x-2 lg:text-sm">
           {mediaTitle}
-          {formattedEpisodeCode}
+          {episodeCode}
         </h3>
-
-        <p className="text-xs text-foreground/50">
-          {getRelativeTime(
-            media.air_date || media.first_air_date || media.release_date,
-          )}
-        </p>
+        <p className="text-xs text-foreground/50">{relativeTime}</p>
       </div>
     </div>
   );

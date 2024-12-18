@@ -23,7 +23,6 @@ const PostForm = ({ post, action, from_media }: PostFormProps) => {
   const { toast } = useToast();
 
   const imageUrl = media?.images?.backdrops?.[0]?.file_path;
-  console.log(imageUrl);
   // State to manage input values
   const [formValues, setFormValues] = useState({
     review_user: "Λοιπον είδα το ",
@@ -68,7 +67,6 @@ const PostForm = ({ post, action, from_media }: PostFormProps) => {
         vote_user: post.vote_user,
       }));
     } else {
-      console.log(media);
       if (media) {
         setFormValues((prevValues) => ({
           ...prevValues,

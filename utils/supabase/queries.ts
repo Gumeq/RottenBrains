@@ -523,21 +523,74 @@ export const upsertWatchHistory = async (
   episode_number: number | null,
 ) => {
   try {
-    // Parse percentage_watched to a float
-    const newPercentageFloat = parseFloat(new_percentage_watched);
+    console.log("Starting upsertWatchHistory...");
 
-    // Prepare the data to upsert
-    const watchHistoryData: any = {
+    // Replace NULL with -1 for season_number and episode_number
+    const normalizedSeasonNumber = season_number ?? -1;
+    const normalizedEpisodeNumber = episode_number ?? -1;
+    console.log("Normalized season_number:", normalizedSeasonNumber);
+    console.log("Normalized episode_number:", normalizedEpisodeNumber);
+
+    // Parse new_percentage_watched to a float
+    const newPercentageFloat = parseFloat(new_percentage_watched);
+    console.log("Parsed new_percentage_watched:", newPercentageFloat);
+
+    // Step 1: Retrieve existing percentage_watched
+    console.log("Fetching existing watch history...");
+    const { data: existingData, error: fetchError } = await supabase
+      .from("watch_history")
+      .select("percentage_watched")
+      .eq("user_id", user_id)
+      .eq("media_type", media_type)
+      .eq("media_id", media_id)
+      .eq("season_number", normalizedSeasonNumber)
+      .eq("episode_number", normalizedEpisodeNumber)
+      .single(); // Retrieve one record
+
+    if (fetchError) {
+      if (fetchError.code === "PGRST116") {
+        console.log(
+          "No existing watch history found for this media. Assuming percentage_watched = 0.",
+        );
+      } else {
+        console.error(
+          "Error fetching existing watch history:",
+          fetchError.message,
+        );
+        throw new Error(fetchError.message);
+      }
+    } else {
+      console.log("Existing watch history found:", existingData);
+    }
+
+    // Calculate the total percentage watched
+    const existingPercentage = existingData?.percentage_watched || 0;
+    console.log("Existing percentage_watched:", existingPercentage);
+
+    const updatedPercentage = Math.min(
+      Number(existingPercentage) + Number(newPercentageFloat),
+      100,
+    ).toFixed(2);
+    console.log("Updated percentage_watched (cumulative):", updatedPercentage);
+
+    const updatedCreatedAt = new Date().toISOString(); // Current timestamp
+    console.log("Updated created_at timestamp:", updatedCreatedAt);
+
+    // Step 2: Prepare the data to upsert
+    const watchHistoryData = {
       user_id,
       media_type,
       media_id,
       time_spent: new_time_spent,
-      percentage_watched: newPercentageFloat,
-      season_number,
-      episode_number,
+      percentage_watched: updatedPercentage,
+      season_number: normalizedSeasonNumber,
+      episode_number: normalizedEpisodeNumber,
+      created_at: updatedCreatedAt,
     };
+    console.log("Prepared watch history data for upsert:", watchHistoryData);
 
-    // Perform upsert operation using the unique constraint
+    // Step 3: Perform the upsert operation
+    console.log("Performing upsert operation...");
     const { data, error } = await supabase
       .from("watch_history")
       .upsert(watchHistoryData, {
@@ -545,7 +598,12 @@ export const upsertWatchHistory = async (
       })
       .select();
 
-    if (error) throw new Error(error.message);
+    if (error) {
+      console.error("Error during upsert operation:", error.message);
+      throw new Error(error.message);
+    }
+
+    console.log("Upsert successful. Returned data:", data);
 
     return { success: true, action: "upserted", data };
   } catch (error) {
