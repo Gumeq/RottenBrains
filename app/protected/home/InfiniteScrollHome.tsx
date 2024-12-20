@@ -71,10 +71,10 @@ const InfiniteScrollHome = ({ user_id }: any) => {
 
   return (
     <div
-      className="flex w-full flex-col justify-center gap-4 lg:p-2"
+      className="flex w-full flex-col justify-center gap-4 p-4 lg:p-0"
       ref={targetRef}
     >
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4 lg:grid-cols-[repeat(auto-fit,minmax(350px,1fr))]">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-8 lg:grid-cols-[repeat(auto-fit,minmax(350px,1fr))]">
         {mediaItems && mediaItems.length > 0 ? (
           mediaItems.map((mediaItem) => (
             <HomeMediaCardClient
@@ -82,6 +82,7 @@ const InfiniteScrollHome = ({ user_id }: any) => {
               media_type={mediaItem.media_type}
               media_id={mediaItem.id}
               user_id={user_id}
+              rounded={true}
             />
           ))
         ) : (
@@ -89,7 +90,7 @@ const InfiniteScrollHome = ({ user_id }: any) => {
         )}
       </div>
       {loading && (
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-8">
           {Array.from({ length: 20 }).map((_, index) => (
             <div key={index} className="flex flex-col gap-4">
               <div className="aspect-[16/9] w-full bg-foreground/10"></div>

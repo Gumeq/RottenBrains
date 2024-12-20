@@ -110,10 +110,6 @@ const HomeMediaCardClient: React.FC<MediaCardProps> = React.memo(
       return <p>Error loading media data.</p>;
     }
 
-    if (watchTime && watchTime > 85) {
-      return null;
-    }
-
     // Extract genre IDs
     const genreIds: bigint[] =
       media?.genres?.map((genre: any) => genre.id) || [];

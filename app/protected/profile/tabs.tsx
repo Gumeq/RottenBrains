@@ -122,15 +122,15 @@ const Tabs: React.FC<any> = (user: any) => {
         return (
           <>
             <div
-              className="grid w-full gap-4"
+              className="grid w-full gap-4 p-4 lg:p-0"
               style={{
-                gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
               }}
             >
               {userPosts.length > 0 && (
                 <>
                   {userPosts.map((post: any) => (
-                    <div key={post.id} className="w-[98vw] lg:w-fit">
+                    <div key={post.id} className="w-full">
                       <HomePostCardNew post={post} />
                     </div>
                   ))}

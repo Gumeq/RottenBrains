@@ -99,7 +99,11 @@ const MediaCardSmall = async ({
           watchTime={fetchedWatchTime}
           transformRuntime={transformRuntime}
         />
-        <ImageWithFallback imageUrl={imageUrl} altText={mediaTitle} />
+        <ImageWithFallback
+          imageUrl={imageUrl}
+          altText={mediaTitle}
+          quality={"w1280"}
+        />
       </div>
       <div className="flex flex-col gap-1 px-2 lg:px-0">
         <h3 className="flex items-center space-x-2 lg:text-sm">

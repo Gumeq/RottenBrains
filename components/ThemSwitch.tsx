@@ -1,5 +1,3 @@
-// components/ThemeSwitch.tsx
-
 "use client";
 
 import { useTheme } from "@/context/ThemeContext";
@@ -8,7 +6,6 @@ import React from "react";
 export default function ThemeSwitch() {
   const { theme, toggleTheme } = useTheme();
 
-  // Optional: If you want to show some user-friendly label that changes with the theme.
   const getLabel = (currentTheme: string) => {
     if (currentTheme === "light") return "Light Theme";
     if (currentTheme === "dark") return "Dark Theme";
@@ -23,6 +20,7 @@ export default function ThemeSwitch() {
       aria-label="Toggle theme"
     >
       <div className="flex items-center gap-2">
+        {/* Ensure you have an icon for system-mode.svg or handle it if not */}
         <img
           src={`/assets/icons/${theme}-mode.svg`}
           alt={`${theme} mode icon`}

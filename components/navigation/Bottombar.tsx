@@ -4,6 +4,7 @@ import { useUser } from "@/context/UserContext";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import SearchIconWithOverlay from "@/app/protected/home/SearchIconWithOverlay";
 
 const Bottombar = () => {
   const { user } = useUser();
@@ -15,70 +16,56 @@ const Bottombar = () => {
   }
 
   return (
-    <div className="bottombar">
-      <ul className="bottombar-inner">
+    <div className="bottombar Z-50">
+      <ul className="bottombar-inner Z-50">
         {/* Home Link */}
         <Link href="/protected/home" className="bottombar-link">
-          <Image
+          <img
             src="/assets/icons/home-outline.svg"
             alt="Home"
-            width={24}
-            height={24}
-            className="invert-on-dark"
+            width={40}
+            height={40}
+            className="invert-on-dark rounded-full p-2"
           />
           <p className="text-xs">Home</p>
         </Link>
 
         {/* Explore Link */}
         <Link href="/protected/explore" className="bottombar-link">
-          <Image
+          <img
             src="/assets/icons/explore-outline.svg"
             alt="Explore"
-            width={24}
-            height={24}
-            className="invert-on-dark"
+            width={40}
+            height={40}
+            className="invert-on-dark rounded-full p-2"
           />
           <p className="text-xs">Explore</p>
         </Link>
 
+        <SearchIconWithOverlay />
+
         {/* Create Post Link */}
         <Link href="/protected/create-post" className="bottombar-link">
-          <Image
+          <img
             src="/assets/icons/plus.svg"
             alt="Create"
-            width={24}
-            height={24}
-            className="invert-on-dark"
+            width={40}
+            height={40}
+            className="invert-on-dark rounded-full p-2"
           />
           <p className="text-xs">Create</p>
         </Link>
 
         {/* Watch List Link */}
         <Link href="/protected/watch-list" className="bottombar-link">
-          <Image
+          <img
             src="/assets/icons/library-svg.svg"
             alt="Lists"
-            width={24}
-            height={24}
-            className="invert-on-dark"
+            width={40}
+            height={40}
+            className="invert-on-dark rounded-full p-2"
           />
-          <p className="text-xs">Lists</p>
-        </Link>
-
-        {/* Profile Link */}
-        <Link href="/protected/profile" className="bottombar-link">
-          {user?.image_url ? (
-            <Image
-              src={user.image_url}
-              alt="You"
-              width={24}
-              height={24}
-              className="rounded-full"
-            />
-          ) : (
-            <div className="h-6 w-6 rounded-full bg-gray-300"></div>
-          )}
-          <p className="text-xs">You</p>
+          <p className="text-xs">Library</p>
         </Link>
       </ul>
     </div>

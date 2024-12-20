@@ -113,7 +113,7 @@ export default async function mediaPage({
               </div>
             )}
           </div>
-          <div className="custom-scrollbar flex flex-col lg:w-[25%]">
+          <div className="custom-scrollbar flex flex-col p-4 lg:w-[25%] lg:p-0">
             <p className="mb-2 text-lg font-bold">Recommendations</p>
             {recommendationMediaDetails.map((mediaDetail: any) => (
               <Link

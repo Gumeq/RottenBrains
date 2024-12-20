@@ -151,7 +151,11 @@ const HoverImage: React.FC<HoverImageProps> = ({
       ref={ref}
       data-media-id={media_id}
     >
-      <ImageWithFallback imageUrl={imageUrl} altText={altText} />
+      <ImageWithFallback
+        imageUrl={imageUrl}
+        altText={altText}
+        quality={"w1280"}
+      />
       {children}
 
       {/* Loading Bar */}

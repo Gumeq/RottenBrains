@@ -158,7 +158,7 @@ export default async function mediaPage({
           </div>
           <div className="mt-2 flex flex-col gap-2 lg:w-[25%]">
             {nextEpisode && (
-              <div className="flex flex-col gap-2 bg-foreground/5 p-4 lg:rounded-[8px] lg:p-2">
+              <div className="flex flex-col gap-2 p-4 lg:rounded-[8px] lg:p-2">
                 <h3 className="px-2 font-semibold">Next Episode</h3>
                 <Link
                   href={`/protected/watch/tv/${media.id}/${nextEpisode.season_number}/${nextEpisode.episode_number}`}

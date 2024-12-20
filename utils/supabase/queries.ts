@@ -138,8 +138,37 @@ export const getUserPosts = async (
       {
         creator_id: creator_id,
         current_user_id: user_id,
-        result_limit: 6,
-        result_offset: page * 6,
+        result_limit: 10,
+        result_offset: page * 10,
+      },
+    );
+
+    if (postsError) throw postsError;
+
+    return postsData;
+  } catch (error) {
+    console.error("getUserPosts", error);
+    return null;
+  }
+};
+export const getUserPostsType = async (
+  creator_id: string,
+  user_id: string,
+  page: number,
+  media_type: string,
+): Promise<any | null> => {
+  try {
+    const supabase = createClient();
+
+    // Call the new RPC function to fetch posts with creator details and like/save status
+    const { data: postsData, error: postsError } = await supabase.rpc(
+      "fetch_user_posts_type",
+      {
+        creator_id: creator_id,
+        current_user_id: user_id,
+        result_limit: 10,
+        result_offset: page * 10,
+        media_type_filter: media_type,
       },
     );
 

@@ -8,7 +8,7 @@ interface PostSkeletonProps {
 const PostSkeleton = ({ variants }: PostSkeletonProps) => {
   return (
     <motion.div
-      className="relative flex h-min flex-col overflow-hidden rounded-[8px] border border-foreground/10 bg-white/5 lg:max-w-[400px]"
+      className="relative flex h-min flex-col overflow-hidden rounded-[8px] border border-foreground/10 bg-white/5 lg:max-w-[300px]"
       variants={variants}
       initial="hidden"
       animate="visible"
@@ -39,7 +39,7 @@ const PostSkeleton = ({ variants }: PostSkeletonProps) => {
       <div className="flex w-full flex-col justify-between">
         <div className="relative w-full">
           {/* Image Skeleton */}
-          <div className="aspect-[16/9] h-auto w-[500px] bg-foreground/10" />
+          <div className="aspect-[16/9] h-auto w-[300px] bg-foreground/10" />
           <div className="absolute bottom-2 right-2">
             {/* Vote Skeleton */}
             <div className="h-[20px] w-[50px] bg-foreground/10" />

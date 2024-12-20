@@ -1,13 +1,14 @@
 "use client";
 
 import NotificationButton from "@/components/notifications/RealtimeNotifications";
-import SearchBar from "@/components/searchBar/SearchBar";
 import Link from "next/link";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
+import { useUser } from "@/context/UserContext";
+import SearchIconWithOverlay from "./SearchIconWithOverlay";
+import MenuButtonWithSidebar from "./MenuWithSlider";
 
 const MobileTopBarHome = () => {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const searchBarRef = useRef<HTMLInputElement>(null);
+  const { user } = useUser();
   const topBarRef = useRef<HTMLDivElement>(null);
 
   const lastScrollY = useRef(0);
@@ -50,63 +51,48 @@ const MobileTopBarHome = () => {
     }
   }, []); // Empty dependency array ensures this runs once on mount
 
-  useEffect(() => {
-    if (isSearchOpen && searchBarRef.current) {
-      searchBarRef.current.focus();
-    }
-  }, [isSearchOpen]);
-
   return (
     <>
       {/* Top bar */}
       <div
         ref={topBarRef}
-        className="fixed left-0 top-0 z-50 flex h-12 w-full items-center justify-between bg-background/60 px-4 backdrop-blur-xl lg:hidden"
+        className="fixed left-0 top-0 z-50 flex h-12 w-full items-center justify-between bg-background px-4 lg:hidden"
         style={{
           transform: "translateY(0)",
           willChange: "transform",
         }}
       >
-        <Link
-          href={"/protected/home"}
-          className="flex flex-row items-center gap-2"
-        >
-          <img
-            src="/assets/images/logo_text_new.svg"
-            alt="text-logo"
-            className="invert-on-dark h-4 w-auto"
-          />
-        </Link>
         <div className="flex flex-row gap-4">
+          <MenuButtonWithSidebar />
+          <Link
+            href={"/protected/home"}
+            className="flex flex-row items-center gap-2"
+          >
+            <img
+              src="/assets/images/logo_text_new.svg"
+              alt="text-logo"
+              className="invert-on-dark h-4 w-auto"
+            />
+          </Link>
+        </div>
+
+        <div className="flex flex-row gap-6">
           <NotificationButton />
-          <button onClick={() => setIsSearchOpen(true)}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="24px"
-              viewBox="0 -960 960 960"
-              width="24px"
-              fill="#000000"
-              className="invert-on-dark"
-            >
-              <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
-            </svg>
-          </button>
+          <Link href="/protected/profile" className="">
+            {user?.image_url ? (
+              <img
+                src={user.image_url}
+                alt="You"
+                width={32}
+                height={32}
+                className="rounded-full"
+              />
+            ) : (
+              <div className="h-6 w-6 rounded-full bg-gray-300"></div>
+            )}
+          </Link>
         </div>
       </div>
-
-      {/* Search overlay */}
-      {isSearchOpen && (
-        <div className="fixed inset-0 z-50 flex flex-col bg-background p-4">
-          <div className="z-50 mb-4 flex items-center justify-between gap-4">
-            <button onClick={() => setIsSearchOpen(false)} className="text-lg">
-              X
-            </button>
-            <div className="z-50 w-full">
-              <SearchBar ref={searchBarRef} link={true} user={true} />
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 };
