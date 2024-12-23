@@ -76,7 +76,7 @@ const MobileTopBarHome = () => {
           </Link>
         </div>
 
-        <div className="flex flex-row gap-6">
+        <div className="flex flex-row items-center gap-4">
           <NotificationButton />
           <Link
             href={"/protected/settings"}
