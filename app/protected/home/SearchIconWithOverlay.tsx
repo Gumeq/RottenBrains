@@ -19,7 +19,7 @@ const SearchIconWithOverlay: React.FC = () => {
       <button
         onClick={() => setIsSearchOpen(true)}
         aria-label="Open Search"
-        className="flex flex-1 flex-col items-center justify-center gap-1 text-xs opacity-80"
+        className="flex flex-1 flex-col items-center justify-center text-xs opacity-80"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

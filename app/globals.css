@@ -406,11 +406,11 @@
 }
 
 .bottombar-inner {
-  @apply relative flex h-full w-full flex-row items-center justify-between bg-foreground/5 pb-2;
+  @apply relative flex h-full w-full flex-row items-center justify-between bg-foreground/5 pb-1;
 }
 
 .bottombar-link {
-  @apply flex flex-1 flex-col items-center justify-center gap-1 opacity-80;
+  @apply flex flex-1 flex-col items-center justify-center opacity-80;
 }
 
 /* Adjust the padding to account for the safe area inset */

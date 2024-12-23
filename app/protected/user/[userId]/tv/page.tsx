@@ -1,7 +1,7 @@
 "use client";
 
 import { useUser } from "@/context/UserContext";
-import UserPosts from "../../profile/UserPosts";
+import UserPostsType from "@/app/protected/profile/UserPostsType";
 
 export default function ProtectedPage({
   params,
@@ -13,9 +13,10 @@ export default function ProtectedPage({
 
   if (!currentUser) return <p>Loading User</p>;
   return (
-    <UserPosts
+    <UserPostsType
       userId={userId}
       currentUserId={currentUser.id.toString()}
-    ></UserPosts>
+      media_type={"tv"}
+    ></UserPostsType>
   );
 }

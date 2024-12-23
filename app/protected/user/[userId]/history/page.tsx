@@ -1,7 +1,8 @@
 "use client";
 
 import { useUser } from "@/context/UserContext";
-import UserPosts from "../../profile/UserPosts";
+import UserPostsType from "@/app/protected/profile/UserPostsType";
+import UserWatchHistory from "@/app/protected/profile/UserWatchHistory";
 
 export default function ProtectedPage({
   params,
@@ -13,9 +14,9 @@ export default function ProtectedPage({
 
   if (!currentUser) return <p>Loading User</p>;
   return (
-    <UserPosts
+    <UserWatchHistory
       userId={userId}
       currentUserId={currentUser.id.toString()}
-    ></UserPosts>
+    ></UserWatchHistory>
   );
 }

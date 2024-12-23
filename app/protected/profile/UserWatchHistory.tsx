@@ -8,6 +8,7 @@ import HomeMediaCardClient from "../home/HomeMediaCardClient";
 
 interface UserWatchHistoryProps {
   userId: string;
+  currentUserId: string;
   initialPage?: number; // Optional initial page number
   pageSize?: number; // Optional number of items per page
   onHistoryLoaded?: (historyItems: any[]) => void; // Callback when history items are loaded
@@ -15,6 +16,7 @@ interface UserWatchHistoryProps {
 
 const UserWatchHistory: React.FC<UserWatchHistoryProps> = ({
   userId,
+  currentUserId,
   initialPage = 0, // Default to page 0
   pageSize = 20, // Default to 20 items per page
   onHistoryLoaded,
@@ -72,7 +74,7 @@ const UserWatchHistory: React.FC<UserWatchHistoryProps> = ({
             media_id={item.media_id}
             season_number={item.season_number}
             episode_number={item.episode_number}
-            user_id={userId}
+            user_id={currentUserId}
             rounded={true}
           />
         </div>

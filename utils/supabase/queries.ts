@@ -665,6 +665,62 @@ export const getWatchHistoryForUser = async (
   }
 };
 
+export async function isMediaWatched(
+  userId: string,
+  mediaType: string,
+  mediaId: number,
+): Promise<boolean> {
+  try {
+    // Call the SQL function `is_item_watched`
+    const { data, error } = await supabase.rpc("is_item_watched", {
+      input_user_id: userId,
+      input_media_type: mediaType,
+      input_media_id: mediaId,
+    });
+
+    if (error) {
+      console.error("Error calling is_item_watched:", error);
+      return false;
+    }
+
+    return data ?? false; // Return the result or `false` if null
+  } catch (err) {
+    console.error("Unexpected error:", err);
+    return false;
+  }
+}
+
+export async function getBatchWatchedItemsForUser(
+  userId: string,
+  batch: any[],
+) {
+  try {
+    // Create the batch payload in the format { media_type, media_id }
+    const batchPayload = batch.map((item) => ({
+      media_type: item.media_type,
+      media_id: item.id,
+    }));
+
+    console.log(batchPayload);
+
+    // Call the Supabase function
+    const { data, error } = await supabase.rpc("get_batch_watched_items", {
+      input_user_id: userId,
+      input_items: batchPayload,
+    });
+
+    if (error) {
+      console.error("Error fetching batch watched items:", error);
+      return [];
+    }
+    console.log(data);
+    return data; // Return the watched items array
+  } catch (err) {
+    console.error("Unexpected error in getBatchWatchedItemsForUser:", err);
+    return [];
+  }
+}
+
 export const getWatchTime = async (
   user_id: string,
   media_type: string,

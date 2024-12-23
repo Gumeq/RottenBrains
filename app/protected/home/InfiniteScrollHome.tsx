@@ -7,54 +7,56 @@ import {
   getTvRecommendationsForUser,
 } from "@/lib/recommendations";
 import HomeMediaCardClient from "./HomeMediaCardClient";
+import { getBatchWatchedItemsForUser } from "@/utils/supabase/queries"; // A new bulk query function
 
 const InfiniteScrollHome = ({ user_id }: any) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [mediaItems, setMediaItems] = useState<any[]>([]);
   const [page, setPage] = useState<number>(1);
-  const { ref, inView } = useInView();
+  const { ref, inView } = useInView({ threshold: 0.1, rootMargin: "200px" });
   const targetRef = useRef<HTMLDivElement>(null);
 
-  // Moved shuffleArray function outside of useEffect
-  const shuffleArray = (array: any[]) => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  };
-
-  // Wrapped loadMore function with useCallback and optimized dependencies
   const loadMore = useCallback(async () => {
     if (inView && hasMore && !loading) {
       setLoading(true);
       try {
-        const resultMovies = await getMovieRecommendationsForUser(
-          user_id,
-          page,
-        );
+        // Fetch recommendations in parallel
+        const [resultMovies, resultTv] = await Promise.all([
+          getMovieRecommendationsForUser(user_id, page),
+          getTvRecommendationsForUser(user_id, page),
+        ]);
         const resMovies = resultMovies.results.map((movie: any) => ({
           ...movie,
           media_type: "movie",
         }));
-
-        const resultTv = await getTvRecommendationsForUser(user_id, page);
         const resTv = resultTv.results.map((tvShow: any) => ({
           ...tvShow,
           media_type: "tv",
         }));
 
         const combinedResults = [...resMovies, ...resTv];
-        const shuffledResults = shuffleArray(combinedResults);
 
-        if (shuffledResults.length === 0) {
+        // Get watched items for the current batch
+        const watchedItems = await getBatchWatchedItemsForUser(
+          user_id,
+          combinedResults,
+        );
+        const watchedSet = new Set(
+          watchedItems.map(
+            (item: any) => `${item.media_type}-${item.media_id}`,
+          ),
+        );
+
+        // Filter out watched items
+        const unwatchedItems = combinedResults.filter(
+          (item) => !watchedSet.has(`${item.media_type}-${item.id}`),
+        );
+
+        if (unwatchedItems.length === 0) {
           setHasMore(false);
         } else {
-          setMediaItems((prevMediaItems) => [
-            ...prevMediaItems,
-            ...shuffledResults,
-          ]);
+          setMediaItems((prev) => [...prev, ...unwatchedItems]);
           setPage((prevPage) => prevPage + 1);
         }
       } catch (error) {
@@ -94,7 +96,6 @@ const InfiniteScrollHome = ({ user_id }: any) => {
           {Array.from({ length: 20 }).map((_, index) => (
             <div key={index} className="flex flex-col gap-4">
               <div className="aspect-[16/9] w-full bg-foreground/10"></div>
-              {/* <div className="h-16 w-screen lg:w-full lg:min-w-[400px] lg:max-w-[550px]"></div> */}
               <div className="h-6 w-2/3 bg-foreground/10"></div>
               <div className="h-6 w-1/3 bg-foreground/10"></div>
             </div>
