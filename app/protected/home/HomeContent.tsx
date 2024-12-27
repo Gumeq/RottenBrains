@@ -187,7 +187,7 @@ const HomeContent = async () => {
               </div>
               <ScrollButtons containerId="rotten-posts-one" />
             </div>
-            <div className="relative px-2 lg:p-0">
+            <div className="relative pl-4 lg:p-0">
               <div className="gradient-edge absolute right-0 top-0 z-20 h-full w-[5%]" />
               <div
                 className="hidden-scrollbar flex flex-row gap-2 overflow-x-auto pr-[5%] lg:gap-4"

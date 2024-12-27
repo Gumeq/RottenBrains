@@ -7,13 +7,14 @@ import { getWatchTime } from "@/utils/supabase/queries";
 import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
 import MediaCardOverlay from "./MediaCardOverlay";
 import ImageWithFallback from "./ImageWithFallback";
+import MoreOptions from "@/app/protected/home/MoreOptions";
 
 type MediaCardSmallProps = {
   media_type: string;
   media_id: number;
   season_number?: number;
   episode_number?: number;
-  user_id?: string;
+  user_id: string;
   media?: any;
   rounded?: boolean;
 };
@@ -72,6 +73,9 @@ const MediaCardSmall = async ({
     release_date,
   } = media;
 
+  // Extract genre IDs
+  const genreIds: bigint[] = media?.genres?.map((genre: any) => genre.id) || [];
+
   const imageUrl =
     images?.backdrops?.[0]?.file_path ||
     (season_number && episode_number ? media.still_path : media.backdrop_path);
@@ -105,11 +109,20 @@ const MediaCardSmall = async ({
           quality={"w1280"}
         />
       </div>
-      <div className="flex flex-col gap-1 px-2 lg:px-0">
-        <h3 className="flex items-center space-x-2 lg:text-sm">
-          {mediaTitle}
-          {episodeCode}
-        </h3>
+      <div className="flex flex-col gap-1 lg:px-0">
+        <div className="flex flex-row items-center justify-between">
+          <h3 className="flex items-center space-x-2 lg:text-sm">
+            {mediaTitle}
+            {episodeCode}
+          </h3>
+          <MoreOptions
+            user_id={user_id}
+            media_type={media_type}
+            media_id={media_id}
+            genre_ids={genreIds}
+          />
+        </div>
+
         <p className="text-xs text-foreground/50">{relativeTime}</p>
       </div>
     </div>

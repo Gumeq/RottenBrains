@@ -125,7 +125,7 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
           />
         </HoverImage>
       </Link>
-      <div className="flex flex-col gap-2 px-2 lg:p-0">
+      <div className="flex flex-col gap-2 lg:p-0">
         <div className="mt-2 flex flex-row justify-between">
           <h2 className="font-medium">
             {mediaTitle}

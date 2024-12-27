@@ -113,12 +113,12 @@ export default async function mediaPage({
               </div>
             )}
           </div>
-          <div className="custom-scrollbar flex flex-col p-4 lg:w-[25%] lg:p-0">
-            <p className="mb-2 text-lg font-bold">Recommendations</p>
+          <div className="custom-scrollbar flex flex-col gap-8 p-4 lg:w-[25%] lg:p-0">
+            <p className="text-lg font-bold">Recommendations</p>
             {recommendationMediaDetails.map((mediaDetail: any) => (
               <Link
                 href={
-                  mediaDetail.media_type === "movie"
+                  mediaDetail.title
                     ? `/protected/watch/${mediaDetail.media_type}/${mediaDetail.id}`
                     : `/protected/watch/${mediaDetail.media_type}/${mediaDetail.id}/1/1`
                 }
@@ -130,6 +130,7 @@ export default async function mediaPage({
                   media_id={mediaDetail.id}
                   user_id={user?.user.id.toString()}
                   media={mediaDetail}
+                  rounded
                 />
               </Link>
             ))}
