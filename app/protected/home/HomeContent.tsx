@@ -131,46 +131,61 @@ const HomeContent = async () => {
               <ScrollButtons containerId="watch_history_main" />
             </div>
             <div className="w-full pl-4 lg:pl-0">
-              <div
-                className="hidden-scrollbar flex flex-row gap-4 overflow-x-auto"
-                id="watch_history_main"
-              >
-                {processedEpisodes.length > 0 &&
-                  processedEpisodes.map((media) => {
-                    if (
-                      (media.media_type === "movie" &&
-                        media.next_episode === true) ||
-                      (media.media_type === "tv" &&
-                        !media.next_episode_number &&
-                        media.next_episode === true)
-                    ) {
-                      return null; // Skip rendering for watched movies
-                    }
+              <div>
+                {processedEpisodes.length > 0 ? (
+                  <div
+                    className="hidden-scrollbar flex flex-row gap-4 overflow-x-auto"
+                    id="watch_history_main"
+                  >
+                    {processedEpisodes.map((media) => {
+                      if (
+                        (media.media_type === "movie" &&
+                          media.next_episode === true) ||
+                        (media.media_type === "tv" &&
+                          !media.next_episode_number &&
+                          media.next_episode === true)
+                      ) {
+                        return null; // Skip rendering for watched movies
+                      }
 
-                    const isNextEpisodeAvailable =
-                      media.media_type === "tv" && media.next_episode === true;
+                      const isNextEpisodeAvailable =
+                        media.media_type === "tv" &&
+                        media.next_episode === true;
 
-                    const episodeNumber = isNextEpisodeAvailable
-                      ? media.next_episode_number
-                      : media.episode_number;
+                      const episodeNumber = isNextEpisodeAvailable
+                        ? media.next_episode_number
+                        : media.episode_number;
 
-                    const seasonNumber = isNextEpisodeAvailable
-                      ? media.next_season_number
-                      : media.season_number;
+                      const seasonNumber = isNextEpisodeAvailable
+                        ? media.next_season_number
+                        : media.season_number;
 
-                    return (
-                      <div key={media.media_id} className="h-auto w-screen">
-                        <HomeMediaCard
-                          user_id={user.user.id}
-                          media_type={media.media_type}
-                          media_id={media.media_id}
-                          episode_number={episodeNumber || undefined}
-                          season_number={seasonNumber || undefined}
-                          rounded={true}
-                        />
-                      </div>
-                    );
-                  })}
+                      return (
+                        <div key={media.media_id} className="h-auto w-screen">
+                          <HomeMediaCard
+                            user_id={user.user.id}
+                            media_type={media.media_type}
+                            media_id={media.media_id}
+                            episode_number={episodeNumber || undefined}
+                            season_number={seasonNumber || undefined}
+                            rounded={true}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="flex h-64 w-full flex-col items-center justify-center gap-4 rounded-[8px] bg-foreground/5">
+                    <img
+                      src="/assets/images/logo_new_black.svg"
+                      alt=""
+                      className="invert-on-dark h-16 w-16 opacity-50"
+                    />
+                    <p className="text-foreground/50">
+                      Start watching to display history
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -188,21 +203,35 @@ const HomeContent = async () => {
               <ScrollButtons containerId="rotten-posts-one" />
             </div>
             <div className="relative pl-4 lg:p-0">
-              <div className="gradient-edge absolute right-0 top-0 z-20 h-full w-[5%]" />
-              <div
-                className="hidden-scrollbar flex flex-row gap-2 overflow-x-auto pr-[5%] lg:gap-4"
-                id="rotten-posts-one"
-              >
-                {followedPosts &&
-                  followedPosts.map((post: any) => (
-                    <div
-                      key={post.id}
-                      className="flex w-[80vw] flex-shrink-0 lg:w-fit"
-                    >
-                      <HomePostCardNew post={post} />
-                    </div>
-                  ))}
-              </div>
+              {followedPosts && followedPosts.length > 0 ? (
+                <>
+                  <div className="gradient-edge absolute right-0 top-0 z-20 h-full w-[5%]" />
+                  <div
+                    className="hidden-scrollbar flex flex-row gap-2 overflow-x-auto pr-[5%] lg:gap-4"
+                    id="rotten-posts-one"
+                  >
+                    {followedPosts.map((post: any) => (
+                      <div
+                        key={post.id}
+                        className="flex w-[80vw] flex-shrink-0 lg:w-fit"
+                      >
+                        <HomePostCardNew post={post} />
+                      </div>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <div className="flex h-64 w-full flex-col items-center justify-center gap-4 rounded-[8px] bg-foreground/5">
+                  <img
+                    src="/assets/images/logo_new_black.svg"
+                    alt=""
+                    className="invert-on-dark h-16 w-16 opacity-50"
+                  />
+                  <p className="text-foreground/50">
+                    Follow friends to show recent posts
+                  </p>
+                </div>
+              )}
             </div>
           </div>
           {/* Top Movie Genre Section */}
@@ -285,7 +314,7 @@ const HomeContent = async () => {
             </div>
           </div> */}
           {/* Infinite Scroll Section */}
-          <h2 className="pl-4 font-semibold">More you might like</h2>
+          <h2 className="pl-4 font-semibold lg:pl-0">More you might like</h2>
           <InfiniteScrollHome user_id={user.user.id} />
           <div className="h-16 w-full" />
         </div>
