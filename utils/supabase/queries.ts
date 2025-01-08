@@ -1030,3 +1030,32 @@ export async function getLatestNewEpisodes(
 
   return data;
 }
+
+export const fetchBlogPostById = async (id: string) => {
+  const { data, error } = await supabase
+    .from("dev_blog")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    console.error("Error fetching blog post:", error.message);
+    return null;
+  }
+
+  return data;
+};
+
+export const fetchBlogPosts = async () => {
+  const { data, error } = await supabase
+    .from("dev_blog")
+    .select("*")
+    .limit(6)
+    .order("created_at", { ascending: false });
+  if (error) {
+    console.error("Error fetching blog post:", error.message);
+    return null;
+  }
+
+  return data;
+};

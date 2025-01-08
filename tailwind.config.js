@@ -1,5 +1,3 @@
-// tailwind.config.js
-
 module.exports = {
   darkMode: "class", // Use class-based dark mode
   content: [
@@ -24,7 +22,64 @@ module.exports = {
             "hsl(var(--btn-background-hover) / <alpha-value>)",
         },
       },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            color: "hsl(var(--foreground))", // Text color
+            a: {
+              color: "hsl(var(--accent))", // Links
+              textDecoration: "underline",
+              "&:hover": {
+                color: "hsl(var(--primary))", // Links hover
+              },
+            },
+            h1: {
+              color: "hsl(var(--foreground))",
+            },
+            h2: {
+              color: "hsl(var(--foreground))",
+            },
+            h3: {
+              color: "hsl(var(--foreground))",
+            },
+            strong: {
+              color: "hsl(var(--foreground))", // Bold text
+            },
+            blockquote: {
+              color: "hsl(var(--foreground))",
+              borderLeftColor: "hsl(var(--accent))", // Blockquote border
+            },
+          },
+        },
+        dark: {
+          css: {
+            color: "hsl(var(--foreground))", // Dark mode text
+            a: {
+              color: "hsl(var(--accent))",
+              "&:hover": {
+                color: "hsl(var(--primary))",
+              },
+            },
+            h1: {
+              color: "hsl(var(--foreground))",
+            },
+            h2: {
+              color: "hsl(var(--foreground))",
+            },
+            h3: {
+              color: "hsl(var(--foreground))",
+            },
+            strong: {
+              color: "hsl(var(--foreground))",
+            },
+            blockquote: {
+              color: "hsl(var(--foreground))",
+              borderLeftColor: "hsl(var(--accent))",
+            },
+          },
+        },
+      }),
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };
