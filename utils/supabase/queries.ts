@@ -923,3 +923,81 @@ export const getNextEpisodes = async (userId: string): Promise<Episode[]> => {
 
   return data as Episode[];
 };
+
+export async function removeFromWatchList(id: string) {
+  const { data, error } = await supabase
+    .from("watch_list") // your table name
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.error("Error removing watch list item:", error.message);
+    throw error;
+  }
+  return data;
+}
+
+interface User {
+  id: string;
+}
+interface WatchListItem {
+  media_id: number;
+}
+
+export interface LastEpisodeInfo {
+  lastAirDate: string;
+  season: number;
+  episode: number;
+}
+export async function getAllUsers(): Promise<User[]> {
+  const { data: users, error } = await supabase.from("users").select("id");
+
+  if (error) {
+    console.error("Error fetching users:", error);
+    return [];
+  }
+  return users ?? [];
+}
+
+export async function getTvWatchListForUser(
+  userId: string,
+): Promise<WatchListItem[]> {
+  const { data, error } = await supabase
+    .from("watch_list")
+    .select("media_id")
+    .eq("user_id", userId)
+    .eq("media_type", "tv");
+
+  if (error) {
+    console.error(`Error fetching watch_list for user=${userId}:`, error);
+    return [];
+  }
+  return data ?? [];
+}
+
+export async function upsertNewEpisodeRecord(
+  userId: string,
+  tvId: number,
+  lastAirDate: string,
+  season_number: number,
+  episode_number: number,
+): Promise<void> {
+  const { error } = await supabase.from("new_episodes").upsert(
+    {
+      user_id: userId,
+      tv_id: tvId,
+      last_air_date: lastAirDate,
+      season_number,
+      episode_number,
+      updated_at: new Date().toISOString(),
+    },
+    { onConflict: "user_id,tv_id" },
+  );
+
+  if (error) {
+    console.error(
+      `new_episodes upsert error (user=${userId}, tvId=${tvId}):`,
+      error,
+    );
+  }
+}

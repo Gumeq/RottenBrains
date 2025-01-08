@@ -64,7 +64,7 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
                             onClick={toggleDropdown}
                             className="flex flex-row items-center gap-2 rounded-full bg-black/20 px-3 py-1 backdrop-blur-xl"
                           >
-                            <p>Categories</p>
+                            <p className="text-white">Categories</p>
                             <img
                               src="/assets/icons/drop_down_arrow_solid.svg"
                               alt="dropdown arrow"
@@ -108,7 +108,7 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
                             </div>
                           )}
                         </div>
-                        <div className="self-start rounded-full bg-black/20 px-3 py-1 backdrop-blur-xl">
+                        <div className="self-start rounded-full bg-black/20 px-3 py-1 text-white backdrop-blur-xl">
                           🔥Now Popular
                         </div>
                       </div>
@@ -119,17 +119,17 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
                             return (
                               <div
                                 key={genre}
-                                className="rounded-full bg-black/20 px-3 py-1 text-sm backdrop-blur-xl"
+                                className="rounded-full bg-black/20 px-3 py-1 text-sm text-white backdrop-blur-xl"
                               >
                                 {getGenreNameById(genre)}
                               </div>
                             );
                           })}
                         </div>
-                        <h2 className="text-4xl font-bold">
+                        <h2 className="text-4xl font-bold text-white">
                           {media.title || media.name}
                         </h2>
-                        <h3 className="line-clamp-[4] lg:w-1/3">
+                        <h3 className="line-clamp-[4] text-white lg:w-1/3">
                           {media.overview}
                         </h3>
                         <div className="flex flex-col gap-4 lg:flex-row">
@@ -146,7 +146,7 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
                           </Link>
                           <Link
                             href={`/protected/media/${media.media_type}/${media.id}`}
-                            className="rounded-full bg-black/20 px-6 py-3 text-lg backdrop-blur-xl"
+                            className="rounded-full bg-black/20 px-6 py-3 text-lg text-white backdrop-blur-xl"
                           >
                             View Details
                           </Link>

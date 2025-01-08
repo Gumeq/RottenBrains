@@ -190,3 +190,27 @@ export const getGenreInfo = async (genreId: number) => {
     }
   }
 };
+
+export async function getLastEpisodeFromTMDB(
+  tvId: number,
+): Promise<any | null> {
+  try {
+    const data = await getMediaDetails("tv", tvId);
+    if (!data.last_episode_to_air) {
+      // Show might be ended or no episodes yet
+      return null;
+    }
+
+    const { air_date, season_number, episode_number } =
+      data.last_episode_to_air;
+
+    return {
+      lastAirDate: air_date,
+      season: season_number,
+      episode: episode_number,
+    };
+  } catch (err) {
+    console.error("getLastEpisodeFromTMDB error:", err);
+    return null;
+  }
+}

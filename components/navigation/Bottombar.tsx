@@ -51,7 +51,7 @@ const Bottombar = () => {
             alt="Create"
             width={40}
             height={40}
-            className="invert-on-dark rounded-full p-2"
+            className="invert-on-dark p-2"
           />
           <p className="text-xs">Create</p>
         </Link>
@@ -63,7 +63,7 @@ const Bottombar = () => {
             alt="Lists"
             width={40}
             height={40}
-            className="invert-on-dark rounded-full p-2"
+            className="invert-on-dark p-2"
           />
           <p className="text-xs">Library</p>
         </Link>

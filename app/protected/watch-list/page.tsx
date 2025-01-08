@@ -1,17 +1,17 @@
-import {
-  getWatchLaterForUser,
-  getWatchListFull,
-  getWatchListSpecific,
-} from "@/utils/supabase/queries";
-import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import React from "react";
-import MediaCard from "./MediaCardWatchList";
+import { getWatchListSpecific } from "@/utils/supabase/queries";
+import { getCurrentUser } from "@/utils/supabase/serverQueries";
+import { getMediaDetails } from "@/utils/tmdb";
+import { getAverageColor } from "fast-average-color-node";
+import WatchListCard from "./WatchListCard";
 
 const page = async () => {
   const user = await getCurrentUser();
-  const limit = 10;
+
+  const limit = 1;
   const offset = 0;
-  // const watchList = await getWatchListFull(user.user.id, limit, offset);
+
+  // Example queries
   const watching = await getWatchListSpecific(
     user.user.id,
     limit,
@@ -31,49 +31,69 @@ const page = async () => {
     "watched",
   );
 
+  // “Watched”
+  const fwatched = watched[0];
+  const watchedMedia = await getMediaDetails(
+    fwatched.media_type,
+    fwatched.media_id,
+  );
+  const watchedImageUrl =
+    watchedMedia?.images?.backdrops?.[0]?.file_path ||
+    watchedMedia?.backdrop_path;
+  const watchedColor = await getAverageColor(
+    `https://image.tmdb.org/t/p/w200${watchedMedia.backdrop_path}`,
+  );
+
+  // “Watching”
+  const fwatching = watching[0];
+  const watchingMedia = await getMediaDetails(
+    fwatching.media_type,
+    fwatching.media_id,
+  );
+  const watchingImageUrl =
+    watchingMedia?.images?.backdrops?.[0]?.file_path ||
+    watchingMedia?.backdrop_path;
+  const watchingColor = await getAverageColor(
+    `https://image.tmdb.org/t/p/w200${watchingMedia.backdrop_path}`,
+  );
+
+  // “Planned”
+  const fplanned = planned[0];
+  const plannedMedia = await getMediaDetails(
+    fplanned.media_type,
+    fplanned.media_id,
+  );
+  const plannedImageUrl =
+    plannedMedia?.images?.backdrops?.[0]?.file_path ||
+    plannedMedia?.backdrop_path;
+  const plannedColor = await getAverageColor(
+    `https://image.tmdb.org/t/p/w200${plannedMedia.backdrop_path}`,
+  );
+
   return (
-    <div className="grid grid-cols-1 p-2 lg:grid-cols-3 lg:gap-8 lg:p-4">
-      <div className="">
-        <h2 className="my-4 text-xl font-semibold">Watching</h2>
-        <div className="grid grid-cols-1 gap-2 xl:grid-cols-2">
-          {watching &&
-            watching.map((media: any) => {
-              return (
-                <MediaCard
-                  media_type={media.media_type}
-                  media_id={media.media_id}
-                ></MediaCard>
-              );
-            })}
-        </div>
-      </div>
-      <div className="">
-        <h2 className="my-4 text-xl font-semibold">Planned</h2>
-        <div className="grid grid-cols-1 gap-2 xl:grid-cols-2">
-          {planned &&
-            planned.map((media: any) => {
-              return (
-                <MediaCard
-                  media_type={media.media_type}
-                  media_id={media.media_id}
-                ></MediaCard>
-              );
-            })}
-        </div>
-      </div>
-      <div className="">
-        <h2 className="my-4 text-xl font-semibold">Watched</h2>
-        <div className="grid grid-cols-1 gap-2 xl:grid-cols-2">
-          {watched &&
-            watched.map((media: any) => {
-              return (
-                <MediaCard
-                  media_type={media.media_type}
-                  media_id={media.media_id}
-                ></MediaCard>
-              );
-            })}
-        </div>
+    <div className="mb-16 w-full flex-col px-4 py-4 lg:px-0">
+      <h1 className="px-4 text-lg font-semibold">Watch List</h1>
+      <div className="my-4 w-full border-b-2 border-foreground/5"></div>
+
+      <div className="flex w-full flex-col gap-8 lg:flex-row">
+        <WatchListCard
+          label="Watching"
+          color={watchingColor.hex}
+          mediaId={watchingMedia.id}
+          imageUrl={watchingImageUrl}
+        />
+        <WatchListCard
+          label="Planned"
+          color={plannedColor.hex}
+          mediaId={plannedMedia.id}
+          imageUrl={plannedImageUrl}
+        />
+        <WatchListCard
+          label="Watched"
+          color={watchedColor.hex}
+          mediaId={watchedMedia.id}
+          imageUrl={watchedImageUrl}
+        />
       </div>
     </div>
   );

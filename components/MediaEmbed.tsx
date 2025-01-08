@@ -99,6 +99,8 @@ const VideoEmbed = ({
               loading="lazy"
               src={link}
               // src={"/api/testapi?video_id=1419&tmdb=1&season=4&episode=22"}
+              // src={`https://2anime.xyz/embed/demon-slayer-episode-4`}
+              // src={`https://www.2embed.cc/embedtv/60735&s=1&e=1`}
               className="inline-block h-full w-screen lg:w-full"
               frameBorder="0"
               marginHeight={0}

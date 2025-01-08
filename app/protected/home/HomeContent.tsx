@@ -1,8 +1,10 @@
 import {
+  getAllUsers,
   getNewestUsers,
   getNextEpisodes,
   getTopMovieGenresForUser,
   getTopTvGenresForUser,
+  getTvWatchListForUser,
 } from "@/utils/supabase/queries";
 import {
   getCurrentUser,
@@ -19,7 +21,11 @@ import {
 import InfiniteScrollHome from "./InfiniteScrollHome";
 import { MobileVideoProvider } from "@/context/MobileVideoContext";
 import { getGenreNameById } from "@/lib/functions";
-import { getFromGenres, getMediaDetails } from "@/utils/tmdb";
+import {
+  getFromGenres,
+  getLastEpisodeFromTMDB,
+  getMediaDetails,
+} from "@/utils/tmdb";
 import { AlignVerticalJustifyEnd } from "lucide-react";
 import GenreSelector from "./GenreSelectorHome";
 
@@ -36,26 +42,16 @@ const HomeContent = async () => {
     }
 
     const userId = user.user.id.toString();
-
+    // const test = await getTvWatchListForUser(userId);
+    // console.log(test);
     // Fetch other data in parallel
-    const [
-      followedPosts,
-      movieRecsData,
-      topMovieGenres,
-      topTvGenres,
-      tvRecsData,
-      nextEpisodes,
-    ] = await Promise.all([
-      getPostsFromFollowedUsers(userId, 0),
-      getMovieRecommendationsForUser(userId, 1),
-      getTopMovieGenresForUser(userId),
-      getTopTvGenresForUser(userId),
-      getTvRecommendationsForUser(userId, 1),
-      getNextEpisodes(userId),
-    ]);
-
-    const movieRecommendations = movieRecsData.results;
-    const tvRecommendations = tvRecsData.results;
+    const [followedPosts, topMovieGenres, topTvGenres, nextEpisodes] =
+      await Promise.all([
+        getPostsFromFollowedUsers(userId, 0),
+        getTopMovieGenresForUser(userId),
+        getTopTvGenresForUser(userId),
+        getNextEpisodes(userId),
+      ]);
 
     const topMovieGenreCode = topMovieGenres[0]?.genre_code;
     const topTvGenreCode = topTvGenres[0]?.genre_code;
