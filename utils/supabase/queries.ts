@@ -697,8 +697,8 @@ export async function getBatchWatchedItemsForUser(
   try {
     // Create the batch payload in the format { media_type, media_id }
     const batchPayload = batch.map((item) => ({
-      media_type: item.media_type,
-      media_id: item.id,
+      media_type: item.media_type || "tv",
+      media_id: item.tv_id || item.media_id || item.id,
     }));
 
     console.log(batchPayload);

@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { useState } from "react";
 
 export default async function Index() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

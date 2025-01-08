@@ -3,9 +3,20 @@ import Link from "next/link";
 import React from "react";
 import ReactMarkdown from "react-markdown";
 
-const page = async ({ params }: { params: { blog_id: string } }) => {
+type PageProps = {
+  params: {
+    blog_id: string;
+  };
+};
+
+const Page = async ({ params }: PageProps) => {
+  // Destructure `blog_id` from `params`
   const { blog_id } = params;
+
+  // Fetch the blog post by ID
   const data = await fetchBlogPostById(blog_id);
+
+  // Replace escaped newline characters with actual newlines
   data.content = data.content.replace(/\\n/g, "\n");
   const post = data;
 
@@ -36,7 +47,7 @@ const page = async ({ params }: { params: { blog_id: string } }) => {
       ) : (
         <img
           src={post.thumbnail}
-          alt={`Thumbnail`}
+          alt="Thumbnail"
           className="aspect-[16/9] w-full rounded shadow"
         />
       )}
@@ -57,4 +68,4 @@ const page = async ({ params }: { params: { blog_id: string } }) => {
   );
 };
 
-export default page;
+export default Page;

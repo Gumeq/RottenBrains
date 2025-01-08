@@ -1,5 +1,6 @@
 import {
   getAllUsers,
+  getBatchWatchedItemsForUser,
   getLatestNewEpisodes,
   getNewestUsers,
   getNextEpisodes,
@@ -72,6 +73,25 @@ const HomeContent = async () => {
     const topMovieGenreName = getGenreNameById(Number(topMovieGenreCode));
     const topTvGenreName = getGenreNameById(Number(topTvGenreCode));
 
+    let unwatchedEpisodes: any[] = [];
+    if (newEpisodes && newEpisodes.length > 0) {
+      console.log(newEpisodes);
+      const watchedItems = await getBatchWatchedItemsForUser(
+        userId,
+        newEpisodes,
+      );
+      console.log(watchedItems);
+      const watchedSet = new Set(
+        watchedItems.map((item: any) => `tv-${item.media_id}`),
+      );
+      console.log(watchedSet);
+
+      // Filter out watched items
+      unwatchedEpisodes = newEpisodes.filter(
+        (item) => !watchedSet.has(`tv-${item.tv_id}`),
+      );
+    }
+
     // Optimize nextEpisodes processing
     const processedEpisodes = await Promise.all(
       nextEpisodes.map(async (episode) => {
@@ -126,57 +146,108 @@ const HomeContent = async () => {
         <div className="flex w-full flex-col gap-8 p-0 pb-4 lg:w-auto lg:p-4 lg:py-0">
           <MobileTopBarHome />
           {/* Watch History Section */}
-          <div className="mt-4 rounded-[16px] pl-2 lg:p-0">
-            <div className="mb-4 flex flex-row items-center justify-between">
-              <h2 className="px-2 font-semibold lg:px-0 lg:text-lg">
-                Continue Watching
-              </h2>
-              <ScrollButtons containerId="watch_history_main" />
+          {processedEpisodes.length > 0 ? (
+            <div className="mt-4 rounded-[16px] pl-2 lg:p-0">
+              <div className="mb-4 flex flex-row items-center justify-between">
+                <h2 className="px-2 font-semibold lg:px-0 lg:text-lg">
+                  Continue Watching
+                </h2>
+                <ScrollButtons containerId="watch_history_main" />
+              </div>
+              <div className="w-full pl-4 lg:pl-0">
+                <div>
+                  {processedEpisodes.length > 0 ? (
+                    <div
+                      className="hidden-scrollbar flex flex-row gap-4 overflow-x-auto"
+                      id="watch_history_main"
+                    >
+                      {processedEpisodes.map((media) => {
+                        if (
+                          (media.media_type === "movie" &&
+                            media.next_episode === true) ||
+                          (media.media_type === "tv" &&
+                            !media.next_episode_number &&
+                            media.next_episode === true)
+                        ) {
+                          return null; // Skip rendering for watched movies
+                        }
+
+                        const isNextEpisodeAvailable =
+                          media.media_type === "tv" &&
+                          media.next_episode === true;
+
+                        const episodeNumber = isNextEpisodeAvailable
+                          ? media.next_episode_number
+                          : media.episode_number;
+
+                        const seasonNumber = isNextEpisodeAvailable
+                          ? media.next_season_number
+                          : media.season_number;
+
+                        return (
+                          <div key={media.media_id} className="h-auto w-screen">
+                            <HomeMediaCard
+                              user_id={user.user.id}
+                              media_type={media.media_type}
+                              media_id={media.media_id}
+                              episode_number={episodeNumber || undefined}
+                              season_number={seasonNumber || undefined}
+                              rounded={true}
+                            />
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <div className="flex h-64 w-full flex-col items-center justify-center gap-4 rounded-[8px] bg-foreground/5">
+                      <img
+                        src="/assets/images/logo_new_black.svg"
+                        alt=""
+                        className="invert-on-dark h-16 w-16 opacity-50"
+                      />
+                      <p className="text-foreground/50">
+                        Start watching to display history
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
-            <div className="w-full pl-4 lg:pl-0">
-              <div>
-                {processedEpisodes.length > 0 ? (
-                  <div
-                    className="hidden-scrollbar flex flex-row gap-4 overflow-x-auto"
-                    id="watch_history_main"
-                  >
-                    {processedEpisodes.map((media) => {
-                      if (
-                        (media.media_type === "movie" &&
-                          media.next_episode === true) ||
-                        (media.media_type === "tv" &&
-                          !media.next_episode_number &&
-                          media.next_episode === true)
-                      ) {
-                        return null; // Skip rendering for watched movies
-                      }
-
-                      const isNextEpisodeAvailable =
-                        media.media_type === "tv" &&
-                        media.next_episode === true;
-
-                      const episodeNumber = isNextEpisodeAvailable
-                        ? media.next_episode_number
-                        : media.episode_number;
-
-                      const seasonNumber = isNextEpisodeAvailable
-                        ? media.next_season_number
-                        : media.season_number;
-
-                      return (
-                        <div key={media.media_id} className="h-auto w-screen">
-                          <HomeMediaCard
-                            user_id={user.user.id}
-                            media_type={media.media_type}
-                            media_id={media.media_id}
-                            episode_number={episodeNumber || undefined}
-                            season_number={seasonNumber || undefined}
-                            rounded={true}
-                          />
+          ) : (
+            <></>
+          )}
+          {/* Posts Section */}
+          {followedPosts && followedPosts.length > 0 ? (
+            <div className="">
+              <div className="mb-4 flex flex-row items-center justify-between pl-4 lg:pl-0">
+                <div className="flex flex-row items-center gap-2">
+                  <img
+                    src="/assets/icons/review-outline.svg"
+                    alt="Posts Icon"
+                    className="invert-on-dark"
+                  />
+                  <h2 className="text-xl font-bold">Posts</h2>
+                </div>
+                <ScrollButtons containerId="rotten-posts-one" />
+              </div>
+              <div className="relative pl-4 lg:p-0">
+                {followedPosts && followedPosts.length > 0 ? (
+                  <>
+                    <div className="gradient-edge absolute right-0 top-0 z-20 h-full w-[5%]" />
+                    <div
+                      className="hidden-scrollbar flex flex-row gap-2 overflow-x-auto pr-[5%] lg:gap-4"
+                      id="rotten-posts-one"
+                    >
+                      {followedPosts.map((post: any) => (
+                        <div
+                          key={post.id}
+                          className="flex w-[80vw] flex-shrink-0 lg:w-fit"
+                        >
+                          <HomePostCardNew post={post} />
                         </div>
-                      );
-                    })}
-                  </div>
+                      ))}
+                    </div>
+                  </>
                 ) : (
                   <div className="flex h-64 w-full flex-col items-center justify-center gap-4 rounded-[8px] bg-foreground/5">
                     <img
@@ -185,73 +256,29 @@ const HomeContent = async () => {
                       className="invert-on-dark h-16 w-16 opacity-50"
                     />
                     <p className="text-foreground/50">
-                      Start watching to display history
+                      Follow friends to show recent posts
                     </p>
                   </div>
                 )}
               </div>
             </div>
-          </div>
-          {/* Posts Section */}
-          <div className="">
-            <div className="mb-4 flex flex-row items-center justify-between pl-4 lg:pl-0">
-              <div className="flex flex-row items-center gap-2">
-                <img
-                  src="/assets/icons/review-outline.svg"
-                  alt="Posts Icon"
-                  className="invert-on-dark"
-                />
-                <h2 className="text-xl font-bold">Posts</h2>
-              </div>
-              <ScrollButtons containerId="rotten-posts-one" />
-            </div>
-            <div className="relative pl-4 lg:p-0">
-              {followedPosts && followedPosts.length > 0 ? (
-                <>
-                  <div className="gradient-edge absolute right-0 top-0 z-20 h-full w-[5%]" />
-                  <div
-                    className="hidden-scrollbar flex flex-row gap-2 overflow-x-auto pr-[5%] lg:gap-4"
-                    id="rotten-posts-one"
-                  >
-                    {followedPosts.map((post: any) => (
-                      <div
-                        key={post.id}
-                        className="flex w-[80vw] flex-shrink-0 lg:w-fit"
-                      >
-                        <HomePostCardNew post={post} />
-                      </div>
-                    ))}
+          ) : (
+            <></>
+          )}
+          {unwatchedEpisodes && unwatchedEpisodes.length > 0 ? (
+            <div>
+              <div className="flex flex-col gap-4 pl-4 lg:pl-0">
+                <div className="flex flex-row items-center justify-between lg:p-0">
+                  <div className="flex flex-row items-center gap-2">
+                    <h2 className="font-bold">New Episodes</h2>
                   </div>
-                </>
-              ) : (
-                <div className="flex h-64 w-full flex-col items-center justify-center gap-4 rounded-[8px] bg-foreground/5">
-                  <img
-                    src="/assets/images/logo_new_black.svg"
-                    alt=""
-                    className="invert-on-dark h-16 w-16 opacity-50"
-                  />
-                  <p className="text-foreground/50">
-                    Follow friends to show recent posts
-                  </p>
+                  <ScrollButtons containerId="new-episodes" />
                 </div>
-              )}
-            </div>
-          </div>
-          <div>
-            <div className="flex flex-col gap-4 pl-4 lg:pl-0">
-              <div className="flex flex-row items-center justify-between lg:p-0">
-                <div className="flex flex-row items-center gap-2">
-                  <h2 className="font-bold">New Episodes</h2>
-                </div>
-                <ScrollButtons containerId="new-episodes" />
-              </div>
-              <div
-                className="hidden-scrollbar relative flex flex-row gap-4 overflow-x-auto"
-                id={"new-episodes"}
-              >
-                {newEpisodes &&
-                  newEpisodes.length > 0 &&
-                  newEpisodes.slice(0, 10).map((media: any) => (
+                <div
+                  className="hidden-scrollbar relative flex flex-row gap-4 overflow-x-auto"
+                  id={"new-episodes"}
+                >
+                  {unwatchedEpisodes.slice(0, 10).map((media: any) => (
                     <div key={media.id}>
                       <HomeMediaCard
                         user_id={user.user.id}
@@ -263,9 +290,12 @@ const HomeContent = async () => {
                       />
                     </div>
                   ))}
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <></>
+          )}
           {/* Top Movie Genre Section */}
           <div>
             <div className="flex flex-col gap-4 pl-4 lg:pl-0">
