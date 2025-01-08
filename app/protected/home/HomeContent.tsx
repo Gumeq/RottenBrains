@@ -1,5 +1,6 @@
 import {
   getAllUsers,
+  getLatestNewEpisodes,
   getNewestUsers,
   getNextEpisodes,
   getTopMovieGenresForUser,
@@ -45,13 +46,19 @@ const HomeContent = async () => {
     // const test = await getTvWatchListForUser(userId);
     // console.log(test);
     // Fetch other data in parallel
-    const [followedPosts, topMovieGenres, topTvGenres, nextEpisodes] =
-      await Promise.all([
-        getPostsFromFollowedUsers(userId, 0),
-        getTopMovieGenresForUser(userId),
-        getTopTvGenresForUser(userId),
-        getNextEpisodes(userId),
-      ]);
+    const [
+      followedPosts,
+      topMovieGenres,
+      topTvGenres,
+      nextEpisodes,
+      newEpisodes,
+    ] = await Promise.all([
+      getPostsFromFollowedUsers(userId, 0),
+      getTopMovieGenresForUser(userId),
+      getTopTvGenresForUser(userId),
+      getNextEpisodes(userId),
+      getLatestNewEpisodes(userId),
+    ]);
 
     const topMovieGenreCode = topMovieGenres[0]?.genre_code;
     const topTvGenreCode = topTvGenres[0]?.genre_code;
@@ -228,6 +235,35 @@ const HomeContent = async () => {
                   </p>
                 </div>
               )}
+            </div>
+          </div>
+          <div>
+            <div className="flex flex-col gap-4 pl-4 lg:pl-0">
+              <div className="flex flex-row items-center justify-between lg:p-0">
+                <div className="flex flex-row items-center gap-2">
+                  <h2 className="font-bold">New Episodes</h2>
+                </div>
+                <ScrollButtons containerId="new-episodes" />
+              </div>
+              <div
+                className="hidden-scrollbar relative flex flex-row gap-4 overflow-x-auto"
+                id={"new-episodes"}
+              >
+                {newEpisodes &&
+                  newEpisodes.length > 0 &&
+                  newEpisodes.slice(0, 10).map((media: any) => (
+                    <div key={media.id}>
+                      <HomeMediaCard
+                        user_id={user.user.id}
+                        media_type="tv"
+                        media_id={media.tv_id}
+                        season_number={media.season_number}
+                        episode_number={media.episode_number}
+                        rounded={true}
+                      />
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
           {/* Top Movie Genre Section */}

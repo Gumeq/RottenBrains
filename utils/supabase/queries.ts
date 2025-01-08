@@ -1001,3 +1001,32 @@ export async function upsertNewEpisodeRecord(
     );
   }
 }
+
+export interface NewEpisode {
+  user_id: string;
+  tv_id: number;
+  last_air_date: string; // or Date, depending on how you store it
+  season: number;
+  episode: number;
+  updated_at?: string;
+  created_at?: string;
+}
+
+export async function getLatestNewEpisodes(
+  userId: string,
+): Promise<NewEpisode[] | null> {
+  // Query the `new_episodes` table:
+  const { data, error } = await supabase
+    .from("new_episodes")
+    .select("*")
+    .eq("user_id", userId)
+    .order("last_air_date", { ascending: false })
+    .limit(10);
+
+  if (error) {
+    console.error("Error fetching latest new episodes:", error);
+    return null;
+  }
+
+  return data;
+}

@@ -206,8 +206,8 @@ export async function getLastEpisodeFromTMDB(
 
     return {
       lastAirDate: air_date,
-      season: season_number,
-      episode: episode_number,
+      season_number: season_number,
+      episode_number: episode_number,
     };
   } catch (err) {
     console.error("getLastEpisodeFromTMDB error:", err);
