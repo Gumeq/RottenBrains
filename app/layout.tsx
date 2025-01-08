@@ -15,13 +15,14 @@ export const metadata = {
   description: "Your Hub for Movie Reviews and Streaming!",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   // Read theme from cookie
-  const themeCookieValue = cookies().get("theme")?.value;
+  const cookieStore = await cookies();
+  const themeCookieValue = cookieStore.get("theme")?.value;
 
   // Validate and assign theme
   const themeCookie: Theme = themeCookieValue === "dark" ? "dark" : "light";

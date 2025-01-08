@@ -4,7 +4,7 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 
 const page = async ({ params }: { params: { blog_id: string } }) => {
-  const { blog_id } = await params;
+  const { blog_id } = params;
   const data = await fetchBlogPostById(blog_id);
   data.content = data.content.replace(/\\n/g, "\n");
   const post = data;
