@@ -5,13 +5,11 @@ import GenreSelector from "../../GenreSelectorHome";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import MobileTopBarHome from "../../MobileTopBarHome";
 
-const page = async ({
-  params,
-}: {
-  params: { genre_id: number; media_type: "movie" | "tv" };
-}) => {
-  const genre_id = Number(params.genre_id);
-  const media_type = params.media_type;
+type Params = Promise<{ genre_id: number; media_type: "movie" | "tv" }>;
+
+const page = async ({ params }: { params: Params }) => {
+  const { genre_id } = await params;
+  const { media_type } = await params;
   const genre_name = getGenreNameById(genre_id);
   const user = await getCurrentUser();
 

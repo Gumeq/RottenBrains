@@ -37,13 +37,9 @@ export async function generateMetadata({ params }: any) {
     description: `${media.overview}`,
   };
 }
-
-export default async function mediaPage({
-  params,
-}: {
-  params: { media_id: number };
-}) {
-  const media_id = params.media_id;
+type Params = Promise<{ media_id: number }>;
+export default async function mediaPage({ params }: { params: Params }) {
+  const { media_id } = await params;
   const media_type = "movie";
 
   const user = await getCurrentUser();

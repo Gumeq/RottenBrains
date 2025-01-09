@@ -3,22 +3,20 @@ import GoBackArrow from "@/components/GoBackArrow";
 import { getPostById } from "@/utils/supabase/queries";
 import React from "react";
 
-export default async function Page({
-	params,
-}: {
-	params: { post_id: string };
-}) {
-	const post_id = params.post_id;
+type Params = Promise<{ post_id: string }>;
 
-	const post = await getPostById(post_id);
+export default async function Page({ params }: { params: Params }) {
+  const { post_id } = await params;
 
-	return (
-		<div className="w-screen">
-			<div className="w-screen h-16 bg-white/10 flex-row gap-4 flex lg:hidden z-20 relative items-center px-4">
-				<GoBackArrow />
-				<p className="truncate text-lg">Update post</p>
-			</div>
-			<PostForm action="Update" post={post}></PostForm>
-		</div>
-	);
+  const post = await getPostById(post_id);
+
+  return (
+    <div className="w-screen">
+      <div className="relative z-20 flex h-16 w-screen flex-row items-center gap-4 bg-white/10 px-4 lg:hidden">
+        <GoBackArrow />
+        <p className="truncate text-lg">Update post</p>
+      </div>
+      <PostForm action="Update" post={post}></PostForm>
+    </div>
+  );
 }

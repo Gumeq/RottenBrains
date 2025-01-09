@@ -3,9 +3,9 @@ import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import React from "react";
 import HomeMediaCard from "../../home/HomeMediaCard";
 import WatchListInfiniteScroll from "./WatchListInfinireScroll";
-
-const page = async ({ params }: { params: { watch_list_type: string } }) => {
-  const watch_list_type = params.watch_list_type;
+type Params = Promise<{ watch_list_type: string }>;
+const page = async ({ params }: { params: Params }) => {
+  const { watch_list_type } = await params;
 
   let user = await getCurrentUser();
   user = user.user;

@@ -10,14 +10,16 @@ import FollowInfo from "./FollowInfo";
 import NewTabs from "./NewTabs";
 import { getUserFromDB } from "@/utils/supabase/queries";
 
+type Params = Promise<{ userId: string }>;
+
 const ProfileLayout = async ({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: { userId: string };
+  params: Params;
 }) => {
-  const userId = params.userId;
+  const { userId } = await params;
   let user = await getUserFromDB(userId);
 
   const currentUser = await getCurrentUser();

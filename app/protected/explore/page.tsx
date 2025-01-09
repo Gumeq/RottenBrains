@@ -1,11 +1,7 @@
 import ExploreTab from "@/components/explore/ExploreTab";
-import MediaCarousel from "@/components/MediaCarousel";
 import { getPopular } from "@/utils/tmdb";
 import React from "react";
-import GenreSelector from "./GenreSelector";
-import SearchBar from "@/components/searchBar/SearchBar";
 import { getAverageColor } from "fast-average-color-node";
-import ScrollButtons from "@/components/explore/ScrollButtons";
 import MediaCarouselNew from "@/components/MediaCarouselNew";
 
 const fetchMoviesWithColors = async (movies: any) => {

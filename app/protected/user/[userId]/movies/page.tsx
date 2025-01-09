@@ -3,13 +3,10 @@
 import { useUser } from "@/context/UserContext";
 import UserPostsType from "@/app/protected/profile/UserPostsType";
 
-export default function ProtectedPage({
-  params,
-}: {
-  params: { userId: string };
-}) {
+type Params = Promise<{ userId: string }>;
+export default async function ProtectedPage({ params }: { params: Params }) {
+  const { userId } = await params;
   const { user: currentUser } = useUser();
-  const userId = params.userId;
 
   if (!currentUser) return <p>Loading User</p>;
   return (

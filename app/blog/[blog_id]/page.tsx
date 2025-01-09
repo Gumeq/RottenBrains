@@ -3,15 +3,12 @@ import Link from "next/link";
 import React from "react";
 import ReactMarkdown from "react-markdown";
 
-type PageProps = {
-  params: {
-    blog_id: string;
-  };
-};
+type Params = Promise<{ blog_id: string }>;
 
-const Page = async ({ params }: PageProps) => {
+export default async function AsyncPage({ params }: { params: Params }) {
   // Destructure `blog_id` from `params`
-  const { blog_id } = params;
+
+  const { blog_id } = await params;
 
   // Fetch the blog post by ID
   const data = await fetchBlogPostById(blog_id);
@@ -66,6 +63,4 @@ const Page = async ({ params }: PageProps) => {
       </div>
     </div>
   );
-};
-
-export default Page;
+}

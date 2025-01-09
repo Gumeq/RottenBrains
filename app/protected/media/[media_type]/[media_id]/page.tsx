@@ -116,13 +116,11 @@ async function separateCredits(media_type: string, media_id: number) {
   };
 }
 
-export default async function mediaPage({
-  params,
-}: {
-  params: { media_type: string; media_id: any };
-}) {
-  const media_id = parseInt(params.media_id, 10);
-  const media_type = params.media_type;
+type Params = Promise<{ media_id: number; media_type: string }>;
+
+export default async function mediaPage({ params }: { params: Params }) {
+  const { media_id } = await params;
+  const { media_type } = await params;
   let mediaData;
   try {
     mediaData = await getMediaDetails(media_type, media_id);

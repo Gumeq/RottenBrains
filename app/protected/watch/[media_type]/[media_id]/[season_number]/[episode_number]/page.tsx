@@ -41,19 +41,16 @@ export async function generateMetadata({ params }: any) {
   };
 }
 
-export default async function mediaPage({
-  params,
-}: {
-  params: {
-    media_id: number;
-    season_number: number;
-    episode_number: number;
-  };
-}) {
-  const media_id = params.media_id;
+type Params = Promise<{
+  media_id: number;
+  season_number: number;
+  episode_number: number;
+}>;
+export default async function mediaPage({ params }: { params: Params }) {
+  const { media_id } = await params;
   const media_type = "tv";
-  const season_number = params.season_number;
-  const episode_number = Number(params.episode_number);
+  const { season_number } = await params;
+  const { episode_number } = await params;
 
   const user = await getCurrentUser();
 
