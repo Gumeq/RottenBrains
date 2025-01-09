@@ -11,12 +11,18 @@ import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
 import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
 import WatchPageDetails from "@/components/WatchPageDetails";
+type Params = Promise<{
+  media_id: number;
+  season_number: number;
+  episode_number: number;
+  media_type: string;
+}>;
 
-export async function generateMetadata({ params }: any) {
-  const media_id = parseInt(params.media_id, 10);
-  const media_type = "tv";
-  const season_number = parseInt(params.season_number);
-  const episode_number = parseInt(params.episode_number);
+export async function generateMetadata({ params }: { params: Params }) {
+  const { media_id } = await params;
+  const { media_type } = await params;
+  const { season_number } = await params;
+  const { episode_number } = await params;
 
   let mediaData;
   try {
@@ -41,16 +47,13 @@ export async function generateMetadata({ params }: any) {
   };
 }
 
-type Params = Promise<{
-  media_id: number;
-  season_number: number;
-  episode_number: number;
-}>;
 export default async function mediaPage({ params }: { params: Params }) {
   const { media_id } = await params;
-  const media_type = "tv";
+  const { media_type } = await params;
   const { season_number } = await params;
   const { episode_number } = await params;
+
+  console.log(media_type, media_id, season_number, episode_number);
 
   const user = await getCurrentUser();
 
@@ -86,7 +89,7 @@ export default async function mediaPage({ params }: { params: Params }) {
       nextEpisode = await getEpisodeDetails(
         media.id,
         season_number,
-        episode_number + 1,
+        Number(episode_number) + 1,
       );
     } else if (currentSeasonIndex + 1 < seasons.length) {
       // First episode of the next season

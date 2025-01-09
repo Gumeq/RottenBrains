@@ -30,7 +30,7 @@ const PostCardMain: React.FC<{ post: Post }> = async ({ post }) => {
   return (
     <Link
       href={`/blog/${post.id}`}
-      className="w-full min-w-[300px] max-w-[500px] border"
+      className="w-full min-w-[300px] border lg:max-w-[500px]"
     >
       <div className="relative aspect-[4/3] w-full overflow-hidden">
         <div className="grid h-full w-full grid-cols-2 grid-rows-2 gap-2 bg-foreground/20 p-2">

@@ -10,7 +10,7 @@ export default async function BlogLayout({
     <div>
       <div className="w-full"> </div>
       <div className="w-full overflow-x-hidden bg-background text-foreground md:flex">
-        <div className="hidden lg:flex">
+        <div className="flex">
           <BlogNav>{children}</BlogNav>
         </div>
       </div>

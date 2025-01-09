@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import VersionDisplay from "@/components/VersionDisplay";
 import NavLinkMobile from "./NavLinkMobile";
 import {
+  DevBlogIcon,
   ExploreIcon,
   HistoryIcon,
   HomeIcon,
@@ -89,12 +90,17 @@ const MenuButtonWithSidebar: React.FC = () => {
             <NavLinkMobile
               href="/protected/watch-list"
               icon={WatchListIcon}
-              label="Watch list"
+              label="Library"
             />
             <NavLinkMobile
               href="/protected/watch-later"
               icon={WatchLaterIcon}
               label="Watch later"
+            />
+            <NavLinkMobile
+              href="/blog"
+              icon={DevBlogIcon}
+              label="Developer blog"
             />
           </ul>
           <div className="absolute bottom-0 flex flex-col gap-2 p-2 text-sm text-foreground/50">

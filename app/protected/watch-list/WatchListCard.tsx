@@ -36,7 +36,7 @@ const WatchListCard: React.FC<WatchListCardProps> = ({
 
       {/* Top layer with image */}
       <div className="relative z-30 flex aspect-[16/9] w-full overflow-hidden rounded-[8px] drop-shadow-md">
-        <div className="absolute flex h-full w-full items-center justify-center bg-black/50">
+        <div className="absolute flex h-full w-full items-center justify-center bg-black/50 text-white">
           <p className="text-2xl font-semibold">{label}</p>
         </div>
         <ImageWithFallback altText={`${mediaId}`} imageUrl={imageUrl} />

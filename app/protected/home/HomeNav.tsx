@@ -20,6 +20,7 @@ import {
   WatchLaterIcon,
   WatchListIcon,
   YouIcon,
+  DevBlogIcon,
 } from "./Icon";
 
 const HomeNav = ({ children }: any) => {
@@ -155,8 +156,9 @@ const HomeNav = ({ children }: any) => {
               <NavLink
                 href="/protected/watch-later"
                 icon={WatchLaterIcon}
-                label="Watch later"
+                label="Watch Later"
               />
+              <NavLink href="/blog" icon={DevBlogIcon} label="Developer Blog" />
             </ul>
             <div className="absolute bottom-0 flex flex-col gap-2 p-2 text-sm text-foreground/50">
               <VersionDisplay></VersionDisplay>
@@ -175,6 +177,7 @@ const HomeNav = ({ children }: any) => {
               <NavLink href="/protected/saved-posts" icon={SavedPostsIcon} />
               <NavLink href="/protected/watch-list" icon={WatchListIcon} />
               <NavLink href="/protected/watch-later" icon={WatchLaterIcon} />
+              <NavLink href="/blog" icon={DevBlogIcon} />
             </ul>
           </div>
         )}
