@@ -3,7 +3,7 @@
 import { dailyNewEpisodesJob } from "@/lib/new_episodes";
 import { NextResponse } from "next/server";
 
-export async function POST() {
+export async function GET() {
   try {
     await dailyNewEpisodesJob();
     return NextResponse.json({
