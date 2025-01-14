@@ -2,7 +2,8 @@
   "crons": [
     {
       "path": "/api/new-episodes",
-      "schedule": "5 2 * * *"
+      "schedule": "5 2 * * *",
+      "method": "POST"
     }
   ]
 }
