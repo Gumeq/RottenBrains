@@ -265,7 +265,7 @@ const HomeContent = async () => {
           ) : (
             <></>
           )}
-          {unwatchedEpisodes && unwatchedEpisodes.length > 0 ? (
+          {newEpisodes && newEpisodes.length > 0 ? (
             <div>
               <div className="flex flex-col gap-4 pl-4 lg:pl-0">
                 <div className="flex flex-row items-center justify-between lg:p-0">
@@ -278,7 +278,7 @@ const HomeContent = async () => {
                   className="hidden-scrollbar relative flex flex-row gap-4 overflow-x-auto"
                   id={"new-episodes"}
                 >
-                  {unwatchedEpisodes.slice(0, 10).map((media: any) => (
+                  {newEpisodes.slice(0, 10).map((media: any) => (
                     <div key={media.id}>
                       <HomeMediaCard
                         user_id={user.user.id}

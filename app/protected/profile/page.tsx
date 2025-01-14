@@ -6,10 +6,5 @@ import UserPosts from "./UserPosts";
 export default function ProtectedPage() {
   const { user } = useUser();
   if (!user) return <p>Loading User</p>;
-  return (
-    <UserPosts
-      userId={user.id.toString()}
-      currentUserId={user.id.toString()}
-    ></UserPosts>
-  );
+  return <UserPosts userId={user.id.toString()}></UserPosts>;
 }
