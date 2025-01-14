@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/new-episodes",
-      "schedule": "* * * * *"
+      "schedule": "5 2 * * *"
     }
   ]
 }
