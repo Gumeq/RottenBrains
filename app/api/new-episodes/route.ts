@@ -1,9 +1,9 @@
 // app/api/daily-new-episodes/route.ts
 
 import { dailyNewEpisodesJob } from "@/lib/new_episodes";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     await dailyNewEpisodesJob();
     return NextResponse.json({
