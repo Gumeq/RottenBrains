@@ -9,7 +9,6 @@ export default function ProtectedPage() {
   return (
     <UserPostsType
       userId={user.id.toString()}
-      currentUserId={user.id.toString()}
       media_type={"movie"}
     ></UserPostsType>
   );
