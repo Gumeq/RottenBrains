@@ -197,12 +197,13 @@ const HomeMediaCardClient: React.FC<MediaCardProps> = React.memo(
           {media.genres && (
             <div className="flex flex-row items-center gap-2 text-xs text-foreground/70">
               {media.genres.slice(0, 3).map((genre: any) => (
-                <p
+                <Link
+                  href={`/protected/home/${media_type}/${genre.id}`}
                   key={genre.id}
                   className="rounded-[4px] bg-foreground/5 px-3 py-1"
                 >
                   {genre.name}
-                </p>
+                </Link>
               ))}
             </div>
           )}

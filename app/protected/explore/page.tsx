@@ -26,58 +26,22 @@ const page = async () => {
         className="z-10 mt-4 flex w-full flex-col gap-8 px-2 lg:px-4"
         id="explore"
       >
-        {/* <div className="my-4 flex w-full flex-col items-center justify-between md:mt-8 md:flex-row">
-          <div>
-            <h1 className="text-2xl font-bold">Explore</h1>
-          </div>
-          <div className="h-full w-screen p-2 md:w-[25vw] md:p-0">
-            <SearchBar link={true} user={true}></SearchBar>
-          </div>
-        </div> */}
         <div className="flex flex-col gap-4">
-          <div className="flex flex-row items-center justify-between">
-            <div className="my-2 flex flex-row items-center gap-2">
-              <div className="h-2 w-2 rounded-full bg-accent"></div>
-              <h1 className="text-xl font-bold">Now in cinemas</h1>
-            </div>
-          </div>
-
           <ExploreTab
             action="Now_in_cinemas"
             containerId="cinemasNow"
           ></ExploreTab>
         </div>
         <div className="flex flex-col gap-4">
-          <div className="flex flex-row items-center justify-between">
-            <div className="my-2 flex flex-row items-center gap-2">
-              <div className="h-2 w-2 rounded-full bg-accent"></div>
-              <h1 className="text-xl font-bold">Popular Today</h1>
-            </div>
-          </div>
-
           <ExploreTab
             action="Popular_Today"
             containerId="popularToday"
           ></ExploreTab>
         </div>
         <div className="flex flex-col gap-4">
-          <div className="flex flex-row items-center justify-between">
-            <div className="my-2 flex flex-row items-center gap-2">
-              <div className="h-2 w-2 rounded-full bg-accent"></div>
-              <h1 className="text-xl font-bold">Trending TV</h1>
-            </div>
-          </div>
-
           <ExploreTab action="Trending_TV" containerId="trendngTV"></ExploreTab>
         </div>
         <div className="flex flex-col gap-4">
-          <div className="flex flex-row items-center justify-between">
-            <div className="my-2 flex flex-row items-center gap-2">
-              <div className="h-2 w-2 rounded-full bg-accent"></div>
-              <h1 className="text-xl font-bold">Trending Movies</h1>
-            </div>
-          </div>
-
           <ExploreTab
             action="Trending_Movies"
             containerId="trendngmovies"

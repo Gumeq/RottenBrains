@@ -11,12 +11,17 @@ export const videoProviders = [
   { name: "VIDSRC.PRO", link: "https://vidsrc.pro/embed/" },
   { name: "VIDSRC.NET", link: "https://vidsrc.net/embed/" },
   { name: "VIDSRC.CC", link: "https://vidsrc.cc/v2/embed/" },
+  { name: "SUPEREMBED", link: "/api/testapi" },
+  { name: "2EMBED", link: "https://www.2embed.cc/embed" },
 ];
+
+// src={`/api/testapi?video_id=${media_id}&tmdb=1&season=4&episode=22`}
+// src={`https://www.2embed.cc/embed${media_type === "tv" ? "tv" : ""}/${media_id}${media_type == "tv" ? episode_season_string : ""}`}
 
 const DefaultSettingsForm = () => {
   // State for form data
   const [formData, setFormData] = useState<FormData>({
-    video_provider: "VIDSRC.PRO", // Default selection
+    video_provider: "SUPEREMBED", // Default selection
   });
 
   const { toast } = useToast();
@@ -44,7 +49,7 @@ const DefaultSettingsForm = () => {
     <div className="">
       <form>
         <p className="mg-2 block font-medium">Watch provider</p>
-        <div className="flex w-full flex-row items-center justify-center gap-4">
+        <div className="flex w-full flex-row flex-wrap items-center justify-center gap-4">
           {videoProviders.map((provider) => (
             <div
               key={provider.name}

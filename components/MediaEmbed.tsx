@@ -23,9 +23,7 @@ const VideoEmbed = ({
   media,
   episode,
 }: VideoEmbedProps) => {
-  const [linkStart, setLinkStart] = useState<string>(
-    "https://vidsrc.net/embed/",
-  );
+  const [linkStart, setLinkStart] = useState<string>("/api/testapi");
   const [showVideo, setShowVideo] = useState(false);
 
   // Retrieve the selected provider from local storage when the component mounts
@@ -40,10 +38,29 @@ const VideoEmbed = ({
     setShowVideo(true);
   };
 
-  const link =
-    media_type === "movie"
-      ? `${linkStart}${media_type}/${media_id}`
-      : `${linkStart}${media_type}/${media_id}/${season_number}/${episode_number}`;
+  const buildLink = () => {
+    // If the link starts with "https://www.2embed.cc/embed"
+    if (linkStart.startsWith("https://www.2embed.cc/embed")) {
+      return `${linkStart}${media_type}/${media_id}&s=${season_number}&e=${episode_number}`;
+    }
+
+    // Else if the link starts with "/api/testapi"
+    if (linkStart.startsWith("/api/testapi")) {
+      const seasonEpisodeString = `&season=${season_number}&episode=${episode_number}`;
+      return `${linkStart}?video_id=${media_id}&tmdb=1${
+        media_type === "tv" ? seasonEpisodeString : ""
+      }`;
+    }
+
+    // Otherwise
+    if (media_type === "movie") {
+      return `${linkStart}${media_type}/${media_id}`;
+    } else {
+      return `${linkStart}${media_type}/${media_id}/${season_number}/${episode_number}`;
+    }
+  };
+
+  const link = buildLink();
 
   if (!media) {
     return (
@@ -73,6 +90,9 @@ const VideoEmbed = ({
       <div>
         {!showVideo ? (
           <div className="relative aspect-[16/9] w-full overflow-hidden text-center lg:rounded-[8px]">
+            <h1 className="absolute left-0 top-0 text-4xl font-bold">
+              {linkStart}
+            </h1>
             <ImageWithFallback
               imageUrl={imageUrl}
               altText={media.title || episode.name}
@@ -98,9 +118,7 @@ const VideoEmbed = ({
               id="iframe"
               loading="lazy"
               src={link}
-              // src={"/api/testapi?video_id=1419&tmdb=1&season=4&episode=22"}
-              // src={`https://2anime.xyz/embed/demon-slayer-episode-4`}
-              // src={`https://www.2embed.cc/embedtv/60735&s=1&e=1`}
+              // src={`https://2anime.xyz/embed/fullmetal-alchemist-episode-14`}
               className="inline-block h-full w-screen lg:w-full"
               frameBorder="0"
               marginHeight={0}

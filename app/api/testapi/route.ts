@@ -13,12 +13,12 @@ export async function GET(req: NextRequest) {
     return new NextResponse("Missing video_id", { status: 400 });
   }
 
-  const player_font = "Poppins";
+  const player_font = "Roboto";
   const player_bg_color = "000000";
   const player_font_color = "ffffff";
-  const player_primary_color = "ff0037";
-  const player_secondary_color = "#ff0037";
-  const player_loader = 1;
+  const player_primary_color = "34cfeb";
+  const player_secondary_color = "6900e0";
+  const player_loader = 3;
   const preferred_server = 0;
   const player_sources_toggle_type = 2;
 

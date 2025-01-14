@@ -52,7 +52,7 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
 
             return (
               <div
-                className="h-[80vh] w-full overflow-hidden lg:rounded-[16px]"
+                className="h-[75vh] w-full overflow-hidden lg:rounded-[16px]"
                 key={index}
               >
                 <div className="h-full w-full">
