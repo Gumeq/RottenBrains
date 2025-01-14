@@ -5,10 +5,10 @@ import { useInView } from "react-intersection-observer";
 import Loader from "@/components/Loader";
 import { getWatchHistoryForUser } from "@/utils/supabase/queries";
 import HomeMediaCardClient from "../home/HomeMediaCardClient";
+import { useUser } from "@/context/UserContext";
 
 interface UserWatchHistoryProps {
   userId: string;
-  currentUserId: string;
   initialPage?: number; // Optional initial page number
   pageSize?: number; // Optional number of items per page
   onHistoryLoaded?: (historyItems: any[]) => void; // Callback when history items are loaded
@@ -16,7 +16,6 @@ interface UserWatchHistoryProps {
 
 const UserWatchHistory: React.FC<UserWatchHistoryProps> = ({
   userId,
-  currentUserId,
   initialPage = 0, // Default to page 0
   pageSize = 20, // Default to 20 items per page
   onHistoryLoaded,
@@ -26,6 +25,7 @@ const UserWatchHistory: React.FC<UserWatchHistoryProps> = ({
   const [hasMoreHistory, setHasMoreHistory] = useState<boolean>(true);
   const [historyPage, setHistoryPage] = useState<number>(initialPage);
   const { ref: refHistory, inView: inViewHistory } = useInView();
+  const { user: currentUser } = useUser();
 
   useEffect(() => {
     const loadMoreHistory = async () => {
@@ -67,19 +67,26 @@ const UserWatchHistory: React.FC<UserWatchHistoryProps> = ({
       className="grid w-full gap-8 p-4 lg:gap-4 lg:p-0"
       style={{ gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))" }}
     >
-      {watchHistory.map((item) => (
-        <div key={`${item.media_type}-${item.media_id}`} className="w-full">
-          <HomeMediaCardClient
-            media_type={item.media_type}
-            media_id={item.media_id}
-            season_number={item.season_number}
-            episode_number={item.episode_number}
-            user_id={currentUserId}
-            rounded={true}
-          />
-        </div>
-      ))}
-      {loadingHistory && <Loader />}
+      {currentUser ? (
+        <>
+          {watchHistory.map((item) => (
+            <div key={`${item.media_type}-${item.media_id}`} className="w-full">
+              <HomeMediaCardClient
+                media_type={item.media_type}
+                media_id={item.media_id}
+                season_number={item.season_number}
+                episode_number={item.episode_number}
+                user_id={currentUser.id.toString()}
+                rounded={true}
+              />
+            </div>
+          ))}
+        </>
+      ) : (
+        <></>
+      )}
+
+      {loadingHistory && !currentUser && <Loader />}
       {!loadingHistory && hasMoreHistory && (
         <div ref={refHistory} className="h-[100px] w-[100px]"></div>
       )}

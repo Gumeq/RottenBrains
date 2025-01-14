@@ -4,10 +4,10 @@ import { useInView } from "react-intersection-observer";
 import HomePostCardNew from "@/components/post/HomePostCardNew";
 import Loader from "@/components/Loader";
 import { getUserPosts, getUserPostsType } from "@/utils/supabase/queries";
+import { useUser } from "@/context/UserContext";
 
 interface UserPostsProps {
   userId: string;
-  currentUserId: string;
   media_type: string;
   initialPage?: number; // Optional prop for the initial page
   pageSize?: number; // Optional prop for the number of posts per page
@@ -16,7 +16,6 @@ interface UserPostsProps {
 
 const UserPostsType: React.FC<UserPostsProps> = ({
   userId,
-  currentUserId,
   media_type,
   initialPage = 0, // Default to page 0
   pageSize = 10, // Default to 10 posts per page
@@ -27,15 +26,16 @@ const UserPostsType: React.FC<UserPostsProps> = ({
   const [hasMorePosts, setHasMorePosts] = useState<boolean>(true);
   const [postPage, setPostPage] = useState<number>(initialPage);
   const { ref: refPosts, inView: inViewPosts } = useInView();
+  const { user: currentUser } = useUser();
 
   useEffect(() => {
     const loadMorePosts = async () => {
-      if (inViewPosts && hasMorePosts && !loadingPosts) {
+      if (inViewPosts && hasMorePosts && !loadingPosts && currentUser) {
         setLoadingPosts(true);
         try {
           const res = await getUserPostsType(
             userId,
-            currentUserId,
+            currentUser.id.toString(),
             postPage,
             media_type,
           );
@@ -62,7 +62,7 @@ const UserPostsType: React.FC<UserPostsProps> = ({
     hasMorePosts,
     loadingPosts,
     userId,
-    currentUserId,
+    currentUser,
     postPage,
     pageSize,
     onPostsLoaded,

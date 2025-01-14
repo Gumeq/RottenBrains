@@ -5,10 +5,10 @@ import { useInView } from "react-intersection-observer";
 import HomePostCardNew from "@/components/post/HomePostCardNew";
 import Loader from "@/components/Loader";
 import { getUserPosts } from "@/utils/supabase/queries";
+import { useUser } from "@/context/UserContext";
 
 interface UserPostsProps {
   userId: string;
-  currentUserId: string;
   initialPage?: number; // Optional prop for the initial page
   pageSize?: number; // Optional prop for the number of posts per page
   onPostsLoaded?: (posts: any[]) => void; // Callback when posts are loaded
@@ -16,7 +16,6 @@ interface UserPostsProps {
 
 const UserPosts: React.FC<UserPostsProps> = ({
   userId,
-  currentUserId,
   initialPage = 0, // Default to page 0
   pageSize = 10, // Default to 10 posts per page
   onPostsLoaded,
@@ -26,13 +25,18 @@ const UserPosts: React.FC<UserPostsProps> = ({
   const [hasMorePosts, setHasMorePosts] = useState<boolean>(true);
   const [postPage, setPostPage] = useState<number>(initialPage);
   const { ref: refPosts, inView: inViewPosts } = useInView();
+  const { user: currentUser } = useUser();
 
   useEffect(() => {
     const loadMorePosts = async () => {
-      if (inViewPosts && hasMorePosts && !loadingPosts) {
+      if (inViewPosts && hasMorePosts && !loadingPosts && currentUser) {
         setLoadingPosts(true);
         try {
-          const res = await getUserPosts(userId, currentUserId, postPage);
+          const res = await getUserPosts(
+            userId,
+            currentUser.id.toString(),
+            postPage,
+          );
           if (res.length === 0) {
             setHasMorePosts(false);
           } else {
@@ -56,7 +60,7 @@ const UserPosts: React.FC<UserPostsProps> = ({
     hasMorePosts,
     loadingPosts,
     userId,
-    currentUserId,
+    currentUser,
     postPage,
     pageSize,
     onPostsLoaded,

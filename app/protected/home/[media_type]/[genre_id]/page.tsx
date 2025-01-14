@@ -10,7 +10,7 @@ type Params = Promise<{ genre_id: number; media_type: "movie" | "tv" }>;
 const page = async ({ params }: { params: Params }) => {
   const { genre_id } = await params;
   const { media_type } = await params;
-  const genre_name = getGenreNameById(genre_id);
+  const genre_name = getGenreNameById(Number(genre_id));
   const user = await getCurrentUser();
 
   if (!user) {
