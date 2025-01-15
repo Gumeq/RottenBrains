@@ -30,7 +30,7 @@ const ProfileLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <MobileTopBarHome />
-      <div className="mx-auto mt-12 w-screen max-w-[100vw] lg:mt-0 lg:max-w-7xl lg:p-4">
+      <div className="mt-12 w-full lg:mx-auto lg:mt-0 lg:max-w-7xl lg:p-4">
         <div className="w-full">
           <div className="aspect-[5/1] w-full overflow-hidden lg:rounded-[16px]">
             <img
@@ -50,7 +50,7 @@ const ProfileLayout = async ({ children }: { children: React.ReactNode }) => {
                   <FollowButton user_to_follow_id={user.id}></FollowButton>
                 </div>
                 <div className="flex w-full flex-col gap-2 lg:flex-row lg:items-center">
-                  <p className="lowercase">@{user.username}</p>
+                  {/* <p className="lowercase">@{user.username}</p> */}
                   <FollowInfo user={user}></FollowInfo>
                   <p className="text-sm text-foreground/50">
                     Member since {formattedDate}
@@ -62,7 +62,7 @@ const ProfileLayout = async ({ children }: { children: React.ReactNode }) => {
           <div className="my-4 w-full lg:my-8">
             <NewTabs></NewTabs>
           </div>
-          <div>{children}</div>
+          <div className="max-w-screen w-full px-4">{children}</div>
         </div>
       </div>
     </>

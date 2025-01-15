@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import SearchBar from "@/components/searchBar/SearchBar";
+import { SearchIcon } from "./Icon";
 
 const SearchIconWithOverlay: React.FC = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -19,20 +20,32 @@ const SearchIconWithOverlay: React.FC = () => {
       <button
         onClick={() => setIsSearchOpen(true)}
         aria-label="Open Search"
-        className="flex flex-1 flex-col items-center justify-center text-xs opacity-80"
+        className="flex flex-1 flex-col items-center justify-center gap-1 opacity-80"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="40px"
-          viewBox="0 -960 960 960"
-          width="40px"
-          fill="#000000"
-          className="invert-on-dark rounded-full p-2"
+        <div
+          className={`flex w-full flex-col items-center justify-center rounded-full`}
         >
-          <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
-        </svg>
-        <p>Search</p>
+          <SearchIcon className="fill-current" width={28} height={28} />
+        </div>
+        <p className="text-xs">Search</p>
       </button>
+      {/* <Link
+        href={href}
+        className={`flex flex-1 flex-col items-center justify-center gap-1 opacity-80`}
+      >
+        <div
+          className={`flex w-full flex-col items-center justify-center rounded-full ${
+            isActive ? `bg-secondary/20 text-accent` : `text-foreground`
+          }`}
+        >
+          {isActive && IconFill ? (
+            <IconFill className="fill-current" width={28} height={28} />
+          ) : (
+            <Icon className="fill-current" width={28} height={28} />
+          )}
+        </div>
+        {label && <p className="text-xs">{label}</p>}
+      </Link> */}
 
       {/* Search Overlay */}
       {isSearchOpen && (

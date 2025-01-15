@@ -23,7 +23,7 @@ const page = async () => {
     <div className="flex w-full flex-col items-center">
       <MediaCarouselNew movies={moviesWithColors}></MediaCarouselNew>
       <div
-        className="z-10 mt-4 flex w-full flex-col gap-8 px-2 lg:px-4"
+        className="z-10 mt-4 flex w-full flex-col gap-8 lg:px-4"
         id="explore"
       >
         <div className="flex flex-col gap-4">

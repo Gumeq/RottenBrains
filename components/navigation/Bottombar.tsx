@@ -6,6 +6,22 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import SearchIconWithOverlay from "@/app/protected/home/SearchIconWithOverlay";
 
+import {
+  ExploreIcon,
+  HistoryIcon,
+  HomeIcon,
+  HomeIconFill,
+  LikedPostsIcon,
+  ProfileIcon,
+  SavedPostsIcon,
+  WatchLaterIcon,
+  WatchListIcon,
+  YouIcon,
+  DevBlogIcon,
+  PlusIcon,
+} from "../../app/protected/home/Icon";
+import NavLinkMobile from "./NavLinkMobile";
+
 const Bottombar = () => {
   const { user } = useUser();
   const pathname = usePathname();
@@ -16,57 +32,30 @@ const Bottombar = () => {
   }
 
   return (
-    <div className="bottombar Z-50">
-      <ul className="bottombar-inner Z-50">
+    <div className="fixed bottom-0 left-0 right-0 z-50 bg-background">
+      <ul className="relative z-50 flex h-full w-full flex-row items-center justify-between bg-foreground/5 p-2">
         {/* Home Link */}
-        <Link href="/protected/home" className="bottombar-link">
-          <img
-            src="/assets/icons/home-outline.svg"
-            alt="Home"
-            width={40}
-            height={40}
-            className="invert-on-dark rounded-full p-2"
-          />
-          <p className="text-xs">Home</p>
-        </Link>
-
-        {/* Explore Link */}
-        <Link href="/protected/explore" className="bottombar-link">
-          <img
-            src="/assets/icons/explore-outline.svg"
-            alt="Explore"
-            width={40}
-            height={40}
-            className="invert-on-dark rounded-full p-2"
-          />
-          <p className="text-xs">Explore</p>
-        </Link>
-
+        <NavLinkMobile
+          href={"/protected/home"}
+          icon={HomeIcon}
+          label={"Home"}
+        ></NavLinkMobile>
+        <NavLinkMobile
+          href={"/protected/explore"}
+          icon={ExploreIcon}
+          label={"Explore"}
+        ></NavLinkMobile>
         <SearchIconWithOverlay />
-
-        {/* Create Post Link */}
-        <Link href="/protected/create-post" className="bottombar-link">
-          <img
-            src="/assets/icons/plus.svg"
-            alt="Create"
-            width={40}
-            height={40}
-            className="invert-on-dark p-2"
-          />
-          <p className="text-xs">Create</p>
-        </Link>
-
-        {/* Watch List Link */}
-        <Link href="/protected/watch-list" className="bottombar-link">
-          <img
-            src="/assets/icons/library-svg.svg"
-            alt="Lists"
-            width={40}
-            height={40}
-            className="invert-on-dark p-2"
-          />
-          <p className="text-xs">Library</p>
-        </Link>
+        <NavLinkMobile
+          href={"/protected/create-post"}
+          icon={PlusIcon}
+          label={"Create"}
+        ></NavLinkMobile>
+        <NavLinkMobile
+          href={"/protected/watch-list"}
+          icon={WatchListIcon}
+          label={"Library"}
+        ></NavLinkMobile>
       </ul>
     </div>
   );

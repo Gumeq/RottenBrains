@@ -20,13 +20,13 @@ export async function ExploreTab({
   }
 
   return (
-    <div className="flex w-full flex-col gap-8 border-foreground/20 p-4 lg:gap-16 lg:rounded-[16px] lg:border lg:p-8">
-      <div className="flex w-full flex-row items-center justify-between">
+    <div className="flex w-full flex-col gap-8 border-foreground/20 lg:gap-16 lg:rounded-[16px] lg:border lg:p-8">
+      <div className="flex w-full flex-row items-center justify-between px-2 lg:px-0">
         <h2 className="text-xl font-bold uppercase">{action}</h2>
         <div className="rounded-full bg-foreground/5 px-6 py-2">View all</div>
       </div>
 
-      <div className="flex w-full flex-row gap-2 overflow-x-auto lg:grid lg:grid-cols-[repeat(auto-fit,minmax(350px,1fr))] lg:gap-8">
+      <div className="hidden-scrollbar flex w-full snap-x snap-mandatory flex-row gap-2 overflow-x-auto px-4 lg:grid lg:grid-cols-[repeat(auto-fit,minmax(350px,1fr))] lg:gap-8">
         {exploreData &&
           exploreData.results.slice(0, 10).map((media: any) => {
             if (!media.media_type && media.title) {
@@ -35,12 +35,14 @@ export async function ExploreTab({
               media.media_type = "tv";
             }
             return (
-              <HomeMediaCard
-                media_id={media.id}
-                media_type={media.media_type}
-                user_id={user.id}
-                rounded
-              ></HomeMediaCard>
+              <div key={media.id} className="snap-start scroll-ml-4">
+                <HomeMediaCard
+                  media_id={media.id}
+                  media_type={media.media_type}
+                  user_id={user.id}
+                  rounded
+                ></HomeMediaCard>
+              </div>
             );
           })}
       </div>

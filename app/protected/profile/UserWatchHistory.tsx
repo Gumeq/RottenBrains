@@ -63,44 +63,43 @@ const UserWatchHistory: React.FC<UserWatchHistoryProps> = ({
   ]);
 
   return (
-    <div
-      className="grid w-full gap-8 p-4 lg:gap-4 lg:p-0"
-      style={{ gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))" }}
-    >
-      {currentUser ? (
-        <>
-          {watchHistory.map((item) => (
-            <div key={`${item.media_type}-${item.media_id}`} className="w-full">
-              <HomeMediaCardClient
-                media_type={item.media_type}
-                media_id={item.media_id}
-                season_number={item.season_number}
-                episode_number={item.episode_number}
-                user_id={currentUser.id.toString()}
-                rounded={true}
-              />
-            </div>
-          ))}
-        </>
-      ) : (
-        <></>
-      )}
+    <>
+      <div className="w-full">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-8 lg:gap-4">
+          {currentUser ? (
+            <>
+              {watchHistory.map((item) => (
+                <HomeMediaCardClient
+                  media_type={item.media_type}
+                  media_id={item.media_id}
+                  season_number={item.season_number}
+                  episode_number={item.episode_number}
+                  user_id={currentUser.id.toString()}
+                  rounded={true}
+                />
+              ))}
+            </>
+          ) : (
+            <></>
+          )}
 
-      {loadingHistory && !currentUser && <Loader />}
-      {!loadingHistory && hasMoreHistory && (
-        <div ref={refHistory} className="h-[100px] w-[100px]"></div>
-      )}
-      {!hasMoreHistory && (
-        <div className="flex w-full flex-col items-center justify-center gap-4 rounded-[8px] bg-foreground/10 p-4">
-          <img
-            src="/assets/images/logo_new_black.svg"
-            alt="No more history"
-            className="invert-on-dark h-8 w-8 opacity-50"
-          />
-          <p className="text-foreground/50">No more watch history</p>
+          {loadingHistory && !currentUser && <Loader />}
+          {!loadingHistory && hasMoreHistory && (
+            <div ref={refHistory} className="h-[100px] w-[100px]"></div>
+          )}
+          {!hasMoreHistory && (
+            <div className="flex w-full flex-col items-center justify-center gap-4 rounded-[8px] bg-foreground/10 p-4">
+              <img
+                src="/assets/images/logo_new_black.svg"
+                alt="No more history"
+                className="invert-on-dark h-8 w-8 opacity-50"
+              />
+              <p className="text-foreground/50">No more watch history</p>
+            </div>
+          )}
         </div>
-      )}
-    </div>
+      </div>
+    </>
   );
 };
 

@@ -52,7 +52,7 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
 
             return (
               <div
-                className="h-[75vh] w-full overflow-hidden lg:rounded-[16px]"
+                className="h-[60vh] w-full overflow-hidden lg:h-[75vh] lg:rounded-[16px]"
                 key={index}
               >
                 <div className="h-full w-full">
@@ -129,7 +129,7 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
                         <h2 className="text-4xl font-bold text-white">
                           {media.title || media.name}
                         </h2>
-                        <h3 className="line-clamp-[4] text-white lg:w-1/3">
+                        <h3 className="line-clamp-[2] text-white lg:line-clamp-[4] lg:w-1/3">
                           {media.overview}
                         </h3>
                         <div className="flex flex-col gap-4 lg:flex-row">

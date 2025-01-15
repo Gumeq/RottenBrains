@@ -161,7 +161,7 @@ const HomeMediaCardClient: React.FC<MediaCardProps> = React.memo(
           : `/protected/watch/${media_type}/${media_id}/1/1`;
 
     return (
-      <div className="mb-2 flex flex-col lg:w-full lg:min-w-[350px] lg:max-w-[450px]">
+      <div className="mb-2 flex w-full min-w-[75vw] max-w-[100vw] flex-col lg:w-full lg:min-w-[300px] lg:max-w-[450px]">
         <Link
           className={`relative w-full overflow-hidden lg:rounded-[8px] ${rounded === true ? "rounded-[8px]" : ""}`}
           href={href}

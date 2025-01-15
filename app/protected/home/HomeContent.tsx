@@ -147,18 +147,18 @@ const HomeContent = async () => {
           <MobileTopBarHome />
           {/* Watch History Section */}
           {processedEpisodes.length > 0 ? (
-            <div className="mt-4 rounded-[16px] pl-2 lg:p-0">
+            <div className="mt-4 rounded-[16px] lg:p-0">
               <div className="mb-4 flex flex-row items-center justify-between">
                 <h2 className="px-2 font-semibold lg:px-0 lg:text-lg">
                   Continue Watching
                 </h2>
                 <ScrollButtons containerId="watch_history_main" />
               </div>
-              <div className="w-full pl-4 lg:pl-0">
+              <div className="w-full lg:pl-0">
                 <div>
                   {processedEpisodes.length > 0 ? (
                     <div
-                      className="hidden-scrollbar flex flex-row gap-4 overflow-x-auto"
+                      className="hidden-scrollbar flex snap-x snap-mandatory flex-row gap-2 overflow-x-auto px-4"
                       id="watch_history_main"
                     >
                       {processedEpisodes.map((media) => {
@@ -169,7 +169,7 @@ const HomeContent = async () => {
                             !media.next_episode_number &&
                             media.next_episode === true)
                         ) {
-                          return null; // Skip rendering for watched movies
+                          return null;
                         }
 
                         const isNextEpisodeAvailable =
@@ -185,7 +185,10 @@ const HomeContent = async () => {
                           : media.season_number;
 
                         return (
-                          <div key={media.media_id} className="h-auto w-screen">
+                          <div
+                            key={media.media_id}
+                            className="h-auto w-screen snap-start scroll-ml-4"
+                          >
                             <HomeMediaCard
                               user_id={user.user.id}
                               media_type={media.media_type}
@@ -230,18 +233,18 @@ const HomeContent = async () => {
                 </div>
                 <ScrollButtons containerId="rotten-posts-one" />
               </div>
-              <div className="relative pl-4 lg:p-0">
+              <div className="relative">
                 {followedPosts && followedPosts.length > 0 ? (
                   <>
                     <div className="gradient-edge absolute right-0 top-0 z-20 h-full w-[5%]" />
                     <div
-                      className="hidden-scrollbar flex flex-row gap-2 overflow-x-auto pr-[5%] lg:gap-4"
+                      className="hidden-scrollbar flex snap-x snap-mandatory flex-row gap-2 overflow-x-auto px-4 lg:gap-4"
                       id="rotten-posts-one"
                     >
                       {followedPosts.map((post: any) => (
                         <div
                           key={post.id}
-                          className="flex w-[80vw] flex-shrink-0 lg:w-fit"
+                          className="flex w-[80vw] flex-shrink-0 snap-start scroll-ml-4 lg:w-fit"
                         >
                           <HomePostCardNew post={post} />
                         </div>
@@ -267,19 +270,19 @@ const HomeContent = async () => {
           )}
           {newEpisodes && newEpisodes.length > 0 ? (
             <div>
-              <div className="flex flex-col gap-4 pl-4 lg:pl-0">
-                <div className="flex flex-row items-center justify-between lg:p-0">
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-row items-center justify-between px-4 lg:p-0">
                   <div className="flex flex-row items-center gap-2">
                     <h2 className="font-bold">New Episodes</h2>
                   </div>
                   <ScrollButtons containerId="new-episodes" />
                 </div>
                 <div
-                  className="hidden-scrollbar relative flex flex-row gap-4 overflow-x-auto"
+                  className="hidden-scrollbar relative flex snap-x snap-mandatory flex-row gap-2 overflow-x-auto px-4"
                   id={"new-episodes"}
                 >
                   {newEpisodes.slice(0, 10).map((media: any) => (
-                    <div key={media.id}>
+                    <div key={media.id} className="snap-start scroll-ml-4">
                       <HomeMediaCard
                         user_id={user.user.id}
                         media_type="tv"
@@ -298,8 +301,8 @@ const HomeContent = async () => {
           )}
           {/* Top Movie Genre Section */}
           <div>
-            <div className="flex flex-col gap-4 pl-4 lg:pl-0">
-              <div className="flex flex-row items-center justify-between lg:p-0">
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-row items-center justify-between px-4 lg:p-0">
                 <div className="flex flex-row items-center gap-2">
                   <h2 className="font-bold">
                     Because you like {topMovieGenreName} movies
@@ -308,12 +311,12 @@ const HomeContent = async () => {
                 <ScrollButtons containerId="top-genre-movies" />
               </div>
               <div
-                className="hidden-scrollbar relative flex flex-row gap-4 overflow-x-auto"
+                className="hidden-scrollbar relative flex snap-x snap-mandatory flex-row gap-2 overflow-x-auto px-4"
                 id={"top-genre-movies"}
               >
                 {topMovieGenreMedia.results.length > 0 &&
                   topMovieGenreMedia.results.slice(0, 20).map((media: any) => (
-                    <div key={media.id}>
+                    <div key={media.id} className="snap-start scroll-ml-4">
                       <HomeMediaCard
                         user_id={user.user.id}
                         media_type="movie"
@@ -327,8 +330,8 @@ const HomeContent = async () => {
           </div>
           {/* Top TV Genre Section */}
           <div>
-            <div className="flex flex-col gap-4 pl-4 lg:pl-0">
-              <div className="flex flex-row items-center justify-between lg:p-0">
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-row items-center justify-between px-4 lg:p-0">
                 <div className="flex flex-row items-center gap-2">
                   <h2 className="font-bold">
                     Because you like {topTvGenreName} shows
@@ -337,12 +340,12 @@ const HomeContent = async () => {
                 <ScrollButtons containerId="top-genre-tv" />
               </div>
               <div
-                className="hidden-scrollbar relative flex flex-row gap-4 overflow-x-auto"
+                className="hidden-scrollbar relative flex snap-x snap-mandatory flex-row gap-2 overflow-x-auto px-4"
                 id={"top-genre-tv"}
               >
                 {topTvGenreMedia.results.length > 0 &&
                   topTvGenreMedia.results.slice(0, 20).map((media: any) => (
-                    <div key={media.id}>
+                    <div key={media.id} className="snap-start scroll-ml-4">
                       <HomeMediaCard
                         user_id={user.user.id}
                         media_type="tv"
