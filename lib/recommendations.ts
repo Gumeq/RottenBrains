@@ -4,9 +4,7 @@ import {
 } from "@/utils/supabase/queries";
 import { fetchFromApi } from "@/utils/tmdb/tmdbApi";
 
-function formatGenreCodes(
-  arr: { genre_code: string; value: number }[],
-): string {
+function formatGenreCodes(arr: { genre_code: string }[]): string {
   return arr.map((item) => item.genre_code).join("%7C");
 }
 
