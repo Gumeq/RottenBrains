@@ -127,26 +127,11 @@ const HomeNav = ({ children }: any) => {
                 label="Explore"
               />
               <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
-              <NavLink href="/protected/profile" icon={YouIcon} label="You" />
+              {/* <NavLink href="/protected/profile" icon={YouIcon} label="You" /> */}
               <NavLink
                 href="/protected/profile"
                 icon={ProfileIcon}
                 label="Your profile"
-              />
-              <NavLink
-                href="/protected/watch-history"
-                icon={HistoryIcon}
-                label="History"
-              />
-              <NavLink
-                href="/protected/liked-posts"
-                icon={LikedPostsIcon}
-                label="Liked posts"
-              />
-              <NavLink
-                href="/protected/saved-posts"
-                icon={SavedPostsIcon}
-                label="Saved posts"
               />
               <NavLink
                 href="/protected/watch-list"
@@ -154,10 +139,26 @@ const HomeNav = ({ children }: any) => {
                 label="Library"
               />
               <NavLink
+                href="/protected/watch-history"
+                icon={HistoryIcon}
+                label="History"
+              />
+              {/* <NavLink
+                href="/protected/liked-posts"
+                icon={LikedPostsIcon}
+                label="Liked posts"
+              /> */}
+              {/* <NavLink
+                href="/protected/saved-posts"
+                icon={SavedPostsIcon}
+                label="Saved posts"
+              /> */}
+              {/* <NavLink
                 href="/protected/watch-later"
                 icon={WatchLaterIcon}
                 label="Watch Later"
-              />
+              /> */}
+              <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
               <NavLink href="/blog" icon={DevBlogIcon} label="Developer Blog" />
             </ul>
             <div className="absolute bottom-0 flex flex-col gap-2 p-2 text-sm text-foreground/50">
@@ -172,11 +173,12 @@ const HomeNav = ({ children }: any) => {
               <NavLink href="/protected/explore" icon={ExploreIcon} />
               <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
               <NavLink href="/protected/profile" icon={ProfileIcon} />
-              <NavLink href="/protected/watch-history" icon={HistoryIcon} />
-              <NavLink href="/protected/liked-posts" icon={LikedPostsIcon} />
-              <NavLink href="/protected/saved-posts" icon={SavedPostsIcon} />
               <NavLink href="/protected/watch-list" icon={WatchListIcon} />
-              <NavLink href="/protected/watch-later" icon={WatchLaterIcon} />
+              <NavLink href="/protected/watch-history" icon={HistoryIcon} />
+              {/* <NavLink href="/protected/liked-posts" icon={LikedPostsIcon} />
+              <NavLink href="/protected/saved-posts" icon={SavedPostsIcon} />
+              <NavLink href="/protected/watch-later" icon={WatchLaterIcon} /> */}
+              <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
               <NavLink href="/blog" icon={DevBlogIcon} />
             </ul>
           </div>

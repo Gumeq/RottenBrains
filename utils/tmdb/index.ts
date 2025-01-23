@@ -10,6 +10,12 @@ export const searchMovies = async (query: string) => {
   return fetchFromApi(`search/multi?query=${encodeURIComponent(query)}`);
 };
 
+export const searchMulti = async (query: string, page: number) => {
+  return fetchFromApi(
+    `search/multi?query=${query}&include_adult=false&language=en-US&page=${page}`,
+  );
+};
+
 export const getNowPlayingMovies = async () => {
   return fetchFromApi("movie/now_playing?language=en-US&page=1");
 };

@@ -42,7 +42,7 @@ const PostContent = ({
           />
           <Link
             href={`/protected/media/${media_type}/${media_id}`}
-            className="line-clamp-1 font-semibold"
+            className="line-clamp-1 font-medium"
           >
             {media && (media.title || media.name)}
           </Link>

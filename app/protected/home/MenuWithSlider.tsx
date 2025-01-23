@@ -62,11 +62,11 @@ const MenuButtonWithSidebar: React.FC = () => {
               label="Explore"
             />
             <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
-            <NavLinkMobile
+            {/* <NavLinkMobile
               href="/protected/profile"
               icon={YouIcon}
               label="You"
-            />
+            /> */}
             <NavLinkMobile
               href="/protected/profile"
               icon={ProfileIcon}
@@ -77,7 +77,7 @@ const MenuButtonWithSidebar: React.FC = () => {
               icon={HistoryIcon}
               label="History"
             />
-            <NavLinkMobile
+            {/* <NavLinkMobile
               href="/protected/liked-posts"
               icon={LikedPostsIcon}
               label="Liked posts"
@@ -86,17 +86,17 @@ const MenuButtonWithSidebar: React.FC = () => {
               href="/protected/saved-posts"
               icon={SavedPostsIcon}
               label="Saved posts"
-            />
+            /> */}
             <NavLinkMobile
               href="/protected/watch-list"
               icon={WatchListIcon}
               label="Library"
             />
-            <NavLinkMobile
+            {/* <NavLinkMobile
               href="/protected/watch-later"
               icon={WatchLaterIcon}
               label="Watch later"
-            />
+            /> */}
             <NavLinkMobile
               href="/blog"
               icon={DevBlogIcon}

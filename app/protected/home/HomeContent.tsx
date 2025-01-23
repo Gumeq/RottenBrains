@@ -1,12 +1,10 @@
 import {
-  getAllUsers,
   getBatchWatchedItemsForUser,
   getLatestNewEpisodes,
   getNewestUsers,
   getNextEpisodes,
   getTopMovieGenresForUser,
   getTopTvGenresForUser,
-  getTvWatchListForUser,
 } from "@/utils/supabase/queries";
 import {
   getCurrentUser,
@@ -16,18 +14,10 @@ import HomeMediaCard from "./HomeMediaCard";
 import HomePostCardNew from "@/components/post/HomePostCardNew";
 import ScrollButtons from "@/components/explore/ScrollButtons";
 import MobileTopBarHome from "./MobileTopBarHome";
-import {
-  getMovieRecommendationsForUser,
-  getTvRecommendationsForUser,
-} from "@/lib/recommendations";
 import InfiniteScrollHome from "./InfiniteScrollHome";
 import { MobileVideoProvider } from "@/context/MobileVideoContext";
 import { getGenreNameById } from "@/lib/functions";
-import {
-  getFromGenres,
-  getLastEpisodeFromTMDB,
-  getMediaDetails,
-} from "@/utils/tmdb";
+import { getFromGenres, getMediaDetails } from "@/utils/tmdb";
 import { AlignVerticalJustifyEnd } from "lucide-react";
 import GenreSelector from "./GenreSelectorHome";
 
@@ -44,9 +34,6 @@ const HomeContent = async () => {
     }
 
     const userId = user.user.id.toString();
-    // const test = await getTvWatchListForUser(userId);
-    // console.log(test);
-    // Fetch other data in parallel
     const [
       followedPosts,
       topMovieGenres,
@@ -55,8 +42,8 @@ const HomeContent = async () => {
       newEpisodes,
     ] = await Promise.all([
       getPostsFromFollowedUsers(userId, 0),
-      getTopMovieGenresForUser(userId),
-      getTopTvGenresForUser(userId),
+      getTopMovieGenresForUser(undefined, user.user),
+      getTopTvGenresForUser(undefined, user.user),
       getNextEpisodes(userId),
       getLatestNewEpisodes(userId),
     ]);
@@ -75,16 +62,13 @@ const HomeContent = async () => {
 
     let unwatchedEpisodes: any[] = [];
     if (newEpisodes && newEpisodes.length > 0) {
-      console.log(newEpisodes);
       const watchedItems = await getBatchWatchedItemsForUser(
         userId,
         newEpisodes,
       );
-      console.log(watchedItems);
       const watchedSet = new Set(
         watchedItems.map((item: any) => `tv-${item.media_id}`),
       );
-      console.log(watchedSet);
 
       // Filter out watched items
       unwatchedEpisodes = newEpisodes.filter(
@@ -142,7 +126,7 @@ const HomeContent = async () => {
 
     return (
       <MobileVideoProvider>
-        <GenreSelector user_id={userId}></GenreSelector>
+        <GenreSelector></GenreSelector>
         <div className="flex w-full flex-col gap-8 p-0 pb-4 lg:w-auto lg:p-4 lg:py-0">
           <MobileTopBarHome />
           {/* Watch History Section */}
@@ -238,7 +222,7 @@ const HomeContent = async () => {
                   <>
                     <div className="gradient-edge absolute right-0 top-0 z-20 h-full w-[5%]" />
                     <div
-                      className="hidden-scrollbar flex snap-x snap-mandatory flex-row gap-2 overflow-x-auto px-4 lg:gap-4"
+                      className="hidden-scrollbar flex snap-x snap-mandatory flex-row gap-2 overflow-x-auto px-4"
                       id="rotten-posts-one"
                     >
                       {followedPosts.map((post: any) => (

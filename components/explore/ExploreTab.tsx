@@ -26,9 +26,9 @@ export async function ExploreTab({
         <div className="rounded-full bg-foreground/5 px-6 py-2">View all</div>
       </div>
 
-      <div className="hidden-scrollbar flex w-full snap-x snap-mandatory flex-row gap-2 overflow-x-auto px-4 lg:grid lg:grid-cols-[repeat(auto-fit,minmax(350px,1fr))] lg:gap-8">
+      <div className="hidden-scrollbar flex w-full snap-x snap-mandatory grid-cols-[repeat(auto-fit,minmax(320px,1fr))] flex-row gap-4 overflow-x-auto px-4 lg:grid">
         {exploreData &&
-          exploreData.results.slice(0, 10).map((media: any) => {
+          exploreData.results.slice(0, 12).map((media: any) => {
             if (!media.media_type && media.title) {
               media.media_type = "movie";
             } else if (!media.media_type && media.name) {

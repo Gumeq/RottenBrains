@@ -69,9 +69,9 @@ export default async function mediaPage({ params }: { params: Params }) {
           media_duration={media.runtime || 24}
         />
       )}
-      <div className="relative z-10 mx-auto mb-16 flex w-screen flex-col lg:w-full lg:px-4">
-        <div className="small-screen-watch-margin flex w-full flex-col lg:mt-4 lg:flex-row lg:gap-4">
-          <div className="flex flex-col gap-4 lg:w-[70%]">
+      <div className="relative z-10 mb-16 flex w-screen flex-col lg:w-full lg:px-4">
+        <div className="small-screen-watch-margin mx-auto flex w-full flex-col lg:mt-4 lg:w-auto lg:flex-row lg:gap-8">
+          <div className="flex w-full flex-col gap-4 lg:max-w-[1280px]">
             <VideoEmbed
               media_type={media_type}
               media_id={media_id}
@@ -109,7 +109,7 @@ export default async function mediaPage({ params }: { params: Params }) {
               </div>
             )}
           </div>
-          <div className="custom-scrollbar flex flex-col gap-8 p-4 lg:w-[25%] lg:p-0">
+          <div className="custom-scrollbar flex flex-col gap-4 p-4 lg:w-[400px] lg:p-0">
             <p className="text-lg font-bold">Recommendations</p>
             {recommendationMediaDetails.map((mediaDetail: any) => (
               <Link

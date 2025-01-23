@@ -27,6 +27,7 @@ export type IUser = {
   likes: Array<string>;
   saves: Array<string>;
   backdrop_url: string;
+  feed_genres: any[];
 };
 export type IPost = {
   id: number;
@@ -58,6 +59,11 @@ export type MediaPageProps = {
   media_type: "movie" | "tv" | string;
   media_id: number;
 };
+
+export interface FeedGenre {
+  genre_code: string;
+  media_type: "movie" | "tv";
+}
 
 declare global {
   interface Window {

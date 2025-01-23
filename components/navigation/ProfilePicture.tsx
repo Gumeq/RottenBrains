@@ -42,7 +42,7 @@ const ProfilePicture = () => {
       <img
         src={user?.image_url}
         alt="User Avatar"
-        className="mr-1 aspect-[1/1] h-8 cursor-pointer rounded-full"
+        className={`aspect-[1/1] h-8 cursor-pointer rounded-full`}
         onClick={handleToggleDropdown}
       />
       {isOpen && (

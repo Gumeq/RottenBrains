@@ -73,20 +73,20 @@ const MoreOptions = ({
   }, [isSaving, user_id, media_type, media_id, toast]);
 
   return (
-    <>
-      <DropdownMenu>
-        <DropdownMenuTrigger>
-          <img
-            src="/assets/icons/more-vert.svg"
-            alt=""
-            className="invert-on-dark h-[24px] w-[24px]"
-          />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent
-          className="right-0 border-none bg-[#3F3F3F] drop-shadow-md"
-          align="start"
-        >
-          <DropdownMenuItem className="hover:bg-[#6f6f6f]">
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <img
+          src="/assets/icons/more-vert.svg"
+          alt=""
+          className="invert-on-dark h-[24px] w-[24px]"
+        />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        className="border-none bg-background p-0"
+        align="start"
+      >
+        <div className="h-full w-full bg-foreground/10">
+          <DropdownMenuItem className="hover:bg-foreground/20">
             <div
               className="flex h-full w-full flex-row items-center gap-2 hover:cursor-pointer"
               onClick={handleSaveToWatchLater}
@@ -100,7 +100,7 @@ const MoreOptions = ({
             </div>
           </DropdownMenuItem>
           <div className="my-1 h-[1px] w-full bg-foreground/10"></div>
-          <DropdownMenuItem className="hover:bg-[#6f6f6f]">
+          <DropdownMenuItem className="hover:bg-foreground/20">
             <div
               className="flex h-full w-full flex-row items-center gap-2 hover:cursor-pointer"
               onClick={handleSaveToWatching}
@@ -113,7 +113,7 @@ const MoreOptions = ({
               <p>Watching</p>
             </div>
           </DropdownMenuItem>
-          <DropdownMenuItem className="hover:bg-[#6f6f6f]">
+          <DropdownMenuItem className="hover:bg-foreground/20">
             <div
               className="flex h-full w-full flex-row items-center gap-2 hover:cursor-pointer"
               onClick={handleSaveToPlanned}
@@ -126,7 +126,7 @@ const MoreOptions = ({
               <p>Planned</p>
             </div>
           </DropdownMenuItem>
-          <DropdownMenuItem className="hover:bg-[#6f6f6f]">
+          <DropdownMenuItem className="hover:bg-foreground/20">
             <div
               className="flex h-full w-full flex-row items-center gap-2 hover:cursor-pointer"
               onClick={handleSaveToWatched}
@@ -139,9 +139,9 @@ const MoreOptions = ({
               <p>Watched</p>
             </div>
           </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </>
+        </div>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

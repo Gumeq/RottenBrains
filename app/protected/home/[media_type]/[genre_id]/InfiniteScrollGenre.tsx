@@ -69,7 +69,7 @@ const InfiniteScrollByGenre: React.FC<InfiniteScrollByGenreProps> = ({
       className="flex w-full flex-col justify-center gap-4 p-4"
       ref={targetRef}
     >
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-8 lg:grid-cols-[repeat(auto-fit,minmax(350px,1fr))]">
+      <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-4">
         {mediaItems && mediaItems.length > 0 ? (
           mediaItems.map((mediaItem) => (
             <HomeMediaCardClient

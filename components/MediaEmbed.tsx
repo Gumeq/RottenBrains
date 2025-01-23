@@ -90,9 +90,9 @@ const VideoEmbed = ({
       <div>
         {!showVideo ? (
           <div className="relative aspect-[16/9] w-full overflow-hidden text-center lg:rounded-[8px]">
-            <h1 className="absolute left-0 top-0 text-4xl font-bold">
+            {/* <h1 className="absolute left-0 top-0 text-4xl font-bold">
               {linkStart}
-            </h1>
+            </h1> */}
             <ImageWithFallback
               imageUrl={imageUrl}
               altText={media.title || episode.name}

@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "./client";
-import { IPost } from "@/types";
+import { FeedGenre, IPost, IUser } from "@/types";
 
 const supabase = createClient();
 
@@ -701,8 +701,6 @@ export async function getBatchWatchedItemsForUser(
       media_id: item.tv_id || item.media_id || item.id,
     }));
 
-    console.log(batchPayload);
-
     // Call the Supabase function
     const { data, error } = await supabase.rpc("get_batch_watched_items", {
       input_user_id: userId,
@@ -713,7 +711,6 @@ export async function getBatchWatchedItemsForUser(
       console.error("Error fetching batch watched items:", error);
       return [];
     }
-    console.log(data);
     return data; // Return the watched items array
   } catch (err) {
     console.error("Unexpected error in getBatchWatchedItemsForUser:", err);
@@ -837,39 +834,107 @@ export const getWatchListSpecific = async (
   }
 };
 
-export const getTopMovieGenresForUser = async (user_id: string) => {
+/**
+ * Combine user's feed genres with recommended to ensure at least 5 total.
+ */
+function ensureAtLeastFiveGenres(
+  userFeed: { genre_code: string; media_type: "movie" | "tv" }[],
+  recommended: { genre_code: string; value: number }[],
+  mediaType: "movie" | "tv",
+) {
+  // Sort recommended by highest value first (descending)
+  recommended.sort((a, b) => b.value - a.value);
+
+  // Start with the user’s feed genres
+  const finalGenres = [...userFeed];
+
+  // If user has fewer than 5, fill with recommended
+  if (finalGenres.length < 5) {
+    for (const rec of recommended) {
+      // Avoid duplicates by checking genre_code
+      if (!finalGenres.some((item) => item.genre_code === rec.genre_code)) {
+        finalGenres.push({
+          genre_code: rec.genre_code,
+          media_type: mediaType,
+        });
+      }
+      if (finalGenres.length >= 5) break;
+    }
+  }
+
+  return finalGenres;
+}
+
+/**
+ * Get Top Movie Genres for a User.
+ * Returns at least 5 total (combining user feed_genres + recommended).
+ */
+export const getTopMovieGenresForUser = async (
+  userId?: string,
+  user?: IUser,
+) => {
+  const user_id = user ? user.id : userId;
   try {
-    const { data, error } = await supabase.rpc(
+    // 1. Get recommended from your Supabase RPC
+    const { data: recommended, error } = await supabase.rpc(
       "get_top_movie_genres_for_user",
-      {
-        p_user_id: user_id,
-      },
+      { p_user_id: user_id },
     );
 
-    if (error) {
-      console.error("Error fetching watch later:", error);
-      throw new Error(error.message);
-    }
-    return data;
+    if (error) throw new Error(error.message);
+
+    // 2. Get user’s current movie feed_genres (if available)
+    const userFeedGenres = user?.feed_genres || [];
+    const userMovieFeedGenres = userFeedGenres.filter(
+      (g) => g.media_type === "movie",
+    );
+
+    // 3. Combine user feed_genres with recommended to ensure at least 5
+    const final = ensureAtLeastFiveGenres(
+      userMovieFeedGenres,
+      recommended || [],
+      "movie",
+    );
+
+    // 4. Return the merged array
+    return final;
   } catch (error) {
-    console.error("Error in getWatchHistoryForUser:", error);
+    console.error("Error in getTopMovieGenresForUser:", error);
     throw error;
   }
 };
 
-export const getTopTvGenresForUser = async (user_id: string) => {
+/**
+ * Get Top TV Genres for a User.
+ * Returns at least 5 total (combining user feed_genres + recommended).
+ */
+export const getTopTvGenresForUser = async (userId?: string, user?: IUser) => {
+  const user_id = user ? user.id : userId;
   try {
-    const { data, error } = await supabase.rpc("get_top_tv_genres_for_user", {
-      p_user_id: user_id,
-    });
+    // 1. Get recommended from your Supabase RPC
+    const { data: recommended, error } = await supabase.rpc(
+      "get_top_tv_genres_for_user",
+      { p_user_id: user_id },
+    );
 
-    if (error) {
-      console.error("Error fetching watch later:", error);
-      throw new Error(error.message);
-    }
-    return data;
+    if (error) throw new Error(error.message);
+
+    // 2. Get user’s current tv feed_genres
+    const userFeedGenres = user?.feed_genres || [];
+    const userTvFeedGenres = userFeedGenres.filter(
+      (g) => g.media_type === "tv",
+    );
+
+    // 3. Combine user feed_genres with recommended to ensure at least 5
+    const final = ensureAtLeastFiveGenres(
+      userTvFeedGenres,
+      recommended || [],
+      "tv",
+    );
+
+    return final;
   } catch (error) {
-    console.error("Error in getWatchHistoryForUser:", error);
+    console.error("Error in getTopTvGenresForUser:", error);
     throw error;
   }
 };
@@ -1059,3 +1124,16 @@ export const fetchBlogPosts = async () => {
 
   return data;
 };
+
+export async function updateUserFeedGenres(
+  userId: string,
+  feedGenres: FeedGenre[],
+) {
+  const { data, error } = await supabase
+    .from("users")
+    .update({ feed_genres: feedGenres })
+    .eq("id", userId)
+    .single();
+
+  return { data, error };
+}

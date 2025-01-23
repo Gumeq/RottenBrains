@@ -124,7 +124,7 @@ const HomePostCard = ({ post }: HomePostCardProps) => {
 
   return (
     <motion.div
-      className="relative flex h-min flex-col rounded-[8px] border border-foreground/10 bg-white/5 lg:w-[300px]"
+      className="relative flex h-min flex-col rounded-[8px] border border-foreground/10 bg-white/5 lg:min-w-[320px] lg:max-w-[400px]"
       variants={variants}
       initial="hidden"
       animate="visible"
