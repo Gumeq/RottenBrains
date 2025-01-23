@@ -19,7 +19,7 @@ const page = async ({ params }: { params: Params }) => {
   const userId = user.user.id.toString();
   return (
     <div className="flex w-full flex-col gap-2">
-      <GenreSelector user_id={userId}></GenreSelector>
+      <GenreSelector></GenreSelector>
       <MobileTopBarHome />
       <div className="mt-4 w-full">
         <InfiniteScrollByGenre
