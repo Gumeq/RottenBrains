@@ -8,6 +8,7 @@ import UserProvider from "@/context/UserContext";
 import { cookies } from "next/headers";
 import { Theme, ThemeProvider } from "@/context/ThemeContext";
 import LegalConsent from "@/components/LegalConsent";
+import GoogleAdsense from "@/components/GoogleAdSense";
 
 export const metadata = {
   title: "RottenBrains",
@@ -47,6 +48,7 @@ export default async function RootLayout({
             <CookieConsent />
             <LegalConsent />
             <SpeedInsights />
+            <GoogleAdsense pId="4557341861686356" />
           </ThemeProvider>
         </UserProvider>
       </body>
