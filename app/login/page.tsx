@@ -30,18 +30,6 @@ export default async function Login({
     return redirect("/protected/home");
   };
 
-  const signInWithOAuth = async () => {
-    "use server";
-    const supabase = await createClient();
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-    });
-
-    if (error) {
-      return redirect("/login?message=Could not authenticate user");
-    }
-  };
-
   return (
     <div className="mx-auto flex h-screen w-full flex-1 flex-col justify-center gap-2 px-8 sm:max-w-md">
       <script src="https://accounts.google.com/gsi/client" async></script>

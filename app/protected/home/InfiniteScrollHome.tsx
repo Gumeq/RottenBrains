@@ -8,8 +8,13 @@ import {
 } from "@/lib/recommendations";
 import HomeMediaCardClient from "./HomeMediaCardClient";
 import { getBatchWatchedItemsForUser } from "@/utils/supabase/queries"; // A new bulk query function
+import { getPopular } from "@/utils/tmdb";
 
-const InfiniteScrollHome = ({ user_id }: any) => {
+interface InfiniteScrollHomeProps {
+  user_id?: string;
+}
+
+const InfiniteScrollHome: React.FC<InfiniteScrollHomeProps> = ({ user_id }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [mediaItems, setMediaItems] = useState<any[]>([]);
@@ -22,42 +27,53 @@ const InfiniteScrollHome = ({ user_id }: any) => {
       setLoading(true);
       try {
         // Fetch recommendations in parallel
-        const [resultMovies, resultTv] = await Promise.all([
-          getMovieRecommendationsForUser(user_id, page),
-          getTvRecommendationsForUser(user_id, page),
-        ]);
-        const resMovies = resultMovies.results.map((movie: any) => ({
-          ...movie,
-          media_type: "movie",
-        }));
-        const resTv = resultTv.results.map((tvShow: any) => ({
-          ...tvShow,
-          media_type: "tv",
-        }));
+        if (user_id) {
+          const [resultMovies, resultTv] = await Promise.all([
+            getMovieRecommendationsForUser(user_id, page),
+            getTvRecommendationsForUser(user_id, page),
+          ]);
+          const resMovies = resultMovies.results.map((movie: any) => ({
+            ...movie,
+            media_type: "movie",
+          }));
+          const resTv = resultTv.results.map((tvShow: any) => ({
+            ...tvShow,
+            media_type: "tv",
+          }));
 
-        const combinedResults = [...resMovies, ...resTv];
+          const combinedResults = [...resMovies, ...resTv];
 
-        // Get watched items for the current batch
-        const watchedItems = await getBatchWatchedItemsForUser(
-          user_id,
-          combinedResults,
-        );
-        const watchedSet = new Set(
-          watchedItems.map(
-            (item: any) => `${item.media_type}-${item.media_id}`,
-          ),
-        );
+          // Get watched items for the current batch
+          const watchedItems = await getBatchWatchedItemsForUser(
+            user_id,
+            combinedResults,
+          );
+          const watchedSet = new Set(
+            watchedItems.map(
+              (item: any) => `${item.media_type}-${item.media_id}`,
+            ),
+          );
 
-        // Filter out watched items
-        const unwatchedItems = combinedResults.filter(
-          (item) => !watchedSet.has(`${item.media_type}-${item.id}`),
-        );
+          // Filter out watched items
+          const unwatchedItems = combinedResults.filter(
+            (item) => !watchedSet.has(`${item.media_type}-${item.id}`),
+          );
 
-        if (unwatchedItems.length === 0) {
-          setHasMore(false);
+          if (unwatchedItems.length === 0) {
+            setHasMore(false);
+          } else {
+            setMediaItems((prev) => [...prev, ...unwatchedItems]);
+            setPage((prevPage) => prevPage + 1);
+          }
         } else {
-          setMediaItems((prev) => [...prev, ...unwatchedItems]);
-          setPage((prevPage) => prevPage + 1);
+          const combined_results = await getPopular(page);
+          console.log(combined_results);
+          if (combined_results.results.length === 0) {
+            setHasMore(false);
+          } else {
+            setMediaItems((prev) => [...prev, ...combined_results.results]);
+            setPage((prevPage) => prevPage + 1);
+          }
         }
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -88,11 +104,11 @@ const InfiniteScrollHome = ({ user_id }: any) => {
             />
           ))
         ) : (
-          <p>No recommendations available at the moment.</p>
+          <></>
         )}
       </div>
       {loading && (
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-8">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-8">
           {Array.from({ length: 20 }).map((_, index) => (
             <div key={index} className="flex flex-col gap-4">
               <div className="aspect-[16/9] w-full bg-foreground/10"></div>

@@ -10,13 +10,7 @@ type Params = Promise<{ genre_id: number; media_type: "movie" | "tv" }>;
 const page = async ({ params }: { params: Params }) => {
   const { genre_id } = await params;
   const { media_type } = await params;
-  const genre_name = getGenreNameById(Number(genre_id));
-  const user = await getCurrentUser();
 
-  if (!user) {
-    return null;
-  }
-  const userId = user.user.id.toString();
   return (
     <div className="flex w-full flex-col gap-2">
       <GenreSelector></GenreSelector>

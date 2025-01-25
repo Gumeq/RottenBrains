@@ -87,14 +87,6 @@ const HomePostCard = ({ post }: HomePostCardProps) => {
     };
   }, [media_type, media_id]);
 
-  const variants = useMemo(
-    () => ({
-      hidden: { opacity: 0 },
-      visible: { opacity: 1 },
-    }),
-    [],
-  );
-
   const creator: Creator = {
     id: post.creatorid,
     email: post.creator_email,
@@ -107,11 +99,11 @@ const HomePostCard = ({ post }: HomePostCardProps) => {
     return <p>No creator</p>;
   }
 
-  if (loading || !currentUser) {
-    return <PostSkeleton variants={variants} />;
+  if (loading) {
+    return <PostSkeleton />;
   }
 
-  const userId = currentUser.id.toString();
+  const userId = currentUser?.id.toString();
 
   const imageUrl =
     media?.images?.backdrops?.[0]?.file_path || media?.backdrop_path || "";
@@ -123,17 +115,7 @@ const HomePostCard = ({ post }: HomePostCardProps) => {
   }
 
   return (
-    <motion.div
-      className="relative flex h-min flex-col rounded-[8px] border border-foreground/10 bg-white/5 lg:min-w-[320px] lg:max-w-[400px]"
-      variants={variants}
-      initial="hidden"
-      animate="visible"
-      transition={{
-        ease: "easeInOut",
-        duration: 0.25,
-      }}
-      viewport={{ amount: 0 }}
-    >
+    <div className="relative flex h-min flex-col rounded-[8px] border border-foreground/10 bg-white/5 lg:min-w-[320px] lg:max-w-[400px]">
       <PostHeader creator={creator} post={post} userId={userId} />
       <PostMedia
         media={media}
@@ -157,7 +139,7 @@ const HomePostCard = ({ post }: HomePostCardProps) => {
         media_id={media_id}
         genreIds={genreIds}
       />
-    </motion.div>
+    </div>
   );
 };
 

@@ -3,6 +3,8 @@ import { getPopular } from "@/utils/tmdb";
 import React from "react";
 import { getAverageColor } from "fast-average-color-node";
 import MediaCarouselNew from "@/components/MediaCarouselNew";
+import { getCurrentUser } from "@/utils/supabase/serverQueries";
+import Banner_90x728 from "@/components/ads/Banner_90x728";
 
 const fetchMoviesWithColors = async (movies: any) => {
   const moviesWithColors = await Promise.all(
@@ -19,9 +21,15 @@ const fetchMoviesWithColors = async (movies: any) => {
 const page = async () => {
   const movies = await getPopular();
   const moviesWithColors = await fetchMoviesWithColors(movies.results);
+  const user = await getCurrentUser();
   return (
     <div className="flex w-full flex-col items-center">
       <MediaCarouselNew movies={moviesWithColors}></MediaCarouselNew>
+      {user && !user.user.premium && (
+        <div className="mt-4 hidden w-full items-center justify-center lg:flex">
+          <Banner_90x728></Banner_90x728>
+        </div>
+      )}
       <div
         className="z-10 mt-4 flex w-full flex-col gap-8 lg:px-4"
         id="explore"

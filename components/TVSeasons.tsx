@@ -50,7 +50,7 @@ const TVShowDetails = async ({
         </div>
       </div>
       <div className="mt-2 w-full">
-        <div className="flex w-full flex-col gap-4">
+        <div className="flex w-full flex-col gap-8 px-4 lg:gap-4 lg:px-0">
           {episodes.map((episode: any) => (
             <Link
               key={episode.episode_number}

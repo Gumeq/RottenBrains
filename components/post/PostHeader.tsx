@@ -20,7 +20,7 @@ interface Post {
 interface PostHeaderProps {
   creator: Creator;
   post: Post;
-  userId: string;
+  userId?: string;
 }
 
 const PostHeader = ({ creator, post, userId }: PostHeaderProps) => {

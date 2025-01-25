@@ -4,9 +4,14 @@ import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import { getMediaDetails } from "@/utils/tmdb";
 import { getAverageColor } from "fast-average-color-node";
 import WatchListCard from "./WatchListCard";
+import { redirect } from "next/navigation";
 
 const page = async () => {
   const user = await getCurrentUser();
+
+  if (!user) {
+    redirect("/login");
+  }
 
   const limit = 1;
   const offset = 0;

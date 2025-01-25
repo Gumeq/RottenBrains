@@ -17,11 +17,6 @@ const InfiniteScrollByGenre: React.FC<InfiniteScrollByGenreProps> = ({
 }) => {
   const { user } = useUser();
 
-  // If no user, render a fallback message
-  if (!user) {
-    return <p>You need to be logged in to view this content.</p>;
-  }
-
   const [loading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [mediaItems, setMediaItems] = useState<any[]>([]);
@@ -73,7 +68,7 @@ const InfiniteScrollByGenre: React.FC<InfiniteScrollByGenreProps> = ({
         {mediaItems && mediaItems.length > 0 ? (
           mediaItems.map((mediaItem) => (
             <HomeMediaCardClient
-              user_id={user.id.toString()}
+              user_id={user?.id.toString()}
               key={`${mediaItem.media_type}-${mediaItem.id}`}
               media_type={mediaItem.media_type}
               media_id={mediaItem.id}
@@ -81,7 +76,7 @@ const InfiniteScrollByGenre: React.FC<InfiniteScrollByGenreProps> = ({
             />
           ))
         ) : (
-          <p>No media available for this genre at the moment.</p>
+          <></>
         )}
       </div>
       {loading && (

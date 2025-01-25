@@ -1,7 +1,6 @@
 import AuthButton from "@/components/auth/AuthButton";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import React from "react";
-import Tabs from "./tabs";
 import FollowButton from "@/components/post/FollowButton";
 import ScrollButtons from "@/components/explore/ScrollButtons";
 import Link from "next/link";
@@ -21,8 +20,6 @@ const ProfileLayout = async ({
 }) => {
   const { userId } = await params;
   let user = await getUserFromDB(userId);
-
-  const currentUser = await getCurrentUser();
   if (!user) {
     return <p>Loading...</p>;
   }
@@ -58,8 +55,8 @@ const ProfileLayout = async ({
               />
             </div>
             <div className="h-full w-full">
-              <div className="flex flex-col gap-2 pt-4 lg:gap-4">
-                <div className="flex w-full flex-row flex-wrap gap-4 lg:justify-between">
+              <div className="flex flex-col pt-4">
+                <div className="flex w-full flex-row flex-wrap gap-2 lg:justify-between">
                   <p className="text-2xl font-semibold">{user.username}</p>
                   <FollowButton user_to_follow_id={user.id}></FollowButton>
                 </div>

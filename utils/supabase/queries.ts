@@ -126,8 +126,8 @@ export const getPostsOfMedia = async (
 
 export const getUserPosts = async (
   creator_id: string,
-  user_id: string,
   page: number,
+  user_id?: string,
 ): Promise<any | null> => {
   try {
     const supabase = createClient();
@@ -153,9 +153,9 @@ export const getUserPosts = async (
 };
 export const getUserPostsType = async (
   creator_id: string,
-  user_id: string,
   page: number,
   media_type: string,
+  user_id?: string,
 ): Promise<any | null> => {
   try {
     const supabase = createClient();
@@ -166,9 +166,9 @@ export const getUserPostsType = async (
       {
         creator_id: creator_id,
         current_user_id: user_id,
+        media_type_filter: media_type,
         result_limit: 10,
         result_offset: page * 10,
-        media_type_filter: media_type,
       },
     );
 
@@ -1136,4 +1136,10 @@ export async function updateUserFeedGenres(
     .single();
 
   return { data, error };
+}
+
+export async function getSinglePost() {
+  const { data, error } = await supabase.from("posts").select("*").range(0, 1);
+
+  return data;
 }

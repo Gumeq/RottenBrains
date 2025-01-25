@@ -1,5 +1,4 @@
-// app/components/ClientComponent.jsx
-"use client"; // This directive marks the component as a client component
+"use client";
 
 import React, { useState } from "react";
 import Link from "next/link";
@@ -8,7 +7,6 @@ import SearchBar from "@/components/searchBar/SearchBar";
 import NotificationButton from "@/components/notifications/RealtimeNotifications";
 import ProfilePicture from "@/components/navigation/ProfilePicture";
 import VersionDisplay from "@/components/VersionDisplay";
-import NavLink from "./NavLink";
 import {
   ExploreIcon,
   HistoryIcon,
@@ -22,10 +20,14 @@ import {
   YouIcon,
   DevBlogIcon,
 } from "./Icon";
+import { useUser } from "@/context/UserContext";
+import NavLink from "./NavLink";
 
 const HomeNav = ({ children }: any) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const pathname = usePathname();
+
+  const { user } = useUser();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -66,48 +68,62 @@ const HomeNav = ({ children }: any) => {
               <SearchBar link={true} user={true}></SearchBar>
             </div>
 
-            <div className="flex flex-row items-center gap-8">
-              <Link
-                href={"/protected/create-post"}
-                className={` ${
-                  pathname.includes("create-post")
-                    ? `text-primary`
-                    : `text-foreground`
-                }`}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
-                  viewBox="0 -960 960 960"
-                  width="24px"
-                  className={`fill-current`}
+            {user ? (
+              <div className="flex flex-row items-center gap-4">
+                <Link
+                  href={"/protected/create-post"}
+                  className={` ${
+                    pathname.includes("create-post")
+                      ? `text-primary`
+                      : `text-foreground`
+                  }`}
                 >
-                  <path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
-                </svg>
-              </Link>
-              <Link
-                href={"/protected/settings"}
-                className={` ${
-                  pathname.includes("settings")
-                    ? `text-primary`
-                    : `text-foreground`
-                }`}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
-                  viewBox="0 -960 960 960"
-                  width="24px"
-                  className={`fill-current`}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                    className={`fill-current`}
+                  >
+                    <path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+                  </svg>
+                </Link>
+                <Link
+                  href={"/protected/settings"}
+                  className={` ${
+                    pathname.includes("settings")
+                      ? `text-primary`
+                      : `text-foreground`
+                  }`}
                 >
-                  <path d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z" />
-                </svg>
-              </Link>
-              <NotificationButton></NotificationButton>
-              <div className="flex items-center">
-                <ProfilePicture></ProfilePicture>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                    className={`fill-current`}
+                  >
+                    <path d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z" />
+                  </svg>
+                </Link>
+                <NotificationButton></NotificationButton>
+                <div className="flex items-center">
+                  <ProfilePicture></ProfilePicture>
+                </div>
               </div>
-            </div>
+            ) : (
+              <Link
+                href={"/login"}
+                className="flex flex-row items-center gap-2 rounded-lg bg-foreground/10 px-4 py-2"
+              >
+                <img
+                  src="/assets/icons/account-circle-outline.svg"
+                  className="invert-on-dark"
+                  alt=""
+                />
+                <p>Sign in</p>
+              </Link>
+            )}
           </div>
         </div>
       </nav>
@@ -143,21 +159,6 @@ const HomeNav = ({ children }: any) => {
                 icon={HistoryIcon}
                 label="History"
               />
-              {/* <NavLink
-                href="/protected/liked-posts"
-                icon={LikedPostsIcon}
-                label="Liked posts"
-              /> */}
-              {/* <NavLink
-                href="/protected/saved-posts"
-                icon={SavedPostsIcon}
-                label="Saved posts"
-              /> */}
-              {/* <NavLink
-                href="/protected/watch-later"
-                icon={WatchLaterIcon}
-                label="Watch Later"
-              /> */}
               <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
               <NavLink href="/blog" icon={DevBlogIcon} label="Developer Blog" />
             </ul>
@@ -175,9 +176,6 @@ const HomeNav = ({ children }: any) => {
               <NavLink href="/protected/profile" icon={ProfileIcon} />
               <NavLink href="/protected/watch-list" icon={WatchListIcon} />
               <NavLink href="/protected/watch-history" icon={HistoryIcon} />
-              {/* <NavLink href="/protected/liked-posts" icon={LikedPostsIcon} />
-              <NavLink href="/protected/saved-posts" icon={SavedPostsIcon} />
-              <NavLink href="/protected/watch-later" icon={WatchLaterIcon} /> */}
               <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
               <NavLink href="/blog" icon={DevBlogIcon} />
             </ul>

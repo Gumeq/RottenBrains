@@ -10,6 +10,7 @@ import { getPostsOfMedia } from "@/utils/supabase/queries";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import { getMediaDetails, getRecommendations } from "@/utils/tmdb";
 import WatchPageDetails from "@/components/WatchPageDetails";
+import NativeAd from "@/components/ads/Native";
 
 export async function generateMetadata({ params }: any) {
   const media_id = parseInt(params.media_id, 10);
@@ -70,7 +71,7 @@ export default async function mediaPage({ params }: { params: Params }) {
         />
       )}
       <div className="relative z-10 mb-16 flex w-screen flex-col lg:w-full lg:px-4">
-        <div className="small-screen-watch-margin mx-auto flex w-full flex-col lg:mt-4 lg:w-auto lg:flex-row lg:gap-8">
+        <div className="small-screen-watch-margin mx-auto flex flex-col lg:mt-4 lg:w-full lg:max-w-[1712px] lg:flex-row lg:gap-8">
           <div className="flex w-full flex-col gap-4 lg:max-w-[1280px]">
             <VideoEmbed
               media_type={media_type}
@@ -109,7 +110,8 @@ export default async function mediaPage({ params }: { params: Params }) {
               </div>
             )}
           </div>
-          <div className="custom-scrollbar flex flex-col gap-4 p-4 lg:w-[400px] lg:p-0">
+          <div className="custom-scrollbar lg;gap-4 flex flex-col gap-8 p-4 lg:w-[400px] lg:p-0">
+            <NativeAd></NativeAd>
             <p className="text-lg font-bold">Recommendations</p>
             {recommendationMediaDetails.map((mediaDetail: any) => (
               <Link

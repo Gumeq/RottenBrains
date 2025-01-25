@@ -1,6 +1,6 @@
 import Bottombar from "@/components/navigation/Bottombar";
 import React from "react";
-import HomeNav from "./home/HomeNav";
+import HomeNav from "../protected/home/HomeNav";
 
 export default async function NotProtectedLayout({
   children,
@@ -20,6 +20,7 @@ export default async function NotProtectedLayout({
           <div className="mb-16 w-full">{children}</div>
         </div>
       </div>
+      {/* <div className="w-full h-[200px] "> </div> */}
     </div>
   );
 }

@@ -29,27 +29,6 @@ export async function updateSession(request: NextRequest) {
     },
   );
 
-  // Do not run code between createServerClient and supabase.auth.getUser()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  // Skip login checks for API routes
-  if (request.nextUrl.pathname.startsWith("/api")) {
-    return supabaseResponse;
-  }
-
-  // Redirect to login for unauthenticated non-API requests
-  if (
-    !user &&
-    !request.nextUrl.pathname.startsWith("/login") &&
-    !request.nextUrl.pathname.startsWith("/auth")
-  ) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/login";
-    return NextResponse.redirect(url);
-  }
-
   // Return the original response
   return supabaseResponse;
 }

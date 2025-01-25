@@ -23,7 +23,7 @@ export async function getCurrentUser(): Promise<any | null> {
     }
     return null;
   } catch (error) {
-    handleError("getCurrentUser", error);
+    console.log(error);
     return null;
   }
 }

@@ -1,33 +1,16 @@
 import AuthButton from "@/components/auth/AuthButton";
-import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
-import { redirect } from "next/navigation";
-import { useState } from "react";
 
 export default async function Index() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (user) {
-    return redirect("/protected/home");
-  }
-
   return (
     <div className="flex w-full flex-1 flex-col items-center gap-8">
-      {/* <div className="w-screen">
-				<ScrollingBackground />
-			</div> */}
       <nav className="flex h-16 w-full justify-center bg-background">
         <div className="flex w-full max-w-4xl items-center justify-between p-3 text-sm">
           <div className="text-xl font-bold">
             <img
-              src="/assets/images/logo-text-new.svg"
+              src="/assets/images/logo_text_new.svg"
               alt=""
-              width={80}
-              height={80}
-              className="invert-on-dark"
+              className="invert-on-dark h-4 w-auto"
             />
           </div>
           {<AuthButton />}
@@ -84,6 +67,26 @@ export default async function Index() {
             Sign up
           </div>
         </Link>
+      </div>
+      <div className="w-full max-w-7xl">
+        <h2 className="mb-4 text-lg font-medium">Legal Disclaimer</h2>
+        <p className="">
+          Data provided by TMDb API.{" "}
+          <Link href={"/"} className="text-accent">
+            rotten-brains.com
+          </Link>{" "}
+          doesn’t host movies; we only share links. Our site provides links to
+          content hosted by third-party sites, over which we have no control. We
+          take intellectual property rights seriously. If you believe a third
+          party is infringing on your copyright, please submit a DMCA report to
+          rottenbrains@proton.me, and we’ll take appropriate action. Premium
+          servers are just a scrape of other servers which are not hosted by us.
+          You can find more information in our{" "}
+          <Link href={"/protected/about"} className="text-accent">
+            about page
+          </Link>
+          .
+        </p>
       </div>
       <div className="my-4 flex w-screen max-w-7xl flex-row items-center justify-between gap-8 p-16 px-8">
         <div className="flex flex-col gap-2">

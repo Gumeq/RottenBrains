@@ -4,6 +4,7 @@ import React from "react";
 import { format, isToday, isYesterday } from "date-fns";
 import HomeMediaCard from "../home/HomeMediaCard";
 import WatchHistoryWithInfiniteScroll from "./WatchHistoryInfiniteScroll";
+import { redirect } from "next/navigation";
 
 // Define the type for a single watch history item
 interface WatchHistoryItem {
@@ -16,6 +17,9 @@ interface WatchHistoryItem {
 const page = async () => {
   // Fetch the user and watch history
   const user = await getCurrentUser();
+  if (!user) {
+    redirect("/login");
+  }
   const limit = 20;
   const offset = 0;
 

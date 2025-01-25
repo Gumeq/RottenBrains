@@ -10,7 +10,9 @@ export async function ExploreTab({
   containerId,
 }: ExploreTabProps & { containerId: string }) {
   let user = await getCurrentUser();
-  user = user.user;
+  if (user) {
+    user = user.user;
+  }
   let exploreData;
   try {
     exploreData = await fetchExploreData(action);
@@ -39,7 +41,7 @@ export async function ExploreTab({
                 <HomeMediaCard
                   media_id={media.id}
                   media_type={media.media_type}
-                  user_id={user.id}
+                  user_id={user?.id}
                   rounded
                 ></HomeMediaCard>
               </div>

@@ -28,8 +28,9 @@ export const getTrendingMovies = async () => {
   return fetchFromApi("trending/movie/day?language=en-US");
 };
 
-export const getPopular = async () => {
-  return fetchFromApi("trending/all/day?language=en-US");
+export const getPopular = async (page?: number) => {
+  const page_string = page ? `&page=${page}` : "";
+  return fetchFromApi(`trending/all/day?language=en-US${page_string}`);
 };
 
 export const getAiringToday = async () => {

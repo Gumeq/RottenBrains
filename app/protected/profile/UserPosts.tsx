@@ -29,14 +29,15 @@ const UserPosts: React.FC<UserPostsProps> = ({
 
   useEffect(() => {
     const loadMorePosts = async () => {
-      if (inViewPosts && hasMorePosts && !loadingPosts && currentUser) {
+      if (inViewPosts && hasMorePosts && !loadingPosts) {
         setLoadingPosts(true);
         try {
           const res = await getUserPosts(
             userId,
-            currentUser.id.toString(),
             postPage,
+            currentUser?.id.toString(),
           );
+          console.log(res);
           if (res.length === 0) {
             setHasMorePosts(false);
           } else {
@@ -69,7 +70,7 @@ const UserPosts: React.FC<UserPostsProps> = ({
   return (
     <div
       className="grid w-full gap-4 p-4 lg:p-0"
-      style={{ gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))" }}
+      style={{ gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))" }}
     >
       {userPosts.map((post) => (
         <div key={post.id} className="w-full">

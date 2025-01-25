@@ -65,24 +65,19 @@ const UserWatchHistory: React.FC<UserWatchHistoryProps> = ({
   return (
     <>
       <div className="w-full">
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-8 lg:gap-4">
-          {currentUser ? (
-            <>
-              {watchHistory.map((item) => (
-                <HomeMediaCardClient
-                  media_type={item.media_type}
-                  media_id={item.media_id}
-                  season_number={item.season_number}
-                  episode_number={item.episode_number}
-                  user_id={currentUser.id.toString()}
-                  rounded={true}
-                />
-              ))}
-            </>
-          ) : (
-            <></>
-          )}
-
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-8 lg:gap-4">
+          <>
+            {watchHistory.map((item) => (
+              <HomeMediaCardClient
+                media_type={item.media_type}
+                media_id={item.media_id}
+                season_number={item.season_number}
+                episode_number={item.episode_number}
+                user_id={currentUser?.id.toString()}
+                rounded={true}
+              />
+            ))}
+          </>
           {loadingHistory && !currentUser && <Loader />}
           {!loadingHistory && hasMoreHistory && (
             <div ref={refHistory} className="h-[100px] w-[100px]"></div>

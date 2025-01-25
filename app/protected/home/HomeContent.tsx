@@ -10,27 +10,37 @@ import {
   getCurrentUser,
   getPostsFromFollowedUsers,
 } from "@/utils/supabase/serverQueries";
-import HomeMediaCard from "./HomeMediaCard";
+
 import HomePostCardNew from "@/components/post/HomePostCardNew";
 import ScrollButtons from "@/components/explore/ScrollButtons";
-import MobileTopBarHome from "./MobileTopBarHome";
-import InfiniteScrollHome from "./InfiniteScrollHome";
 import { MobileVideoProvider } from "@/context/MobileVideoContext";
 import { getGenreNameById } from "@/lib/functions";
 import { getFromGenres, getMediaDetails } from "@/utils/tmdb";
-import { AlignVerticalJustifyEnd } from "lucide-react";
+import InfiniteScrollHome from "./InfiniteScrollHome";
 import GenreSelector from "./GenreSelectorHome";
+import MobileTopBarHome from "./MobileTopBarHome";
+import HomeMediaCard from "./HomeMediaCard";
+import Banner_90x728 from "@/components/ads/Banner_90x728";
+import Banner_250x300 from "@/components/ads/Banner_250x300";
 
 const HomeContent = async () => {
   try {
     // Parallelize initial data fetching
-    const [users, user] = await Promise.all([
-      getNewestUsers(),
-      getCurrentUser(),
-    ]);
+    const user = await getCurrentUser();
 
-    if (!user || !users) {
-      return null;
+    if (!user) {
+      return (
+        <>
+          <MobileTopBarHome />
+          <div className="flex w-full flex-col gap-4 lg:pr-8">
+            <GenreSelector></GenreSelector>
+            <div className="hidden w-full items-center justify-center lg:flex">
+              <Banner_90x728></Banner_90x728>
+            </div>
+            <InfiniteScrollHome />
+          </div>
+        </>
+      );
     }
 
     const userId = user.user.id.toString();
@@ -127,6 +137,11 @@ const HomeContent = async () => {
     return (
       <MobileVideoProvider>
         <GenreSelector></GenreSelector>
+        {user && !user.user.premium && (
+          <div className="mt-4 hidden w-full items-center justify-center lg:flex">
+            <Banner_90x728></Banner_90x728>
+          </div>
+        )}
         <div className="flex w-full flex-col gap-8 p-0 pb-4 lg:w-auto lg:p-4 lg:py-0">
           <MobileTopBarHome />
           {/* Watch History Section */}
@@ -341,28 +356,6 @@ const HomeContent = async () => {
               </div>
             </div>
           </div>
-          {/* TV Recommendations Section
-          <div className="flex flex-col gap-4">
-            <h2 className="text-xl font-bold">More you might like</h2>
-            <div
-              className="grid gap-4"
-              style={{
-                gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
-              }}
-            >
-              {tvRecommendations.length > 0 &&
-                tvRecommendations.slice(0, 20).map((media: any) => (
-                  <div key={media.id}>
-                    <HomeMediaCard
-                      user_id={user.user.id}
-                      media_type="tv"
-                      media_id={media.id}
-                    />
-                  </div>
-                ))}
-            </div>
-          </div> */}
-          {/* Infinite Scroll Section */}
           <h2 className="pl-4 font-semibold lg:pl-0">More you might like</h2>
           <InfiniteScrollHome user_id={user.user.id} />
           <div className="h-16 w-full" />

@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import MoreOptions from "./MoreOptions";
 import {
   formatDate,
   formatEpisodeCode,
@@ -10,8 +9,9 @@ import {
 } from "@/lib/functions";
 import { getWatchTime } from "@/utils/supabase/queries";
 import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
-import HoverImage from "./HoverImage";
 import MediaCardOverlay from "@/components/MediaCardOverlay";
+import HoverImage from "./HoverImage";
+import MoreOptions from "./MoreOptions";
 
 interface MediaCardProps {
   media_type: string;
@@ -19,7 +19,7 @@ interface MediaCardProps {
   season_number?: number;
   episode_number?: number;
   quality?: string;
-  user_id: string;
+  user_id?: string;
   rounded?: boolean;
 }
 
@@ -46,7 +46,12 @@ const HomeMediaCardClient: React.FC<MediaCardProps> = React.memo(
           let fetchedMedia;
           if (media_type === "movie") {
             fetchedMedia = await getMediaDetails(media_type, media_id);
-          } else if (season_number && episode_number) {
+          } else if (
+            season_number &&
+            episode_number &&
+            season_number !== -1 &&
+            episode_number !== -1
+          ) {
             fetchedMedia = await getEpisodeDetails(
               media_id,
               season_number,
@@ -80,13 +85,15 @@ const HomeMediaCardClient: React.FC<MediaCardProps> = React.memo(
 
       const fetchWatchTime = async () => {
         try {
-          const fetchedWatchTime = await getWatchTime(
-            user_id,
-            media_type,
-            media_id,
-            season_number,
-            episode_number,
-          );
+          const fetchedWatchTime = user_id
+            ? await getWatchTime(
+                user_id,
+                media_type,
+                media_id,
+                season_number,
+                episode_number,
+              )
+            : 0;
           setWatchTime(fetchedWatchTime || 0);
         } catch (err) {
           console.error("Failed to fetch watch time", err);
@@ -100,14 +107,21 @@ const HomeMediaCardClient: React.FC<MediaCardProps> = React.memo(
       return (
         <div className="flex flex-col gap-4">
           <div className="aspect-[16/9] w-full bg-foreground/10"></div>
-          {/* <div className="h-16 w-screen lg:w-full lg:min-w-[400px] lg:max-w-[550px]"></div> */}
           <div className="h-6 w-2/3 bg-foreground/10"></div>
           <div className="h-6 w-1/3 bg-foreground/10"></div>
         </div>
       );
 
     if (error) {
-      return <p>Error loading media data.</p>;
+      return (
+        <div className="flex flex-col gap-4">
+          <div className="flex aspect-[16/9] w-full items-center justify-center bg-foreground/10 text-foreground/60">
+            <p>Error Loading Media</p>
+          </div>
+          <div className="h-6 w-2/3 bg-foreground/10"></div>
+          <div className="h-6 w-1/3 bg-foreground/10"></div>
+        </div>
+      );
     }
 
     // Extract genre IDs
@@ -187,12 +201,16 @@ const HomeMediaCardClient: React.FC<MediaCardProps> = React.memo(
         <div className="flex flex-col gap-2 lg:p-0">
           <div className="mt-2 flex flex-row justify-between">
             <h2 className="font-medium">{mediaTitle}</h2>
-            <MoreOptions
-              user_id={user_id}
-              media_type={media_type}
-              media_id={media_id}
-              genre_ids={genreIds}
-            />
+            {user_id ? (
+              <MoreOptions
+                user_id={user_id}
+                media_type={media_type}
+                media_id={media_id}
+                genre_ids={genreIds}
+              />
+            ) : (
+              <></>
+            )}
           </div>
           {media.genres && (
             <div className="flex flex-row items-center gap-2 text-xs text-foreground/70">

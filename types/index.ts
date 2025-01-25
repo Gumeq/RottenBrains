@@ -28,6 +28,7 @@ export type IUser = {
   saves: Array<string>;
   backdrop_url: string;
   feed_genres: any[];
+  premium: boolean;
 };
 export type IPost = {
   id: number;

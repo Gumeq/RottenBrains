@@ -5,19 +5,9 @@ interface PostSkeletonProps {
   variants: any;
 }
 
-const PostSkeleton = ({ variants }: PostSkeletonProps) => {
+const PostSkeleton = () => {
   return (
-    <motion.div
-      className="relative flex h-min flex-col overflow-hidden rounded-[8px] border border-foreground/10 bg-white/5 lg:max-w-[300px]"
-      variants={variants}
-      initial="hidden"
-      animate="visible"
-      transition={{
-        ease: "easeInOut",
-        duration: 0.25,
-      }}
-      viewport={{ amount: 0 }}
-    >
+    <div className="relative flex h-min flex-col overflow-hidden rounded-[8px] border border-foreground/10 bg-white/5 lg:max-w-[300px]">
       {/* Header Section */}
       <div className="flex flex-row items-center justify-between gap-4 px-4 py-2">
         <div className="flex flex-row items-center gap-2">
@@ -71,7 +61,7 @@ const PostSkeleton = ({ variants }: PostSkeletonProps) => {
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

@@ -114,7 +114,7 @@ const WatchDuration: React.FC<WatchDurationProps> = ({
     media_duration,
   ]);
 
-  return null;
+  return <></>;
 };
 
 export default WatchDuration;

@@ -9,11 +9,9 @@ import {
 import { getWatchTime } from "@/utils/supabase/queries";
 import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
 import Link from "next/link";
-import MoreOptions from "./MoreOptions";
-import HoverImage from "./HoverImage";
-import MediaInfoText from "@/components/MediaInfoText";
-import ProgressBar from "@/components/ProgressBar";
 import MediaCardOverlay from "@/components/MediaCardOverlay";
+import HoverImage from "./HoverImage";
+import MoreOptions from "./MoreOptions";
 
 interface MediaCardProps {
   media_type: string;
@@ -21,7 +19,7 @@ interface MediaCardProps {
   season_number?: number;
   episode_number?: number;
   quality?: string;
-  user_id: string;
+  user_id?: string;
   rounded?: boolean;
 }
 
@@ -34,9 +32,7 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
   user_id,
   rounded,
 }) => {
-  // Fetch media details based on type
   let media: any;
-
   if (media_type === "movie") {
     media = await getMediaDetails(media_type, media_id);
   } else if (season_number && episode_number) {
@@ -45,14 +41,15 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
     media = await getMediaDetails(media_type, media_id);
   }
 
-  // Fetch watch time
-  const watchTime = await getWatchTime(
-    user_id,
-    media_type,
-    media_id,
-    season_number,
-    episode_number,
-  );
+  const watchTime = user_id
+    ? await getWatchTime(
+        user_id,
+        media_type,
+        media_id,
+        season_number,
+        episode_number,
+      )
+    : 0;
 
   // Extract genre IDs
   const genreIds: bigint[] = media?.genres?.map((genre: any) => genre.id) || [];
@@ -131,12 +128,16 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
             {mediaTitle}
             {formattedEpisodeCode}
           </h2>
-          <MoreOptions
-            user_id={user_id}
-            media_type={media_type}
-            media_id={media_id}
-            genre_ids={genreIds}
-          />
+          {user_id ? (
+            <MoreOptions
+              user_id={user_id}
+              media_type={media_type}
+              media_id={media_id}
+              genre_ids={genreIds}
+            />
+          ) : (
+            <></>
+          )}
         </div>
         {media.genres && (
           <div className="flex flex-row items-center gap-2 text-xs text-foreground/70">

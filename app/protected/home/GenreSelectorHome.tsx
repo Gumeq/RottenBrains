@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useMemo } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 
 // Context for user
 import { useUser } from "@/context/UserContext";
@@ -16,8 +16,6 @@ import {
   getTopTvGenresForUser,
   updateUserFeedGenres,
 } from "@/utils/supabase/queries";
-
-// Modal component
 import Modal from "../user/[userId]/Modal";
 
 // Types
@@ -41,32 +39,26 @@ interface FeedGenre {
 }
 
 const GenreSelector: React.FC = () => {
-  // ---------------------------
-  // 1. HOOKS & STATE
-  // ---------------------------
   const { user } = useUser();
+
   const pathname = usePathname();
   const router = useRouter();
 
-  // State for the user's feed genres
   const [feedGenres, setFeedGenres] = useState<FeedGenre[]>(
     user?.feed_genres || [],
   );
-  // State for recommended genres
   const [topRecommendedGenres, setTopRecommendedGenres] = useState<
     RecommendedGenre[]
   >([]);
-  // Other UI states
   const [selectedCategory, setSelectedCategory] = useState<
-    "Recommended" | "movie" | "tv"
+    "Recommended" | "movie" | "tv" | "Home"
   >("Recommended");
+
   const [loading, setLoading] = useState(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
 
-  // Safely get the user ID
   const user_id = user?.id;
 
-  // If user changes (e.g., after loading), sync feedGenres
   useEffect(() => {
     if (user?.feed_genres) {
       setFeedGenres(user.feed_genres);
@@ -138,8 +130,17 @@ const GenreSelector: React.FC = () => {
       }
     };
 
+    const getGenresNoUser = async () => {
+      console.log("NO USER");
+      setTopRecommendedGenres([]);
+    };
+
     if (selectedCategory === "Recommended") {
-      fetchRecommendedGenres();
+      if (user) {
+        fetchRecommendedGenres();
+      } else {
+        getGenresNoUser();
+      }
     }
   }, [user_id, selectedCategory]);
 
@@ -180,7 +181,8 @@ const GenreSelector: React.FC = () => {
   };
 
   const handleRecommendedClick = () => {
-    router.push("/protected/home");
+    setSelectedCategory("Recommended");
+    redirect("/protected/home");
   };
 
   // Add genre to feed (optimistic update)
@@ -241,35 +243,47 @@ const GenreSelector: React.FC = () => {
   // 7. RENDER
   // ---------------------------
 
-  // If user is not yet loaded, show a loading state
-  if (!user) {
-    return <p>Loading User...</p>;
-  }
-
   return (
-    <div className="hidden-scrollbar mt-14 flex flex-row items-center gap-2 overflow-x-auto px-2 text-sm lg:mt-0 lg:px-4 lg:py-1">
+    <div className="hidden-scrollbar mt-14 flex flex-row items-center gap-2 overflow-x-auto px-2 text-sm lg:mt-0 lg:px-0 lg:py-1 lg:pr-4">
       {/* Category buttons */}
-      <button
-        className="rounded-[4px] bg-foreground/5 px-3 py-1"
-        onClick={() => setIsSettingsModalOpen(true)}
-      >
-        <img
-          src="/assets/icons/tune-outline.svg"
-          alt="settings"
-          className="invert-on-dark min-h-6 min-w-6"
-        />
-      </button>
+      {user ? (
+        <button
+          className="rounded-[4px] bg-foreground/5 px-3 py-1"
+          onClick={() => setIsSettingsModalOpen(true)}
+        >
+          <img
+            src="/assets/icons/tune-outline.svg"
+            alt="settings"
+            className="invert-on-dark min-h-6 min-w-6"
+          />
+        </button>
+      ) : (
+        <></>
+      )}
 
-      <button
-        className={`rounded-[4px] px-3 py-1 ${
-          selectedCategory === "Recommended"
-            ? "bg-foreground text-background"
-            : "bg-foreground/5"
-        }`}
-        onClick={handleRecommendedClick}
-      >
-        Recommended
-      </button>
+      {user ? (
+        <button
+          className={`rounded-[4px] px-3 py-1 ${
+            selectedCategory === "Recommended"
+              ? "bg-foreground text-background"
+              : "bg-foreground/5"
+          }`}
+          onClick={handleRecommendedClick}
+        >
+          Recommended
+        </button>
+      ) : (
+        <button
+          className={`rounded-[4px] px-3 py-1 ${
+            selectedCategory === "Recommended"
+              ? "bg-foreground text-background"
+              : "bg-foreground/5"
+          }`}
+          onClick={handleRecommendedClick}
+        >
+          Home
+        </button>
+      )}
       <button
         className={`rounded-[4px] px-3 py-1 ${
           selectedCategory === "movie"
