@@ -58,7 +58,7 @@ export function TopNavbarDesktop() {
             </div>
 
             <div className="flex flex-row gap-8">
-              <NotificationButton></NotificationButton>
+              {/* <NotificationButton></NotificationButton> */}
               <div className="flex items-center">
                 <ProfilePicture></ProfilePicture>
               </div>

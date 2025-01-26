@@ -20,7 +20,7 @@ const MobileTopNav = async () => {
         {/* <div className=" h-full w-full mx-4">
 					<SearchBar link={true}></SearchBar>
 				</div> */}
-        <NotificationButton></NotificationButton>
+        {/* <NotificationButton></NotificationButton> */}
       </div>
     </div>
   );

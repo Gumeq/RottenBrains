@@ -77,7 +77,7 @@ const MobileTopBarHome = () => {
 
         {user ? (
           <div className="flex flex-row items-center gap-4">
-            <NotificationButton />
+            {/* <NotificationButton /> */}
             <Link
               href={"/protected/settings"}
               // className={` ${
