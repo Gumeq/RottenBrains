@@ -37,7 +37,7 @@ const MenuButtonWithSidebar: React.FC = () => {
 
       {/* Sidebar */}
       <div
-        className={`fixed left-0 top-0 z-50 h-screen w-2/3 transform bg-background text-white drop-shadow-md transition-transform ${
+        className={`fixed left-0 top-0 z-50 h-screen w-2/3 transform bg-background drop-shadow-md transition-transform ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -45,7 +45,7 @@ const MenuButtonWithSidebar: React.FC = () => {
           <button
             onClick={toggleMenu}
             aria-label="Close Menu"
-            className="p-4 text-lg text-white"
+            className="p-4 text-lg text-foreground"
           >
             X
           </button>

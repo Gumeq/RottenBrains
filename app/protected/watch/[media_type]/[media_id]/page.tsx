@@ -45,11 +45,6 @@ export default async function mediaPage({ params }: { params: Params }) {
 
   const user = await getCurrentUser();
 
-  let postsOfMedia: any = [];
-  if (user) {
-    postsOfMedia = await getPostsOfMedia(user.user.id, media_type, media_id, 0);
-  }
-
   const recommendations = await getRecommendations(media_type, media_id);
   const media = await getMediaDetails(media_type, media_id);
 
@@ -71,7 +66,7 @@ export default async function mediaPage({ params }: { params: Params }) {
         />
       )}
       <div className="relative z-10 mb-16 flex w-screen flex-col lg:w-full lg:px-4">
-        <div className="small-screen-watch-margin mx-auto flex flex-col lg:mt-4 lg:w-full lg:max-w-[1712px] lg:flex-row lg:gap-8">
+        <div className="small-screen-watch-margin mx-auto flex w-full flex-col lg:mt-4 lg:w-full lg:max-w-[1712px] lg:flex-row lg:gap-8">
           <div className="flex w-full flex-col gap-4 lg:max-w-[1280px]">
             <VideoEmbed
               media_type={media_type}
@@ -83,36 +78,13 @@ export default async function mediaPage({ params }: { params: Params }) {
               media_type="movie"
               media_id={media.id}
             ></WatchPageDetails>
-            {postsOfMedia && postsOfMedia.length > 0 && (
-              <div className="my-2 flex flex-col gap-2 pl-4">
-                <div className="flex flex-row items-center justify-between">
-                  <div className="flex flex-row items-center gap-2">
-                    <h2 className="font-bold">User posts</h2>
-                  </div>
-                  <ScrollButtons containerId="user_posts" scrollPercent={30} />
-                </div>
-                <div className="relative">
-                  <div className="gradient-edge absolute right-0 top-0 z-10 h-full w-[5%]"></div>
-                  <div
-                    className="hidden-scrollbar flex flex-row flex-nowrap gap-2 overflow-x-auto pb-2"
-                    id="user_posts"
-                  >
-                    {postsOfMedia.slice(0, 9).map((post: any) => (
-                      <div
-                        className="w-[85vw] flex-shrink-0 lg:w-fit"
-                        key={post.id}
-                      >
-                        <HomePostCardNew post={post} />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
           <div className="custom-scrollbar lg;gap-4 flex flex-col gap-8 p-4 lg:w-[400px] lg:p-0">
-            <NativeAd></NativeAd>
-            <p className="text-lg font-bold">Recommendations</p>
+            {user && !user.user.premium && (
+              <div className="hidden w-full items-center justify-center lg:flex">
+                <NativeAd></NativeAd>
+              </div>
+            )}
             {recommendationMediaDetails.map((mediaDetail: any) => (
               <Link
                 href={

@@ -8,7 +8,7 @@ interface ProgressBarProps {
 
 const ProgressBar: FC<ProgressBarProps> = ({
   progress,
-  backgroundColor = "bg-white/20",
+  backgroundColor = "bg-white/60",
   progressColor = "bg-accent",
 }) => {
   return (

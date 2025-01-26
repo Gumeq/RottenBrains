@@ -348,6 +348,10 @@
   }
 }
 
+.small-screen-watch-margin-info {
+  margin-top: calc((56.25vw + 38px));
+}
+
 .svgAnimation {
   width: 100px; /* Adjust this to your desired size */
   height: 100px;

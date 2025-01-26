@@ -82,7 +82,10 @@ const UserPosts: React.FC<UserPostsProps> = ({
         <div ref={refPosts} className="h-[100px] w-[100px]"></div>
       )}
       {!hasMorePosts && (
-        <div className="flex w-full flex-col items-center justify-center gap-4 rounded-[8px] bg-foreground/10 p-4">
+        <div
+          className="flex w-full flex-col items-center justify-center gap-4 rounded-[8px] bg-foreground/10 p-4"
+          key={"loader"}
+        >
           <img
             src="/assets/images/logo_new_black.svg"
             alt="No more posts"

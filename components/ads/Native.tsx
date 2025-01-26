@@ -51,8 +51,16 @@ const NativeAd = () => {
   // Show fallback if ad is blocked
   if (adBlocked) {
     return (
-      <div className="flex h-full min-h-32 w-full items-center justify-center bg-red-500 text-white">
-        Ad Blocked / Could not display ad
+      <div className="flex flex-col items-center justify-center gap-6">
+        <div className="flex aspect-[1/1] w-full items-center justify-center border-[4px] border-foreground/60 p-4 text-center font-medium text-foreground">
+          Ads help keep Rotten-Brains free. Please help support us by disabling
+          your ad blocker.
+        </div>
+        <div className="relative mb-4 h-[4px] w-full bg-foreground/60">
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-full bg-accent px-4 py-1 text-center font-medium">
+            AD
+          </div>
+        </div>
       </div>
     );
   }

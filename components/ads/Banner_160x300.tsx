@@ -84,7 +84,7 @@ const Banner_250x300: React.FC<AdComponentProps> = ({
   if (adBlocked) {
     return (
       <div className="flex flex-col items-center justify-center gap-6">
-        <div className="flex h-[250px] w-[300px] items-center justify-center border-[4px] border-foreground/60 font-medium text-foreground">
+        <div className="flex h-[250px] w-[300px] items-center justify-center border-[4px] border-foreground/60 p-4 text-center font-medium text-foreground">
           Ads help keep Rotten-Brains free. Please help support us by disabling
           your ad blocker.
         </div>

@@ -11,6 +11,7 @@ import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
 import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
 import WatchPageDetails from "@/components/WatchPageDetails";
+import NativeAd from "@/components/ads/Native";
 type Params = Promise<{
   media_id: number;
   season_number: number;
@@ -56,12 +57,6 @@ export default async function mediaPage({ params }: { params: Params }) {
   console.log(media_type, media_id, season_number, episode_number);
 
   const user = await getCurrentUser();
-
-  let postsOfMedia: any = [];
-  if (user) {
-    postsOfMedia = await getPostsOfMedia(user.user.id, media_type, media_id, 0);
-  }
-
   const media = await getMediaDetails(media_type, media_id);
   const episode = await getEpisodeDetails(
     media_id,
@@ -110,8 +105,8 @@ export default async function mediaPage({ params }: { params: Params }) {
           media_duration={episode.runtime || 100}
         />
       )}
-      <div className="relative z-10 mb-16 flex w-screen flex-col lg:w-full lg:px-4">
-        <div className="small-screen-watch-margin mx-auto flex flex-col lg:mt-4 lg:w-full lg:max-w-[1712px] lg:flex-row lg:gap-8">
+      <div className="relative z-10 mb-16 flex w-full flex-col lg:w-full lg:px-4">
+        <div className="small-screen-watch-margin mx-auto flex w-full flex-col lg:mt-4 lg:w-full lg:max-w-[1712px] lg:flex-row lg:gap-8">
           <div className="flex w-full flex-col gap-4 lg:max-w-[1280px]">
             <VideoEmbed
               media_type={media_type}
@@ -129,39 +124,19 @@ export default async function mediaPage({ params }: { params: Params }) {
               episode_number={episode_number}
               episode={episode}
             ></WatchPageDetails>
-            {postsOfMedia && postsOfMedia.length > 0 && (
-              <div className="my-2 flex flex-col gap-2 pl-4">
-                <div className="flex flex-row items-center justify-between">
-                  <div className="flex flex-row items-center gap-2">
-                    <h2 className="font-bold">User posts</h2>
-                  </div>
-                  <ScrollButtons containerId="user_posts" scrollPercent={30} />
-                </div>
-                <div className="relative">
-                  <div className="gradient-edge absolute right-0 top-0 z-10 h-full w-[5%]"></div>
-                  <div
-                    className="hidden-scrollbar flex flex-row flex-nowrap gap-2 overflow-x-auto pb-2"
-                    id="user_posts"
-                  >
-                    {postsOfMedia.slice(0, 9).map((post: any) => (
-                      <div
-                        className="w-[85vw] flex-shrink-0 lg:w-fit"
-                        key={post.id}
-                      >
-                        <HomePostCardNew post={post} />
-                      </div>
-                    ))}
-                  </div>
-                </div>
+          </div>
+          <div className="flex flex-col gap-2 lg:mt-0 lg:max-w-[400px]">
+            {user && !user.user.premium && (
+              <div className="hidden w-full items-center justify-center lg:flex">
+                <NativeAd></NativeAd>
               </div>
             )}
-          </div>
-          <div className="mt-2 flex flex-col gap-2 lg:mt-0 lg:max-w-[400px]">
             {nextEpisode && (
-              <div className="flex flex-col gap-2 p-4 lg:rounded-[8px] lg:p-0">
+              <div className="flex flex-col gap-2 lg:rounded-[8px] lg:p-0">
                 <h3 className="px-2 font-semibold lg:px-0">Next Episode</h3>
                 <Link
                   href={`/protected/watch/tv/${media.id}/${nextEpisode.season_number}/${nextEpisode.episode_number}`}
+                  className="px-4 lg:px-0"
                 >
                   <MediaCardSmall
                     media_type={"tv"}
