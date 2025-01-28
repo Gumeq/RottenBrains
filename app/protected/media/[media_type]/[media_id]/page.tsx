@@ -1,9 +1,11 @@
 import GoBackArrow from "@/components/GoBackArrow";
 import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
-import { getPostsOfMedia } from "@/utils/supabase/queries";
 import { getMediaCredits, getMediaDetails, getVideos } from "@/utils/tmdb";
 import Link from "next/link";
-import { getCurrentUser } from "@/utils/supabase/serverQueries";
+import {
+  getCurrentUser,
+  getPostsOfMedia,
+} from "@/utils/supabase/serverQueries";
 import HomePostCardNew from "@/components/post/HomePostCardNew";
 import MoreOptions from "@/app/protected/home/MoreOptions";
 import ImageWithFallback from "@/components/ImageWithFallback";
@@ -137,7 +139,7 @@ export default async function mediaPage({ params }: { params: Params }) {
 
   let postsOfMedia: any = [];
   if (user) {
-    postsOfMedia = await getPostsOfMedia(user.user.id, media_type, media_id, 0);
+    postsOfMedia = await getPostsOfMedia(user.id, media_type, media_id, 0);
   }
   const mediaCredits = await separateCredits(media_type, media_id);
 
@@ -167,7 +169,7 @@ export default async function mediaPage({ params }: { params: Params }) {
               <div className="flex w-full flex-row justify-between">
                 <p className="text-2xl">{media.title || media.name}</p>
                 <MoreOptions
-                  user_id={user.user.id}
+                  user_id={user.id}
                   media_type={media_type}
                   media_id={media_id}
                   genre_ids={genreIds}

@@ -1,9 +1,6 @@
 "use client";
 import { useUser } from "@/context/UserContext";
-import {
-  uploadBackdropPicture,
-  uploadProfilePicture,
-} from "@/utils/supabase/queries";
+import { uploadBackdropPicture } from "@/utils/supabase/clientQueries";
 import React, { useState, useEffect, ChangeEvent } from "react";
 
 const BackdropChange: React.FC = () => {

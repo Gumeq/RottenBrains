@@ -1,13 +1,12 @@
 import {
   getBatchWatchedItemsForUser,
-  getLatestNewEpisodes,
-  getNewestUsers,
-  getNextEpisodes,
   getTopMovieGenresForUser,
   getTopTvGenresForUser,
-} from "@/utils/supabase/queries";
+} from "@/utils/supabase/clientQueries";
 import {
   getCurrentUser,
+  getLatestNewEpisodes,
+  getNextEpisodes,
   getPostsFromFollowedUsers,
 } from "@/utils/supabase/serverQueries";
 
@@ -27,6 +26,7 @@ const HomeContent = async () => {
   try {
     // Parallelize initial data fetching
     const user = await getCurrentUser();
+    console.log(user);
 
     if (!user) {
       return (
@@ -43,7 +43,7 @@ const HomeContent = async () => {
       );
     }
 
-    const userId = user.user.id.toString();
+    const userId = user.id.toString();
     const [
       followedPosts,
       topMovieGenres,
@@ -52,8 +52,8 @@ const HomeContent = async () => {
       newEpisodes,
     ] = await Promise.all([
       getPostsFromFollowedUsers(userId, 0),
-      getTopMovieGenresForUser(undefined, user.user),
-      getTopTvGenresForUser(undefined, user.user),
+      getTopMovieGenresForUser(undefined, user),
+      getTopTvGenresForUser(undefined, user),
       getNextEpisodes(userId),
       getLatestNewEpisodes(userId),
     ]);
@@ -69,22 +69,6 @@ const HomeContent = async () => {
 
     const topMovieGenreName = getGenreNameById(Number(topMovieGenreCode));
     const topTvGenreName = getGenreNameById(Number(topTvGenreCode));
-
-    let unwatchedEpisodes: any[] = [];
-    if (newEpisodes && newEpisodes.length > 0) {
-      const watchedItems = await getBatchWatchedItemsForUser(
-        userId,
-        newEpisodes,
-      );
-      const watchedSet = new Set(
-        watchedItems.map((item: any) => `tv-${item.media_id}`),
-      );
-
-      // Filter out watched items
-      unwatchedEpisodes = newEpisodes.filter(
-        (item) => !watchedSet.has(`tv-${item.tv_id}`),
-      );
-    }
 
     // Optimize nextEpisodes processing
     const processedEpisodes = await Promise.all(
@@ -137,7 +121,7 @@ const HomeContent = async () => {
     return (
       <MobileVideoProvider>
         <GenreSelector></GenreSelector>
-        {user && !user.user.premium && (
+        {user && !user.premium && (
           <div className="mt-4 hidden w-full items-center justify-center lg:flex">
             <Banner_90x728></Banner_90x728>
           </div>
@@ -189,7 +173,7 @@ const HomeContent = async () => {
                             className="h-auto w-screen snap-start scroll-ml-4"
                           >
                             <HomeMediaCard
-                              user_id={user.user.id}
+                              user_id={user.id}
                               media_type={media.media_type}
                               media_id={media.media_id}
                               episode_number={episodeNumber || undefined}
@@ -283,7 +267,7 @@ const HomeContent = async () => {
                   {newEpisodes.slice(0, 10).map((media: any) => (
                     <div key={media.id} className="snap-start scroll-ml-4">
                       <HomeMediaCard
-                        user_id={user.user.id}
+                        user_id={user.id}
                         media_type="tv"
                         media_id={media.tv_id}
                         season_number={media.season_number}
@@ -317,7 +301,7 @@ const HomeContent = async () => {
                   topMovieGenreMedia.results.slice(0, 20).map((media: any) => (
                     <div key={media.id} className="snap-start scroll-ml-4">
                       <HomeMediaCard
-                        user_id={user.user.id}
+                        user_id={user.id}
                         media_type="movie"
                         media_id={media.id}
                         rounded={true}
@@ -346,7 +330,7 @@ const HomeContent = async () => {
                   topTvGenreMedia.results.slice(0, 20).map((media: any) => (
                     <div key={media.id} className="snap-start scroll-ml-4">
                       <HomeMediaCard
-                        user_id={user.user.id}
+                        user_id={user.id}
                         media_type="tv"
                         media_id={media.id}
                         rounded={true}
@@ -357,7 +341,7 @@ const HomeContent = async () => {
             </div>
           </div>
           <h2 className="pl-4 font-semibold lg:pl-0">More you might like</h2>
-          <InfiniteScrollHome user_id={user.user.id} />
+          <InfiniteScrollHome user_id={user.id} />
           <div className="h-16 w-full" />
         </div>
       </MobileVideoProvider>

@@ -15,7 +15,7 @@ interface FormData {
 }
 
 const UserSettingsForm = (user: any) => {
-  user = user.user;
+  user = user;
   const [formData, setFormData] = useState<FormData>({
     name: user.name,
     username: user.username,

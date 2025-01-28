@@ -1,4 +1,4 @@
-import { getWatchListSpecific } from "@/utils/supabase/queries";
+import { getWatchListSpecific } from "@/utils/supabase/clientQueries";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import React from "react";
 import HomeMediaCard from "../../home/HomeMediaCard";
@@ -8,7 +8,7 @@ const page = async ({ params }: { params: Params }) => {
   const { watch_list_type } = await params;
 
   let user = await getCurrentUser();
-  user = user.user;
+  user = user;
   const limit = 10;
   const offset = 0;
 

@@ -6,7 +6,7 @@ import { useInView } from "react-intersection-observer";
 import {
   getWatchListSpecific,
   removeFromWatchList,
-} from "@/utils/supabase/queries";
+} from "@/utils/supabase/clientQueries";
 // <-- wherever you defined removeFromWatchList
 
 import HomeMediaCardClient from "../../home/HomeMediaCardClient";

@@ -7,7 +7,7 @@ import SearchBar from "../searchBar/SearchBar";
 import { getMediaDetails } from "@/utils/tmdb";
 import { useUser } from "@/context/UserContext";
 import { useToast } from "../ui/use-toast";
-import { updateGenreStats } from "@/utils/supabase/queries";
+import { updateGenreStats } from "@/utils/supabase/clientQueries";
 
 type PostFormProps = {
   post?: any;

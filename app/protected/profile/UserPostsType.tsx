@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import HomePostCardNew from "@/components/post/HomePostCardNew";
 import Loader from "@/components/Loader";
-import { getUserPosts, getUserPostsType } from "@/utils/supabase/queries";
+import { getUserPosts, getUserPostsType } from "@/utils/supabase/clientQueries";
 import { useUser } from "@/context/UserContext";
 
 interface UserPostsProps {

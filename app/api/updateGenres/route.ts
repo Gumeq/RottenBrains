@@ -1,5 +1,5 @@
 // app/api/updateGenre/route.ts
-import { updateGenreStats } from "@/utils/supabase/queries";
+import { updateGenreStats } from "@/utils/supabase/clientQueries";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {

@@ -3,7 +3,7 @@ import {
   getRelativeTime,
   transformRuntime,
 } from "@/lib/functions";
-import { getWatchTime } from "@/utils/supabase/queries";
+import { getWatchTime } from "@/utils/supabase/clientQueries";
 import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
 import MediaCardOverlay from "./MediaCardOverlay";
 import ImageWithFallback from "./ImageWithFallback";

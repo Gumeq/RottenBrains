@@ -1,5 +1,5 @@
 import React from "react";
-import { getWatchListSpecific } from "@/utils/supabase/queries";
+import { getWatchListSpecific } from "@/utils/supabase/clientQueries";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import { getMediaDetails } from "@/utils/tmdb";
 import { getAverageColor } from "fast-average-color-node";
@@ -18,23 +18,13 @@ const page = async () => {
 
   // Example queries
   const watching = await getWatchListSpecific(
-    user.user.id,
+    user.id,
     limit,
     offset,
     "watching",
   );
-  const planned = await getWatchListSpecific(
-    user.user.id,
-    limit,
-    offset,
-    "planned",
-  );
-  const watched = await getWatchListSpecific(
-    user.user.id,
-    limit,
-    offset,
-    "watched",
-  );
+  const planned = await getWatchListSpecific(user.id, limit, offset, "planned");
+  const watched = await getWatchListSpecific(user.id, limit, offset, "watched");
 
   // “Watched”
   const fwatched = watched[0];

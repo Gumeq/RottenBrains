@@ -13,7 +13,7 @@ const page = async () => {
       <h1 className="my-4 text-lg font-semibold">Defaults</h1>
       <DefaultSettingsForm></DefaultSettingsForm>
       <h1 className="my-4 text-lg font-semibold">Profile</h1>
-      <UserSettingsForm user={user.user}></UserSettingsForm>
+      <UserSettingsForm user={user}></UserSettingsForm>
     </div>
   );
 };

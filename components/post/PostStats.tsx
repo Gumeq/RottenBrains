@@ -2,7 +2,7 @@
 
 import { likePost, removeLike } from "@/utils/clientFunctions/updatePostData";
 import { createClient } from "@/utils/supabase/client";
-import { getPostComments } from "@/utils/supabase/queries";
+import { getPostComments } from "@/utils/supabase/clientQueries";
 import { useCallback, useEffect, useState } from "react";
 import AddComment from "./AddComment";
 import CommentCard from "./CommentCard";

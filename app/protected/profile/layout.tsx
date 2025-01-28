@@ -19,8 +19,8 @@ const ProfileLayout = async ({ children }: { children: React.ReactNode }) => {
     redirect("/login");
   }
 
-  // Extract the actual user data if currentUser.user is nested
-  const user = currentUser.user;
+  // Extract the actual user data if currentuser is nested
+  const user = currentUser;
   const dateString = user.created_at;
   const date = new Date(dateString);
   const options: Intl.DateTimeFormatOptions = {

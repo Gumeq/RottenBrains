@@ -6,7 +6,6 @@ import ScrollButtons from "@/components/explore/ScrollButtons";
 import { getRelativeTime } from "@/lib/functions";
 import MediaCardSmall from "@/components/MediaCardSmall";
 import TVShowDetails from "@/components/TVSeasons";
-import { getPostsOfMedia } from "@/utils/supabase/queries";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
 import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
@@ -101,7 +100,7 @@ export default async function mediaPage({ params }: { params: Params }) {
           media_id={media_id}
           season_number={season_number}
           episode_number={episode_number}
-          user_id={user.user.id}
+          user_id={user.id}
           media_duration={episode.runtime || 100}
         />
       )}
@@ -126,7 +125,7 @@ export default async function mediaPage({ params }: { params: Params }) {
             ></WatchPageDetails>
           </div>
           <div className="flex flex-col gap-2 lg:mt-0 lg:max-w-[400px]">
-            {user && !user.user.premium && (
+            {user && !user.premium && (
               <div className="hidden w-full items-center justify-center lg:flex">
                 <NativeAd></NativeAd>
               </div>

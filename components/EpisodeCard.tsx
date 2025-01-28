@@ -1,5 +1,9 @@
-import { formatEpisodeCode, getRelativeTime, transformRuntime } from "@/lib/functions";
-import { getWatchTime } from "@/utils/supabase/queries";
+import {
+  formatEpisodeCode,
+  getRelativeTime,
+  transformRuntime,
+} from "@/lib/functions";
+import { getWatchTime } from "@/utils/supabase/clientQueries";
 import { getEpisodeDetails } from "@/utils/tmdb";
 
 type EpisodeCardProps = {
@@ -18,7 +22,6 @@ type Episode = {
   runtime: number;
   vote_average: number;
 };
-
 
 // Server Component
 const EpisodeCard = async ({

@@ -1,8 +1,9 @@
+import {} from "@/utils/supabase/clientQueries";
 import {
   getAllUsers,
   getTvWatchListForUser,
   upsertNewEpisodeRecord,
-} from "@/utils/supabase/queries";
+} from "@/utils/supabase/serverQueries";
 import { getLastEpisodeFromTMDB } from "@/utils/tmdb";
 
 export async function dailyNewEpisodesJob(): Promise<void> {

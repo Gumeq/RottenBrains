@@ -15,7 +15,7 @@ import {
   getTopMovieGenresForUser,
   getTopTvGenresForUser,
   updateUserFeedGenres,
-} from "@/utils/supabase/queries";
+} from "@/utils/supabase/clientQueries";
 import Modal from "../user/[userId]/Modal";
 
 // Types

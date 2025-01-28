@@ -1,5 +1,5 @@
 "use client";
-import { getCommentReplies, getUserFromDB } from "@/utils/supabase/queries";
+import { getCommentReplies } from "@/utils/supabase/clientQueries";
 import React, { useEffect, useState } from "react";
 import { timeAgo } from "./TimeAgo";
 import AddComment from "./AddComment";

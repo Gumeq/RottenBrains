@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import Loader from "@/components/Loader";
-import { getWatchHistoryForUser } from "@/utils/supabase/queries";
+import { getWatchHistoryForUser } from "@/utils/supabase/clientQueries";
 import HomeMediaCardClient from "../home/HomeMediaCardClient";
 import { useUser } from "@/context/UserContext";
 

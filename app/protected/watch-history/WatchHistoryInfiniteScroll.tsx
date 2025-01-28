@@ -4,7 +4,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useInView } from "react-intersection-observer";
 import { format, isToday, isYesterday } from "date-fns";
 
-import { getWatchHistoryForUser } from "@/utils/supabase/queries";
+import { getWatchHistoryForUser } from "@/utils/supabase/clientQueries";
 import { useUser } from "@/context/UserContext";
 import HomeMediaCardClient from "../home/HomeMediaCardClient";
 

@@ -65,6 +65,7 @@
     "postcss-nested": "^7.0.2",
     "postcss-nesting": "^13.0.1",
     "prettier": "^3.4.2",
-    "prettier-plugin-tailwindcss": "^0.6.9"
+    "prettier-plugin-tailwindcss": "^0.6.9",
+    "supabase": "^2.6.8"
   }
 }

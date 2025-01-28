@@ -7,7 +7,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { addToWatchList, updateGenreStats } from "@/utils/supabase/queries";
+import {
+  addToWatchList,
+  updateGenreStats,
+} from "@/utils/supabase/clientQueries";
 import { useToast } from "@/components/ui/use-toast";
 
 type MoreOptionsProps = {

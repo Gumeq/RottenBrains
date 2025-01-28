@@ -4,7 +4,7 @@ import {
   getFollowers,
   getFollowing,
   getPostCount,
-} from "@/utils/supabase/queries";
+} from "@/utils/supabase/clientQueries";
 import React, { useState, useEffect } from "react";
 import Modal from "./Modal";
 import UserCard from "./UserCard";
@@ -72,7 +72,7 @@ const FollowInfo = ({ user }: any) => {
         <ul className="flex flex-col gap-2">
           {followers.map((user: any) => (
             <li key={user.id}>
-              <UserCard user={user.users}></UserCard>
+              <UserCard user={user}></UserCard>
             </li>
           ))}
         </ul>
@@ -86,7 +86,7 @@ const FollowInfo = ({ user }: any) => {
         <ul className="flex flex-col gap-2">
           {following.map((user: any) => (
             <li key={user.id}>
-              <UserCard user={user.users}></UserCard>
+              <UserCard user={user}></UserCard>
             </li>
           ))}
         </ul>

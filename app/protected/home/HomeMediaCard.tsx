@@ -6,7 +6,7 @@ import {
   formatEpisodeCode,
   transformRuntime,
 } from "@/lib/functions";
-import { getWatchTime } from "@/utils/supabase/queries";
+import { getWatchTime } from "@/utils/supabase/clientQueries";
 import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
 import Link from "next/link";
 import MediaCardOverlay from "@/components/MediaCardOverlay";

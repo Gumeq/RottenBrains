@@ -1,4 +1,3 @@
-import { getUserFromDB } from "@/utils/supabase/queries";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";

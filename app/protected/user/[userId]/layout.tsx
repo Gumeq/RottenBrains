@@ -1,5 +1,5 @@
 import AuthButton from "@/components/auth/AuthButton";
-import { getCurrentUser } from "@/utils/supabase/serverQueries";
+import { getCurrentUser, getUserFromDB } from "@/utils/supabase/serverQueries";
 import React from "react";
 import FollowButton from "@/components/post/FollowButton";
 import ScrollButtons from "@/components/explore/ScrollButtons";
@@ -7,7 +7,6 @@ import Link from "next/link";
 import MobileTopBarHome from "../../home/MobileTopBarHome";
 import FollowInfo from "./FollowInfo";
 import NewTabs from "./NewTabs";
-import { getUserFromDB } from "@/utils/supabase/queries";
 
 type Params = Promise<{ userId: string }>;
 

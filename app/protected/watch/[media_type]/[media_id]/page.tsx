@@ -6,7 +6,6 @@ import ScrollButtons from "@/components/explore/ScrollButtons";
 import { getRelativeTime } from "@/lib/functions";
 import MediaCardSmall from "@/components/MediaCardSmall";
 import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
-import { getPostsOfMedia } from "@/utils/supabase/queries";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import { getMediaDetails, getRecommendations } from "@/utils/tmdb";
 import WatchPageDetails from "@/components/WatchPageDetails";
@@ -61,7 +60,7 @@ export default async function mediaPage({ params }: { params: Params }) {
         <WatchDuration
           media_type={media_type}
           media_id={media_id}
-          user_id={user.user.id}
+          user_id={user.id}
           media_duration={media.runtime || 24}
         />
       )}
@@ -80,7 +79,7 @@ export default async function mediaPage({ params }: { params: Params }) {
             ></WatchPageDetails>
           </div>
           <div className="custom-scrollbar lg;gap-4 flex flex-col gap-8 p-4 lg:w-[400px] lg:p-0">
-            {user && !user.user.premium && (
+            {user && !user.premium && (
               <div className="hidden w-full items-center justify-center lg:flex">
                 <NativeAd></NativeAd>
               </div>

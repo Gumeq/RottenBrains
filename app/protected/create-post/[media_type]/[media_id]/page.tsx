@@ -1,6 +1,5 @@
 import PostForm from "@/components/frorms/PostForm";
 import GoBackArrow from "@/components/GoBackArrow";
-import { getPostById } from "@/utils/supabase/queries";
 import React from "react";
 
 type Params = Promise<{ media_id: string; media_type: string }>;

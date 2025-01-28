@@ -1,8 +1,6 @@
-import { getGenreNameById } from "@/lib/functions";
 import React from "react";
 import InfiniteScrollByGenre from "./InfiniteScrollGenre";
 import GenreSelector from "../../GenreSelectorHome";
-import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import MobileTopBarHome from "../../MobileTopBarHome";
 
 type Params = Promise<{ genre_id: number; media_type: "movie" | "tv" }>;

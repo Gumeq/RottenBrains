@@ -1,4 +1,4 @@
-import { getWatchListSpecific } from "@/utils/supabase/queries";
+import { getWatchListSpecific } from "@/utils/supabase/clientQueries";
 import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import React from "react";
 import MediaCard from "../watch-history/media_card";
@@ -9,7 +9,7 @@ const page = async () => {
   const limit = 10;
   const offset = 0;
   const watchHistory = await getWatchListSpecific(
-    user.user.id,
+    user.id,
     limit,
     offset,
     "watch_later",

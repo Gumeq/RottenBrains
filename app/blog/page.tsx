@@ -1,6 +1,6 @@
-import { fetchBlogPosts } from "@/utils/supabase/queries";
 import React from "react";
 import PostCardMain from "./PostCardMain";
+import { fetchBlogPosts } from "@/utils/supabase/serverQueries";
 
 const page = async () => {
   const posts = await fetchBlogPosts();

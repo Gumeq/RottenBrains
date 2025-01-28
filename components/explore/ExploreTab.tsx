@@ -11,7 +11,7 @@ export async function ExploreTab({
 }: ExploreTabProps & { containerId: string }) {
   let user = await getCurrentUser();
   if (user) {
-    user = user.user;
+    user = user;
   }
   let exploreData;
   try {

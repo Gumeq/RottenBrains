@@ -1,5 +1,5 @@
+import { upsertWatchHistory } from "@/utils/supabase/serverQueries";
 import { NextRequest, NextResponse } from "next/server";
-import { upsertWatchHistory } from "@/utils/supabase/queries";
 
 interface WatchTimeData {
   time_spent: number;

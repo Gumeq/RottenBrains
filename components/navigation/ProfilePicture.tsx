@@ -2,9 +2,9 @@
 import { useUser } from "@/context/UserContext";
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { signOut } from "@/utils/supabase/signOut";
 import ThemeSwitch from "../ThemSwitch";
 import { useRouter } from "next/navigation";
+import { signOut } from "@/utils/supabase/serverQueries";
 
 const ProfilePicture = () => {
   const { user } = useUser();

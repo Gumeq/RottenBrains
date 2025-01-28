@@ -7,7 +7,7 @@ import {
   getTvRecommendationsForUser,
 } from "@/lib/recommendations";
 import HomeMediaCardClient from "./HomeMediaCardClient";
-import { getBatchWatchedItemsForUser } from "@/utils/supabase/queries"; // A new bulk query function
+import { getBatchWatchedItemsForUser } from "@/utils/supabase/clientQueries"; // A new bulk query function
 import { getPopular } from "@/utils/tmdb";
 
 interface InfiniteScrollHomeProps {

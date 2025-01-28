@@ -25,7 +25,7 @@ const page = async () => {
   return (
     <div className="flex w-full flex-col items-center">
       <MediaCarouselNew movies={moviesWithColors}></MediaCarouselNew>
-      {user && !user.user.premium && (
+      {user && !user.premium && (
         <div className="mt-4 hidden w-full items-center justify-center lg:flex">
           <Banner_90x728></Banner_90x728>
         </div>

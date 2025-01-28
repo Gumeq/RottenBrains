@@ -1,6 +1,6 @@
 "use client";
 import { useUser } from "@/context/UserContext";
-import { uploadProfilePicture } from "@/utils/supabase/queries";
+import { uploadProfilePicture } from "@/utils/supabase/clientQueries";
 import React, { useState, useEffect, ChangeEvent } from "react";
 
 const ProfilePicture: React.FC = () => {
