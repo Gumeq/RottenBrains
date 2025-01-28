@@ -51,7 +51,7 @@ const UserProvider = ({
     });
 
     return () => subscription.unsubscribe();
-  }, []); // Empty dependency array to run only once
+  }, [user]);
 
   // Inside UserProvider
   const refreshUser = async () => {

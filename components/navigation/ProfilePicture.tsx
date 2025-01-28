@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import ThemeSwitch from "../ThemSwitch";
 import { useRouter } from "next/navigation";
-import { signOut } from "@/utils/supabase/serverQueries";
+import { signOut } from "@/utils/supabase/clientQueries";
 
 const ProfilePicture = () => {
   const { user } = useUser();
