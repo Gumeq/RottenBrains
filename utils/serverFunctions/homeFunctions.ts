@@ -1,4 +1,7 @@
-import { getNextEpisodes } from "../supabase/serverQueries";
+import {
+  getLatestNewEpisodes,
+  getNextEpisodes,
+} from "../supabase/serverQueries";
 import { getMediaDetails } from "../tmdb";
 import { fetchMediaData } from "./fetchMediaData";
 
@@ -57,23 +60,6 @@ export async function fetchContinueWatching(user_id: string) {
     }),
   );
 
-  const post_processed = processed.map((media) => {
-    const post_processed = { ...media };
-    if (!post_processed.episode_number) {
-      return;
-    }
-    if (
-      (post_processed.media_type === "movie" &&
-        post_processed.next_episode === true) ||
-      (post_processed.media_type === "tv" &&
-        !post_processed.next_episode_number &&
-        post_processed.next_episode === true)
-    ) {
-      return;
-    } else {
-      return post_processed;
-    }
-  });
   const post_processed_not_null = processed.filter(
     (item) => item !== null || undefined,
   );
@@ -89,4 +75,24 @@ export async function fetchContinueWatching(user_id: string) {
     }),
   );
   return post_process_data;
+}
+
+export async function fetchNewEpisodes(user_id: string) {
+  const new_episodes = await getLatestNewEpisodes(user_id);
+  if (!new_episodes || new_episodes.length <= 0) {
+    return;
+  }
+  const new_episodes_data = await Promise.all(
+    new_episodes.map(async (media) => {
+      return fetchMediaData(
+        media.tv_id,
+        "tv",
+        user_id,
+        media.season_number,
+        media.episode_number,
+      );
+    }),
+  );
+
+  return new_episodes_data;
 }

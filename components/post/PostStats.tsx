@@ -7,10 +7,10 @@ import { useCallback, useEffect, useState } from "react";
 import AddComment from "./AddComment";
 import CommentCard from "./CommentCard";
 
-const PostStats = ({ post, user }: any) => {
-  const postId = post.post_id;
+const PostStats = ({ post, user_id, current_user }: any) => {
+  const postId = post.id;
   const [state, setState] = useState({
-    liked: post.has_liked,
+    liked: current_user.has_liked,
     likes: post.total_likes,
     animate: false,
     isOpen: false,
@@ -18,10 +18,9 @@ const PostStats = ({ post, user }: any) => {
     commentCount: post.total_comments || 0,
     loading: true,
   });
-  const userId = user?.id.toString();
 
   const handleLike = useCallback(async () => {
-    if (userId && user) {
+    if (user_id) {
       // Optimistically update the state
       const newLikedState = !state.liked;
       const newLikesCount = newLikedState ? state.likes + 1 : state.likes - 1;
@@ -35,9 +34,9 @@ const PostStats = ({ post, user }: any) => {
 
       try {
         if (newLikedState) {
-          await likePost(userId, postId);
+          await likePost(user_id, postId);
         } else {
-          await removeLike(userId, postId);
+          await removeLike(user_id, postId);
         }
       } catch (error) {
         // Revert the state in case of an error
@@ -50,7 +49,7 @@ const PostStats = ({ post, user }: any) => {
         console.error("Error toggling like:", error);
       }
     }
-  }, [userId, postId, state.liked, state.likes]);
+  }, [user_id, postId, state.liked, state.likes]);
 
   useEffect(() => {
     if (state.animate) {
@@ -87,7 +86,7 @@ const PostStats = ({ post, user }: any) => {
     }
   };
 
-  if (!userId) {
+  if (!user_id) {
     return null;
   }
   return (
@@ -157,7 +156,7 @@ const PostStats = ({ post, user }: any) => {
                               <CommentCard
                                 comment={comment}
                                 post={post}
-                                user={user}
+                                user_id={user_id}
                                 fetchComments={fetchComments}
                               />
                             </div>
@@ -170,7 +169,7 @@ const PostStats = ({ post, user }: any) => {
                 <div className="absolute bottom-6 w-11/12">
                   <AddComment
                     post={post}
-                    user={user}
+                    user_id={user_id}
                     fetchComments={fetchComments}
                   />
                 </div>

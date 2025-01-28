@@ -38,8 +38,8 @@ export const getUserPosts = async (
 
 export const getUserPostsType = async (
   creator_id: string,
-  page: number,
   media_type: string,
+  page: number,
   user_id?: string,
 ): Promise<any | null> => {
   try {
@@ -334,7 +334,6 @@ export async function getBatchWatchedItemsForUser(
       media_type: item.media_type || "tv",
       media_id: item.tv_id || item.media_id || item.id,
     }));
-
     // Call the Supabase function
     const { data, error } = await supabase.rpc("get_batch_watched_items", {
       input_user_id: userId,

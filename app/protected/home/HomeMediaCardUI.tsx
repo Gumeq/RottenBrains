@@ -1,12 +1,9 @@
-// HomeMediaCard.tsx
-
 import React from "react";
 import {
   formatDate,
   formatEpisodeCode,
   transformRuntime,
 } from "@/lib/functions";
-import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
 import Link from "next/link";
 import MediaCardOverlay from "@/components/MediaCardOverlay";
 import HoverImage from "./HoverImage";
@@ -23,7 +20,7 @@ interface MediaCardProps {
   rounded?: boolean;
 }
 
-const HomeMediaCardUI: React.FC<MediaCardProps> = async ({
+const HomeMediaCardUI: React.FC<MediaCardProps> = ({
   media,
   media_type,
   media_id,
@@ -36,18 +33,15 @@ const HomeMediaCardUI: React.FC<MediaCardProps> = async ({
   season_number = season_number || media.season_number || undefined;
   episode_number = episode_number || media.episode_number || undefined;
   media_type = media_type || media.media_type || undefined;
-  media_id = media_id || media.media_id || undefined
+  media_id = media_id || media.media_id || undefined;
+  watch_time = watch_time || media.watch_time || 0;
 
-  console.log(season_number, episode_number);
-  // Extract genre IDs
   const genreIds: bigint[] = media?.genres?.map((genre: any) => genre.id) || [];
 
-  // Determine image URL
   const imageUrl =
     media?.images?.backdrops?.[0]?.file_path ||
     (season_number && episode_number ? media.still_path : media.backdrop_path);
 
-  // Calculate day differences
   const releaseDate =
     media.release_date || media.air_date || media.first_air_date;
 
@@ -72,8 +66,8 @@ const HomeMediaCardUI: React.FC<MediaCardProps> = async ({
     dayDifferenceTv !== undefined &&
     dayDifferenceTv < 30;
 
-  // Prepare display variables
   const mediaTitle = media.title || media.name;
+
   const formattedEpisodeCode =
     media_type === "tv" && season_number && episode_number
       ? ` | ${formatEpisodeCode(season_number, episode_number)}`

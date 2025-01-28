@@ -1,16 +1,6 @@
 import { getWatchTime } from "../supabase/serverQueries";
 import { getEpisodeDetails, getMediaDetails } from "../tmdb";
 
-interface MediaCardProps {
-  media: any;
-  media_type: string;
-  media_id: number;
-  season_number?: number;
-  episode_number?: number;
-  watch_time?: number;
-  user_id?: string;
-}
-
 export async function fetchMediaData(
   media_id: number,
   media_type: string,

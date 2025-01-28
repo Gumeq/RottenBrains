@@ -413,7 +413,7 @@ export async function upsertNewEpisodeRecord(
 
 export async function getLatestNewEpisodes(
   userId: string,
-): Promise<NewEpisode[] | null> {
+): Promise<any[] | null> {
   // Query the `new_episodes` table:
   const supabase = await getSupabaseClient();
   const { data, error } = await supabase
@@ -464,7 +464,7 @@ export const fetchBlogPosts = async () => {
 
 export const getPostsFromFollowedUsers = async (
   userId: string,
-  page: number,
+  page: number = 0,
 ): Promise<any | null> => {
   try {
     const supabase = await getSupabaseClient();

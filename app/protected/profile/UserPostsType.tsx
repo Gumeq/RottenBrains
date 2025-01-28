@@ -1,10 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import HomePostCardNew from "@/components/post/HomePostCardNew";
 import Loader from "@/components/Loader";
 import { getUserPosts, getUserPostsType } from "@/utils/supabase/clientQueries";
 import { useUser } from "@/context/UserContext";
+import HomePostCardUI from "@/components/post/HomePostCardUI";
+import { fetchPostsDataForUserByType } from "@/utils/clientFunctions/fetchPostData";
 
 interface UserPostsProps {
   userId: string;
@@ -33,10 +34,10 @@ const UserPostsType: React.FC<UserPostsProps> = ({
       if (inViewPosts && hasMorePosts && !loadingPosts) {
         setLoadingPosts(true);
         try {
-          const res = await getUserPostsType(
+          const res = await fetchPostsDataForUserByType(
             userId,
-            postPage,
             media_type,
+            postPage,
             currentUser?.id.toString(),
           );
           if (res.length === 0) {
@@ -75,7 +76,10 @@ const UserPostsType: React.FC<UserPostsProps> = ({
     >
       {userPosts.map((post) => (
         <div key={post.id} className="w-full">
-          <HomePostCardNew post={post} />
+          <HomePostCardUI
+            post_media_data={post}
+            user_id={currentUser?.id.toString()}
+          />
         </div>
       ))}
       {loadingPosts && <Loader />}

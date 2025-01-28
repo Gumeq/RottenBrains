@@ -1,7 +1,6 @@
 import Link from "next/link";
 import VideoEmbed from "@/components/MediaEmbed";
 import WatchDuration from "@/components/WatchDuration";
-import HomePostCardNew from "@/components/post/HomePostCardNew";
 import ScrollButtons from "@/components/explore/ScrollButtons";
 import { getRelativeTime } from "@/lib/functions";
 import MediaCardSmall from "@/components/MediaCardSmall";

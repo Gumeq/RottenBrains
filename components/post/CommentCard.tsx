@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { timeAgo } from "./TimeAgo";
 import AddComment from "./AddComment";
 
-const CommentCard = ({ comment, post, user, fetchComments }: any) => {
+const CommentCard = ({ comment, post, user_id, fetchComments }: any) => {
   const [reply, setReply] = useState(false);
   const [replies, setReplies] = useState<any[]>([]);
   const creator = comment.users;
@@ -69,7 +69,7 @@ const CommentCard = ({ comment, post, user, fetchComments }: any) => {
             {reply && (
               <AddComment
                 post={post}
-                user={user}
+                user_id={user_id}
                 fetchComments={fetchComments}
                 parent_id={comment.id}
               />
@@ -83,7 +83,7 @@ const CommentCard = ({ comment, post, user, fetchComments }: any) => {
                     <CommentCard
                       comment={reply}
                       post={post}
-                      user={user}
+                      user_id={user_id}
                       fetchComments={fetchComments}
                     ></CommentCard>
                   );

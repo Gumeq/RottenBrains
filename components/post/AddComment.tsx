@@ -5,26 +5,26 @@ import { addNotification } from "@/utils/clientFunctions/notificationsData";
 
 const AddComment: React.FC<any> = ({
   post,
-  user,
+  user_id,
   fetchComments,
   parent_id,
 }) => {
   const [content, setContent] = useState("");
-  const postId = post.post_id;
+  const postId = post.id;
 
   const supabase = createClient();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!user) {
+    if (!user_id) {
       alert("You must be logged in to comment");
       return;
     }
 
     const { data, error } = await supabase
       .from("comments")
-      .insert([{ post_id: postId, user_id: user.id, content, parent_id }])
+      .insert([{ post_id: postId, user_id: user_id, content, parent_id }])
       .select();
 
     const { error: incrementError } = await supabase.rpc("increment_comments", {
@@ -33,7 +33,7 @@ const AddComment: React.FC<any> = ({
     if (incrementError) throw incrementError;
     if (data && data.length > 0) {
       await addNotification(
-        user.id,
+        user_id,
         post.creatorid,
         "comment",
         post.post_id,

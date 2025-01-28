@@ -6,7 +6,6 @@ import {
   getCurrentUser,
   getPostsOfMedia,
 } from "@/utils/supabase/serverQueries";
-import HomePostCardNew from "@/components/post/HomePostCardNew";
 import MoreOptions from "@/app/protected/home/MoreOptions";
 import ImageWithFallback from "@/components/ImageWithFallback";
 
@@ -137,10 +136,10 @@ export default async function mediaPage({ params }: { params: Params }) {
 
   const user = await getCurrentUser();
 
-  let postsOfMedia: any = [];
-  if (user) {
-    postsOfMedia = await getPostsOfMedia(user.id, media_type, media_id, 0);
-  }
+  // let postsOfMedia: any = [];
+  // if (user) {
+  //   postsOfMedia = await getPostsOfMedia(user.id, media_type, media_id, 0);
+  // }
   const mediaCredits = await separateCredits(media_type, media_id);
 
   const watchLink =
@@ -336,19 +335,6 @@ export default async function mediaPage({ params }: { params: Params }) {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="">
-              {postsOfMedia && (
-                <div>
-                  <div className="flex flex-row flex-wrap gap-4">
-                    {postsOfMedia?.slice(0, 9).map((post: any) => (
-                      <div>
-                        <HomePostCardNew post={post}></HomePostCardNew>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>

@@ -20,10 +20,10 @@ interface Post {
 interface PostHeaderProps {
   creator: Creator;
   post: Post;
-  userId?: string;
+  user_id?: string;
 }
 
-const PostHeader = ({ creator, post, userId }: PostHeaderProps) => {
+const PostHeader = ({ creator, post, user_id }: PostHeaderProps) => {
   return (
     <div className="flex flex-row items-center justify-between gap-4 px-4 py-2">
       <div className="flex flex-row items-center gap-2">
@@ -40,7 +40,7 @@ const PostHeader = ({ creator, post, userId }: PostHeaderProps) => {
         </div>
       </div>
       <div className="flex h-full flex-row items-center gap-2">
-        {post.creatorid.toString() === userId && (
+        {creator.id.toString() === user_id && (
           <Link href={`/protected/edit-post/${post.post_id}`}>
             <img
               src="/assets/icons/ellipsis-solid.svg"
