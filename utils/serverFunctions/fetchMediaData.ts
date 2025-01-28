@@ -37,5 +37,12 @@ export async function fetchMediaData(
     watchTimePromise,
   ]);
 
-  return { ...media, watch_time, media_type, media_id };
+  return {
+    ...media,
+    watch_time,
+    media_type,
+    media_id,
+    season_number,
+    episode_number,
+  };
 }

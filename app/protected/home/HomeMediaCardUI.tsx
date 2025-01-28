@@ -35,6 +35,10 @@ const HomeMediaCardUI: React.FC<MediaCardProps> = async ({
 }) => {
   season_number = season_number || media.season_number || undefined;
   episode_number = episode_number || media.episode_number || undefined;
+  media_type = media_type || media.media_type || undefined;
+  media_id = media_id || media.media_id || undefined
+
+  console.log(season_number, episode_number);
   // Extract genre IDs
   const genreIds: bigint[] = media?.genres?.map((genre: any) => genre.id) || [];
 
