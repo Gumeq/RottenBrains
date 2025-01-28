@@ -1,6 +1,8 @@
 import React from "react";
-import { getWatchListSpecific } from "@/utils/supabase/clientQueries";
-import { getCurrentUser } from "@/utils/supabase/serverQueries";
+import {
+  getCurrentUser,
+  getWatchListSpecific,
+} from "@/utils/supabase/serverQueries";
 import { getMediaDetails } from "@/utils/tmdb";
 import { getAverageColor } from "fast-average-color-node";
 import WatchListCard from "./WatchListCard";

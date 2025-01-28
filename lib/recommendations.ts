@@ -1,7 +1,7 @@
 import {
   getTopMovieGenresForUser,
   getTopTvGenresForUser,
-} from "@/utils/supabase/clientQueries";
+} from "@/utils/supabase/serverQueries";
 import { fetchFromApi } from "@/utils/tmdb/tmdbApi";
 
 function formatGenreCodes(arr: { genre_code: string }[]): string {

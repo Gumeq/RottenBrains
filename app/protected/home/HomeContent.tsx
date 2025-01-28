@@ -1,15 +1,11 @@
 import {
-  getBatchWatchedItemsForUser,
-  getTopMovieGenresForUser,
-  getTopTvGenresForUser,
-} from "@/utils/supabase/clientQueries";
-import {
   getCurrentUser,
   getLatestNewEpisodes,
   getNextEpisodes,
   getPostsFromFollowedUsers,
+  getTopMovieGenresForUser,
+  getTopTvGenresForUser,
 } from "@/utils/supabase/serverQueries";
-
 import HomePostCardNew from "@/components/post/HomePostCardNew";
 import ScrollButtons from "@/components/explore/ScrollButtons";
 import { MobileVideoProvider } from "@/context/MobileVideoContext";
@@ -26,8 +22,6 @@ const HomeContent = async () => {
   try {
     // Parallelize initial data fetching
     const user = await getCurrentUser();
-    console.log(user);
-
     if (!user) {
       return (
         <>

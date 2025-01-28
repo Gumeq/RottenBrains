@@ -142,7 +142,7 @@ export default async function mediaPage({ params }: { params: Params }) {
                     media_id={media.id}
                     season_number={nextEpisode.season_number}
                     episode_number={nextEpisode.episode_number}
-                    user_id={user?.user.id.toString()}
+                    user_id={user?.id.toString()}
                     media={nextEpisode}
                     rounded={true}
                   />
@@ -154,7 +154,7 @@ export default async function mediaPage({ params }: { params: Params }) {
               <TVShowDetails
                 tv_show_id={media_id}
                 season_number={season_number}
-                user_id={user?.user.id.toString()}
+                user_id={user?.id.toString()}
               />
             )}
           </div>

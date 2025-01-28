@@ -97,7 +97,7 @@ export default async function mediaPage({ params }: { params: Params }) {
                 <MediaCardSmall
                   media_type={mediaDetail.media_type || "movie"}
                   media_id={mediaDetail.id}
-                  user_id={user?.user.id.toString()}
+                  user_id={user?.id.toString()}
                   media={mediaDetail}
                   rounded
                 />

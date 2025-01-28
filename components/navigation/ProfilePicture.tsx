@@ -55,12 +55,12 @@ const ProfilePicture = () => {
               <div className="bg-foreground/5 py-2">
                 <div className="flex flex-row items-center gap-2 px-4 py-2">
                   <img
-                    src={user?.image_url}
+                    src={user.image_url}
                     alt="User Avatar"
                     className="mr-1 aspect-[1/1] h-8 rounded-full"
                   />
                   <p className="truncate text-lg font-semibold">
-                    {user?.username}
+                    {user.username}
                   </p>
                 </div>
                 <div className="my-2 h-[1px] w-full bg-foreground/20"></div>

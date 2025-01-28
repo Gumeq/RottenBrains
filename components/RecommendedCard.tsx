@@ -1,6 +1,5 @@
 import { getRelativeTime, transformRuntime } from "@/lib/functions";
-import { getWatchTime } from "@/utils/supabase/clientQueries";
-import { getCurrentUser } from "@/utils/supabase/serverQueries";
+import { getWatchTime } from "@/utils/supabase/serverQueries";
 import { getMediaDetails } from "@/utils/tmdb";
 import Link from "next/link";
 

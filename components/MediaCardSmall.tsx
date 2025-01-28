@@ -3,11 +3,11 @@ import {
   getRelativeTime,
   transformRuntime,
 } from "@/lib/functions";
-import { getWatchTime } from "@/utils/supabase/clientQueries";
 import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
 import MediaCardOverlay from "./MediaCardOverlay";
 import ImageWithFallback from "./ImageWithFallback";
 import MoreOptions from "@/app/protected/home/MoreOptions";
+import { getWatchTime } from "@/utils/supabase/serverQueries";
 
 type MediaCardSmallProps = {
   media_type: string;

@@ -3,7 +3,7 @@ import {
   getRelativeTime,
   transformRuntime,
 } from "@/lib/functions";
-import { getWatchTime } from "@/utils/supabase/clientQueries";
+import { getWatchTime } from "@/utils/supabase/serverQueries";
 import { getEpisodeDetails } from "@/utils/tmdb";
 
 type EpisodeCardProps = {

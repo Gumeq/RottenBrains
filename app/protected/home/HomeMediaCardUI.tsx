@@ -11,46 +11,30 @@ import Link from "next/link";
 import MediaCardOverlay from "@/components/MediaCardOverlay";
 import HoverImage from "./HoverImage";
 import MoreOptions from "./MoreOptions";
-import { getWatchTime } from "@/utils/supabase/serverQueries";
 
 interface MediaCardProps {
-  media_type: string;
-  media_id: number;
+  media: any;
+  media_type?: string;
+  media_id?: number;
   season_number?: number;
   episode_number?: number;
-  quality?: string;
+  watch_time?: number;
   user_id?: string;
   rounded?: boolean;
 }
 
-const HomeMediaCard: React.FC<MediaCardProps> = async ({
+const HomeMediaCardUI: React.FC<MediaCardProps> = async ({
+  media,
   media_type,
   media_id,
   season_number,
   episode_number,
-  quality,
+  watch_time,
   user_id,
   rounded,
 }) => {
-  let media: any;
-  if (media_type === "movie") {
-    media = await getMediaDetails(media_type, media_id);
-  } else if (season_number && episode_number) {
-    media = await getEpisodeDetails(media_id, season_number, episode_number);
-  } else {
-    media = await getMediaDetails(media_type, media_id);
-  }
-
-  const watchTime = user_id
-    ? await getWatchTime(
-        user_id,
-        media_type,
-        media_id,
-        season_number,
-        episode_number,
-      )
-    : 0;
-
+  season_number = season_number || media.season_number || undefined;
+  episode_number = episode_number || media.episode_number || undefined;
   // Extract genre IDs
   const genreIds: bigint[] = media?.genres?.map((genre: any) => genre.id) || [];
 
@@ -107,17 +91,16 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
         <HoverImage
           imageUrl={imageUrl}
           altText={mediaTitle}
-          media_type={media_type}
-          media_id={media_id}
+          media_type={media.media_type}
+          media_id={media.media_id}
         >
           <MediaCardOverlay
             runtime={media.runtime}
             voteAverage={media.vote_average}
-            quality={quality}
             isNew={isNew}
             isSoon={isSoon}
             isNewEpisodes={isNewEpisodes}
-            watchTime={watchTime}
+            watchTime={watch_time}
             transformRuntime={transformRuntime}
           />
         </HoverImage>
@@ -131,8 +114,8 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
           {user_id ? (
             <MoreOptions
               user_id={user_id}
-              media_type={media_type}
-              media_id={media_id}
+              media_type={media.media_type}
+              media_id={media.media_id}
               genre_ids={genreIds}
             />
           ) : (
@@ -158,4 +141,4 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
   );
 };
 
-export default HomeMediaCard;
+export default HomeMediaCardUI;

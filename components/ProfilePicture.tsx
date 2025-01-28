@@ -4,28 +4,6 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 const ProfilePicture = ({ user }: any) => {
-  // const [loading, setLoading] = useState<boolean>(true);
-  // const [error, setError] = useState<string | null>(null);
-
-  // useEffect(() => {
-  // 	const fetchUser = async () => {
-  // 		setLoading(true);
-  // 		setError(null);
-
-  // 		try {
-  // 			const fetchedUser = await getUserFromDB(userId);
-  // 			setUser(fetchedUser);
-  // 		} catch (error) {
-  // 			console.error("Error fetching user data:", error);
-  // 			setError("Error fetching user data");
-  // 		} finally {
-  // 			setLoading(false);
-  // 		}
-  // 	};
-
-  // 	fetchUser();
-  // }, [userId]);
-
   return (
     <div>
       {user && (

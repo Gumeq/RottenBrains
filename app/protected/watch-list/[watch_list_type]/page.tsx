@@ -1,5 +1,7 @@
-import { getWatchListSpecific } from "@/utils/supabase/clientQueries";
-import { getCurrentUser } from "@/utils/supabase/serverQueries";
+import {
+  getCurrentUser,
+  getWatchListSpecific,
+} from "@/utils/supabase/serverQueries";
 import React from "react";
 import HomeMediaCard from "../../home/HomeMediaCard";
 import WatchListInfiniteScroll from "./WatchListInfinireScroll";
