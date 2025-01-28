@@ -59,7 +59,10 @@ const page = async () => {
 
     return (
       <MobileVideoProvider>
-        <GenreSelector></GenreSelector>
+        <GenreSelector
+          movie_genres={movie_genres}
+          tv_genres={tv_genres}
+        ></GenreSelector>
         {!user && !user.premium && (
           <div className="mt-4 hidden w-full items-center justify-center lg:flex">
             <Banner_90x728></Banner_90x728>

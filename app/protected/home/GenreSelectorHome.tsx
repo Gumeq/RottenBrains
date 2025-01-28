@@ -7,8 +7,8 @@ import { redirect, usePathname, useRouter } from "next/navigation";
 import { useUser } from "@/context/UserContext";
 
 // JSON genre lists
-import movie_genres from "../../../constants/movie_genres.json";
-import tv_genres from "../../../constants/tv_genres.json";
+import movie_genres_json from "../../../constants/movie_genres.json";
+import tv_genres_json from "../../../constants/tv_genres.json";
 
 // Supabase queries for recommended genres
 import {
@@ -28,7 +28,7 @@ export interface Genre {
 interface RecommendedGenre {
   genre_code: string;
   media_type: "movie" | "tv";
-  value: number;
+  value?: number;
 }
 
 type UnifiedGenre = Genre | RecommendedGenre;
@@ -38,7 +38,15 @@ interface FeedGenre {
   media_type: "movie" | "tv";
 }
 
-const GenreSelector: React.FC = () => {
+type GenreSelectorProps = {
+  movie_genres?: any;
+  tv_genres?: any;
+};
+
+const GenreSelector: React.FC<GenreSelectorProps> = ({
+  movie_genres,
+  tv_genres,
+}) => {
   const { user } = useUser();
 
   const pathname = usePathname();
@@ -49,7 +57,7 @@ const GenreSelector: React.FC = () => {
   );
   const [topRecommendedGenres, setTopRecommendedGenres] = useState<
     RecommendedGenre[]
-  >([]);
+  >([...movie_genres, ...tv_genres]);
   const [selectedCategory, setSelectedCategory] = useState<
     "Recommended" | "movie" | "tv" | "Home"
   >("Recommended");
@@ -68,11 +76,11 @@ const GenreSelector: React.FC = () => {
   // ---------------------------
   // 2. GENRE DATA
   // ---------------------------
-  const movieGenres: Genre[] = movie_genres.genres.map((genre: any) => ({
+  const movieGenres: Genre[] = movie_genres_json.genres.map((genre: any) => ({
     ...genre,
     media_type: "movie",
   }));
-  const tvGenres: Genre[] = tv_genres.genres.map((genre: any) => ({
+  const tvGenres: Genre[] = tv_genres_json.genres.map((genre: any) => ({
     ...genre,
     media_type: "tv",
   }));

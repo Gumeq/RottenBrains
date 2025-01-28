@@ -9,7 +9,7 @@ import { cookies } from "next/headers";
 import { Theme, ThemeProvider } from "@/context/ThemeContext";
 import LegalConsent from "@/components/LegalConsent";
 import GoogleAdsense from "@/components/GoogleAdSense";
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/server";
 
 export const metadata = {
   title: "RottenBrains",
@@ -38,7 +38,7 @@ export default async function RootLayout({
   // Validate and assign theme
   const themeCookie: Theme = themeCookieValue === "dark" ? "dark" : "light";
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user: authUser },
   } = await supabase.auth.getUser();
@@ -57,7 +57,7 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.className} ${themeCookie}`}>
       <body className="overflow-x-hidden bg-background text-foreground">
-        <UserProvider>
+        <UserProvider initialUser={initialUser}>
           <ThemeProvider initialTheme={themeCookie}>
             {children}
             <Toaster />
