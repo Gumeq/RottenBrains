@@ -116,7 +116,7 @@ const SearchMovies = forwardRef<HTMLInputElement, any>(
         <ComboboxOption
           key={media.id}
           value={media}
-          className="group flex select-none items-center gap-4 rounded-lg px-3 py-1.5 data-[focus]:bg-white/10"
+          className="rounded-[12px] data-[focus]:bg-white/10"
         >
           <div className="text-sm/6 text-white">
             {link ? (
@@ -163,7 +163,7 @@ const SearchMovies = forwardRef<HTMLInputElement, any>(
           >
             <ComboboxOptions
               anchor="bottom"
-              className="z-50 w-screen rounded-xl border border-white/5 bg-background p-1 [--anchor-gap:var(--spacing-1)] empty:hidden lg:w-[var(--input-width)]"
+              className="z-50 w-screen gap-2 rounded-xl border border-white/5 bg-background p-2 empty:hidden lg:w-[var(--input-width)]"
             >
               {renderOptions()}
             </ComboboxOptions>

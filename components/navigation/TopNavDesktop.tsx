@@ -38,10 +38,7 @@ export function TopNavbarDesktop() {
                     className="invert-on-dark p-1"
                   />
                 </button>
-                <Link
-                  href={"/protected/home"}
-                  className="m-1 rounded-[8px] p-2"
-                >
+                <Link href={"/"} className="m-1 rounded-[8px] p-2">
                   <img
                     src="/assets/images/logo-text-new.svg"
                     alt="text-logo"
@@ -92,7 +89,7 @@ export function TopNavbarDesktop() {
               className="invert-on-dark p-1"
             />
           </button>
-          <Link href={"/protected/home"} className="m-1 rounded-[8px] p-2">
+          <Link href={"/"} className="m-1 rounded-[8px] p-2">
             <img
               src="/assets/images/logo-text-new.svg"
               alt="text-logo"
@@ -104,7 +101,7 @@ export function TopNavbarDesktop() {
         </div>
         <ul className="flex flex-col justify-start gap-2 p-4">
           <Link
-            href={"/protected/home"}
+            href={"/"}
             className={`rounded-full px-4 py-2 hover:bg-foreground/10 ${
               pathname.includes("home")
                 ? `bg-primary/10 text-primary`

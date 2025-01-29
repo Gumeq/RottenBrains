@@ -1,43 +1,108 @@
+/*
+  1. Import your font (if you still want it in globals.css).
+  2. Then import Tailwind layers in order.
+*/
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* 
+  3. Merge your :root/.dark variables with shadcn’s. 
+     Here, we keep your color definitions for background, foreground, 
+     accent, primary, secondary, and *add* the new ones (card, popover, etc.) 
+     from shadcn. You can shuffle or rename them if you want.
+*/
 @layer base {
-  /* Light theme (default) */
   :root {
+    /* --- Your original variables --- */
     --background: 200 20% 96%; /* hsl(200, 20%, 96%) */
     --foreground: 0 0% 7%; /* hsl(0, 0%, 6%) */
     --accent: 347 100% 40%;
     --primary: 0 55% 29%;
     --secondary: 0 72% 69%;
+
+    /* --- shadcn’s additional variables (light) --- */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
   }
 
-  /* Dark theme */
   .dark {
+    /* --- Your original dark variables --- */
     --background: 0 0% 7%; /* hsl(0, 0%, 6%) */
     --foreground: 200 20% 96%; /* hsl(200, 20%, 96%) */
     --accent: 347 100% 50%;
     --primary: 0 55% 71%;
     --secondary: 0 73% 31%;
+
+    /* --- shadcn’s additional variables (dark) --- */
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+/*
+  4. Merge the base rules from shadcn & your custom CSS.
+     - shadcn: “* { @apply border-border; }” + “body { @apply bg-background text-foreground; }”
+     - you: “body { @apply font-roboto; }”, plus invert-on-dark, etc.
+*/
+@layer base {
+  /* shadcn’s base */
+  * {
+    @apply border-border;
+  }
+  body {
+    /* Merge your body styles with shadcn’s: 
+       (we add the text & background from shadcn plus your font) */
+    @apply bg-background font-roboto text-foreground;
   }
 
-  /* Invert images on dark mode */
+  /* Invert images on dark mode (your custom code) */
   .invert-on-dark {
     /* No filter by default */
   }
-
   .dark .invert-on-dark {
     filter: invert(1);
   }
 }
 
-@layer base {
-  body {
-    @apply font-roboto;
-  }
-}
+/* 
+  5. Keep the rest of your custom classes and animations as they are. 
+     You can wrap them in @layer utilities if you want to let Tailwind's 
+     layering handle specificity, but it's not strictly necessary.
+*/
+
+/* Example: your custom classes, animations, etc. */
 
 .animate-in {
   animation: animateIn 0.3s ease 0.15s both;
@@ -59,7 +124,7 @@
 }
 
 .leftsidebar {
-  @apply fixed left-0 top-0 hidden h-screen min-w-[270px] flex-col justify-between bg-foreground/5 2xl:flex;
+  @apply fixed left-0 top-0 hidden h-screen min-w-[270px] flex-col justify-between bg-foreground/10 2xl:flex;
 }
 
 .leftsidebar-link {
@@ -67,7 +132,7 @@
 }
 
 .topbar {
-  @apply sticky top-0 z-50 w-full bg-foreground/5 md:hidden;
+  @apply sticky top-0 z-50 w-full bg-foreground/10 md:hidden;
 }
 
 .bottom-bar {
@@ -78,32 +143,26 @@
 .custom-scrollbar::-webkit-scrollbar {
   width: 12px;
 }
-
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent; /* Transparent track color */
+  background: transparent;
 }
-
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #555; /* Dark thumb color */
+  background: #555;
 }
-
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #888; /* Slightly lighter on hover */
+  background: #888;
 }
-
 /* For Firefox */
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: #555 transparent; /* thumb color, track color */
+  scrollbar-color: #555 transparent;
 }
-
 @media (max-width: 600px) {
   .custom-scrollbar::-webkit-scrollbar {
     display: none;
   }
-
   .custom-scrollbar {
-    scrollbar-width: none; /* For Firefox */
+    scrollbar-width: none;
   }
 }
 
@@ -111,16 +170,14 @@
   filter: grayscale(100%);
 }
 
+/* More custom code ... etc. */
 .youtube-container {
   position: relative;
-
-  height: 0;
-  overflow: hidden;
-  width: 384px;
   height: 216px;
+  width: 384px;
+  overflow: hidden;
   background: #000;
 }
-
 .youtube-container iframe {
   position: absolute;
   top: 0;
@@ -143,20 +200,12 @@
 }
 
 .downUpAnimation {
-  animation: downUp 2s infinite;
-  animation-timing-function: cubic-bezier(
-    0.8,
-    0,
-    0.2,
-    1
-  ); /* Fast down, slow up */
+  animation: downUp 2s infinite cubic-bezier(0.8, 0, 0.2, 1);
 }
-
 .downUpAnimation:hover {
   animation-play-state: paused;
 }
 
-/* keyframes.css */
 @keyframes pop {
   0% {
     transform: scale(1);
@@ -168,21 +217,19 @@
     transform: scale(1);
   }
 }
-
 .heart-icon {
   transition: transform 0.2s ease-in-out;
 }
-
 .heart-icon.pop {
   animation: pop 0.2s ease-in-out;
 }
 
 .loader {
   @apply mt-4 h-12 w-12 rounded-full border-4 border-t-4 border-solid;
-  border-color: theme("colors.accent") transparent transparent transparent;
+  border-color: theme("colors.accent.DEFAULT") transparent transparent
+    transparent;
   animation: spin 1s linear infinite;
 }
-
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -191,19 +238,18 @@
     transform: rotate(360deg);
   }
 }
-
 .loading-spinner {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
   z-index: 9999;
   display: flex;
-  justify-content: center;
-  align-items: center;
   width: 100%;
   height: 100%;
   background: rgba(255, 255, 255, 0.8);
+  justify-content: center;
+  align-items: center;
+  transform: translate(-50%, -50%);
 }
 
 .mask1 {
@@ -222,29 +268,28 @@
     black 100%
   );
 }
-
 .mask2 {
   -webkit-mask-image: linear-gradient(
     90deg,
-    rgba(0, 0, 0, 0) 0%,
+    #0000 0%,
     rgba(0, 0, 0, 0.5) 10%,
-    rgba(0, 0, 0, 1) 40%,
-    rgba(0, 0, 0, 1) 60%,
+    #000 40%,
+    #000 60%,
     rgba(0, 0, 0, 0.5) 90%,
-    rgba(0, 0, 0, 0) 100%
+    #0000 100%
   );
   mask-image: linear-gradient(
     90deg,
-    rgba(0, 0, 0, 0) 0%,
+    #0000 0%,
     rgba(0, 0, 0, 0.5) 10%,
-    rgba(0, 0, 0, 1) 40%,
-    rgba(0, 0, 0, 1) 60%,
+    #000 40%,
+    #000 60%,
     rgba(0, 0, 0, 0.5) 90%,
-    rgba(0, 0, 0, 0) 100%
+    #0000 100%
   );
 }
 
-/* HTML: <div class="loader"></div> */
+/* HTML: <div class="page-loader"></div> */
 .page-loader {
   width: 55px;
   aspect-ratio: 1;
@@ -299,27 +344,22 @@
 .hidden-scrollbar::-webkit-scrollbar {
   display: none;
 }
-
-/* Hide scrollbar for IE, Edge and Firefox */
 .hidden-scrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .sidebar {
   transition: transform 0.3s ease;
 }
-
 .sidebar-hidden {
   transform: translateX(-100%);
 }
-
 .sidebar-visible {
   transform: translateX(0);
 }
 
 .gradient-edge {
-  background: rgb(0, 0, 0);
   background: linear-gradient(
     90deg,
     rgba(15, 15, 15, 0) 0%,
@@ -337,8 +377,6 @@
 }
 
 .shadow_plus {
-  -webkit-box-shadow: 0px 0px 10px 5px hsla(0, 0%, 0%, 0.2);
-  -moz-box-shadow: 0px 0px 10px 5px hsla(0, 0%, 0%, 0.2);
   box-shadow: 0px 0px 10px 5px hsla(0, 0%, 0%, 0.2);
 }
 
@@ -347,18 +385,16 @@
     margin-top: calc(56.25vw + 38px);
   }
 }
-
 .small-screen-watch-margin-info {
   margin-top: calc((56.25vw + 38px));
 }
 
 .svgAnimation {
-  width: 100px; /* Adjust this to your desired size */
+  width: 100px;
   height: 100px;
   display: block;
-  margin: 0 auto; /* Centering the SVG */
+  margin: 0 auto;
 }
-
 .cls1 {
   fill: #ff0037;
   stroke-width: 0px;
@@ -369,13 +405,11 @@
     draw 4s ease-in-out infinite,
     pulse 2s ease-in-out infinite;
 }
-
 @keyframes draw {
   to {
     stroke-dashoffset: 0;
   }
 }
-
 @keyframes pulse {
   0% {
     transform: scale(1);
@@ -388,7 +422,6 @@
   }
 }
 
-/* In your CSS file */
 @keyframes loading {
   0% {
     width: 0%;
@@ -397,27 +430,18 @@
     width: 100%;
   }
 }
-
 .animate-loading {
   animation: loading 2s linear;
 }
 
 .bottombar {
   @apply fixed bottom-0 left-0 right-0 z-50 flex items-center justify-center bg-background lg:hidden;
-  height: calc(
-    env(safe-area-inset-bottom) + 80px
-  ); /* Adjust the height accordingly */
+  height: calc(env(safe-area-inset-bottom) + 80px);
 }
-
 .bottombar-inner {
-  @apply relative flex h-full w-full flex-row items-center justify-between bg-foreground/5 pb-1;
+  @apply relative flex h-full w-full flex-row items-center justify-between bg-foreground/10 pb-1;
+  padding-bottom: env(safe-area-inset-bottom);
 }
-
 .bottombar-link {
   @apply flex flex-1 flex-col items-center justify-center opacity-80;
-}
-
-/* Adjust the padding to account for the safe area inset */
-.bottombar-inner {
-  padding-bottom: env(safe-area-inset-bottom);
 }

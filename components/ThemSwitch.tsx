@@ -16,7 +16,7 @@ export default function ThemeSwitch() {
   return (
     <button
       onClick={toggleTheme}
-      className="flex items-center text-foreground focus:outline-none"
+      className="flex w-full flex-row items-center gap-4 px-4 py-2 hover:bg-foreground/20"
       aria-label="Toggle theme"
     >
       <div className="flex items-center gap-2">

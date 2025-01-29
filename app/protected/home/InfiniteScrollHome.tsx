@@ -4,6 +4,7 @@ import { useInView } from "react-intersection-observer";
 import { getPopular } from "@/utils/tmdb";
 import { fetchInfiniteScrollHome } from "@/utils/serverFunctions/fetchInfiniteScrollHome";
 import HomeMediaCardUI from "./HomeMediaCardUI";
+import HomeMediaCardSkeleton from "@/components/HomeMediaCardSkeleton";
 
 interface InfiniteScrollHomeProps {
   user_id?: string;
@@ -66,7 +67,7 @@ const InfiniteScrollHome: React.FC<InfiniteScrollHomeProps> = ({
 
   return (
     <div
-      className="flex w-full flex-col justify-center gap-4 p-4 lg:p-0"
+      className="mt-8 flex w-full flex-col justify-center gap-4 px-4 lg:p-0"
       ref={targetRef}
     >
       <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-4">
@@ -85,11 +86,7 @@ const InfiniteScrollHome: React.FC<InfiniteScrollHomeProps> = ({
         {loading && (
           <>
             {Array.from({ length: 40 }).map((_, index) => (
-              <div key={index} className="flex flex-col gap-4">
-                <div className="aspect-[16/9] w-full bg-foreground/10"></div>
-                <div className="h-6 w-2/3 bg-foreground/10"></div>
-                <div className="h-6 w-1/3 bg-foreground/10"></div>
-              </div>
+              <HomeMediaCardSkeleton></HomeMediaCardSkeleton>
             ))}
           </>
         )}

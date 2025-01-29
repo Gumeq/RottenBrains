@@ -72,7 +72,7 @@ const ProfilePicture: React.FC = () => {
             </button>
             <button
               onClick={handleCancel}
-              className="rounded bg-foreground/5 px-4 py-2 text-white"
+              className="rounded bg-foreground/10 px-4 py-2 text-white"
             >
               Cancel
             </button>

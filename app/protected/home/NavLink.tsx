@@ -21,7 +21,7 @@ const NavLink: FC<NavLinkProps> = ({
   return (
     <Link
       href={href}
-      className={`rounded-[8px] p-2 hover:bg-foreground/10 ${
+      className={`rounded-[8px] p-2 px-4 hover:bg-foreground/10 ${
         isActive ? `bg-secondary/20 text-accent` : `text-foreground`
       }`}
     >

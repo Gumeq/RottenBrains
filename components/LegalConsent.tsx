@@ -62,3 +62,5 @@ const LegalConsent: React.FC = () => {
 };
 
 export default LegalConsent;
+
+// nice

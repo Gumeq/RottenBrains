@@ -25,7 +25,7 @@ const NotificationCard = ({ notification }: { notification: any }) => {
   }
 
   return (
-    // <div className="rounded-xl bg-foreground/5 p-4 flex flex-row justify-between">
+    // <div className="rounded-xl bg-foreground/10 p-4 flex flex-row justify-between">
     // 	<div className="flex flex-row items-center gap-4">
     // 		<ProfilePicture userId={fromUser.id}></ProfilePicture>
     // 		<p>

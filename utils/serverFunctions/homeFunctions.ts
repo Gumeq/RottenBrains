@@ -61,7 +61,7 @@ export async function fetchContinueWatching(user_id: string) {
   );
 
   const post_processed_not_null = processed.filter(
-    (item) => item !== null || undefined,
+    (item) => item !== null && item !== undefined,
   );
   const post_process_data = await Promise.all(
     post_processed_not_null.map((media) => {

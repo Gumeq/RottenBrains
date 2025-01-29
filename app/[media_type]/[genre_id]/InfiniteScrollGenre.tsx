@@ -3,8 +3,8 @@
 import { getFromGenres } from "@/utils/tmdb";
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useInView } from "react-intersection-observer";
-import HomeMediaCardClient from "../../HomeMediaCardClient";
 import { useUser } from "@/context/UserContext";
+import HomeMediaCardClient from "@/app/protected/home/HomeMediaCardClient";
 
 interface InfiniteScrollByGenreProps {
   genre_id: number;
@@ -38,7 +38,7 @@ const InfiniteScrollByGenre: React.FC<InfiniteScrollByGenreProps> = ({
           media_type,
         }));
 
-        if (resultsWithMediaType.length === 0) {
+        if (resultsWithMediaType.length === 0 || page === 10) {
           setHasMore(false);
         } else {
           setMediaItems((prevMediaItems) => [

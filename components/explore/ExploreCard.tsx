@@ -87,7 +87,7 @@ const ExploreCard = async (media: any) => {
 						</div> */}
           {/* <div className="flex items-center justify-center w-full">
 							<Link href={watchLink} className="w-full">
-								<div className="px-4 py-2 bg-foreground/5 rounded-md w-full flex items-center justify-center flex-row gap-4 font-bold hover:bg-accent">
+								<div className="px-4 py-2 bg-foreground/10 rounded-md w-full flex items-center justify-center flex-row gap-4 font-bold hover:bg-accent">
 									<img
 										src="/assets/icons/play-solid.svg"
 										alt=""

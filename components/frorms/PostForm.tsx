@@ -168,7 +168,7 @@ const PostForm = ({ post, action, from_media }: PostFormProps) => {
           });
           console.log(error);
         } else {
-          router.push("/protected/home");
+          router.push("/");
           toast({
             title: `${action}d Post`,
           });
@@ -191,22 +191,25 @@ const PostForm = ({ post, action, from_media }: PostFormProps) => {
             },
           ])
           .select();
-
         if (error) {
           console.log(error);
           toast({
             title: error.message,
           });
         } else {
-          await updateGenreStats({
-            genreIds: media.genre_ids,
-            mediaType: dbvalues.media_type,
-            userId: dbvalues.creatorId,
-          });
-          router.push("/protected/home");
-          toast({
-            title: `${action}d Post`,
-          });
+          try {
+            await updateGenreStats({
+              genreIds: media.genre_ids,
+              mediaType: dbvalues.media_type,
+              userId: dbvalues.creatorId,
+            });
+          } catch (error) {
+          } finally {
+            router.push("/");
+            toast({
+              title: `${action}d Post`,
+            });
+          }
         }
         setLoading(false);
       } catch (error) {
@@ -234,7 +237,7 @@ const PostForm = ({ post, action, from_media }: PostFormProps) => {
           title: error.message,
         });
       } else {
-        router.push("/protected/home");
+        router.push("/");
         toast({
           title: `Deleted Post`,
         });

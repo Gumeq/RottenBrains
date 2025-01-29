@@ -12,7 +12,7 @@ export default function NotFound() {
       <p>The page you are looking for does not exist.</p>
       <button onClick={() => router.back()}>Go Back</button>
       <p>or</p>
-      <Link href="/protected/home">
+      <Link href="/">
         <p>Go to Home</p>
       </Link>
     </div>

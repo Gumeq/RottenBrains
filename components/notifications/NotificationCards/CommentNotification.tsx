@@ -29,7 +29,7 @@ const CommentNotification = ({ notification }: any) => {
   }
 
   return (
-    <div className="flex flex-row justify-between rounded-[8px] border border-foreground/10 bg-foreground/5 p-2">
+    <div className="flex flex-row justify-between rounded-[8px] border border-foreground/10 bg-foreground/10 p-2">
       <div className="flex w-full flex-row items-center">
         <div className="flex h-full w-full flex-row items-center justify-between">
           <div className="flex h-full w-full flex-col items-start p-2">

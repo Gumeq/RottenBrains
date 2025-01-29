@@ -25,7 +25,7 @@ export async function ExploreTab({
     <div className="flex w-full flex-col gap-8 border-foreground/20 lg:gap-16 lg:rounded-[16px] lg:border lg:p-8">
       <div className="flex w-full flex-row items-center justify-between px-2 lg:px-0">
         <h2 className="text-xl font-bold uppercase">{action}</h2>
-        <div className="rounded-full bg-foreground/5 px-6 py-2">View all</div>
+        <div className="rounded-full bg-foreground/10 px-6 py-2">View all</div>
       </div>
 
       <div className="hidden-scrollbar flex w-full snap-x snap-mandatory grid-cols-[repeat(auto-fit,minmax(320px,1fr))] flex-row gap-4 overflow-x-auto px-4 lg:grid">

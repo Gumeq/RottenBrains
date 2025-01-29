@@ -80,7 +80,7 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
                                 <ul className="grid grid-cols-2 gap-2 p-2 text-foreground">
                                   {movieGenres.map((genre: any) => (
                                     <Link
-                                      href={`/protected/home/movie/${genre.id}`}
+                                      href={`/movie/${genre.id}`}
                                       key={genre.id}
                                       className="cursor-pointer rounded-[4px] px-2 py-1 hover:bg-foreground/10"
                                     >
@@ -96,7 +96,7 @@ const TopMoviesCarouselNew = ({ movies }: any) => {
                                 <ul className="grid grid-cols-2 gap-2 p-2 text-foreground">
                                   {tvGenres.map((genre: any) => (
                                     <Link
-                                      href={`/protected/home/tv/${genre.id}`}
+                                      href={`/tv/${genre.id}`}
                                       key={genre.id}
                                       className="cursor-pointer rounded-[4px] px-2 py-1 hover:bg-foreground/10"
                                     >

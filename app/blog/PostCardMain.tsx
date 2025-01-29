@@ -56,7 +56,7 @@ const PostCardMain: React.FC<{ post: Post }> = async ({ post }) => {
         </div>
         <div className="flex flex-row flex-wrap gap-1">
           {post.tags.slice(0, 2).map((tag: string) => (
-            <div className="bg-foreground/5 px-2 py-1 text-xs">{tag}</div>
+            <div className="bg-foreground/10 px-2 py-1 text-xs">{tag}</div>
           ))}
         </div>
         <ReactMarkdown className={"line-clamp-5 text-sm"}>

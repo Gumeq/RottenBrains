@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 const CookieConsent: React.FC = () => {
@@ -18,29 +19,26 @@ const CookieConsent: React.FC = () => {
   };
 
   const handleDismiss = () => {
+    localStorage.setItem("cookieConsent", "true");
     setIsVisible(false); // Simply hide the popup without saving consent
   };
 
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-0 z-50 flex w-full items-center justify-between border-t border-foreground/10 bg-background p-4 text-foreground">
-      <span className="flex-1">
-        We use cookies to improve your experience and collect your data for
-        recommendations and other functionality. By accepting, you agree to our
-        use of cookies and to our Terms of Service.
-      </span>
-      <div className="flex items-center space-x-4">
-        <button
-          onClick={handleAccept}
-          className="rounded bg-accent px-4 py-2 text-foreground"
-        >
-          Accept
-        </button>
+    <div className="max-w-screen fixed bottom-4 right-4 z-50 ml-4 overflow-hidden rounded-[8px] bg-background text-foreground drop-shadow-md lg:max-w-xl">
+      <div className="flex h-full w-full flex-row items-center justify-between gap-4 bg-foreground/10 p-6">
+        <span className="flex-1">
+          By browsing this website, you accept our{" "}
+          <Link href="/cookie-policy" className="text-primary">
+            cookies policy
+          </Link>
+          .
+        </span>
         <button
           onClick={handleDismiss}
           aria-label="Dismiss cookie consent popup"
-          className="text-foreground hover:text-foreground/50"
+          className="flex aspect-[1/1] h-full flex-shrink-0 items-center justify-center rounded-full p-4 hover:bg-foreground/10"
         >
           ✕
         </button>
@@ -50,3 +48,5 @@ const CookieConsent: React.FC = () => {
 };
 
 export default CookieConsent;
+
+// nice

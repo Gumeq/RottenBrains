@@ -1,3 +1,6 @@
+import Bottombar from "@/components/navigation/Bottombar";
+import React from "react";
+import HomeNav from "./protected/home/HomeNav";
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
@@ -26,7 +29,7 @@ export const metadata = {
   },
 };
 
-export default async function RootLayout({
+export default async function NotProtectedLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -53,13 +56,24 @@ export default async function RootLayout({
 
     initialUser = userData;
   }
-
   return (
     <html lang="en" className={`${GeistSans.className} ${themeCookie}`}>
       <body className="overflow-x-hidden bg-background text-foreground">
         <UserProvider initialUser={initialUser}>
           <ThemeProvider initialTheme={themeCookie}>
-            {children}
+            <div>
+              <div className="w-full"> </div>
+              <div className="w-full overflow-x-hidden bg-background text-foreground md:flex">
+                <div className="hidden lg:flex">
+                  <HomeNav>{children}</HomeNav>
+                </div>
+                {/* <MobileTopNav></MobileTopNav> */}
+                <div className="flex w-full lg:hidden">
+                  <Bottombar />
+                  <main className="mb-16 w-full">{children}</main>
+                </div>
+              </div>
+            </div>
             <Toaster />
             <Analytics />
             <CookieConsent />

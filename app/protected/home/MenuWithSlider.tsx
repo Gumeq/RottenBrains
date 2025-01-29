@@ -51,7 +51,7 @@ const MenuButtonWithSidebar: React.FC = () => {
           </button>
           <ul className="flex flex-col justify-start px-4 py-2">
             <NavLinkMobile
-              href="/protected/home"
+              href="/"
               icon={HomeIcon}
               icon_fill={HomeIconFill}
               label="Home"

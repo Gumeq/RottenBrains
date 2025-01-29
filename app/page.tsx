@@ -1,122 +1,177 @@
-import AuthButton from "@/components/auth/AuthButton";
-import Link from "next/link";
+import {
+  getCurrentUser,
+  getLatestNewEpisodes,
+  getPostsFromFollowedUsers,
+  getTopMovieGenresForUser,
+  getTopTvGenresForUser,
+} from "@/utils/supabase/serverQueries";
+import ScrollButtons from "@/components/explore/ScrollButtons";
+import { MobileVideoProvider } from "@/context/MobileVideoContext";
+import { getGenreNameById } from "@/lib/functions";
+import { getFromGenres, getMediaDetails } from "@/utils/tmdb";
+import Banner_90x728 from "@/components/ads/Banner_90x728";
+import {
+  fetchContinueWatching,
+  fetchNewEpisodes,
+} from "@/utils/serverFunctions/homeFunctions";
+import { fetchPostsData } from "@/utils/serverFunctions/fetchPostsData";
+import HomePostCardUI from "@/components/post/HomePostCardUI";
+import MobileTopBarHome from "./protected/home/MobileTopBarHome";
+import GenreSelector from "./protected/home/GenreSelectorHome";
+import InfiniteScrollHome from "./protected/home/InfiniteScrollHome";
+import HomeMediaCardUI from "./protected/home/HomeMediaCardUI";
+import ContinueWatchingRow from "./protected/home/continue_watching_window";
+import HorizontalScroll from "./protected/home/horizontal_scroll";
 
-export default async function Index() {
-  return (
-    <div className="flex w-full flex-1 flex-col items-center gap-8">
-      <nav className="flex h-16 w-full justify-center bg-background">
-        <div className="flex w-full max-w-4xl items-center justify-between p-3 text-sm">
-          <div className="text-xl font-bold">
-            <img
-              src="/assets/images/logo_text_new.svg"
-              alt=""
-              className="invert-on-dark h-4 w-auto"
-            />
-          </div>
-          {<AuthButton />}
-        </div>
-      </nav>
-      <div className="my-16 flex w-screen max-w-4xl flex-col items-center justify-center gap-4 px-8">
-        <img
-          src="/assets/images/logo-text-new.svg"
-          alt="logo-text.png"
-          className="invert-on-dark"
-        />
-        <h1 className="max-w-xl text-center text-2xl font-bold text-foreground opacity-80">
-          Review movies, share with friends, and watch your favorites all in one
-          place.
-        </h1>
-        <div className="flex flex-col gap-4 md:flex-row">
-          <Link href={"/protected/home"}>
-            <div className="my-4 rounded-lg bg-accent px-8 py-4 text-xl font-bold">
-              Get Started
+const page = async () => {
+  try {
+    // Parallelize initial data fetching
+    const user = await getCurrentUser();
+    if (!user) {
+      return (
+        <>
+          <MobileTopBarHome />
+          <div className="flex w-full flex-col gap-4 lg:pr-8">
+            <GenreSelector></GenreSelector>
+            <div className="hidden w-full items-center justify-center lg:mt-8 lg:flex">
+              <Banner_90x728></Banner_90x728>
             </div>
-          </Link>
-          <Link href={"https://www.youtube.com/watch?v=dQw4w9WgXcQ"}>
-            <div className="my-4 rounded-lg border-2 border-accent px-8 py-4 text-xl font-bold">
-              Hmmm...
+            <InfiniteScrollHome />
+          </div>
+        </>
+      );
+    }
+
+    const user_id = user.id.toString();
+
+    const [followedPosts, continue_watching, movie_genres, tv_genres] =
+      await Promise.all([
+        fetchPostsData(user_id),
+        fetchContinueWatching(user_id),
+        getTopMovieGenresForUser(undefined, user),
+        getTopTvGenresForUser(undefined, user),
+      ]);
+
+    return (
+      <MobileVideoProvider>
+        <GenreSelector
+          movie_genres={movie_genres}
+          tv_genres={tv_genres}
+        ></GenreSelector>
+        {user?.premium || (
+          <div className="mt-8 hidden w-full items-center justify-center lg:flex">
+            <Banner_90x728></Banner_90x728>
+          </div>
+        )}
+        <div className="w-full lg:w-auto lg:py-0" id={"main-content"}>
+          <MobileTopBarHome />
+          {/* Watch History Section */}
+          {continue_watching.length > 0 ? (
+            <div className="mt-8">
+              <div className="w-full lg:pl-0">
+                {continue_watching.length > 0 ? (
+                  <div className="lg:rounded-[16px] lg:bg-foreground/10">
+                    <p className="hidden px-8 py-8 font-medium lg:flex lg:text-lg">
+                      Continue Watching
+                    </p>
+                    <HorizontalScroll>
+                      {continue_watching.map((media) => {
+                        return (
+                          <div className="snap-start scroll-ml-4 lg:scroll-ml-8">
+                            <HomeMediaCardUI
+                              media={media}
+                              user_id={user_id}
+                              rounded
+                            ></HomeMediaCardUI>
+                          </div>
+                        );
+                      })}
+                    </HorizontalScroll>
+                  </div>
+                ) : (
+                  <div className="flex h-64 w-full flex-col items-center justify-center gap-4 rounded-[8px] bg-foreground/10 lg:mt-8">
+                    <img
+                      src="/assets/images/logo_new_black.svg"
+                      alt=""
+                      className="invert-on-dark h-16 w-16 opacity-50"
+                    />
+                    <p className="text-foreground/50">
+                      Start watching to display history
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
-          </Link>
-        </div>
-      </div>
-      <div className="flex w-screen justify-center bg-accent/10 p-4 py-8">
-        <div className="my-4 flex w-screen max-w-[95vw] flex-col gap-4 divide-y md:max-w-7xl md:flex-row md:divide-x md:divide-y-0">
-          <div className="flex w-full flex-col justify-center gap-4 py-4 text-center">
-            <h3 className="text-xl font-bold">Review</h3>
-            <p>Share your thoughts and ratings on the latest movies</p>
-          </div>
-          <div className="flex w-full flex-col justify-center gap-4 py-4 text-center">
-            <h3 className="text-xl font-bold">Share</h3>
-            <p>Connect with friends and see their reviews</p>
-          </div>
-          <div className="flex w-full flex-col justify-center gap-4 py-4 text-center">
-            <h3 className="text-xl font-bold">Watch</h3>
-            <p>Stream your favorite movies directly on our platform</p>
-          </div>
-        </div>
-      </div>
-      <div className="my-4 flex w-screen max-w-7xl flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed border-accent p-16 px-8">
-        <h2 className="max-w-xl text-center text-2xl font-bold text-foreground">
-          Join the Brain Rotting Community Today!
-        </h2>
-        <h3 className="max-w-xl text-center text-xl text-foreground opacity-80">
-          Sign up now and start sharing your reviews
-        </h3>
-        <Link href={"/login"}>
-          <div className="my-4 rounded-lg bg-accent px-8 py-4 text-xl font-bold">
-            Sign up
-          </div>
-        </Link>
-      </div>
-      <div className="w-full max-w-7xl">
-        <h2 className="mb-4 text-lg font-medium">Legal Disclaimer</h2>
-        <p className="">
-          Data provided by TMDb API.{" "}
-          <Link href={"/"} className="text-accent">
-            rotten-brains.com
-          </Link>{" "}
-          doesn’t host movies; we only share links. Our site provides links to
-          content hosted by third-party sites, over which we have no control. We
-          take intellectual property rights seriously. If you believe a third
-          party is infringing on your copyright, please submit a DMCA report to
-          rottenbrains@proton.me, and we’ll take appropriate action. Premium
-          servers are just a scrape of other servers which are not hosted by us.
-          You can find more information in our{" "}
-          <Link href={"/protected/about"} className="text-accent">
-            about page
-          </Link>
-          .
-        </p>
-      </div>
-      <div className="my-4 flex w-screen max-w-7xl flex-row items-center justify-between gap-8 p-16 px-8">
-        <div className="flex flex-col gap-2">
-          <h3 className="text-lg font-bold">Quick Links</h3>
-          <div className="flex flex-col gap-4 text-foreground/80">
-            <Link href={"/protected/home"}>Home</Link>
-            <Link href={"/protected/explore"}>Explore</Link>
-            <Link href={"/protected/create-post"}>Create Post</Link>
-          </div>
-        </div>
-        <div className="flex flex-col gap-2">
-          <h3 className="text-lg font-bold">Socials</h3>
-          <div className="flex flex-col gap-4 text-foreground/80">
-            <Link href={"/"}>Discord</Link>
-            <Link href={"/"}>Instagram</Link>
-            <Link href={"/"}>Telegram</Link>
-          </div>
-        </div>
-        <div className="flex flex-col gap-4">
-          <img src="/assets/images/logo.png" alt="" width={200} height={200} />
-          <img
-            src="/assets/images/logo-text.png"
-            alt=""
-            className="invert-on-dark"
-            width={200}
-            height={200}
+          ) : (
+            <></>
+          )}
+          {/* Posts Section */}
+          {followedPosts && followedPosts.length > 0 ? (
+            <div className="mt-8">
+              {/* <div className="mb-4 flex flex-row items-center justify-between pl-4 lg:pl-0">
+                <div className="flex flex-row items-center gap-4">
+                  <img
+                    src="/assets/icons/review-outline.svg"
+                    alt="Posts Icon"
+                    className="invert-on-dark"
+                  />
+                  <h2 className="text-xl font-bold">Posts</h2>
+                </div>
+                <ScrollButtons containerId="rotten-posts-one" />
+              </div> */}
+              <div className="relative">
+                {followedPosts && followedPosts.length > 0 ? (
+                  <>
+                    <div className="gradient-edge absolute right-0 top-0 z-20 h-full w-[5%]" />
+                    <div
+                      className="hidden-scrollbar flex snap-x snap-mandatory flex-row gap-4 overflow-x-auto px-4 lg:px-0 lg:pr-4"
+                      id="rotten-posts-one"
+                    >
+                      {followedPosts.map((post: any) => (
+                        <div
+                          key={post.id}
+                          className="flex w-[80vw] flex-shrink-0 snap-start scroll-ml-4 lg:w-fit"
+                        >
+                          <HomePostCardUI
+                            post_media_data={post}
+                            user_id={user_id}
+                          ></HomePostCardUI>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <div className="flex h-64 w-full flex-col items-center justify-center gap-4 rounded-[8px] bg-foreground/10 lg:mt-8">
+                    <img
+                      src="/assets/images/logo_new_black.svg"
+                      alt=""
+                      className="invert-on-dark h-16 w-16 opacity-50"
+                    />
+                    <p className="text-foreground/50">
+                      Follow friends to show recent posts
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          ) : (
+            <></>
+          )}
+          {/* <h2 className="pl-4 font-semibold lg:pl-0">More you might like</h2> */}
+          <InfiniteScrollHome
+            user_id={user.id}
+            movie_genres={movie_genres}
+            tv_genres={tv_genres}
           />
-          <p>© Developed by Gumeq 2024</p>
+          <div className="h-16 w-full" />
         </div>
-      </div>
-    </div>
-  );
-}
+      </MobileVideoProvider>
+    );
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    // Display an error message or component
+    return <div>Something went wrong. Please try again later.</div>;
+  }
+};
+
+export default page;

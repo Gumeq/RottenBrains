@@ -42,7 +42,7 @@ const CommentCard = ({ comment, post, user_id, fetchComments }: any) => {
   };
 
   return (
-    <div className="flex w-full flex-col gap-1 rounded-[8px] bg-foreground/5 p-2">
+    <div className="flex w-full flex-col gap-1 rounded-[8px] bg-foreground/10 p-2">
       <div className="flex w-full flex-row gap-4">
         <div>
           <img

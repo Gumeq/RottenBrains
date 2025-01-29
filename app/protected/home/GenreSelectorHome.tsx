@@ -57,7 +57,7 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({
   );
   const [topRecommendedGenres, setTopRecommendedGenres] = useState<
     RecommendedGenre[]
-  >([...movie_genres, ...tv_genres]);
+  >([]);
   const [selectedCategory, setSelectedCategory] = useState<
     "Recommended" | "movie" | "tv" | "Home"
   >("Recommended");
@@ -71,7 +71,7 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({
     if (user?.feed_genres) {
       setFeedGenres(user.feed_genres);
     }
-  }, [user]);
+  }, [user?.feed_genres]);
 
   // ---------------------------
   // 2. GENRE DATA
@@ -92,8 +92,8 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({
     () => pathname.split("/").filter(Boolean),
     [pathname],
   );
-  const media_type = pathSegments[2] || null;
-  const genre_id = pathSegments[3] || null;
+  const media_type = pathSegments[0] || null;
+  const genre_id = pathSegments[1] || null;
 
   // Update selected category based on the URL
   useEffect(() => {
@@ -185,12 +185,12 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({
   // 6. CLICK HANDLERS
   // ---------------------------
   const handleGenreClick = (genreId: number, mediaType: "movie" | "tv") => {
-    router.push(`/protected/home/${mediaType}/${genreId}`);
+    router.push(`/${mediaType}/${genreId}`);
   };
 
   const handleRecommendedClick = () => {
     setSelectedCategory("Recommended");
-    redirect("/protected/home");
+    redirect("/");
   };
 
   // Add genre to feed (optimistic update)
@@ -252,17 +252,17 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({
   // ---------------------------
 
   return (
-    <div className="hidden-scrollbar mt-14 flex flex-row items-center gap-2 overflow-x-auto px-2 text-sm lg:mt-0 lg:px-0 lg:py-1 lg:pr-4">
+    <div className="hidden-scrollbar mt-14 flex flex-row items-center gap-2 overflow-x-auto px-2 text-sm lg:mt-0 lg:gap-4 lg:px-0">
       {/* Category buttons */}
       {user ? (
         <button
-          className="rounded-[4px] bg-foreground/5 px-3 py-1"
+          className="flex flex-shrink-0 items-center justify-center rounded-[8px] bg-foreground/10 px-3 py-1"
           onClick={() => setIsSettingsModalOpen(true)}
         >
           <img
             src="/assets/icons/tune-outline.svg"
             alt="settings"
-            className="invert-on-dark min-h-6 min-w-6"
+            className="invert-on-dark aspect-[1/1] h-full"
           />
         </button>
       ) : (
@@ -271,10 +271,10 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({
 
       {user ? (
         <button
-          className={`rounded-[4px] px-3 py-1 ${
+          className={`rounded-[8px] px-3 py-1 ${
             selectedCategory === "Recommended"
               ? "bg-foreground text-background"
-              : "bg-foreground/5"
+              : "bg-foreground/10"
           }`}
           onClick={handleRecommendedClick}
         >
@@ -282,10 +282,10 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({
         </button>
       ) : (
         <button
-          className={`rounded-[4px] px-3 py-1 ${
+          className={`rounded-[8px] px-3 py-1 ${
             selectedCategory === "Recommended"
               ? "bg-foreground text-background"
-              : "bg-foreground/5"
+              : "bg-foreground/10"
           }`}
           onClick={handleRecommendedClick}
         >
@@ -293,20 +293,20 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({
         </button>
       )}
       <button
-        className={`rounded-[4px] px-3 py-1 ${
+        className={`rounded-[8px] px-3 py-1 ${
           selectedCategory === "movie"
             ? "bg-foreground text-background"
-            : "bg-foreground/5"
+            : "bg-foreground/10"
         }`}
         onClick={() => setSelectedCategory("movie")}
       >
         Movies
       </button>
       <button
-        className={`rounded-[4px] px-3 py-1 ${
+        className={`rounded-[8px] px-3 py-1 ${
           selectedCategory === "tv"
             ? "bg-foreground text-background"
-            : "bg-foreground/5"
+            : "bg-foreground/10"
         }`}
         onClick={() => setSelectedCategory("tv")}
       >
@@ -340,10 +340,10 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({
             return (
               <button
                 key={`${mediaType}-${genreId}`}
-                className={`flex flex-shrink-0 rounded-[4px] px-3 py-1 ${
+                className={`flex flex-shrink-0 rounded-[8px] px-3 py-1 ${
                   isSelected
                     ? "bg-foreground text-background"
-                    : "bg-foreground/5"
+                    : "bg-foreground/10"
                 }`}
                 onClick={() => handleGenreClick(genreId, mediaType)}
               >
@@ -351,14 +351,14 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({
               </button>
             );
           })}
-
-        {loading && <p>Loading genres...</p>}
       </div>
 
       {/* Settings Modal */}
       <Modal
         isOpen={isSettingsModalOpen}
-        onClose={() => setIsSettingsModalOpen(false)}
+        onClose={() => {
+          setIsSettingsModalOpen(false);
+        }}
         title="Personalized Feed"
       >
         <div className="w-full">
@@ -384,7 +384,7 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({
                 <button
                   onClick={() => removeGenreFromFeed(genre.id, "movie")}
                   key={genre.id}
-                  className="flex flex-shrink-0 flex-row items-center gap-2 rounded-[4px] bg-foreground px-3 py-1 text-background"
+                  className="flex flex-shrink-0 flex-row items-center gap-2 rounded-[8px] bg-foreground px-3 py-1 text-background"
                 >
                   <p>{genre.name}</p>
                   <p className="text-xl font-semibold">&times;</p>
@@ -407,7 +407,7 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({
                 <button
                   onClick={() => removeGenreFromFeed(genre.id, "tv")}
                   key={genre.id}
-                  className="flex flex-shrink-0 flex-row items-center gap-2 rounded-[4px] bg-foreground px-3 py-1 text-background"
+                  className="flex flex-shrink-0 flex-row items-center gap-2 rounded-[8px] bg-foreground px-3 py-1 text-background"
                 >
                   <p>{genre.name}</p>
                   <p className="text-xl font-semibold">&times;</p>
@@ -437,7 +437,7 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({
                 <button
                   onClick={() => addGenreToFeed(genre.id, "movie")}
                   key={genre.id}
-                  className="flex flex-shrink-0 flex-row items-center gap-2 rounded-[4px] bg-foreground/5 px-3 py-1"
+                  className="flex flex-shrink-0 flex-row items-center gap-2 rounded-[8px] bg-foreground/10 px-3 py-1"
                 >
                   <p>{genre.name}</p>
                   <p className="text-xl font-semibold">&#10003;</p>
@@ -461,7 +461,7 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({
                 <button
                   onClick={() => addGenreToFeed(genre.id, "tv")}
                   key={genre.id}
-                  className="flex flex-shrink-0 flex-row items-center gap-2 rounded-[4px] bg-foreground/5 px-3 py-1"
+                  className="flex flex-shrink-0 flex-row items-center gap-2 rounded-[8px] bg-foreground/10 px-3 py-1"
                 >
                   <p>{genre.name}</p>
                   <p className="text-xl font-semibold">&#10003;</p>

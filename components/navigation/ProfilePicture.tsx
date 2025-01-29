@@ -52,7 +52,7 @@ const ProfilePicture = () => {
               ref={dropdownRef}
               className="absolute right-0 z-10 mt-2 w-[250px] origin-top-right rounded-[8px] border border-foreground/10 bg-background shadow-lg"
             >
-              <div className="bg-foreground/5 py-2">
+              <div className="bg-foreground/10 py-2">
                 <div className="flex flex-row items-center gap-2 px-4 py-2">
                   <img
                     src={user.image_url}
@@ -112,3 +112,4 @@ const ProfilePicture = () => {
 };
 
 export default ProfilePicture;
+// nice

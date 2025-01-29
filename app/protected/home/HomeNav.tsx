@@ -19,9 +19,18 @@ import {
   WatchListIcon,
   YouIcon,
   DevBlogIcon,
+  PremiumIcon,
+  DonationsIcon,
+  HelpIcon,
+  FeedbackIcon,
+  GithubIcon,
+  CookiesIcon,
+  LegalIcon,
+  InfoIcon,
 } from "./Icon";
 import { useUser } from "@/context/UserContext";
 import NavLink from "./NavLink";
+import ProfilePictureNew from "@/components/navigation/ProfilePictureNew";
 
 const HomeNav = ({ children }: any) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -35,36 +44,35 @@ const HomeNav = ({ children }: any) => {
   return (
     <div>
       <nav
-        className={`fixed top-0 z-30 hidden h-16 w-screen items-center justify-center bg-background p-1 lg:flex`}
+        className={`fixed top-0 z-30 hidden h-16 w-screen items-center justify-center bg-background lg:flex`}
       >
         <div className="flex flex-col items-center">
-          <div className="flex w-screen flex-row items-center justify-between gap-10 pr-8">
-            <div className="flex flex-row items-center gap-4">
-              <button
-                onClick={toggleSidebar}
-                className="m-1 rounded-full p-2 hover:bg-foreground/20"
-              >
+          <div className="flex w-screen flex-row items-center justify-between gap-10 pl-4 pr-8">
+            <div className="flex flex-row items-center gap-8">
+              <button onClick={toggleSidebar} className="rounded-full">
                 <img
                   src="/assets/icons/menu.svg"
                   alt="menu-icon"
-                  width={30}
-                  height={30}
-                  className="invert-on-dark p-1"
+                  width={24}
+                  height={24}
+                  className="invert-on-dark"
                 />
               </button>
-              <Link
-                href={"/protected/home"}
-                className="flex flex-row items-center gap-2"
-              >
+              <Link href={"/"} className="flex flex-row items-center gap-2">
                 <img
-                  src="/assets/images/logo_text_new.svg"
+                  src="/assets/images/logo_new_black.svg"
                   alt="text-logo"
-                  className="invert-on-dark h-4 w-auto"
+                  className="invert-on-dark h-6 w-auto"
                 />
+                {user && user.premium ? (
+                  <p className="text-xl font-black">Premium</p>
+                ) : (
+                  <p className="text-xl font-black">Rotten Brains</p>
+                )}
               </Link>
             </div>
 
-            <div className="h-full w-screen p-2 lg:max-w-[40vw] lg:p-0">
+            <div className="h-full w-screen p-2 lg:max-w-[600px] lg:p-0">
               <SearchBar link={true} user={true}></SearchBar>
             </div>
 
@@ -108,7 +116,7 @@ const HomeNav = ({ children }: any) => {
                 </Link>
                 {/* <NotificationButton></NotificationButton> */}
                 <div className="flex items-center">
-                  <ProfilePicture></ProfilePicture>
+                  <ProfilePictureNew></ProfilePictureNew>
                 </div>
               </div>
             ) : (
@@ -127,12 +135,12 @@ const HomeNav = ({ children }: any) => {
           </div>
         </div>
       </nav>
-      <div className="relative hidden flex-row lg:flex lg:h-svh lg:w-screen">
+      <nav className="relative hidden flex-row lg:flex lg:h-svh lg:w-screen">
         {isSidebarOpen ? (
-          <div className="mt-16 bg-background">
-            <ul className="flex flex-col justify-start px-4 py-2">
+          <div className="mt-16 min-w-[250px] max-w-[400px] bg-background">
+            <ul className="flex flex-col justify-start px-4">
               <NavLink
-                href="/protected/home"
+                href="/"
                 icon={HomeIcon}
                 icon_fill={HomeIconFill}
                 label="Home"
@@ -160,7 +168,26 @@ const HomeNav = ({ children }: any) => {
                 label="History"
               />
               <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
+              <NavLink href="/premium" icon={PremiumIcon} label="Premium" />
+              <NavLink
+                href="/donations"
+                icon={DonationsIcon}
+                label="Donations"
+              />
+              <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
               <NavLink href="/blog" icon={DevBlogIcon} label="Developer Blog" />
+              <NavLink href="/github" icon={GithubIcon} label="Github" />
+              <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
+              <NavLink href="/info" icon={InfoIcon} label="Info" />
+              <NavLink href="/legal" icon={LegalIcon} label="Legal" />
+              <NavLink href="/help" icon={HelpIcon} label="Help" />
+              <NavLink
+                href="/cookie-policy"
+                icon={CookiesIcon}
+                label="Cookies"
+              />
+              <NavLink href="/feedback" icon={FeedbackIcon} label="Feedback" />
+              <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
             </ul>
             <div className="absolute bottom-0 flex flex-col gap-2 p-2 text-sm text-foreground/50">
               <VersionDisplay></VersionDisplay>
@@ -168,23 +195,34 @@ const HomeNav = ({ children }: any) => {
             </div>
           </div>
         ) : (
-          <div className="mt-16 bg-background p-2">
+          <nav className="mt-16 bg-background p-2">
             <ul className="flex flex-col justify-center">
-              <NavLink href="/protected/home" icon={HomeIcon} />
+              <NavLink href="/" icon={HomeIcon} />
               <NavLink href="/protected/explore" icon={ExploreIcon} />
               <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
               <NavLink href="/protected/profile" icon={ProfileIcon} />
               <NavLink href="/protected/watch-list" icon={WatchListIcon} />
               <NavLink href="/protected/watch-history" icon={HistoryIcon} />
               <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
+              <NavLink href="/premium" icon={PremiumIcon} />
+              <NavLink href="/donations" icon={DonationsIcon} />
+              <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
               <NavLink href="/blog" icon={DevBlogIcon} />
+              <NavLink href="/github" icon={GithubIcon} />
+              <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
+              <NavLink href="/info" icon={InfoIcon} />
+              <NavLink href="/legal" icon={LegalIcon} />
+              <NavLink href="/help" icon={HelpIcon} />
+              <NavLink href="/cookie-policy" icon={CookiesIcon} />
+              <NavLink href="/feedback" icon={FeedbackIcon} />
+              <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
             </ul>
-          </div>
+          </nav>
         )}
-        <div className="custom-scrollbar mt-16 w-full overflow-y-auto overflow-x-hidden py-2">
+        <main className="custom-scrollbar mt-16 w-full overflow-y-auto overflow-x-hidden px-4 pr-8">
           {children}
-        </div>
-      </div>
+        </main>
+      </nav>
     </div>
   );
 };

@@ -150,7 +150,7 @@ const WatchPageDetails: React.FC<WatchPageDetailsProps> = ({
                 )}
                 <Link
                   href={`/protected/media/${media_type}/${media_id}`}
-                  className="flex h-32 w-full flex-row items-center gap-4 overflow-hidden rounded-[8px] bg-foreground/5"
+                  className="flex h-32 w-full flex-row items-center gap-4 overflow-hidden rounded-[8px] bg-foreground/10"
                 >
                   <img
                     src={`https://image.tmdb.org/t/p/w200${media.poster_path}`}
@@ -223,7 +223,7 @@ const WatchPageDetails: React.FC<WatchPageDetailsProps> = ({
         </p>
         <Link
           href={`/protected/media/${media_type}/${media_id}`}
-          className="flex h-32 w-full flex-row items-center gap-4 overflow-hidden rounded-[8px] bg-foreground/5"
+          className="flex h-32 w-full flex-row items-center gap-4 overflow-hidden rounded-[8px] bg-foreground/10"
         >
           <img
             src={`https://image.tmdb.org/t/p/w200${media.poster_path}`}

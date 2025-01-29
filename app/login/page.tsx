@@ -27,7 +27,7 @@ export default async function Login({
       return redirect("/login?message=Could not authenticate user");
     }
 
-    return redirect("/protected/home");
+    return redirect("/");
   };
 
   return (
@@ -54,7 +54,7 @@ export default async function Login({
         Back
       </Link>
 
-      <form className="animate-in flex w-full flex-1 flex-col justify-center gap-2 text-foreground">
+      <form className="flex w-full flex-1 flex-col justify-center gap-2 text-foreground animate-in">
         <label className="text-md" htmlFor="email">
           Email
         </label>

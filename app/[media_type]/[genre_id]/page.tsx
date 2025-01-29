@@ -1,7 +1,7 @@
 import React from "react";
 import InfiniteScrollByGenre from "./InfiniteScrollGenre";
-import GenreSelector from "../../GenreSelectorHome";
-import MobileTopBarHome from "../../MobileTopBarHome";
+import MobileTopBarHome from "@/app/protected/home/MobileTopBarHome";
+import GenreSelector from "@/app/protected/home/GenreSelectorHome";
 
 type Params = Promise<{ genre_id: number; media_type: "movie" | "tv" }>;
 

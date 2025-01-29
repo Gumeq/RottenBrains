@@ -2,6 +2,7 @@
 
 import { IUser } from "@/types";
 import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
 import {
   createContext,
   useContext,
@@ -29,10 +30,12 @@ const UserProvider = ({
   const [loading, setLoading] = useState(true);
   const supabase = createClient();
 
+  const router = useRouter();
   useEffect(() => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log("-----CONTEXT RELOAD-----");
       if (session?.user) {
         // Only fetch user data if we don't already have it
         if (!user || user.id !== session.user.id) {
@@ -51,7 +54,7 @@ const UserProvider = ({
     });
 
     return () => subscription.unsubscribe();
-  }, [user]);
+  }, [initialUser]);
 
   // Inside UserProvider
   const refreshUser = async () => {

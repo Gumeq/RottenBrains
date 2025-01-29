@@ -8,7 +8,7 @@ const MobileTopNav = async () => {
   return (
     <div className="fixed top-0 z-30 flex w-screen items-center justify-center bg-background p-2 md:hidden">
       <div className="flex w-full flex-row items-center justify-between">
-        <Link href={"/protected/home"}>
+        <Link href={"/"}>
           <img
             src="/assets/images/logo-text.png"
             alt="text-logo"

@@ -48,7 +48,7 @@ const getUser = async () => {
         console.log("Error inserting user profile:", insertError.message);
       }
     }
-    redirect("/protected/home");
+    redirect("/");
   }
 
   return <div>HI</div>;

@@ -33,7 +33,7 @@ const page = async () => {
           </div>
         </div>
       </div>
-      <div className="mx-auto flex w-full max-w-[1500px] flex-col bg-foreground/5 lg:flex-row">
+      <div className="mx-auto flex w-full max-w-[1500px] flex-col bg-foreground/10 lg:flex-row">
         <div className="p-4 lg:w-2/3">
           <h4 className="mb-6 text-xl font-semibold">Latest Posts</h4>
           <div className="flex w-full flex-col gap-4 lg:grid lg:grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
