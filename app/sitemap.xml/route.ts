@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
     .map((media: any) => {
       return `
     <url>
-      <loc>${baseUrl}/watch/movie/${media.id}</loc>
+      <loc>${baseUrl}/protected/watch/movie/${media.id}</loc>
       <priority>0.80</priority>
       <changefreq>daily</changefreq>
     </url>`;
@@ -30,7 +30,7 @@ export async function GET(req: NextRequest) {
         .map((media: any) => {
           return `
     <url>
-      <loc>${baseUrl}/watch/tv/${media.id}/1/1</loc>
+      <loc>${baseUrl}/protected/watch/tv/${media.id}/1/1</loc>
       <priority>0.80</priority>
       <changefreq>daily</changefreq>
     </url>`;
