@@ -66,11 +66,11 @@ const InfiniteScrollHome: React.FC<InfiniteScrollHomeProps> = ({
   }, [loadMore]);
 
   return (
-    <div
+    <section
       className="mt-8 flex w-full flex-col justify-center gap-4 px-4 lg:p-0"
       ref={targetRef}
     >
-      <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-4">
+      <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-8 lg:gap-4">
         {mediaItems && mediaItems.length > 0 ? (
           mediaItems.map((mediaItem) => (
             <HomeMediaCardUI
@@ -92,7 +92,7 @@ const InfiniteScrollHome: React.FC<InfiniteScrollHomeProps> = ({
         )}
       </div>
       {!loading && hasMore && <div ref={ref}></div>}
-    </div>
+    </section>
   );
 };
 

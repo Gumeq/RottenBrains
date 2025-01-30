@@ -25,13 +25,21 @@ const NavLink: FC<NavLinkProps> = ({
         isActive ? `bg-secondary/20 text-accent` : `text-foreground`
       }`}
     >
-      <div className="flex flex-row items-center gap-6">
+      <div
+        className={`flex flex-row items-center gap-6 ${!label ? "justify-center" : ""}`}
+      >
         {isActive && IconFill ? (
-          <IconFill className="fill-current" width={24} height={24} />
+          <IconFill
+            className="flex-shrink-0 fill-current"
+            width={24}
+            height={24}
+          />
         ) : (
-          <Icon className="fill-current" width={24} height={24} />
+          <Icon className="flex-shrink-0 fill-current" width={24} height={24} />
         )}
-        {label && <p className="w-max pr-4 text-sm text-foreground">{label}</p>}
+        {label && (
+          <p className="w-max truncate pr-4 text-sm text-foreground">{label}</p>
+        )}
       </div>
     </Link>
   );

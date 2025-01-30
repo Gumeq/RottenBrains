@@ -12,6 +12,7 @@ import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
 import MediaCardOverlay from "@/components/MediaCardOverlay";
 import HoverImage from "./HoverImage";
 import MoreOptions from "./MoreOptions";
+import HomeMediaCardSkeleton from "@/components/HomeMediaCardSkeleton";
 
 interface MediaCardProps {
   media_type: string;
@@ -103,25 +104,10 @@ const HomeMediaCardClient: React.FC<MediaCardProps> = React.memo(
       fetchWatchTime();
     }, [media, user_id, media_type, media_id, season_number, episode_number]);
 
-    if (loading)
-      return (
-        <div className="flex flex-col gap-4">
-          <div className="aspect-[16/9] w-full bg-foreground/10"></div>
-          <div className="h-6 w-2/3 bg-foreground/10"></div>
-          <div className="h-6 w-1/3 bg-foreground/10"></div>
-        </div>
-      );
+    if (loading) return <HomeMediaCardSkeleton></HomeMediaCardSkeleton>;
 
     if (error) {
-      return (
-        <div className="flex flex-col gap-4">
-          <div className="flex aspect-[16/9] w-full items-center justify-center bg-foreground/10 text-foreground/60">
-            <p>Error Loading Media</p>
-          </div>
-          <div className="h-6 w-2/3 bg-foreground/10"></div>
-          <div className="h-6 w-1/3 bg-foreground/10"></div>
-        </div>
-      );
+      return <HomeMediaCardSkeleton></HomeMediaCardSkeleton>;
     }
 
     // Extract genre IDs

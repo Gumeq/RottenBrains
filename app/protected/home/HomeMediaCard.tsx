@@ -12,6 +12,7 @@ import MediaCardOverlay from "@/components/MediaCardOverlay";
 import HoverImage from "./HoverImage";
 import MoreOptions from "./MoreOptions";
 import { getWatchTime } from "@/utils/supabase/serverQueries";
+import HomeMediaCardSkeleton from "@/components/HomeMediaCardSkeleton";
 
 interface MediaCardProps {
   media_type: string;
@@ -33,12 +34,16 @@ const HomeMediaCard: React.FC<MediaCardProps> = async ({
   rounded,
 }) => {
   let media: any;
-  if (media_type === "movie") {
-    media = await getMediaDetails(media_type, media_id);
-  } else if (season_number && episode_number) {
-    media = await getEpisodeDetails(media_id, season_number, episode_number);
-  } else {
-    media = await getMediaDetails(media_type, media_id);
+  try {
+    if (media_type === "movie") {
+      media = await getMediaDetails(media_type, media_id);
+    } else if (season_number && episode_number) {
+      media = await getEpisodeDetails(media_id, season_number, episode_number);
+    } else {
+      media = await getMediaDetails(media_type, media_id);
+    }
+  } catch (error) {
+    return <HomeMediaCardSkeleton></HomeMediaCardSkeleton>;
   }
 
   const watchTime = user_id

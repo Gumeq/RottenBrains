@@ -41,8 +41,8 @@ export async function generateMetadata({ params }: { params: Params }) {
   }
 
   return {
-    title: `${media.title || media.name} Season ${season_number} Episode ${episode_number} - RottenBrains`,
-    description: `${media.overview}`,
+    title: `Watch ${media.name} - S${season_number}E${episode_number} Online | Rotten Brains`,
+    description: `Stream ${media.name} Season ${season_number} Episode ${episode_number} on Rotten Brains. ${media.overview} Share and review with friends today!`,
   };
 }
 

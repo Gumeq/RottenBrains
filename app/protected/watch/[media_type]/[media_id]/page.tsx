@@ -32,8 +32,8 @@ export async function generateMetadata({ params }: any) {
   }
 
   return {
-    title: `${media.title || media.name} - RottenBrains`,
-    description: `${media.overview}`,
+    title: `Watch ${media.title || media.name} Online | Rotten Brains`,
+    description: `Stream ${media.title || media.name} now on Rotten Brains. ${media.overview} Enjoy watching and sharing with friends today!`,
   };
 }
 type Params = Promise<{ media_id: number }>;

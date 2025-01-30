@@ -160,7 +160,7 @@ const HoverImage: React.FC<HoverImageProps> = ({
 
       {/* Loading Bar */}
       {isLoading && (
-        <div className="animate-loading absolute left-0 top-0 z-30 h-1 w-full bg-accent"></div>
+        <div className="animate-loading absolute left-0 top-0 h-1 w-full bg-accent"></div>
       )}
 
       {showOverlay && (

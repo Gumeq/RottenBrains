@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import VersionDisplay from "@/components/VersionDisplay";
 import NavLinkMobile from "./NavLinkMobile";
 import {
-  DevBlogIcon,
   ExploreIcon,
   HistoryIcon,
   HomeIcon,
@@ -15,6 +14,15 @@ import {
   WatchLaterIcon,
   WatchListIcon,
   YouIcon,
+  DevBlogIcon,
+  PremiumIcon,
+  DonationsIcon,
+  HelpIcon,
+  FeedbackIcon,
+  GithubIcon,
+  CookiesIcon,
+  LegalIcon,
+  InfoIcon,
 } from "./Icon";
 
 const MenuButtonWithSidebar: React.FC = () => {
@@ -37,7 +45,7 @@ const MenuButtonWithSidebar: React.FC = () => {
 
       {/* Sidebar */}
       <div
-        className={`fixed left-0 top-0 z-50 h-screen w-2/3 transform bg-background drop-shadow-md transition-transform ${
+        className={`fixed left-0 top-0 z-50 h-screen w-3/4 transform overflow-y-auto bg-background pb-20 drop-shadow-md transition-all duration-200 ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -62,51 +70,51 @@ const MenuButtonWithSidebar: React.FC = () => {
               label="Explore"
             />
             <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
-            {/* <NavLinkMobile
-              href="/protected/profile"
-              icon={YouIcon}
-              label="You"
-            /> */}
             <NavLinkMobile
               href="/protected/profile"
               icon={ProfileIcon}
               label="Your profile"
             />
             <NavLinkMobile
-              href="/protected/watch-history"
-              icon={HistoryIcon}
-              label="History"
-            />
-            {/* <NavLinkMobile
-              href="/protected/liked-posts"
-              icon={LikedPostsIcon}
-              label="Liked posts"
-            />
-            <NavLinkMobile
-              href="/protected/saved-posts"
-              icon={SavedPostsIcon}
-              label="Saved posts"
-            /> */}
-            <NavLinkMobile
               href="/protected/watch-list"
               icon={WatchListIcon}
               label="Library"
             />
-            {/* <NavLinkMobile
-              href="/protected/watch-later"
-              icon={WatchLaterIcon}
-              label="Watch later"
-            /> */}
+            <NavLinkMobile
+              href="/protected/watch-history"
+              icon={HistoryIcon}
+              label="History"
+            />
+            <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
+            <NavLinkMobile href="/premium" icon={PremiumIcon} label="Premium" />
+            <NavLinkMobile
+              href="/donations"
+              icon={DonationsIcon}
+              label="Donations"
+            />
+            <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
             <NavLinkMobile
               href="/blog"
               icon={DevBlogIcon}
-              label="Developer blog"
+              label="Developer Blog"
             />
+            <NavLinkMobile href="/github" icon={GithubIcon} label="Github" />
+            <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
+            <NavLinkMobile href="/info" icon={InfoIcon} label="Info" />
+            <NavLinkMobile href="/legal" icon={LegalIcon} label="Legal" />
+            <NavLinkMobile href="/help" icon={HelpIcon} label="Help" />
+            <NavLinkMobile
+              href="/cookie-policy"
+              icon={CookiesIcon}
+              label="Cookies"
+            />
+            <NavLinkMobile
+              href="/feedback"
+              icon={FeedbackIcon}
+              label="Feedback"
+            />
+            <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
           </ul>
-          <div className="absolute bottom-0 flex flex-col gap-2 p-2 text-sm text-foreground/50">
-            <VersionDisplay></VersionDisplay>
-            <p>&copy; {new Date().getFullYear()} GUMEQ INC.</p>
-          </div>
         </div>
       </div>
 

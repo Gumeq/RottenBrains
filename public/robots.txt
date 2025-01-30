@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://rotten-brains.com
+
+# Sitemaps
+Sitemap: https://rotten-brains.com/sitemap.xml

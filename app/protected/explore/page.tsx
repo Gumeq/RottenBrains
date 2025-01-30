@@ -9,9 +9,16 @@ import Banner_90x728 from "@/components/ads/Banner_90x728";
 const fetchMoviesWithColors = async (movies: any) => {
   const moviesWithColors = await Promise.all(
     movies.map(async (movie: any) => {
-      const color = await getAverageColor(
-        `https://image.tmdb.org/t/p/w200${movie.backdrop_path}`,
-      );
+      let color;
+      try {
+        color = await getAverageColor(
+          `https://image.tmdb.org/t/p/w200${movie.backdrop_path}`,
+        );
+      } catch (error) {
+        console.log(error);
+        color = { hex: "#FFFFFF" }; // Default color for movies without colors
+      }
+
       return { ...movie, averageColor: color.hex };
     }),
   );

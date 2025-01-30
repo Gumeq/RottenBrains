@@ -13,12 +13,15 @@ import { Theme, ThemeProvider } from "@/context/ThemeContext";
 import LegalConsent from "@/components/LegalConsent";
 import GoogleAdsense from "@/components/GoogleAdSense";
 import { createClient } from "@/utils/supabase/server";
+import MainContent from "./protected/home/Main";
+import { SidebarProvider } from "@/context/SidebarContext";
 
 export const metadata = {
-  title: "RottenBrains",
-  description: "Your Hub for Movie Reviews and Streaming!",
+  title:
+    "Rotten Brains | Stream Movies & TV Shows, Share Reviews, Connect with Friends",
+  description:
+    "Discover Rotten Brains – your ultimate destination to watch the latest movies and TV shows. Read and post reviews, share favorites with friends, and join a vibrant community of entertainment enthusiasts. Start streaming and sharing today!",
   other: {
-    // Add the AdSense script as part of the metadata API
     script: [
       {
         src: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4557341861686356",
@@ -58,31 +61,27 @@ export default async function NotProtectedLayout({
   }
   return (
     <html lang="en" className={`${GeistSans.className} ${themeCookie}`}>
-      <body className="overflow-x-hidden bg-background text-foreground">
-        <UserProvider initialUser={initialUser}>
-          <ThemeProvider initialTheme={themeCookie}>
-            <div>
-              <div className="w-full"> </div>
-              <div className="w-full overflow-x-hidden bg-background text-foreground md:flex">
+      <UserProvider initialUser={initialUser}>
+        <ThemeProvider initialTheme={themeCookie}>
+          <SidebarProvider>
+            <body className="custom-scrollbar w-full overflow-x-hidden bg-background text-foreground transition-all duration-300">
+              <header>
                 <div className="hidden lg:flex">
-                  <HomeNav>{children}</HomeNav>
+                  <HomeNav></HomeNav>
                 </div>
-                {/* <MobileTopNav></MobileTopNav> */}
-                <div className="flex w-full lg:hidden">
-                  <Bottombar />
-                  <main className="mb-16 w-full">{children}</main>
-                </div>
-              </div>
-            </div>
-            <Toaster />
-            <Analytics />
-            <CookieConsent />
-            <LegalConsent />
-            <SpeedInsights />
-            <GoogleAdsense pId="4557341861686356" />
-          </ThemeProvider>
-        </UserProvider>
-      </body>
+              </header>
+              <MainContent>{children}</MainContent>
+              <footer></footer>
+              <CookieConsent />
+              <LegalConsent />
+              <Toaster />
+              <Analytics />
+              <SpeedInsights />
+              <GoogleAdsense pId="4557341861686356" />
+            </body>
+          </SidebarProvider>
+        </ThemeProvider>
+      </UserProvider>
     </html>
   );
 }
