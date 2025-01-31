@@ -1,14 +1,13 @@
 import Link from "next/link";
-import VideoEmbed from "@/components/MediaEmbed";
-import WatchDuration from "@/components/WatchDuration";
-import ScrollButtons from "@/components/explore/ScrollButtons";
-import { getRelativeTime } from "@/lib/functions";
-import MediaCardSmall from "@/components/MediaCardSmall";
-import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
-import { getCurrentUser } from "@/utils/supabase/serverQueries";
-import { getMediaDetails, getRecommendations } from "@/utils/tmdb";
-import WatchPageDetails from "@/components/WatchPageDetails";
-import NativeAd from "@/components/ads/Native";
+import VideoEmbed from "@/components/features/watch/MediaEmbed";
+import WatchDuration from "@/components/features/watch/WatchDuration";
+import ScrollButtons from "@/components/common/ScrollButtons";
+import MediaCardSmall from "@/components/features/media/MediaCardSmall";
+import { getMediaDetails, getRecommendations } from "@/lib/tmdb";
+import WatchPageDetails from "@/components/features/watch/WatchPageDetails";
+import NativeAd from "@/components/features/ads/Native";
+import { fetchMediaData } from "@/lib/client/fetchMediaData";
+import { getCurrentUser } from "@/lib/supabase/serverQueries";
 
 export async function generateMetadata({ params }: any) {
   const media_id = parseInt(params.media_id, 10);

@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 import { getAverageColor } from "fast-average-color-node";
 import ReactMarkdown from "react-markdown";
-import { formatDate } from "@/lib/functions";
+import { formatDate } from "@/lib/utils";
 
 interface Post {
   id: string; // Adjust based on your data structure

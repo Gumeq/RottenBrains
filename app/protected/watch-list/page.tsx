@@ -1,12 +1,12 @@
 import React from "react";
+import { getMediaDetails } from "@/lib/tmdb";
+import { getAverageColor } from "fast-average-color-node";
+import { redirect } from "next/navigation";
 import {
   getCurrentUser,
   getWatchListSpecific,
-} from "@/utils/supabase/serverQueries";
-import { getMediaDetails } from "@/utils/tmdb";
-import { getAverageColor } from "fast-average-color-node";
-import WatchListCard from "./WatchListCard";
-import { redirect } from "next/navigation";
+} from "@/lib/supabase/serverQueries";
+import WatchListCard from "@/components/features/library/CategoryCard";
 
 const page = async () => {
   const user = await getCurrentUser();

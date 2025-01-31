@@ -1,15 +1,14 @@
 import Link from "next/link";
-import VideoEmbed from "@/components/MediaEmbed";
-import WatchDuration from "@/components/WatchDuration";
-import ScrollButtons from "@/components/explore/ScrollButtons";
-import { getRelativeTime } from "@/lib/functions";
-import MediaCardSmall from "@/components/MediaCardSmall";
-import TVShowDetails from "@/components/TVSeasons";
-import { getCurrentUser } from "@/utils/supabase/serverQueries";
-import { getEpisodeDetails, getMediaDetails } from "@/utils/tmdb";
-import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
-import WatchPageDetails from "@/components/WatchPageDetails";
-import NativeAd from "@/components/ads/Native";
+import VideoEmbed from "@/components/features/watch/MediaEmbed";
+import WatchDuration from "@/components/features/watch/WatchDuration";
+import ScrollButtons from "@/components/common/ScrollButtons";
+import MediaCardSmall from "@/components/features/media/MediaCardSmall";
+import { getEpisodeDetails, getMediaDetails } from "@/lib/tmdb";
+import WatchPageDetails from "@/components/features/watch/WatchPageDetails";
+import NativeAd from "@/components/features/ads/Native";
+import { fetchMediaData } from "@/lib/client/fetchMediaData";
+import { getCurrentUser } from "@/lib/supabase/serverQueries";
+import TVShowDetails from "@/components/features/watch/TVSeasons";
 type Params = Promise<{
   media_id: number;
   season_number: number;

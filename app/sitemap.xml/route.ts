@@ -1,4 +1,4 @@
-import { getPopular, getTrendingMovies, getTrendingTV } from "@/utils/tmdb";
+import { getPopular, getTrendingMovies, getTrendingTV } from "@/lib/tmdb";
 import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {

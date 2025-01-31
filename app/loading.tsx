@@ -1,4 +1,4 @@
-import HomeMediaCardSkeleton from "@/components/HomeMediaCardSkeleton";
+import HomeMediaCardSkeleton from "@/components/features/media/MediaCardSkeleton";
 import React from "react";
 
 const loading = () => {

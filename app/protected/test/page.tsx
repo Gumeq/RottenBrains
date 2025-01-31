@@ -1,7 +1,5 @@
-import { createClient } from "@/utils/supabase/server";
-import { getUserFromDB } from "@/utils/supabase/serverQueries";
-import { Divide } from "lucide-react";
-import { GetServerSideProps, NextApiRequest } from "next";
+import { createClient } from "@/lib/supabase/server";
+import { getUserFromDB } from "@/lib/supabase/serverQueries";
 import { redirect } from "next/navigation";
 
 export interface User {

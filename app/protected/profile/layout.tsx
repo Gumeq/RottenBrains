@@ -1,15 +1,11 @@
 import { redirect } from "next/navigation";
-import AuthButton from "@/components/auth/AuthButton";
-import { getCurrentUser } from "@/utils/supabase/serverQueries";
 import React from "react";
-import ProfilePicture from "./ProfilePictureChange";
-import FollowInfo from "../user/[userId]/FollowInfo";
-import FollowButton from "@/components/post/FollowButton";
-import ScrollButtons from "@/components/explore/ScrollButtons";
-import HomeMediaCard from "../home/HomeMediaCard";
-import Link from "next/link";
-import NewTabs from "./NewTabs";
-import MobileTopBarHome from "../home/MobileTopBarHome";
+import ProfilePicture from "../../../components/features/profile/ProfilePictureChange";
+import FollowButton from "@/components/features/posts/FollowButton";
+import NewTabs from "../../../components/features/profile/NewTabs";
+import MobileTopBarHome from "../../../components/features/navigation/mobile/NavTop";
+import { getCurrentUser } from "@/lib/supabase/serverQueries";
+import FollowInfo from "@/components/features/profile/FollowInfo";
 
 const ProfileLayout = async ({ children }: { children: React.ReactNode }) => {
   let currentUser = await getCurrentUser();

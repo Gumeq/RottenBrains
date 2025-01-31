@@ -1,8 +1,8 @@
-import Banner_160x300 from "@/components/ads/Banner_160x300";
-import Banner_250x300 from "@/components/ads/Banner_250x300";
-import Banner_90x728 from "@/components/ads/Banner_90x728";
-import NativeAd from "@/components/ads/Native";
-import Native2 from "@/components/ads/Native2";
+import Banner_160x300 from "@/components/features/ads/Banner_160x300";
+import Banner_250x300 from "@/components/features/ads/Banner_250x300";
+import Banner_90x728 from "@/components/features/ads/Banner_90x728";
+import NativeAd from "@/components/features/ads/Native";
+import Native2 from "@/components/features/ads/Native2";
 import React from "react";
 const page = () => {
   return (

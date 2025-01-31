@@ -1,20 +1,20 @@
-import Bottombar from "@/components/navigation/Bottombar";
+import Bottombar from "@/components/features/navigation/mobile/NavBottom";
 import React from "react";
-import HomeNav from "./protected/home/HomeNav";
+import HomeNav from "../components/features/navigation/desktop/Navbar";
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "@/components/ui/toaster";
-import CookieConsent from "@/components/CookieConsent";
-import UserProvider from "@/context/UserContext";
+import CookieConsent from "@/components/features/consent/CookieConsent";
+import UserProvider from "@/hooks/UserContext";
 import { cookies } from "next/headers";
-import { Theme, ThemeProvider } from "@/context/ThemeContext";
-import LegalConsent from "@/components/LegalConsent";
-import GoogleAdsense from "@/components/GoogleAdSense";
-import { createClient } from "@/utils/supabase/server";
-import MainContent from "./protected/home/Main";
-import { SidebarProvider } from "@/context/SidebarContext";
+import { Theme, ThemeProvider } from "@/hooks/ThemeContext";
+import LegalConsent from "@/components/features/consent/LegalConsent";
+import GoogleAdsense from "@/components/common/GoogleAdSense";
+import MainContent from "../components/common/MainContent";
+import { SidebarProvider } from "@/hooks/SidebarContext";
+import { createClient } from "@/lib/supabase/server";
 
 export const metadata = {
   title:

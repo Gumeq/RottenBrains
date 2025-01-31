@@ -1,8 +1,4 @@
-import {
-  getTopMovieGenresForUser,
-  getTopTvGenresForUser,
-} from "@/utils/supabase/serverQueries";
-import { fetchFromApi } from "@/utils/tmdb/tmdbApi";
+import { fetchFromApi } from "@/lib/tmdb/tmdbApi";
 
 export function formatGenreCodes(arr: { genre_code: string }[]): string {
   return arr.map((item) => item.genre_code).join("%7C");

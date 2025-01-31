@@ -1,22 +1,18 @@
-// app/page.tsx or app/home/page.tsx (example path)
+import { MobileVideoProvider } from "@/hooks/MobileVideoContext";
+import Banner_90x728 from "@/components/features/ads/Banner_90x728";
+import { fetchContinueWatching } from "@/lib/server/homeFunctions";
+import { fetchPostsData } from "@/lib/server/fetchPostsData";
+import HomePostCardUI from "@/components/features/posts/HomePostCardUI";
 import {
   getCurrentUser,
   getTopMovieGenresForUser,
   getTopTvGenresForUser,
-} from "@/utils/supabase/serverQueries";
-
-import { MobileVideoProvider } from "@/context/MobileVideoContext";
-import Banner_90x728 from "@/components/ads/Banner_90x728";
-
-import { fetchContinueWatching } from "@/utils/serverFunctions/homeFunctions";
-import { fetchPostsData } from "@/utils/serverFunctions/fetchPostsData";
-
-import MobileTopBarHome from "./protected/home/MobileTopBarHome";
-import GenreSelector from "./protected/home/GenreSelectorHome";
-import InfiniteScrollHome from "./protected/home/InfiniteScrollHome";
-import HomeMediaCardUI from "./protected/home/HomeMediaCardUI";
-import HomePostCardUI from "@/components/post/HomePostCardUI";
-import HorizontalScroll from "./protected/home/horizontal_scroll";
+} from "@/lib/supabase/serverQueries";
+import MediaCardUI from "@/components/features/media/MediaCardUI";
+import NavTop from "@/components/features/navigation/mobile/NavTop";
+import GenreSelector from "@/components/features/home/GenreSelector";
+import InfiniteScrollHome from "@/components/features/home/InfiniteScroll";
+import HorizontalScroll from "@/components/features/home/HorizontalScroll";
 
 export default async function Page() {
   try {
@@ -26,7 +22,7 @@ export default async function Page() {
     if (!user) {
       return (
         <>
-          <MobileTopBarHome />
+          <NavTop />
           <div className="flex w-full flex-col gap-4 lg:pr-8">
             <GenreSelector />
             <div className="hidden w-full items-center justify-center lg:mt-8 lg:flex">
@@ -61,7 +57,7 @@ export default async function Page() {
         )}
 
         <div className="w-full lg:w-auto lg:py-0" id="main-content">
-          <MobileTopBarHome />
+          <NavTop />
 
           {/* CONTINUE WATCHING SECTION */}
           {continue_watching?.length > 0 && (
@@ -71,16 +67,12 @@ export default async function Page() {
                   Continue Watching
                 </p>
                 <HorizontalScroll>
-                  {continue_watching.map((media) => (
+                  {continue_watching.map((media: any) => (
                     <div
                       key={media.id}
                       className="snap-start scroll-ml-4 lg:scroll-ml-8"
                     >
-                      <HomeMediaCardUI
-                        media={media}
-                        user_id={user_id}
-                        rounded
-                      />
+                      <MediaCardUI media={media} user_id={user_id} rounded />
                     </div>
                   ))}
                 </HorizontalScroll>
@@ -97,7 +89,7 @@ export default async function Page() {
                   className="hidden-scrollbar flex snap-x snap-mandatory flex-row gap-4 overflow-x-auto px-4 lg:px-0 lg:pr-4"
                   id="rotten-posts-one"
                 >
-                  {followedPosts.map((post) => (
+                  {followedPosts.map((post: any) => (
                     <div
                       key={post.id}
                       className="flex w-[80vw] flex-shrink-0 snap-start scroll-ml-4 lg:w-fit"

@@ -1,7 +1,7 @@
 "use client";
 
-import { useUser } from "@/context/UserContext";
-import UserPosts from "./UserPosts";
+import UserPosts from "@/components/features/profile/UserPosts";
+import { useUser } from "@/hooks/UserContext";
 
 export default function ProtectedPage() {
   const { user } = useUser();

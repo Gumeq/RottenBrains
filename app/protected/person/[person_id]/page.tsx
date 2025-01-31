@@ -2,7 +2,7 @@ import {
   getPersonCredits,
   getPersonDetails,
   getPersonImages,
-} from "@/utils/tmdb";
+} from "@/lib/tmdb";
 import Link from "next/link";
 import React from "react";
 

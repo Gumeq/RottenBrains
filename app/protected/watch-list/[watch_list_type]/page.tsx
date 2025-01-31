@@ -1,10 +1,9 @@
+import WatchListInfiniteScroll from "@/components/features/library/InfiniteScroll";
 import {
   getCurrentUser,
   getWatchListSpecific,
-} from "@/utils/supabase/serverQueries";
+} from "@/lib/supabase/serverQueries";
 import React from "react";
-import HomeMediaCard from "../../home/HomeMediaCard";
-import WatchListInfiniteScroll from "./WatchListInfinireScroll";
 type Params = Promise<{ watch_list_type: string }>;
 const page = async ({ params }: { params: Params }) => {
   const { watch_list_type } = await params;

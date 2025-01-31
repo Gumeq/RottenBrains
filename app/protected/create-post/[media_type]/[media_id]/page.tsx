@@ -1,5 +1,5 @@
-import PostForm from "@/components/frorms/PostForm";
-import GoBackArrow from "@/components/GoBackArrow";
+import PostForm from "@/components/features/posts/PostForm";
+import GoBackArrow from "@/components/features/navigation/GoBackArrow";
 import React from "react";
 
 type Params = Promise<{ media_id: string; media_type: string }>;

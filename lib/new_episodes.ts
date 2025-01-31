@@ -1,9 +1,9 @@
+import { getLastEpisodeFromTMDB } from "@/lib/tmdb";
 import {
   getAllUsers,
   getTvWatchListForUser,
   upsertNewEpisodeRecord,
-} from "@/utils/supabase/serverQueries";
-import { getLastEpisodeFromTMDB } from "@/utils/tmdb";
+} from "./supabase/serverQueries";
 
 export async function dailyNewEpisodesJob(): Promise<void> {
   console.log("--- Starting dailyNewEpisodesJob ---");

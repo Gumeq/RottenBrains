@@ -1,7 +1,7 @@
-import PostForm from "@/components/frorms/PostForm";
-import GoBackArrow from "@/components/GoBackArrow";
-import { getPostById } from "@/utils/supabase/serverQueries";
+import PostForm from "@/components/features/posts/PostForm";
+import GoBackArrow from "@/components/features/navigation/GoBackArrow";
 import React from "react";
+import { getPostById } from "@/lib/supabase/serverQueries";
 
 type Params = Promise<{ post_id: string }>;
 

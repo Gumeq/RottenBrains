@@ -1,10 +1,10 @@
-import ExploreTab from "@/components/explore/ExploreTab";
-import { getPopular } from "@/utils/tmdb";
+import ExploreTab from "@/components/features/explore/ExploreTab";
+import { getPopular } from "@/lib/tmdb";
 import React from "react";
 import { getAverageColor } from "fast-average-color-node";
-import MediaCarouselNew from "@/components/MediaCarouselNew";
-import { getCurrentUser } from "@/utils/supabase/serverQueries";
-import Banner_90x728 from "@/components/ads/Banner_90x728";
+import MediaCarouselNew from "@/components/features/explore/MediaCarouselNew";
+import Banner_90x728 from "@/components/features/ads/Banner_90x728";
+import { getCurrentUser } from "@/lib/supabase/serverQueries";
 
 const fetchMoviesWithColors = async (movies: any) => {
   const moviesWithColors = await Promise.all(

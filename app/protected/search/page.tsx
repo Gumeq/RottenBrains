@@ -1,6 +1,5 @@
-import { searchMulti } from "@/utils/tmdb";
+import InfiniteScrollSearch from "@/components/features/search/InfiniteScrollSearch";
 import React from "react";
-import InfiniteScrollSearch from "./InfiniteScrollSearch";
 
 type Params = Promise<{ query: string }>;
 

@@ -1,4 +1,4 @@
-import { fetchBlogPostById } from "@/utils/supabase/serverQueries";
+import { fetchBlogPostById } from "@/lib/supabase/serverQueries";
 import Link from "next/link";
 import React from "react";
 import ReactMarkdown from "react-markdown";

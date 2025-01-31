@@ -1,13 +1,10 @@
-import GoBackArrow from "@/components/GoBackArrow";
-import { fetchMediaData } from "@/utils/clientFunctions/fetchMediaData";
-import { getMediaCredits, getMediaDetails, getVideos } from "@/utils/tmdb";
+import GoBackArrow from "@/components/features/navigation/GoBackArrow";
+import { getMediaCredits, getMediaDetails, getVideos } from "@/lib/tmdb";
 import Link from "next/link";
-import {
-  getCurrentUser,
-  getPostsOfMedia,
-} from "@/utils/supabase/serverQueries";
-import MoreOptions from "@/app/protected/home/MoreOptions";
-import ImageWithFallback from "@/components/ImageWithFallback";
+import MoreOptions from "@/components/features/media/MoreOptions";
+import ImageWithFallback from "@/components/features/media/ImageWithFallback";
+import { fetchMediaData } from "@/lib/client/fetchMediaData";
+import { getCurrentUser } from "@/lib/supabase/serverQueries";
 
 function transformRuntime(minutes: number): string {
   const hours: number = Math.floor(minutes / 60);

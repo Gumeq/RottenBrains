@@ -1,5 +1,5 @@
-import { useUser } from "@/context/UserContext";
-import UserPosts from "../../profile/UserPosts";
+import UserPosts from "@/components/features/profile/UserPosts";
+import { useUser } from "@/hooks/UserContext";
 
 type Params = Promise<{ userId: string }>;
 export default async function ProtectedPage({ params }: { params: Params }) {

@@ -1,8 +1,7 @@
 "use client";
 
-import { useUser } from "@/context/UserContext";
-import UserPostsType from "../UserPostsType";
-import UserWatchHistory from "../UserWatchHistory";
+import UserWatchHistory from "@/components/features/profile/UserWatchHistory";
+import { useUser } from "@/hooks/UserContext";
 
 export default function ProtectedPage() {
   const { user } = useUser();
