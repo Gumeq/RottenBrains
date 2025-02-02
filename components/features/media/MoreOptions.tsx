@@ -86,59 +86,39 @@ const MoreOptions = ({
         align="start"
       >
         <div className="h-full w-full bg-foreground/10">
-          <DropdownMenuItem className="hover:bg-foreground/20">
-            <div
-              className="flex h-full w-full flex-row items-center gap-2 hover:cursor-pointer"
-              onClick={handleSaveToWatchLater}
-            >
-              <img
-                src="/assets/icons/time-outline.svg"
-                alt=""
-                className="invert-on-dark h-[24px] w-[24px]"
-              />
-              <p>Save to Watch later</p>
-            </div>
-          </DropdownMenuItem>
-          <div className="my-1 h-[1px] w-full bg-foreground/10"></div>
-          <DropdownMenuItem className="hover:bg-foreground/20">
-            <div
-              className="flex h-full w-full flex-row items-center gap-2 hover:cursor-pointer"
-              onClick={handleSaveToWatching}
-            >
-              <img
-                src="/assets/icons/folder-outline.svg"
-                alt=""
-                className="invert-on-dark h-[24px] w-[24px]"
-              />
-              <p>Watching</p>
-            </div>
-          </DropdownMenuItem>
-          <DropdownMenuItem className="hover:bg-foreground/20">
-            <div
-              className="flex h-full w-full flex-row items-center gap-2 hover:cursor-pointer"
-              onClick={handleSaveToPlanned}
-            >
-              <img
-                src="/assets/icons/folder-outline.svg"
-                alt=""
-                className="invert-on-dark h-[24px] w-[24px]"
-              />
-              <p>Planned</p>
-            </div>
-          </DropdownMenuItem>
-          <DropdownMenuItem className="hover:bg-foreground/20">
-            <div
-              className="flex h-full w-full flex-row items-center gap-2 hover:cursor-pointer"
-              onClick={handleSaveToWatched}
-            >
-              <img
-                src="/assets/icons/folder-outline.svg"
-                alt=""
-                className="invert-on-dark h-[24px] w-[24px]"
-              />
-              <p>Watched</p>
-            </div>
-          </DropdownMenuItem>
+          <div
+            className="flex h-full w-full flex-row items-center gap-4 p-2 hover:cursor-pointer hover:bg-foreground/20"
+            onClick={handleSaveToWatching}
+          >
+            <img
+              src="/assets/icons/folder-outline.svg"
+              alt=""
+              className="invert-on-dark h-[24px] w-[24px]"
+            />
+            <p>Watching</p>
+          </div>
+          <div
+            className="flex h-full w-full flex-row items-center gap-4 p-2 hover:cursor-pointer hover:bg-foreground/20"
+            onClick={handleSaveToPlanned}
+          >
+            <img
+              src="/assets/icons/folder-outline.svg"
+              alt=""
+              className="invert-on-dark h-[24px] w-[24px]"
+            />
+            <p>Planned</p>
+          </div>
+          <div
+            className="flex h-full w-full flex-row items-center gap-4 p-2 hover:cursor-pointer hover:bg-foreground/20"
+            onClick={handleSaveToWatched}
+          >
+            <img
+              src="/assets/icons/folder-outline.svg"
+              alt=""
+              className="invert-on-dark h-[24px] w-[24px]"
+            />
+            <p>Watched</p>
+          </div>
         </div>
       </DropdownMenuContent>
     </DropdownMenu>

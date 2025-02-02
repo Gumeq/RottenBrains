@@ -1,7 +1,6 @@
 "use client";
 
 import { createClient } from "../supabase/client";
-import { addNotification } from "./notificationsData";
 import { PostgrestSingleResponse } from "@supabase/supabase-js";
 
 const supabase = createClient();
@@ -78,12 +77,6 @@ export const likePost = async (
       post_id: postId,
     });
     if (incrementError) throw incrementError;
-
-    const { data: postData, error: postError }: PostgrestSingleResponse<any> =
-      await supabase.from("posts").select("*").eq("id", postId).single();
-    if (postError) throw postError;
-
-    await addNotification(userId, postData.creatorid, "like", postId);
 
     return { data, error: null };
   } catch (error) {

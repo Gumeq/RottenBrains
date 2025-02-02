@@ -1,21 +1,19 @@
 import { redirect } from "next/navigation";
 import React from "react";
 import ProfilePicture from "../../../components/features/profile/ProfilePictureChange";
-import FollowButton from "@/components/features/posts/FollowButton";
 import NewTabs from "../../../components/features/profile/NewTabs";
 import MobileTopBarHome from "../../../components/features/navigation/mobile/NavTop";
 import { getCurrentUser } from "@/lib/supabase/serverQueries";
 import FollowInfo from "@/components/features/profile/FollowInfo";
+import FollowButton from "@/components/features/profile/FollowButton";
 
 const ProfileLayout = async ({ children }: { children: React.ReactNode }) => {
   let currentUser = await getCurrentUser();
 
-  // If the user is not logged in, immediately redirect to login
   if (!currentUser) {
     redirect("/login");
   }
 
-  // Extract the actual user data if currentuser is nested
   const user = currentUser;
   const dateString = user.created_at;
   const date = new Date(dateString);

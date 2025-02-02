@@ -48,18 +48,13 @@ export default async function Page() {
     return (
       <MobileVideoProvider>
         <GenreSelector movie_genres={movie_genres} tv_genres={tv_genres} />
-
-        {/* Only show Banner if user is not premium */}
         {!user?.premium && (
           <div className="mt-8 hidden w-full items-center justify-center lg:flex">
             <Banner_90x728 />
           </div>
         )}
-
         <div className="w-full lg:w-auto lg:py-0" id="main-content">
           <NavTop />
-
-          {/* CONTINUE WATCHING SECTION */}
           {continue_watching?.length > 0 && (
             <section className="mt-8">
               <div className="lg:rounded-[16px] lg:bg-foreground/10">
@@ -79,8 +74,6 @@ export default async function Page() {
               </div>
             </section>
           )}
-
-          {/* POSTS SECTION */}
           {followedPosts && followedPosts.length > 0 && (
             <section className="mt-8">
               <div className="relative">
@@ -104,14 +97,11 @@ export default async function Page() {
               </div>
             </section>
           )}
-
-          {/* SUGGESTIONS / INFINITE SCROLL */}
           <InfiniteScrollHome
             user_id={user.id}
             movie_genres={movie_genres}
             tv_genres={tv_genres}
           />
-
           <div className="h-16 w-full" />
         </div>
       </MobileVideoProvider>

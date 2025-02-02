@@ -1,5 +1,4 @@
 "use client";
-import { addNotification } from "@/lib/client/notificationsData";
 import { createClient } from "@/lib/supabase/client";
 import { useState } from "react";
 
@@ -31,15 +30,6 @@ const AddComment: React.FC<any> = ({
       post_id: postId,
     });
     if (incrementError) throw incrementError;
-    if (data && data.length > 0) {
-      await addNotification(
-        user_id,
-        post.creatorid,
-        "comment",
-        post.post_id,
-        data[0].id,
-      );
-    }
 
     if (error) {
       console.error(error);

@@ -12,7 +12,7 @@ import {
 } from "react";
 
 interface UserContextType {
-  user: IUser | null;
+  user: any | null;
   loading: boolean;
   refreshUser: () => Promise<void>;
 }

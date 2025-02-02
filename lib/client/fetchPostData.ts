@@ -10,8 +10,8 @@ export async function fetchPostsDataForUser(
   const posts_media_data = await Promise.all(
     posts.map(async (post: any) => {
       const media_data = await fetchMediaData(
-        post.post.media_id,
         post.post.media_type,
+        post.post.media_id,
       );
       return { post_data: post, media_data: media_data };
     }),
@@ -34,8 +34,8 @@ export async function fetchPostsDataForUserByType(
   const posts_media_data = await Promise.all(
     posts.map(async (post: any) => {
       const media_data = await fetchMediaData(
-        post.post.media_id,
         post.post.media_type,
+        post.post.media_id,
       );
       return { post_data: post, media_data: media_data };
     }),

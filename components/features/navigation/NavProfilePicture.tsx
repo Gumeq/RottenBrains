@@ -42,7 +42,6 @@ const ProfilePictureNew: React.FC<ProfilePictureNewProps> = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        {/* Use the passed-in imageSize classes here */}
         <img
           src={user.image_url}
           alt="User Avatar"

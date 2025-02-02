@@ -1,12 +1,12 @@
 import AuthButton from "@/components/features/auth/AuthButton";
 import React from "react";
-import FollowButton from "@/components/features/posts/FollowButton";
 import ScrollButtons from "@/components/common/ScrollButtons";
 import Link from "next/link";
 import MobileTopBarHome from "../../../../components/features/navigation/mobile/NavTop";
 import NewTabs from "../../../../components/features/profile/NewTabUser";
 import { getUserFromDB } from "@/lib/supabase/serverQueries";
 import FollowInfo from "@/components/features/profile/FollowInfo";
+import FollowButton from "@/components/features/profile/FollowButton";
 
 type Params = Promise<{ userId: string }>;
 

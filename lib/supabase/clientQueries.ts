@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "./client";
 import { FeedGenre, IPost, IUser } from "@/types";
+import { fetchMediaData } from "../client/fetchMediaData";
 
 const supabase = createClient();
 
@@ -614,3 +615,41 @@ export const signOut = async () => {
   // sign out from the current session only
   await supabase.auth.signOut({ scope: "local" });
 };
+
+export async function fetchUserNotifications(
+  user_id: string,
+  page: number = 0,
+  notifications_per_page: number = 10,
+) {
+  const { data, error } = await supabase.rpc("get_user_notifications", {
+    _recipient_id: user_id,
+    _limit: notifications_per_page,
+    _offset: page * notifications_per_page,
+  });
+
+  if (error) throw error;
+
+  // Process notifications in parallel
+  const notificationsWithMedia = await Promise.all(
+    data.map(async (notification: any) => {
+      // Check if notification requires media data
+      if (
+        ["like", "comment", "new_post"].includes(notification.notification_type)
+      ) {
+        try {
+          const media_data = await fetchMediaData(
+            notification.post.media_type,
+            notification.post.media_id,
+          );
+          return { ...notification, media_data };
+        } catch (error) {
+          console.error("Error fetching media data:", error);
+          return notification; // Return original notification if media fetch fails
+        }
+      }
+      return notification;
+    }),
+  );
+
+  return notificationsWithMedia;
+}
