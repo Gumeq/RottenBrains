@@ -164,12 +164,12 @@ export default async function mediaPage({ params }: { params: Params }) {
             <div className="flex flex-col gap-4">
               <div className="flex w-full flex-row justify-between">
                 <p className="text-2xl">{media.title || media.name}</p>
-                <MoreOptions
+                {/* <MoreOptions
                   user_id={user.id}
                   media_type={media_type}
                   media_id={media_id}
                   genre_ids={genreIds}
-                ></MoreOptions>
+                ></MoreOptions> */}
               </div>
               {media.tagline && (
                 <p className="text-sm italic opacity-50">"{media.tagline}"</p>
