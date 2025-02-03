@@ -1,28 +1,22 @@
-// middleware.ts
-
 import { type NextRequest, NextResponse } from "next/server";
 import { updateSession } from "./lib/supabase/middleware";
 
 export async function middleware(request: NextRequest) {
-  // Call updateSession
-  let response = (await updateSession(request)) || NextResponse.next();
+  // **Ensure session persistence**
+  const response = await updateSession(request);
 
   // Ensure x-pathname header is valid and encoded
   const pathname = decodeURIComponent(request.nextUrl.pathname || "");
   response.headers.set("x-pathname", pathname);
 
-  // **Theme Detection Logic Starts Here**
-
-  // Get theme cookie
+  // **Theme Detection Logic**
   const themeCookie = request.cookies.get("theme");
 
-  // Handle missing or invalid theme cookie
   if (!themeCookie) {
     // Detect system preference
     const prefersDark =
       request.headers.get("sec-ch-prefers-color-scheme") === "dark";
 
-    // Set theme cookie with a default value (dark or light)
     response.cookies.set({
       name: "theme",
       value: prefersDark ? "dark" : "light",
@@ -30,7 +24,6 @@ export async function middleware(request: NextRequest) {
       maxAge: 60 * 60 * 24 * 365, // 1 year
     });
   } else {
-    // Validate existing cookie value
     try {
       decodeURIComponent(themeCookie.value); // Ensure it decodes properly
     } catch {

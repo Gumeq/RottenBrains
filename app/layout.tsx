@@ -60,6 +60,7 @@ export default async function NotProtectedLayout({
 
     initialUser = userData;
   }
+
   return (
     <html lang="en" className={`${GeistSans.className} ${themeCookie}`}>
       <UserProvider initialUser={initialUser}>

@@ -54,7 +54,7 @@ const UserProvider = ({
     });
 
     return () => subscription.unsubscribe();
-  }, [initialUser]);
+  }, []);
 
   // Inside UserProvider
   const refreshUser = async () => {

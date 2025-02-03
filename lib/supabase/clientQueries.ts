@@ -613,7 +613,7 @@ export async function updateUserFeedGenres(
 
 export const signOut = async () => {
   // sign out from the current session only
-  await supabase.auth.signOut({ scope: "local" });
+  await supabase.auth.signOut();
 };
 
 export async function fetchUserNotifications(

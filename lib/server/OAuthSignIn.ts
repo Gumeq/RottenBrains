@@ -16,17 +16,20 @@ export async function oAuthSignIn(provider: Provider) {
   const host = headersList.get("host") ?? "localhost:3000";
 
   // Decide whether to use https or http
-  // (if you have a more robust way to determine protocol, adjust accordingly)
   const isLocalhost = host.includes("localhost");
   const protocol = isLocalhost ? "http" : "https";
 
-  // Dynamically build the callback URL
+  // Build the callback URL
   const redirectUrl = `${protocol}://${host}/auth/callback`;
 
+  // For Google, force the account chooser with queryParams: { prompt: "select_account" }
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
       redirectTo: redirectUrl,
+      queryParams: {
+        prompt: "select_account",
+      },
     },
   });
 
@@ -34,6 +37,6 @@ export async function oAuthSignIn(provider: Provider) {
     return redirect("/login?message=Could not authenticate");
   }
 
-  // If everything is good, redirect to the returned URL from Supabase
+  // Redirect to the URL returned by Supabase
   redirect(data.url);
 }

@@ -54,7 +54,7 @@ export const getCurrentUser = cache(async () => {
 export const signOut = async () => {
   const supabase = await getSupabaseClient();
   // sign out from the current session only
-  await supabase.auth.signOut({ scope: "local" });
+  await supabase.auth.signOut();
 };
 
 export const getPostById = async (post_id: string): Promise<any | null> => {

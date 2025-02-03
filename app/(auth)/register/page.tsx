@@ -27,7 +27,7 @@ export default async function Register({
       email,
       password,
       options: {
-        emailRedirectTo: `${origin}/auth/callback`,
+        emailRedirectTo: `${origin}/callback`,
       },
     });
 
