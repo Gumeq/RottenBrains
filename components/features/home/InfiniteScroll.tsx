@@ -5,6 +5,7 @@ import { getPopular } from "@/lib/tmdb";
 import { fetchInfiniteScrollHome } from "@/lib/server/fetchInfiniteScrollHome";
 import HomeMediaCardSkeleton from "@/components/features/media/MediaCardSkeleton";
 import HomeMediaCardUI from "@/components/features/media/MediaCardUI";
+import MediaCardClient from "../media/MediaCardClient";
 
 interface InfiniteScrollHomeProps {
   user_id?: string;
@@ -73,11 +74,18 @@ const InfiniteScrollHome: React.FC<InfiniteScrollHomeProps> = ({
       <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-8 lg:gap-4">
         {mediaItems && mediaItems.length > 0 ? (
           mediaItems.map((mediaItem) => (
-            <HomeMediaCardUI
-              key={`${mediaItem.media_type}-${mediaItem.id}`}
-              media={mediaItem}
+            // <HomeMediaCardUI
+            //   key={`${mediaItem.media_type}-${mediaItem.id}`}
+            //   media={mediaItem}
+            //   user_id={user_id}
+            //   rounded
+            // />
+            <MediaCardClient
               user_id={user_id}
-              rounded
+              key={`${mediaItem.media_type}-${mediaItem.id}`}
+              media_type={mediaItem.media_type}
+              media_id={mediaItem.id}
+              rounded={true}
             />
           ))
         ) : (

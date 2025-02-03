@@ -251,72 +251,57 @@ export const getWatchListSpecific = async (
   }
 };
 
+async function getTopGenresForUser(
+  userId: string | undefined,
+  user: IUser | undefined,
+  mediaType: "movie" | "tv",
+) {
+  const user_id = user ? user.id : userId;
+  try {
+    const supabase = await getSupabaseClient();
+    // Choose the appropriate RPC based on the media type
+    const rpcName =
+      mediaType === "movie"
+        ? "get_top_movie_genres_for_user"
+        : "get_top_tv_genres_for_user";
+
+    const { data: recommended, error } = await supabase.rpc(rpcName, {
+      p_user_id: user_id,
+    });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    // Get the user's current feed genres
+    const userFeedGenres = user?.feed_genres || [];
+    const userMediaFeedGenres = userFeedGenres.filter(
+      (g) => g.media_type === mediaType,
+    );
+
+    // Merge the feed genres with the recommended ones, ensuring at least five
+    const final = ensureAtLeastFiveGenres(
+      userMediaFeedGenres,
+      recommended || [],
+      mediaType,
+    );
+
+    return final;
+  } catch (error) {
+    console.error(`Error in getTopGenresForUser for ${mediaType}:`, error);
+    return []; // Fallback to an empty array
+  }
+}
+
 export const getTopMovieGenresForUser = async (
   userId?: string,
   user?: IUser,
 ) => {
-  const user_id = user ? user.id : userId;
-  try {
-    // 1. Get recommended from your Supabase RPC
-    const supabase = await getSupabaseClient();
-    const { data: recommended, error } = await supabase.rpc(
-      "get_top_movie_genres_for_user",
-      { p_user_id: user_id },
-    );
-
-    if (error) throw new Error(error.message);
-
-    // 2. Get user’s current movie feed_genres (if available)
-    const userFeedGenres = user?.feed_genres || [];
-    const userMovieFeedGenres = userFeedGenres.filter(
-      (g) => g.media_type === "movie",
-    );
-
-    // 3. Combine user feed_genres with recommended to ensure at least 5
-    const final = ensureAtLeastFiveGenres(
-      userMovieFeedGenres,
-      recommended || [],
-      "movie",
-    );
-
-    // 4. Return the merged array
-    return final;
-  } catch (error) {
-    console.error("Error in getTopMovieGenresForUser:", error);
-    throw error;
-  }
+  return getTopGenresForUser(userId, user, "movie");
 };
 
 export const getTopTvGenresForUser = async (userId?: string, user?: IUser) => {
-  const user_id = user ? user.id : userId;
-  try {
-    const supabase = await getSupabaseClient();
-    // 1. Get recommended from your Supabase RPC
-    const { data: recommended, error } = await supabase.rpc(
-      "get_top_tv_genres_for_user",
-      { p_user_id: user_id },
-    );
-
-    if (error) throw new Error(error.message);
-
-    // 2. Get user’s current tv feed_genres
-    const userFeedGenres = user?.feed_genres || [];
-    const userTvFeedGenres = userFeedGenres.filter(
-      (g) => g.media_type === "tv",
-    );
-
-    // 3. Combine user feed_genres with recommended to ensure at least 5
-    const final = ensureAtLeastFiveGenres(
-      userTvFeedGenres,
-      recommended || [],
-      "tv",
-    );
-
-    return final;
-  } catch (error) {
-    console.error("Error in getTopTvGenresForUser:", error);
-    throw error;
-  }
+  return getTopGenresForUser(userId, user, "tv");
 };
 
 export async function updateGenreStats({

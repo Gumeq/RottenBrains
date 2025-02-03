@@ -13,48 +13,67 @@ import NavTop from "@/components/features/navigation/mobile/NavTop";
 import GenreSelector from "@/components/features/home/GenreSelector";
 import InfiniteScrollHome from "@/components/features/home/InfiniteScroll";
 import HorizontalScroll from "@/components/features/home/HorizontalScroll";
+import { ErrorBoundary } from "@/components/common/ErrorBoundry";
 
 export default async function Page() {
-  try {
-    const user = await getCurrentUser();
+  const user = await getCurrentUser();
 
-    // If no user, render "logged-out" version quickly
-    if (!user) {
-      return (
-        <>
-          <NavTop />
-          <div className="flex w-full flex-col gap-4 lg:pr-8">
-            <GenreSelector />
-            <div className="hidden w-full items-center justify-center lg:mt-8 lg:flex">
-              <Banner_90x728 />
-            </div>
-            <InfiniteScrollHome />
-          </div>
-        </>
-      );
-    }
-
-    const user_id = user.id.toString();
-
-    // Fetch everything in parallel
-    const [followedPosts, continue_watching, movie_genres, tv_genres] =
-      await Promise.all([
-        fetchPostsData(user_id),
-        fetchContinueWatching(user_id),
-        getTopMovieGenresForUser(undefined, user),
-        getTopTvGenresForUser(undefined, user),
-      ]);
-
+  // Render a basic "logged-out" version quickly if no user is available
+  if (!user) {
     return (
-      <MobileVideoProvider>
-        <GenreSelector movie_genres={movie_genres} tv_genres={tv_genres} />
-        {!user?.premium && (
-          <div className="mt-8 hidden w-full items-center justify-center lg:flex">
+      <>
+        <NavTop />
+        <div className="flex w-full flex-col gap-4 lg:pr-8">
+          <GenreSelector />
+          <div className="hidden w-full items-center justify-center lg:mt-8 lg:flex">
             <Banner_90x728 />
           </div>
-        )}
-        <div className="w-full lg:w-auto lg:py-0" id="main-content">
-          <NavTop />
+          <InfiniteScrollHome />
+        </div>
+      </>
+    );
+  }
+
+  const user_id = user.id.toString();
+
+  // Fetch data in parallel and handle errors gracefully using Promise.allSettled
+  const [
+    postsResult,
+    continueWatchingResult,
+    movieGenresResult,
+    tvGenresResult,
+  ] = await Promise.allSettled([
+    fetchPostsData(user_id),
+    fetchContinueWatching(user_id),
+    getTopMovieGenresForUser(undefined, user),
+    getTopTvGenresForUser(undefined, user),
+  ]);
+
+  const followedPosts =
+    postsResult.status === "fulfilled" ? postsResult.value : [];
+  const continue_watching =
+    continueWatchingResult.status === "fulfilled"
+      ? continueWatchingResult.value
+      : [];
+  const movie_genres =
+    movieGenresResult.status === "fulfilled" ? movieGenresResult.value : [];
+  const tv_genres =
+    tvGenresResult.status === "fulfilled" ? tvGenresResult.value : [];
+
+  return (
+    <MobileVideoProvider>
+      <GenreSelector movie_genres={movie_genres} tv_genres={tv_genres} />
+      {!user?.premium && (
+        <div className="mt-8 hidden w-full items-center justify-center lg:flex">
+          <Banner_90x728 />
+        </div>
+      )}
+      <div className="w-full lg:w-auto lg:py-0" id="main-content">
+        <NavTop />
+
+        <ErrorBoundary
+          fallback={<div>Could not load "Continue Watching".</div>}
+        >
           {continue_watching?.length > 0 && (
             <section className="mt-8">
               <div className="lg:rounded-[16px] lg:bg-foreground/10">
@@ -74,6 +93,9 @@ export default async function Page() {
               </div>
             </section>
           )}
+        </ErrorBoundary>
+
+        <ErrorBoundary fallback={<div>Could not load posts.</div>}>
           {followedPosts && followedPosts.length > 0 && (
             <section className="mt-8">
               <div className="relative">
@@ -97,18 +119,15 @@ export default async function Page() {
               </div>
             </section>
           )}
-          <InfiniteScrollHome
-            user_id={user.id}
-            movie_genres={movie_genres}
-            tv_genres={tv_genres}
-          />
-          <div className="h-16 w-full" />
-        </div>
-      </MobileVideoProvider>
-    );
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    // Provide a fallback UI or redirect if needed
-    return <div>Something went wrong. Please try again later.</div>;
-  }
+        </ErrorBoundary>
+
+        <InfiniteScrollHome
+          user_id={user.id}
+          movie_genres={movie_genres}
+          tv_genres={tv_genres}
+        />
+        <div className="h-16 w-full" />
+      </div>
+    </MobileVideoProvider>
+  );
 }
