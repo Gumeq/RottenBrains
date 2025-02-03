@@ -26,7 +26,7 @@ const PostModalFull = ({ post_media_data, user_id }: PostModalFullProps) => {
                 </span>
                 <div className="flex flex-col">
                   <p className="line-clamp-1 font-bold text-accent/80">
-                    <Link href={`/protected/user/${post_data.creator}.id}`}>
+                    <Link href={`/protected/user/${post_data.creator.id}}`}>
                       {post_data.creator.username}
                     </Link>
                   </p>

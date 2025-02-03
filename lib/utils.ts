@@ -2,6 +2,7 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import movieGenres from "@/lib/constants/movie_genres.json";
 import tvGenres from "@/lib/constants/tv_genres.json";
+import { formatDistanceToNow, parseISO } from "date-fns";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -69,47 +70,8 @@ export function transformRuntime(minutes: number): string {
 }
 
 export function getRelativeTime(dateString: string): string {
-  const inputDate = new Date(dateString);
-  const currentDate = new Date();
-  const diffTime = inputDate.getTime() - currentDate.getTime();
-
-  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-  const diffWeeks = Math.floor(Math.abs(diffDays) / 7);
-  const diffMonths = Math.floor(Math.abs(diffDays) / 30);
-  const diffYears = Math.floor(Math.abs(diffDays) / 365);
-
-  if (diffDays < 0) {
-    // Handle past dates
-    if (diffYears >= 1) {
-      return `${diffYears} year${diffYears > 1 ? "s" : ""} ago`;
-    } else if (diffMonths >= 1) {
-      return `${diffMonths} month${diffMonths > 1 ? "s" : ""} ago`;
-    } else if (diffWeeks >= 1) {
-      return `${diffWeeks} week${diffWeeks > 1 ? "s" : ""} ago`;
-    } else if (diffDays === -1) {
-      return "yesterday";
-    } else {
-      return `${Math.abs(diffDays)} day${
-        Math.abs(diffDays) > 1 ? "s" : ""
-      } ago`;
-    }
-  } else if (diffDays > 0) {
-    // Handle future dates
-    if (diffYears >= 1) {
-      return `in ${diffYears} year${diffYears > 1 ? "s" : ""}`;
-    } else if (diffMonths >= 1) {
-      return `in ${diffMonths} month${diffMonths > 1 ? "s" : ""}`;
-    } else if (diffWeeks >= 1) {
-      return `in ${diffWeeks} week${diffWeeks > 1 ? "s" : ""}`;
-    } else if (diffDays === 1) {
-      return "tomorrow";
-    } else {
-      return `in ${diffDays} day${diffDays > 1 ? "s" : ""}`;
-    }
-  } else {
-    // Handle today's date
-    return "today";
-  }
+  const date = parseISO(dateString);
+  return formatDistanceToNow(date, { addSuffix: true });
 }
 
 export const formatEpisodeCode = (
@@ -152,26 +114,9 @@ export function getGenreNameById(genreId: number): string {
 }
 
 export function timeAgo(dateString: string): string {
-  const date = new Date(dateString);
-  const now = new Date();
-  const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+  // If your dateString is in ISO format, you can use parseISO.
+  const date = parseISO(dateString);
 
-  const intervals = [
-    { label: "year", seconds: 31536000 },
-    { label: "month", seconds: 2592000 },
-    { label: "week", seconds: 604800 },
-    { label: "day", seconds: 86400 },
-    { label: "hour", seconds: 3600 },
-    { label: "minute", seconds: 60 },
-    { label: "second", seconds: 1 },
-  ];
-
-  for (const interval of intervals) {
-    const count = Math.floor(diffInSeconds / interval.seconds);
-    if (count > 0) {
-      return `${count} ${interval.label}${count !== 1 ? "s" : ""} ago`;
-    }
-  }
-
-  return "just now";
+  // The addSuffix option adds "ago" for past dates and "in" for future dates.
+  return formatDistanceToNow(date, { addSuffix: true });
 }

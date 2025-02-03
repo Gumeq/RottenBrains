@@ -154,7 +154,7 @@ const CommentSection = ({ post_data, current_user }: any) => {
       {/* Desktop Comments Section */}
       <div
         id="comment_card_desktop"
-        className="flex hidden h-full w-full flex-col gap-2 overflow-y-auto lg:flex"
+        className="hidden h-full w-full flex-col gap-2 overflow-y-auto lg:flex"
       >
         {state.comments ? (
           <>

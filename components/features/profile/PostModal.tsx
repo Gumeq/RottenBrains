@@ -8,11 +8,6 @@ interface MyRedirectModalProps {
   isOpen: boolean; // Whether the modal is visible
   children?: React.ReactNode;
 }
-
-/**
- * A simple client-side modal that locks body scrolling when open
- * and redirects to /protected/user/[userId] onClose.
- */
 export default function PostModal({
   userId,
   isOpen,
@@ -20,15 +15,11 @@ export default function PostModal({
 }: MyRedirectModalProps) {
   const router = useRouter();
 
-  // If `isOpen` is false, do not render anything
   if (!isOpen) return null;
 
   const handleClose = () => {
     router.replace(`/protected/user/${userId}`);
   };
-
-  // 1. Lock body scrolling when the modal is open
-  // 2. Restore scrolling when the modal closes (cleanup)
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
