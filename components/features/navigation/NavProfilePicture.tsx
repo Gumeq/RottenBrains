@@ -1,6 +1,6 @@
 "use client";
 import { useUser } from "@/hooks/UserContext";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,6 +12,7 @@ import Link from "next/link";
 import ThemeSwitch from "./NavThemeSwitch";
 import { useToast } from "../../ui/use-toast";
 import { signOut } from "@/lib/supabase/clientQueries";
+import { usePathname } from "next/navigation";
 
 interface ProfilePictureNewProps {
   /**
@@ -28,6 +29,19 @@ const ProfilePictureNew: React.FC<ProfilePictureNewProps> = ({
   const { user } = useUser();
   const { toast } = useToast();
 
+  const [open, setOpen] = useState(false);
+
+  const pathname = usePathname();
+  const [prevPath, setPrevPath] = useState("");
+
+  useEffect(() => {
+    if (prevPath && prevPath !== pathname) {
+      console.log("User navigated from", prevPath, "to", pathname);
+    }
+    setPrevPath(pathname);
+    setOpen(false);
+  }, [pathname]);
+
   if (!user) {
     return <div className={`aspect-square ${imageSize}`}></div>;
   }
@@ -40,7 +54,7 @@ const ProfilePictureNew: React.FC<ProfilePictureNewProps> = ({
   };
 
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={() => setOpen(!open)}>
       <DropdownMenuTrigger>
         <img
           src={user.image_url}

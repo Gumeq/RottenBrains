@@ -13,6 +13,7 @@ const LikeCard: FC<FollowCardProps> = ({ notification }) => {
   const imageUrl =
     notification.media_data?.images?.backdrops?.[0]?.file_path ||
     notification.media_data.backdrop_path;
+  const post_link = `/protected/user/${notification.post.creatorid}?post_id=${notification.post.id}`;
   return (
     <div className="flex w-full flex-row gap-4 p-4">
       <Link
@@ -35,7 +36,10 @@ const LikeCard: FC<FollowCardProps> = ({ notification }) => {
           </Link>{" "}
           liked your post:
         </p>
-        <div className="flex flex-col gap-2 rounded-[16px] bg-foreground/10 p-4 lg:flex-row">
+        <Link
+          href={post_link}
+          className="flex flex-col gap-2 rounded-[16px] bg-foreground/10 p-4 lg:flex-row"
+        >
           <div className="flex flex-col gap-2">
             <p className="text-lg">
               {notification.media_data.title || notification.media_data.name}
@@ -50,7 +54,7 @@ const LikeCard: FC<FollowCardProps> = ({ notification }) => {
               altText={notification.notification_id}
             ></ImageWithFallback>
           </div>
-        </div>
+        </Link>
         <p className="text-sm text-foreground/50">
           {getRelativeTime(notification.created_at)}
         </p>

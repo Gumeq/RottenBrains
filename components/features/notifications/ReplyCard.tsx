@@ -9,6 +9,7 @@ interface FollowCardProps {
 }
 
 const ReplyCard: FC<FollowCardProps> = ({ notification }) => {
+  const post_link = `/protected/user/${notification.post.creatorid}?post_id=${notification.post.id}`;
   return (
     <div className="flex w-full flex-row gap-4 p-4">
       <Link
@@ -21,7 +22,7 @@ const ReplyCard: FC<FollowCardProps> = ({ notification }) => {
           className="aspect-square h-12 rounded-full"
         />
       </Link>
-      <div className="flex flex-col gap-4">
+      <Link href={post_link} className="flex flex-col gap-4">
         <p className="text-lg">
           <Link
             href={`/protected/user/${notification.triggered_by_user.id}`}
@@ -40,7 +41,7 @@ const ReplyCard: FC<FollowCardProps> = ({ notification }) => {
         <p className="text-sm text-foreground/50">
           {getRelativeTime(notification.created_at)}
         </p>
-      </div>
+      </Link>
     </div>
   );
 };

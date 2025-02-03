@@ -77,7 +77,6 @@ const NavTop = () => {
             )}
           </Link>
         </div>
-
         {user ? (
           <div className="flex flex-row items-center gap-4">
             <NotificationButton user_id={user.id}></NotificationButton>

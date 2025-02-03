@@ -486,3 +486,66 @@ export const getPostsFromFollowedUsers = async (
     return null;
   }
 };
+
+export const getPostByIdNew = async (
+  post_id: string,
+  current_user_id?: string,
+): Promise<any | null> => {
+  try {
+    const supabase = await getSupabaseClient();
+    const { data: postsData, error: postsError } = await supabase.rpc(
+      "fetch_post_with_comments_by_id",
+      {
+        p_post_id: post_id,
+        current_user_id: current_user_id,
+      },
+    );
+    if (postsError) throw postsError;
+    return postsData;
+  } catch (error) {
+    console.log("getPostsFromFollowedUsers", error);
+    return null;
+  }
+};
+
+export const getCommentsByPostId = async (
+  post_id: string,
+  current_user_id?: string,
+) => {
+  try {
+    const supabase = await getSupabaseClient();
+    const { data: commentData, error: commentError } = await supabase.rpc(
+      "fetch_comments_by_post_id",
+      {
+        p_post_id: post_id,
+        current_user_id: current_user_id,
+      },
+    );
+    if (commentError) throw commentError;
+    return commentData;
+  } catch (error) {
+    console.log("getCommentsByPostId", error);
+    return null;
+  }
+};
+
+export const getRepliesByCommentId = async (
+  comment_id: string,
+  current_user_id?: string,
+) => {
+  try {
+    const supabase = await getSupabaseClient();
+    const { data: commentData, error: commentError } = await supabase.rpc(
+      "fetch_replies_by_comment_id",
+      {
+        p_comment_id: comment_id,
+        current_user_id: current_user_id,
+      },
+    );
+    if (commentError) throw commentError;
+    return commentData;
+  } catch (error) {
+    console.log("getRepliesByCommentId", error);
+    return null;
+  }
+};

@@ -29,7 +29,7 @@ const NavBottom = () => {
   }
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-background">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-background">
       <ul className="relative z-50 flex h-full w-full flex-row items-center justify-between bg-foreground/10 p-2">
         {/* Home Link */}
         <NavLinkMobile

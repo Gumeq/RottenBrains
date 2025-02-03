@@ -4,8 +4,9 @@ import AddComment from "./AddComment";
 import CommentCard from "./CommentCard";
 import { likePost, removeLike } from "@/lib/client/updatePostData";
 import { getPostComments } from "@/lib/supabase/clientQueries";
+import Link from "next/link";
 
-const PostStats = ({ post, user_id, current_user }: any) => {
+const PostStats = ({ post, user_id, current_user, post_link }: any) => {
   const postId = post.id;
   const [state, setState] = useState({
     liked: current_user.has_liked,
@@ -118,15 +119,15 @@ const PostStats = ({ post, user_id, current_user }: any) => {
       </div>
       <div className="flex flex-row items-center gap-2">
         <div>
-          <button onClick={togglePopup} className="text-foreground">
+          <Link href={post_link} className="text-foreground">
             <img
               src="/assets/icons/comment-outline.svg"
               alt="Comment"
               width={24}
               height={24}
-              className="invert-on-dark -mb-2 max-h-[24px] min-h-[24px] min-w-[24px] max-w-[24px]"
+              className="invert-on-dark max-h-[24px] min-h-[24px] min-w-[24px] max-w-[24px]"
             />
-          </button>
+          </Link>
           {state.isOpen && (
             <div className="fixed inset-0 z-50 flex justify-center bg-black bg-opacity-50">
               <div className="relative max-h-[90%] w-screen rounded-lg bg-background p-4 pt-16 shadow-lg md:h-auto md:max-h-[80%] md:max-w-4xl">

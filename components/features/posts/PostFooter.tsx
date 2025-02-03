@@ -6,8 +6,9 @@ interface PostFooterProps {
   post: any;
   media: any;
   current_user: any;
+  post_link: string;
   user_id?: string;
-  genreIds: bigint[];
+  genreIds?: bigint[];
 }
 
 const PostFooter = ({
@@ -16,6 +17,7 @@ const PostFooter = ({
   current_user,
   user_id,
   genreIds,
+  post_link,
 }: PostFooterProps) => {
   return (
     <div className="flex w-full flex-col justify-between py-2">
@@ -26,9 +28,10 @@ const PostFooter = ({
               post={post}
               user_id={user_id}
               current_user={current_user}
+              post_link={post_link}
             />
           </div>
-          {user_id ? (
+          {user_id && genreIds ? (
             <>
               <div className="flex flex-row items-center gap-2">
                 <MoreOptions

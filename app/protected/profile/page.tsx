@@ -5,7 +5,6 @@ import { useUser } from "@/hooks/UserContext";
 
 export default function ProtectedPage() {
   const { user } = useUser();
-  console.log(user);
   if (!user) return <p>Loading User</p>;
   return <UserPosts userId={user.id.toString()}></UserPosts>;
 }

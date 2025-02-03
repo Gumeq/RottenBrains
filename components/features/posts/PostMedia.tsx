@@ -11,9 +11,10 @@ interface Post {
 interface PostMediaProps {
   media: any;
   post: Post;
+  quality?: string;
 }
 
-const PostMedia = ({ media, post }: PostMediaProps) => {
+const PostMedia = ({ media, post, quality }: PostMediaProps) => {
   return (
     <div className="relative w-full">
       <Link
@@ -23,6 +24,7 @@ const PostMedia = ({ media, post }: PostMediaProps) => {
         <ImageWithFallback
           imageUrl={getImageUrlFromMediaDetails(media)}
           altText={post.post_id}
+          quality={quality}
         />
       </Link>
       <div className="absolute bottom-2 right-2">

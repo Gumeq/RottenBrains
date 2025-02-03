@@ -15,6 +15,7 @@ import GoogleAdsense from "@/components/common/GoogleAdSense";
 import MainContent from "../components/common/MainContent";
 import { SidebarProvider } from "@/hooks/SidebarContext";
 import { createClient } from "@/lib/supabase/server";
+import TopLoader from "@/components/features/loaders/TopLoader";
 
 export const metadata = {
   title:
@@ -65,6 +66,7 @@ export default async function NotProtectedLayout({
         <ThemeProvider initialTheme={themeCookie}>
           <SidebarProvider>
             <body className="custom-scrollbar w-full overflow-x-hidden bg-background text-foreground transition-all duration-300">
+              <TopLoader />
               <header>
                 <div className="hidden lg:flex">
                   <HomeNav></HomeNav>

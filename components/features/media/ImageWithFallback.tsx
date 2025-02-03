@@ -19,7 +19,6 @@ const ImageWithFallback: FC<ImageWithFallbackProps> = ({
     <img
       src={`https://image.tmdb.org/t/p/${quality}${imageUrl}`}
       alt={altText}
-      loading="lazy"
       className="aspect-[16/9] h-full w-full overflow-hidden bg-foreground/10"
     />
   ) : (

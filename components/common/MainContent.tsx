@@ -5,6 +5,7 @@ import React from "react";
 import Sidebar from "../features/navigation/desktop/Sidebar";
 import { useSidebar } from "@/hooks/SidebarContext";
 import NavBottom from "../features/navigation/mobile/NavBottom";
+import TopLoader from "../features/loaders/TopLoader";
 
 const MainContent = ({ children }: { children: React.ReactNode }) => {
   const { isSidebarOpen } = useSidebar(); // Destructure from context
@@ -19,9 +20,7 @@ const MainContent = ({ children }: { children: React.ReactNode }) => {
         </main>
       </div>
       <div className="flex lg:hidden">
-        <main
-          className={`min-h-screen w-full flex-1 transition-all duration-300`}
-        >
+        <main className={`w-full flex-1 transition-all duration-300`}>
           {children}
         </main>
         <NavBottom />

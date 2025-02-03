@@ -1,22 +1,18 @@
 import AuthButton from "@/components/features/auth/AuthButton";
 import React from "react";
 import ScrollButtons from "@/components/common/ScrollButtons";
-import Link from "next/link";
 import MobileTopBarHome from "../../../../components/features/navigation/mobile/NavTop";
 import NewTabs from "../../../../components/features/profile/NewTabUser";
 import { getUserFromDB } from "@/lib/supabase/serverQueries";
 import FollowInfo from "@/components/features/profile/FollowInfo";
 import FollowButton from "@/components/features/profile/FollowButton";
 
-type Params = Promise<{ userId: string }>;
-
-const ProfileLayout = async ({
-  children,
-  params,
-}: {
+type Props = {
   children: React.ReactNode;
-  params: Params;
-}) => {
+  params: Promise<{ [userId: string]: string }>;
+};
+
+const ProfileLayout = async ({ children, params }: Props) => {
   const { userId } = await params;
   let user = await getUserFromDB(userId);
   if (!user) {

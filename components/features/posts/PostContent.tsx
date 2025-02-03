@@ -19,21 +19,21 @@ interface Post {
 interface PostContentProps {
   media: any;
   post: any;
-  creator: any;
+  post_link: string;
 }
 
-const PostContent = ({ media, post, creator }: PostContentProps) => {
+const PostContent = ({ media, post, post_link }: PostContentProps) => {
   return (
     <div className="flex flex-col px-2 lg:px-4">
       <div className="flex flex-col gap-2 py-4">
         <div className="flex w-full flex-row gap-2">
           <img
-            src={`/assets/icons/${media.media_type}-outline.svg`}
+            src={`/assets/icons/${post.media_type}-outline.svg`}
             alt=""
             className="invert-on-dark"
           />
           <Link
-            href={`/protected/media/${media.media_type}/${media.media_id}`}
+            href={`/protected/media/${post.media_type}/${post.media_id}`}
             className="line-clamp-1 font-medium"
           >
             {media && (media.title || media.name)}
@@ -41,7 +41,7 @@ const PostContent = ({ media, post, creator }: PostContentProps) => {
         </div>
         <UserReviewText
           post_review={post.review_user || "No review"}
-          creator_name={creator?.username || "No user"}
+          post_link={post_link}
         />
       </div>
     </div>

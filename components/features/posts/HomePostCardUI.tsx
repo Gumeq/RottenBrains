@@ -11,7 +11,9 @@ interface HomePostCardProps {
 
 const HomePostCardUI = ({ post_media_data, user_id }: HomePostCardProps) => {
   const { post_data, media_data } = post_media_data;
+  console.log(post_data);
   const genreIds = media_data?.genres?.map((genre: any) => genre.id) || [];
+  const post_link = `/protected/user/${post_data.creator.id}?post_id=${post_data.post.id}`;
   return (
     <div className="relative flex h-min flex-col rounded-[8px] border border-foreground/10 bg-white/10 lg:min-w-[320px] lg:max-w-[400px]">
       <PostHeader
@@ -23,13 +25,14 @@ const HomePostCardUI = ({ post_media_data, user_id }: HomePostCardProps) => {
       <PostContent
         media={media_data}
         post={post_data.post}
-        creator={post_data.creator}
+        post_link={post_link}
       />
       <PostFooter
         post={post_data.post}
         media={media_data}
         current_user={post_data.current_user}
         user_id={user_id}
+        post_link={post_link}
         genreIds={genreIds}
       />
     </div>
