@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   ExploreIcon,
   HistoryIcon,
@@ -27,7 +27,18 @@ import { useSidebar } from "@/hooks/SidebarContext";
 import NavLink from "./NavLink";
 
 const Sidebar = () => {
-  const { isSidebarOpen } = useSidebar(); // Destructure from context
+  const { isSidebarOpen } = useSidebar(); // Client-only state from context
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    // This effect only runs on the client, setting mounted to true
+    setMounted(true);
+  }, []);
+
+  // Until the component is mounted on the client, render nothing
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <aside

@@ -55,6 +55,9 @@ export default async function mediaPage({ params }: { params: Params }) {
 
   const user = await getCurrentUser();
   const media = await getMediaDetails(media_type, media_id);
+  if (!media) {
+    return <div>NO MEDIA FOUND</div>;
+  }
   const episode = await getEpisodeDetails(
     media_id,
     season_number,

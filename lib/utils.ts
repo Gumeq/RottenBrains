@@ -2,54 +2,14 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import movieGenres from "@/lib/constants/movie_genres.json";
 import tvGenres from "@/lib/constants/tv_genres.json";
-import { formatDistanceToNow, parseISO } from "date-fns";
+import { format, formatDistanceToNow, isValid, parseISO } from "date-fns";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 export function formatDate(inputDate: string) {
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
-  function getOrdinalSuffix(day: any) {
-    if (day > 3 && day < 21) return "th"; // Covers 11th, 12th, 13th, etc.
-    switch (day % 10) {
-      case 1:
-        return "st";
-      case 2:
-        return "nd";
-      case 3:
-        return "rd";
-      default:
-        return "th";
-    }
-  }
-
-  if (inputDate === null || inputDate === undefined) {
-    return;
-  }
-  // Parse the input date string
-  const dateParts = inputDate.split("-");
-  const year = dateParts[0];
-  const month = months[parseInt(dateParts[1], 10) - 1];
-  const day = parseInt(dateParts[2], 10);
-  const ordinalSuffix = getOrdinalSuffix(day);
-
-  // Format the date
-  return `${day}${ordinalSuffix} ${month} ${year}`;
+  return format(new Date("2025-02-06"), "do MMMM yyyy");
 }
 
 export function transformRuntime(minutes: number): string {
@@ -70,8 +30,22 @@ export function transformRuntime(minutes: number): string {
 }
 
 export function getRelativeTime(dateString: string): string {
-  const date = parseISO(dateString);
-  return formatDistanceToNow(date, { addSuffix: true });
+  try {
+    if (!dateString) {
+      throw new Error("No date string provided.");
+    }
+
+    const date = parseISO(dateString);
+    if (!isValid(date)) {
+      throw new Error(`Invalid date: ${dateString}`);
+    }
+
+    return formatDistanceToNow(date, { addSuffix: true });
+  } catch (error: unknown) {
+    console.error("Error in getRelativeTime:", error);
+    // Return a fallback string, or you could re-throw the error if desired
+    return "Invalid date";
+  }
 }
 
 export const formatEpisodeCode = (

@@ -25,7 +25,7 @@ export const fetchFromApi = async (
     });
 
     if (!response.ok) {
-      throw new Error(`Error: ${response.status} ${response.statusText}`);
+      console.log(`Error: ${response.status} ${response.statusText}`);
     }
 
     const result = await response.json();

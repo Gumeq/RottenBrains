@@ -1,7 +1,6 @@
 import Link from "next/link";
 import VideoEmbed from "@/components/features/watch/MediaEmbed";
 import WatchDuration from "@/components/features/watch/WatchDuration";
-import ScrollButtons from "@/components/common/ScrollButtons";
 import MediaCardSmall from "@/components/features/media/MediaCardSmall";
 import { getMediaDetails, getRecommendations } from "@/lib/tmdb";
 import WatchPageDetails from "@/components/features/watch/WatchPageDetails";
@@ -44,6 +43,9 @@ export default async function mediaPage({ params }: { params: Params }) {
 
   const recommendations = await getRecommendations(media_type, media_id);
   const media = await getMediaDetails(media_type, media_id);
+  if (!media) {
+    return <div>NO MEDIA FOUND</div>;
+  }
 
   // Fetch media details for recommendations
   const recommendationMediaDetails = await Promise.all(

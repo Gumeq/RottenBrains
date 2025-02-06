@@ -70,23 +70,58 @@ export const getMediaDetails = async (
   media_id: number,
   season_number?: number,
   episode_number?: number,
-) => {
-  if (season_number && episode_number) {
-    if (media_type === "tv") {
-      return await getEpisodeDetails(media_id, season_number, episode_number);
-    } else {
-      throw new Error(
-        "Can't get episode details for media_type :" + media_type,
-      );
+): Promise<any> => {
+  // Validate the media_id
+  if (media_id <= 0) {
+    throw new Error(
+      `Invalid media_id: ${media_id}. It must be a positive number.`,
+    );
+  }
+
+  // Validate that both season_number and episode_number are provided together (if at all)
+  if (
+    (season_number !== undefined || episode_number !== undefined) &&
+    (season_number === undefined || episode_number === undefined)
+  ) {
+    throw new Error(
+      "Both season_number and episode_number must be provided together.",
+    );
+  }
+
+  try {
+    switch (media_type) {
+      case "tv":
+        if (season_number !== undefined && episode_number !== undefined) {
+          if (season_number < 0 || episode_number < 0) {
+            throw new Error("Season and episode numbers must be non-negative.");
+          }
+          // Return episode details for a TV show
+          return await getEpisodeDetails(
+            media_id,
+            season_number,
+            episode_number,
+          );
+        } else {
+          // Return TV show details
+          return await getTVDetails(media_id);
+        }
+
+      case "movie":
+        // Return movie details
+        return await getMovieDetails(media_id);
+
+      default:
+        // This should be unreachable because media_type is of type MediaType
+        throw new Error(`Unsupported media type: ${media_type}`);
     }
-  } else {
-    if (media_type === "movie") {
-      return await getMovieDetails(media_id);
-    } else if (media_type === "tv") {
-      return await getTVDetails(media_id);
-    } else {
-      throw new Error("Can't get details for media_type: " + media_type);
-    }
+  } catch (error: any) {
+    // Log the error for debugging purposes
+    console.error(
+      `Error fetching details for media_type: ${media_type}, media_id: ${media_id}`,
+      error,
+    );
+    // Optionally, you could wrap or process the error further before rethrowing
+    throw new Error(`Failed to get media details: ${error.message || error}`);
   }
 };
 
