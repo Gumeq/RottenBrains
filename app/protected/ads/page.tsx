@@ -1,6 +1,4 @@
 import AdBanner from "@/components/features/ads/GoogleAd";
-import Image from "next/image";
-
 export default function Home() {
   return (
     <>
@@ -22,7 +20,6 @@ export default function Home() {
                 dataAdSlot="4196406083"
               />
             </div>
-
             <img
               src="https://via.placeholder.com/1200x600"
               alt="Featured Image"
