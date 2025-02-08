@@ -7,6 +7,7 @@ import WatchPageDetails from "@/components/features/watch/WatchPageDetails";
 import NativeAd from "@/components/features/ads/Native";
 import { fetchMediaData } from "@/lib/client/fetchMediaData";
 import { getCurrentUser } from "@/lib/supabase/serverQueries";
+import AdBanner from "@/components/features/ads/GoogleDisplayAd";
 
 export async function generateMetadata({ params }: any) {
   const media_id = parseInt(params.media_id, 10);
@@ -64,9 +65,9 @@ export default async function mediaPage({ params }: { params: Params }) {
           media_duration={media.runtime || 24}
         />
       )}
-      <div className="relative z-10 mb-16 flex w-screen flex-col lg:w-full lg:px-4">
-        <div className="small-screen-watch-margin mx-auto flex w-full flex-col lg:mt-4 lg:w-full lg:max-w-[1712px] lg:flex-row lg:gap-8">
-          <div className="flex w-full flex-col gap-4 lg:max-w-[1280px]">
+      <div className="relative z-10 mb-16 flex w-screen flex-col md:w-full md:px-4">
+        <div className="small-screen-watch-margin mx-auto flex w-full flex-col md:mt-4 md:w-full md:max-w-[1712px] md:flex-row md:gap-8">
+          <div className="flex w-full flex-col gap-4 md:max-w-[1280px]">
             <VideoEmbed
               media_type={media_type}
               media_id={media_id}
@@ -78,10 +79,14 @@ export default async function mediaPage({ params }: { params: Params }) {
               media_id={media.id}
             ></WatchPageDetails>
           </div>
-          <div className="custom-scrollbar lg;gap-4 flex flex-col gap-8 p-4 lg:w-[400px] lg:p-0">
-            {user && !user.premium && (
-              <div className="hidden w-full items-center justify-center lg:flex">
-                <NativeAd></NativeAd>
+          <div className="custom-scrollbar lg;gap-4 flex flex-col gap-8 p-4 md:w-[400px] md:p-0">
+            {!user?.premium && (
+              <div className="mx-auto w-full max-w-[400px]">
+                <AdBanner
+                  dataAdFormat="auto"
+                  dataFullWidthResponsive={true}
+                  dataAdSlot="4196406083"
+                />
               </div>
             )}
             {recommendationMediaDetails.map((mediaDetail: any) => (

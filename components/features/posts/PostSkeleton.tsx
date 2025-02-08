@@ -7,7 +7,7 @@ interface PostSkeletonProps {
 
 const PostSkeleton = () => {
   return (
-    <div className="relative flex h-min flex-col overflow-hidden rounded-[8px] border border-foreground/10 bg-white/5 lg:max-w-[300px]">
+    <div className="relative flex h-min flex-col overflow-hidden rounded-[8px] border border-foreground/10 bg-white/5 md:max-w-[300px]">
       {/* Header Section */}
       <div className="flex flex-row items-center justify-between gap-4 px-4 py-2">
         <div className="flex flex-row items-center gap-2">
@@ -36,7 +36,7 @@ const PostSkeleton = () => {
           </div>
         </div>
 
-        <div className="flex flex-col px-2 lg:px-4">
+        <div className="flex flex-col px-2 md:px-4">
           <div className="flex flex-col gap-2 py-4">
             <div className="flex w-full flex-row gap-2">
               {/* Media Icon Skeleton */}

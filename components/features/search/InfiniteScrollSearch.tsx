@@ -83,7 +83,7 @@ const InfiniteScrollSearch = ({ query }: { query: string }) => {
 
   return (
     <div
-      className="flex w-full flex-col justify-center gap-4 p-4 lg:px-4"
+      className="flex w-full flex-col justify-center gap-4 p-4 md:px-4"
       ref={targetRef}
     >
       <div className="mb-8">

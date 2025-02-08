@@ -21,12 +21,12 @@ const NavLink: FC<NavLinkProps> = ({
   return (
     <Link
       href={href}
-      className={`rounded-[8px] p-2 px-4 hover:bg-foreground/10 ${
-        isActive ? `bg-secondary/20 text-accent` : `text-foreground`
+      className={`rounded-full p-2 px-4 hover:bg-foreground/10 ${
+        isActive ? `text-accent` : `text-foreground`
       }`}
     >
       <div
-        className={`flex flex-row items-center gap-6 ${!label ? "justify-center" : ""}`}
+        className={`flex flex-row items-center gap-4 ${!label ? "justify-center" : ""}`}
       >
         {isActive && IconFill ? (
           <IconFill
@@ -38,7 +38,13 @@ const NavLink: FC<NavLinkProps> = ({
           <Icon className="flex-shrink-0 fill-current" width={24} height={24} />
         )}
         {label && (
-          <p className="w-max truncate pr-4 text-sm text-foreground">{label}</p>
+          <p
+            className={`w-max truncate pr-4 text-sm ${
+              isActive ? `text-accent` : `text-foreground`
+            }`}
+          >
+            {label}
+          </p>
         )}
       </div>
     </Link>

@@ -31,7 +31,7 @@ const FollowCard: FC<FollowCardProps> = ({ notification }) => {
           </Link>{" "}
           just followed you!
         </p>
-        <div className="flex flex-col gap-2 lg:flex-row lg:items-center">
+        <div className="flex flex-col gap-2 md:flex-row md:items-center">
           <FollowButton
             user_to_follow_id={notification.triggered_by_user.id}
           ></FollowButton>

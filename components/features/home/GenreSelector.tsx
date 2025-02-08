@@ -245,17 +245,17 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({
   // ---------------------------
 
   return (
-    <div className="hidden-scrollbar top-14 -mb-2 mt-14 flex flex-row items-center gap-2 overflow-x-auto bg-background px-2 py-2 text-sm transition-all duration-300 lg:sticky lg:z-50 lg:mt-0 lg:gap-4 lg:px-0">
+    <div className="hidden-scrollbar top-20 -mb-4 flex h-12 flex-row items-center gap-2 overflow-x-auto bg-background px-2 py-2 text-sm transition-all duration-300 md:sticky md:z-30 md:h-14 md:px-0 md:pb-4">
       {/* Category buttons */}
       {user ? (
         <button
-          className="flex flex-shrink-0 items-center justify-center rounded-[8px] bg-foreground/10 px-3 py-1"
+          className="flex h-full flex-shrink-0 items-center justify-center rounded-full bg-foreground/10 p-2"
           onClick={() => setIsSettingsModalOpen(true)}
         >
           <img
             src="/assets/icons/tune-outline.svg"
             alt="settings"
-            className="invert-on-dark aspect-[1/1] h-full"
+            className="invert-on-dark aspect-square h-full"
           />
         </button>
       ) : (
@@ -264,7 +264,7 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({
 
       {user ? (
         <button
-          className={`rounded-[8px] px-3 py-1 ${
+          className={`h-full rounded-full px-4 ${
             selectedCategory === "Recommended"
               ? "bg-foreground text-background"
               : "bg-foreground/10"
@@ -275,7 +275,7 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({
         </button>
       ) : (
         <button
-          className={`rounded-[8px] px-3 py-1 ${
+          className={`h-full rounded-full px-4 ${
             selectedCategory === "Recommended"
               ? "bg-foreground text-background"
               : "bg-foreground/10"
@@ -286,7 +286,7 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({
         </button>
       )}
       <button
-        className={`rounded-[8px] px-3 py-1 ${
+        className={`h-full rounded-full px-4 ${
           selectedCategory === "movie"
             ? "bg-foreground text-background"
             : "bg-foreground/10"
@@ -296,7 +296,7 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({
         Movies
       </button>
       <button
-        className={`rounded-[8px] px-3 py-1 ${
+        className={`h-full rounded-full px-4 ${
           selectedCategory === "tv"
             ? "bg-foreground text-background"
             : "bg-foreground/10"
@@ -306,45 +306,42 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({
         TV
       </button>
 
-      {/* Dynamically rendered genres (horizontal list) */}
-      <div className="flex flex-row gap-2">
-        {!loading &&
-          getGenres.map((genre) => {
-            let genreName: string;
-            let genreId: number;
-            let mediaType: "movie" | "tv";
+      {!loading &&
+        getGenres.map((genre) => {
+          let genreName: string;
+          let genreId: number;
+          let mediaType: "movie" | "tv";
 
-            if (isGenre(genre)) {
-              // It's a standard Genre
-              genreName = genre.name;
-              genreId = genre.id;
-              mediaType = genre.media_type;
-            } else {
-              // It's a RecommendedGenre
-              genreId = Number(genre.genre_code);
-              mediaType = genre.media_type;
-              genreName = getGenreName(genreId, mediaType);
-            }
+          if (isGenre(genre)) {
+            // It's a standard Genre
+            genreName = genre.name;
+            genreId = genre.id;
+            mediaType = genre.media_type;
+          } else {
+            // It's a RecommendedGenre
+            genreId = Number(genre.genre_code);
+            mediaType = genre.media_type;
+            genreName = getGenreName(genreId, mediaType);
+          }
 
-            // Highlight if this genre matches the URL
-            const isSelected =
-              media_type === mediaType && Number(genre_id) === genreId;
+          // Highlight if this genre matches the URL
+          const isSelected =
+            media_type === mediaType && Number(genre_id) === genreId;
 
-            return (
-              <button
-                key={`${mediaType}-${genreId}`}
-                className={`flex flex-shrink-0 rounded-[8px] px-3 py-1 ${
-                  isSelected
-                    ? "bg-foreground text-background"
-                    : "bg-foreground/10"
-                }`}
-                onClick={() => handleGenreClick(genreId, mediaType)}
-              >
-                {genreName}
-              </button>
-            );
-          })}
-      </div>
+          return (
+            <button
+              key={`${mediaType}-${genreId}`}
+              className={`flex h-full flex-shrink-0 items-center rounded-full px-4 ${
+                isSelected
+                  ? "bg-foreground text-background"
+                  : "bg-foreground/10"
+              }`}
+              onClick={() => handleGenreClick(genreId, mediaType)}
+            >
+              {genreName}
+            </button>
+          );
+        })}
 
       {/* Settings Modal */}
       <Modal

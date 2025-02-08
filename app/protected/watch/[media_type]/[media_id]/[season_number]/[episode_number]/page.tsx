@@ -9,6 +9,7 @@ import NativeAd from "@/components/features/ads/Native";
 import { fetchMediaData } from "@/lib/client/fetchMediaData";
 import { getCurrentUser } from "@/lib/supabase/serverQueries";
 import TVShowDetails from "@/components/features/watch/TVSeasons";
+import AdBanner from "@/components/features/ads/GoogleDisplayAd";
 type Params = Promise<{
   media_id: number;
   season_number: number;
@@ -105,9 +106,9 @@ export default async function mediaPage({ params }: { params: Params }) {
           media_duration={episode.runtime || 100}
         />
       )}
-      <div className="relative z-10 mb-16 flex w-full flex-col lg:w-full lg:px-4">
-        <div className="small-screen-watch-margin mx-auto flex w-full flex-col lg:mt-4 lg:w-full lg:max-w-[1712px] lg:flex-row lg:gap-8">
-          <div className="flex w-full flex-col gap-4 lg:max-w-[1280px]">
+      <div className="relative z-10 mb-16 flex w-full flex-col md:w-full md:px-4">
+        <div className="small-screen-watch-margin mx-auto flex w-full flex-col md:mt-4 md:w-full md:max-w-[1712px] md:flex-row md:gap-8">
+          <div className="flex w-full flex-col gap-4 md:max-w-[1280px]">
             <VideoEmbed
               media_type={media_type}
               media_id={media_id}
@@ -125,18 +126,13 @@ export default async function mediaPage({ params }: { params: Params }) {
               episode={episode}
             ></WatchPageDetails>
           </div>
-          <div className="flex flex-col gap-2 lg:mt-0 lg:max-w-[400px]">
-            {user && !user.premium && (
-              <div className="hidden w-full items-center justify-center lg:flex">
-                <NativeAd></NativeAd>
-              </div>
-            )}
+          <div className="flex flex-col gap-2 md:mt-0 md:w-full md:max-w-[400px]">
             {nextEpisode && (
-              <div className="flex flex-col gap-2 lg:rounded-[8px] lg:p-0">
-                <h3 className="px-2 font-semibold lg:px-0">Next Episode</h3>
+              <div className="flex flex-col gap-2 md:rounded-[8px] md:p-0">
+                <h3 className="px-2 font-semibold md:px-0">Next Episode</h3>
                 <Link
                   href={`/protected/watch/tv/${media.id}/${nextEpisode.season_number}/${nextEpisode.episode_number}`}
-                  className="px-4 lg:px-0"
+                  className="px-4 md:px-0"
                 >
                   <MediaCardSmall
                     media_type={"tv"}
@@ -150,7 +146,16 @@ export default async function mediaPage({ params }: { params: Params }) {
                 </Link>
               </div>
             )}
-            <h3 className="px-2 font-semibold lg:px-0">All Episodes</h3>
+            {!user?.premium && (
+              <div className="mx-auto w-full min-w-[200px]">
+                <AdBanner
+                  dataAdFormat="auto"
+                  dataFullWidthResponsive={true}
+                  dataAdSlot="4196406083"
+                />
+              </div>
+            )}
+            <h3 className="px-2 font-semibold md:px-0">All Episodes</h3>
             {media_type === "tv" && season_number && (
               <TVShowDetails
                 tv_show_id={media_id}

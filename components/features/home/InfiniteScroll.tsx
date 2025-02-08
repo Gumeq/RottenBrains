@@ -6,6 +6,8 @@ import { fetchInfiniteScrollHome } from "@/lib/server/fetchInfiniteScrollHome";
 import HomeMediaCardSkeleton from "@/components/features/media/MediaCardSkeleton";
 import HomeMediaCardUI from "@/components/features/media/MediaCardUI";
 import MediaCardClient from "../media/MediaCardClient";
+import AdBanner from "../ads/GoogleDisplayAd";
+import { useUser } from "@/hooks/UserContext";
 
 interface InfiniteScrollHomeProps {
   user_id?: string;
@@ -24,6 +26,7 @@ const InfiniteScrollHome: React.FC<InfiniteScrollHomeProps> = ({
   const [page, setPage] = useState<number>(1);
   const { ref, inView } = useInView({ threshold: 0.1, rootMargin: "200px" });
   const targetRef = useRef<HTMLDivElement>(null);
+  const { user } = useUser();
 
   const loadMore = useCallback(async () => {
     if (inView && hasMore && !loading) {
@@ -38,7 +41,7 @@ const InfiniteScrollHome: React.FC<InfiniteScrollHomeProps> = ({
             user_id,
           );
 
-          if (results.length === 0) {
+          if (results.length === 0 || page === 10) {
             setHasMore(false);
           } else {
             setMediaItems((prev) => [...prev, ...results]);
@@ -47,7 +50,7 @@ const InfiniteScrollHome: React.FC<InfiniteScrollHomeProps> = ({
         } else {
           const combined_results = await getPopular(page);
           console.log(combined_results);
-          if (combined_results.results.length === 0) {
+          if (combined_results.results.length === 0 || page === 10) {
             setHasMore(false);
           } else {
             setMediaItems((prev) => [...prev, ...combined_results.results]);
@@ -68,26 +71,43 @@ const InfiniteScrollHome: React.FC<InfiniteScrollHomeProps> = ({
 
   return (
     <section
-      className="mt-8 flex w-full flex-col justify-center gap-4 px-4 lg:p-0"
+      className="flex w-full flex-col justify-center gap-4 px-4 md:p-0"
       ref={targetRef}
     >
-      <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-8 lg:gap-4">
+      <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-8 md:gap-4">
         {mediaItems && mediaItems.length > 0 ? (
-          mediaItems.map((mediaItem) => (
-            // <HomeMediaCardUI
-            //   key={`${mediaItem.media_type}-${mediaItem.id}`}
-            //   media={mediaItem}
-            //   user_id={user_id}
-            //   rounded
-            // />
-            <MediaCardClient
-              user_id={user_id}
-              key={`${mediaItem.media_type}-${mediaItem.id}`}
-              media_type={mediaItem.media_type}
-              media_id={mediaItem.id}
-              rounded={true}
-            />
-          ))
+          mediaItems.map((mediaItem, index) => {
+            if (index === 2 || (index % 30 === 0 && index !== 0)) {
+              return (
+                <>
+                  {!user?.premium && (
+                    <div className="h-full w-full">
+                      <AdBanner
+                        dataAdFormat="auto"
+                        dataFullWidthResponsive={true}
+                        dataAdSlot="4196406083"
+                      />
+                    </div>
+                  )}
+
+                  <HomeMediaCardUI
+                    key={`${mediaItem.media_type}-${mediaItem.id}`}
+                    media={mediaItem}
+                    user_id={user_id}
+                    rounded
+                  />
+                </>
+              );
+            }
+            return (
+              <HomeMediaCardUI
+                key={`${mediaItem.media_type}-${mediaItem.id}`}
+                media={mediaItem}
+                user_id={user_id}
+                rounded
+              />
+            );
+          })
         ) : (
           <></>
         )}

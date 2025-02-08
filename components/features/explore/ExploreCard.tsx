@@ -60,9 +60,9 @@ const ExploreCard = async (media: any) => {
                 />
               </picture>
             </div>
-            <div className="absolute bottom-0 left-0 w-full p-1 lg:p-2">
+            <div className="absolute bottom-0 left-0 w-full p-1 md:p-2">
               <div className="flex w-full flex-row justify-between md:gap-2">
-                <div className="flex flex-row items-center justify-center gap-1 rounded-[7px] bg-black/20 px-2 py-1 text-sm font-bold text-white backdrop-blur-xl lg:rounded-[6px]">
+                <div className="flex flex-row items-center justify-center gap-1 rounded-[7px] bg-black/20 px-2 py-1 text-sm font-bold text-white backdrop-blur-xl md:rounded-[6px]">
                   <img
                     src="/assets/icons/star-solid.svg"
                     alt=""
@@ -72,7 +72,7 @@ const ExploreCard = async (media: any) => {
                   />
                   {media.vote_average.toFixed(1)}
                 </div>
-                <div className="flex flex-row items-center justify-center gap-1 rounded-[7px] bg-black/20 px-2 py-1 text-sm font-bold text-white backdrop-blur-xl lg:rounded-[6px]">
+                <div className="flex flex-row items-center justify-center gap-1 rounded-[7px] bg-black/20 px-2 py-1 text-sm font-bold text-white backdrop-blur-xl md:rounded-[6px]">
                   {media.release_date
                     ? media.release_date.slice(0, 4)
                     : media.first_air_date && media.first_air_date.slice(0, 4)}

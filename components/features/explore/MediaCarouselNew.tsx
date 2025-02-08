@@ -41,7 +41,7 @@ const TopMovieCarousel = ({ movies }: any) => {
   }));
 
   return (
-    <div className="w-full lg:px-4">
+    <div className="w-full">
       <Slider {...settings} className="h-full w-full">
         {movies &&
           movies.slice(0, 5).map((media: any, index: number) => {
@@ -52,12 +52,12 @@ const TopMovieCarousel = ({ movies }: any) => {
 
             return (
               <div
-                className="h-[60vh] w-full overflow-hidden lg:h-[75vh] lg:rounded-[16px]"
+                className="h-[60vh] w-full overflow-hidden md:h-[75vh] md:rounded-[16px]"
                 key={index}
               >
                 <div className="h-full w-full">
                   <div className="relative h-full w-full">
-                    <div className="absolute left-0 top-0 z-20 flex h-full w-full flex-col justify-between p-4 lg:p-16">
+                    <div className="absolute left-0 top-0 z-20 flex h-full w-full flex-col justify-between p-4 md:p-16">
                       <div className="flex flex-row gap-4">
                         <div className="relative">
                           <button
@@ -72,7 +72,7 @@ const TopMovieCarousel = ({ movies }: any) => {
                             />
                           </button>
                           {isDropdownOpen && (
-                            <div className="backdrop-blur/xl custom-scrollbar absolute left-0 top-full z-50 mt-2 flex max-h-[60vh] w-max flex-col overflow-y-auto rounded-lg bg-background p-2 shadow-lg lg:flex-row">
+                            <div className="backdrop-blur/xl custom-scrollbar absolute left-0 top-full z-50 mt-2 flex max-h-[60vh] w-max flex-col overflow-y-auto rounded-lg bg-background p-2 shadow-lg md:flex-row">
                               <div>
                                 <h3 className="border-b border-foreground/10 px-4 py-2">
                                   Movies
@@ -129,10 +129,10 @@ const TopMovieCarousel = ({ movies }: any) => {
                         <h2 className="text-4xl font-bold text-white">
                           {media.title || media.name}
                         </h2>
-                        <h3 className="line-clamp-[2] text-white lg:line-clamp-[4] lg:w-1/3">
+                        <h3 className="line-clamp-[2] text-white md:line-clamp-[4] md:w-1/3">
                           {media.overview}
                         </h3>
-                        <div className="flex flex-col gap-4 lg:flex-row">
+                        <div className="flex flex-col gap-4 md:flex-row">
                           <Link
                             href={watchLink}
                             className="flex flex-row items-center gap-2 rounded-full bg-white px-6 py-3 text-lg text-black"

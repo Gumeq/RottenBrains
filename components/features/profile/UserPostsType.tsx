@@ -69,7 +69,7 @@ const UserPostsType: React.FC<UserPostsProps> = ({
 
   return (
     <div
-      className="grid w-full gap-4 p-4 lg:p-0"
+      className="grid w-full gap-4 p-4 md:p-0"
       style={{ gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))" }}
     >
       {userPosts.map((post) => (

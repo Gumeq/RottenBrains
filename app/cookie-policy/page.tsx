@@ -112,8 +112,8 @@ const page = () => {
 
         <h2 className="mt-4 text-lg font-semibold">7. Affiliated Services</h2>
         <p>
-          On our website, Rotten-Brains does not employ any third-party services
-          that use tracking technologies or cookies.
+          On our website, Rotten-Brains we might employ third party websites
+          like Google that would track cookies for advertising purposes.
         </p>
 
         <h2 className="mt-4 text-lg font-semibold">

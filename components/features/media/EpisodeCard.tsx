@@ -50,8 +50,8 @@ const EpisodeCard = async ({
   }
 
   return (
-    <div className="mb-4 flex w-full flex-col gap-2 hover:border-accent hover:bg-foreground/20 lg:mb-2 lg:flex-row lg:rounded-[8px] lg:p-2">
-      <div className="relative w-full flex-shrink-0 overflow-hidden lg:w-1/2 lg:rounded-[4px]">
+    <div className="mb-4 flex w-full flex-col gap-2 hover:border-accent hover:bg-foreground/20 md:mb-2 md:flex-row md:rounded-[8px] md:p-2">
+      <div className="relative w-full flex-shrink-0 overflow-hidden md:w-1/2 md:rounded-[4px]">
         {watchTime > 0 && (
           <div
             className="absolute bottom-0 left-0 h-1 bg-accent"
@@ -73,14 +73,14 @@ const EpisodeCard = async ({
           alt={`Still from episode ${episode.name}`}
           width={780}
           height={440}
-          className="w-full bg-foreground/10 lg:rounded-[4px]"
+          className="w-full bg-foreground/10 md:rounded-[4px]"
         />
       </div>
-      <div className="flex flex-col gap-1 px-4 lg:px-0">
+      <div className="flex flex-col gap-1 px-4 md:px-0">
         <h3 className="">
           {episode.name} | {formatEpisodeCode(season_number, episode_number)}
         </h3>
-        <p className="text-sm text-foreground/50 lg:text-sm">
+        <p className="text-sm text-foreground/50 md:text-sm">
           {getRelativeTime(episode.air_date)}
         </p>
       </div>

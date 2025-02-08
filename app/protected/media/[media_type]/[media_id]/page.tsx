@@ -5,21 +5,8 @@ import MoreOptions from "@/components/features/media/MoreOptions";
 import ImageWithFallback from "@/components/features/media/ImageWithFallback";
 import { fetchMediaData } from "@/lib/client/fetchMediaData";
 import { getCurrentUser } from "@/lib/supabase/serverQueries";
+import { transformRuntime } from "@/lib/utils";
 
-function transformRuntime(minutes: number): string {
-  const hours: number = Math.floor(minutes / 60);
-  const remainingMinutes: number = minutes % 60;
-
-  if (hours > 0) {
-    return `${hours} h ${remainingMinutes} m`;
-  } else {
-    if (remainingMinutes > 0) {
-      return `${remainingMinutes} m`;
-    } else {
-      return "N/A";
-    }
-  }
-}
 function formatNumber(num: number): string {
   if (num >= 1000000) {
     return (num / 1000000).toFixed(1).replace(/\.0$/, "") + "m";
@@ -150,17 +137,17 @@ export default async function mediaPage({ params }: { params: Params }) {
   }
 
   return (
-    <div className="relative lg:w-full">
-      <div className="fixed z-20 flex h-10 w-full flex-row items-center gap-4 bg-background px-4 backdrop-blur-xl lg:hidden">
+    <div className="relative md:w-full">
+      <div className="fixed z-20 flex h-10 w-full flex-row items-center gap-4 bg-background px-4 backdrop-blur-xl md:hidden">
         <GoBackArrow />
         <p className="truncate">{media.title || media.name}</p>
       </div>
-      <div className="relative h-auto w-screen py-4 lg:w-auto">
+      <div className="relative h-auto w-screen md:w-auto">
         <div
-          className="relative mt-10 flex h-auto w-screen lg:mt-0 lg:w-auto"
+          className="relative mt-10 flex h-auto w-screen md:mt-0 md:w-auto"
           id="overview"
         >
-          <div className="mx-auto flex h-full w-screen flex-col gap-4 px-2 lg:my-8 lg:w-auto lg:gap-8">
+          <div className="mx-auto flex h-full w-screen flex-col gap-2 px-2 md:w-auto md:gap-8">
             <div className="flex flex-col gap-4">
               <div className="flex w-full flex-row justify-between">
                 <p className="text-2xl">{media.title || media.name}</p>
@@ -175,7 +162,7 @@ export default async function mediaPage({ params }: { params: Params }) {
                 <p className="text-sm italic opacity-50">"{media.tagline}"</p>
               )}
               <div className="">
-                <div className="flex h-full flex-col justify-between gap-2 lg:flex-row lg:items-center">
+                <div className="flex h-full flex-col justify-between gap-2 md:flex-row md:items-center">
                   <div className="flex flex-row items-center gap-4 text-sm opacity-50">
                     <p className="">
                       {(media.release_date && media.release_date.slice(0, 4)) ||
@@ -229,7 +216,7 @@ export default async function mediaPage({ params }: { params: Params }) {
                 </div>
               </div>
             </div>
-            <div className="flex h-auto flex-col gap-4 lg:h-[50vh] lg:flex-row lg:gap-8">
+            <div className="flex h-auto flex-col gap-4 md:h-[50vh] md:flex-row md:gap-8">
               <div className="h-full">
                 <img
                   src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
@@ -258,13 +245,13 @@ export default async function mediaPage({ params }: { params: Params }) {
                 </div>
               </div>
             </div>
-            <div className="flex w-full flex-row gap-4 px-2 lg:w-auto">
+            <div className="flex w-full flex-row gap-4 px-2 md:w-auto">
               <div className="flex flex-col gap-4">
                 <div className="flex flex-row items-center gap-4">
                   <p className="w-[100px] font-bold text-foreground/50">
                     Genre
                   </p>
-                  <div className="flex w-[60vw] flex-row flex-wrap gap-2 text-sm lg:w-[300px] xl:w-[600px]">
+                  <div className="flex w-[60vw] flex-row flex-wrap gap-2 text-sm md:w-[300px] xl:w-[600px]">
                     {mediaData.genres.map((genre: any) => (
                       <div className="flex items-center rounded-[4px] bg-foreground/20 px-4 py-1 text-center">
                         {genre.name}
@@ -276,7 +263,7 @@ export default async function mediaPage({ params }: { params: Params }) {
                   <p className="w-[100px] text-wrap font-bold text-foreground/50">
                     Plot
                   </p>
-                  <p className="w-[60vw] text-sm lg:w-[300px] xl:w-[600px]">
+                  <p className="w-[60vw] text-sm md:w-[300px] xl:w-[600px]">
                     {mediaData.overview}
                   </p>
                 </div>
@@ -285,7 +272,7 @@ export default async function mediaPage({ params }: { params: Params }) {
                   <p className="w-[100px] font-bold text-foreground/50">
                     {media_type === "movie" ? "Director" : "Creator"}
                   </p>
-                  <div className="w-[60vw] text-sm lg:w-[300px] xl:w-[600px]">
+                  <div className="w-[60vw] text-sm md:w-[300px] xl:w-[600px]">
                     {media_type === "movie"
                       ? mediaCredits.directorOrCreator?.name
                       : mediaData.created_by[0]?.name}
@@ -296,7 +283,7 @@ export default async function mediaPage({ params }: { params: Params }) {
                   <p className="w-[100px] font-bold text-foreground/50">
                     Writers
                   </p>
-                  <span className="w-[60vw] lg:w-[300px] xl:w-[600px]">
+                  <span className="w-[60vw] md:w-[300px] xl:w-[600px]">
                     <div className="flex flex-row flex-wrap text-sm">
                       {mediaCredits.writers
                         ? mediaCredits.writers
@@ -318,7 +305,7 @@ export default async function mediaPage({ params }: { params: Params }) {
                   <p className="w-[100px] font-bold text-foreground/50">
                     Stars
                   </p>
-                  <div className="w-[60vw] text-sm lg:w-[300px] xl:w-[600px]">
+                  <div className="w-[60vw] text-sm md:w-[300px] xl:w-[600px]">
                     {mediaCredits.actors
                       ? mediaCredits.actors.slice(0, 5).map((actor, index) => (
                           <Link

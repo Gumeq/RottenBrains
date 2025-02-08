@@ -68,11 +68,11 @@ const page = async () => {
   );
 
   return (
-    <div className="mb-16 w-full flex-col px-4 py-4 lg:px-0">
+    <div className="mb-16 w-full flex-col px-4 py-4 md:px-0">
       <h1 className="px-4 text-lg font-semibold">Watch List</h1>
       <div className="my-4 w-full border-b-2 border-foreground/5"></div>
 
-      <div className="flex w-full flex-col gap-8 lg:flex-row">
+      <div className="flex w-full flex-col gap-8 md:flex-row">
         <WatchListCard
           label="Watching"
           color={watchingColor.hex}

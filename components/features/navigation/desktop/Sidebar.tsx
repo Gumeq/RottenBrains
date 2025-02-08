@@ -25,10 +25,13 @@ import {
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { useSidebar } from "@/hooks/SidebarContext";
 import NavLink from "./NavLink";
+import { useUser } from "@/hooks/UserContext";
+import Link from "next/link";
 
 const Sidebar = () => {
-  const { isSidebarOpen } = useSidebar(); // Client-only state from context
+  const { isSidebarOpen, toggleSidebar } = useSidebar(); // Client-only state from context
   const [mounted, setMounted] = useState(false);
+  const { user } = useUser();
 
   useEffect(() => {
     // This effect only runs on the client, setting mounted to true
@@ -42,12 +45,38 @@ const Sidebar = () => {
 
   return (
     <aside
-      className={`fixed left-0 top-16 h-full bg-background transition-all duration-300 ${
-        isSidebarOpen ? "w-60" : "w-20"
+      className={`fixed left-0 top-0 z-30 h-full min-h-screen p-4 transition-all duration-300 ${
+        isSidebarOpen ? "w-64" : "w-24"
       }`}
     >
       {isSidebarOpen ? (
-        <ul className="flex flex-col justify-start p-2">
+        <ul className="flex h-full flex-col justify-start rounded-[24px] bg-foreground/10 p-2">
+          <div className="my-8 flex w-full flex-row items-center justify-between gap-8 px-4">
+            <Link href={"/"} className="flex flex-row items-center gap-4">
+              <img
+                src="/assets/images/logo_new_black.svg"
+                alt="text-logo"
+                className="invert-on-dark h-6 w-auto"
+              />
+              {user && user.premium ? (
+                <p className="text-lg font-black">Premium</p>
+              ) : (
+                <p className="text-lg font-black">Rotten Brains</p>
+              )}
+            </Link>
+            <button
+              onClick={toggleSidebar}
+              className="absolute right-0 rounded-full bg-background p-1 hover:bg-foreground/20"
+            >
+              <img
+                src="/assets/icons/chevron-back.svg"
+                alt="menu-icon"
+                width={24}
+                height={24}
+                className="invert-on-dark"
+              />
+            </button>
+          </div>
           <NavLink
             href="/"
             icon={HomeIcon}
@@ -78,9 +107,9 @@ const Sidebar = () => {
           <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
           <NavLink href="/premium" icon={PremiumIcon} label="Premium" />
           <NavLink href="/donations" icon={DonationsIcon} label="Donations" />
-          <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
+          {/* <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
           <NavLink href="/blog" icon={DevBlogIcon} label="Developer Blog" />
-          <NavLink href="/github" icon={GithubIcon} label="Github" />
+          <NavLink href="/github" icon={GithubIcon} label="Github" /> */}
           <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
           <NavLink href="/info" icon={InfoIcon} label="Info" />
           <NavLink href="/legal" icon={LegalIcon} label="Legal" />
@@ -90,7 +119,31 @@ const Sidebar = () => {
           <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
         </ul>
       ) : (
-        <ul className="flex flex-col justify-start p-2">
+        <ul className="flex h-full flex-col justify-start rounded-[24px] bg-foreground/10 p-2">
+          <div className="my-8 flex w-full flex-row items-center justify-center">
+            <Link
+              href={"/"}
+              className="flex flex-shrink-0 flex-row items-center gap-4"
+            >
+              <img
+                src="/assets/images/logo_new_black.svg"
+                alt="text-logo"
+                className="invert-on-dark h-6 w-auto"
+              />
+            </Link>
+            <button
+              onClick={toggleSidebar}
+              className="absolute -right-0 rounded-full bg-background p-1 hover:bg-foreground/20"
+            >
+              <img
+                src="/assets/icons/chevron-forward.svg"
+                alt="menu-icon"
+                width={24}
+                height={24}
+                className="invert-on-dark"
+              />
+            </button>
+          </div>
           <NavLink href="/" icon={HomeIcon} />
           <NavLink href="/protected/explore" icon={ExploreIcon} />
           <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
@@ -100,9 +153,9 @@ const Sidebar = () => {
           <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
           <NavLink href="/premium" icon={PremiumIcon} />
           <NavLink href="/donations" icon={DonationsIcon} />
-          <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
+          {/* <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
           <NavLink href="/blog" icon={DevBlogIcon} />
-          <NavLink href="/github" icon={GithubIcon} />
+          <NavLink href="/github" icon={GithubIcon} /> */}
           <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
           <NavLink href="/info" icon={InfoIcon} />
           <NavLink href="/legal" icon={LegalIcon} />

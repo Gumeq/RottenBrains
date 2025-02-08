@@ -26,7 +26,7 @@ const CookieConsent: React.FC = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="max-w-screen fixed bottom-4 right-4 z-50 ml-4 overflow-hidden rounded-[8px] bg-background text-foreground drop-shadow-md lg:max-w-xl">
+    <div className="max-w-screen fixed bottom-4 right-4 z-50 ml-4 overflow-hidden rounded-[8px] bg-background text-foreground drop-shadow-md md:max-w-xl">
       <div className="flex h-full w-full flex-row items-center justify-between gap-4 bg-foreground/10 p-6">
         <span className="flex-1">
           By browsing this website, you accept our{" "}

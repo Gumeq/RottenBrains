@@ -6,6 +6,8 @@ import ShareButton from "./ShareButton";
 import ToggleClamp from "../posts/ToggleClamp";
 import { motion, AnimatePresence } from "framer-motion";
 import { formatEpisodeCode, getRelativeTime } from "@/lib/utils";
+import AdBanner from "../ads/GoogleDisplayAd";
+import { useUser } from "@/hooks/UserContext";
 
 const cardVariants = {
   hidden: { y: "100%" }, // Start off-screen at the bottom
@@ -64,9 +66,11 @@ const WatchPageDetails: React.FC<WatchPageDetailsProps> = ({
   const media_overview =
     media_type === "movie" ? media.overview : episode?.overview;
 
+  const { user } = useUser();
+
   return (
     <>
-      <div className="relative mx-auto flex w-full p-4 lg:hidden lg:p-0">
+      <div className="relative mx-auto flex w-full p-4 md:hidden md:p-0">
         {/* Initially displayed title and date */}
         <div className="flex flex-col gap-6">
           <div
@@ -185,9 +189,9 @@ const WatchPageDetails: React.FC<WatchPageDetailsProps> = ({
           )}
         </AnimatePresence>
       </div>
-      <div className="mx-auto hidden w-full flex-col gap-4 rounded-[8px] p-4 lg:flex lg:p-0">
+      <div className="mx-auto hidden w-full flex-col gap-4 rounded-[8px] p-4 md:flex md:p-0">
         <div className="flex flex-col gap-1">
-          <h2 className="font-semibold lg:text-lg">
+          <h2 className="font-semibold md:text-lg">
             {episode && season_number && episode_number
               ? `${episode.name} | ${
                   formatEpisodeCode
@@ -263,6 +267,15 @@ const WatchPageDetails: React.FC<WatchPageDetailsProps> = ({
           </div> */}
           </div>
         </Link>
+        {!user?.premium && (
+          <div className="mx-auto w-full max-w-[800px]">
+            <AdBanner
+              dataAdFormat="autorelaxed"
+              dataFullWidthResponsive={true}
+              dataAdSlot="1497132697"
+            />
+          </div>
+        )}
       </div>
     </>
   );

@@ -154,7 +154,7 @@ const CommentSection = ({ post_data, current_user }: any) => {
       {/* Desktop Comments Section */}
       <div
         id="comment_card_desktop"
-        className="hidden h-full w-full flex-col gap-2 overflow-y-auto lg:flex"
+        className="hidden h-full w-full flex-col gap-2 overflow-y-auto md:flex"
       >
         {state.comments ? (
           <>
@@ -186,7 +186,7 @@ const CommentSection = ({ post_data, current_user }: any) => {
       </div>
 
       <div className="w-full">
-        <div className="flex w-full flex-row items-center gap-4 border-t border-foreground/10 bg-background p-4 lg:p-2">
+        <div className="flex w-full flex-row items-center gap-4 border-t border-foreground/10 bg-background p-4 md:p-2">
           <div className="flex flex-row gap-2">
             <button onClick={handleLike} className={state.animate ? "pop" : ""}>
               {state.liked ? (
@@ -212,7 +212,7 @@ const CommentSection = ({ post_data, current_user }: any) => {
             </button>
             <p className="font-bold">{state.likes}</p>
           </div>
-          <div className="flex flex-row gap-2 lg:hidden">
+          <div className="flex flex-row gap-2 md:hidden">
             <button
               onClick={() =>
                 setState((prevState) => ({
@@ -235,7 +235,7 @@ const CommentSection = ({ post_data, current_user }: any) => {
         </div>
 
         {/* Desktop comment input */}
-        <div className="hidden w-full lg:flex">
+        <div className="hidden w-full md:flex">
           <AddComment
             post={post}
             user_id={user_id}

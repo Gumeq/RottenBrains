@@ -9,7 +9,7 @@ export const Tab = ({ name, link }: { name: string; link: string }) => {
 
   return (
     <p
-      className={`cursor-pointer px-4 py-2 lg:px-8 ${
+      className={`cursor-pointer px-4 py-2 md:px-8 ${
         isActive
           ? "border-b-2 border-accent text-foreground"
           : "border-b border-foreground/10 text-foreground/60"

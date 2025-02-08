@@ -12,7 +12,7 @@ export default async function Page({ params }: { params: Params }) {
 
   return (
     <div className="w-screen">
-      <div className="relative z-20 flex h-16 w-screen flex-row items-center gap-4 bg-white/10 px-4 lg:hidden">
+      <div className="relative z-20 flex h-16 w-screen flex-row items-center gap-4 bg-white/10 px-4 md:hidden">
         <GoBackArrow />
         <p className="truncate text-lg">Update post</p>
       </div>

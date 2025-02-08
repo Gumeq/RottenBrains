@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "./client";
 import { FeedGenre, IPost, IUser } from "@/types";
 import { fetchMediaData } from "../client/fetchMediaData";
+import { getMediaDetails } from "../tmdb";
 
 const supabase = createClient();
 
@@ -634,13 +635,26 @@ export async function fetchUserNotifications(
     data.map(async (notification: any) => {
       // Check if notification requires media data
       if (
-        ["like", "comment", "new_post"].includes(notification.notification_type)
+        ["like", "comment", "new_post", "new_episode"].includes(
+          notification.notification_type,
+        )
       ) {
         try {
-          const media_data = await fetchMediaData(
-            notification.post.media_type,
-            notification.post.media_id,
+          let episode_data;
+          const media_data = await getMediaDetails(
+            notification.post?.media_type || notification.media_type,
+            notification.post?.media_id || notification.media_id,
           );
+          console.log(notification.season_number, notification.episode_number);
+          if (notification.media_type === "tv") {
+            episode_data = await getMediaDetails(
+              notification.media_type,
+              notification.media_id,
+              notification.season_number,
+              notification.episode_number,
+            );
+            return { ...notification, media_data, episode_data };
+          }
           return { ...notification, media_data };
         } catch (error) {
           console.error("Error fetching media data:", error);

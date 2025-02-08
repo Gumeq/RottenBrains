@@ -6,6 +6,7 @@ import { useInView } from "react-intersection-observer";
 import { useUser } from "@/hooks/UserContext";
 import HomeMediaCardSkeleton from "@/components/features/media/MediaCardSkeleton";
 import HomeMediaCardClient from "@/components/features/media/MediaCardClient";
+import AdBanner from "../ads/GoogleDisplayAd";
 
 interface InfiniteScrollByGenreProps {
   genre_id: number;
@@ -62,20 +63,45 @@ const InfiniteScrollByGenre: React.FC<InfiniteScrollByGenreProps> = ({
 
   return (
     <div
-      className="flex w-full flex-col justify-center gap-4 p-4"
+      className="flex w-full flex-col justify-center gap-4 p-4 md:p-0"
       ref={targetRef}
     >
       <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-4">
         {mediaItems && mediaItems.length > 0 ? (
-          mediaItems.map((mediaItem) => (
-            <HomeMediaCardClient
-              user_id={user?.id.toString()}
-              key={`${mediaItem.media_type}-${mediaItem.id}`}
-              media_type={mediaItem.media_type}
-              media_id={mediaItem.id}
-              rounded={true}
-            />
-          ))
+          mediaItems.map((mediaItem, index) => {
+            if (index === 2 || (index % 30 === 0 && index !== 0)) {
+              return (
+                <>
+                  {!user?.premium && (
+                    <div className="h-full w-full">
+                      <AdBanner
+                        dataAdFormat="auto"
+                        dataFullWidthResponsive={true}
+                        dataAdSlot="4196406083"
+                      />
+                    </div>
+                  )}
+
+                  <HomeMediaCardClient
+                    user_id={user?.id.toString()}
+                    key={`${mediaItem.media_type}-${mediaItem.id}`}
+                    media_type={mediaItem.media_type}
+                    media_id={mediaItem.id}
+                    rounded={true}
+                  />
+                </>
+              );
+            }
+            return (
+              <HomeMediaCardClient
+                user_id={user?.id.toString()}
+                key={`${mediaItem.media_type}-${mediaItem.id}`}
+                media_type={mediaItem.media_type}
+                media_id={mediaItem.id}
+                rounded={true}
+              />
+            );
+          })
         ) : (
           <></>
         )}

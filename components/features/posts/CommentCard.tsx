@@ -27,7 +27,6 @@ const CommentCard = ({ comment, post, user_id, fetchComments }: any) => {
   }, [replies]);
 
   const handleReplyButton = async () => {
-    console.log("Reply to : " + comment.id);
     setReply(!reply);
 
     if (!reply) {

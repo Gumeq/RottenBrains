@@ -19,21 +19,21 @@ const MainContent = ({ children }: { children: React.ReactNode }) => {
   // Assume that on the server isSidebarOpen is false.
   const mainPaddingClass = mounted
     ? isSidebarOpen
-      ? "pl-64"
-      : "pl-24"
-    : "pl-24";
+      ? "ml-64 max-w-[calc(100vw-256px)]"
+      : "ml-24 max-w-[calc(100vw-96px)]"
+    : "ml-24 max-w-[calc(100vw-96px)]";
 
   return (
     <>
-      <div className="hidden lg:flex">
+      <div className="hidden md:flex">
         <Sidebar />
         <main
-          className={`mt-16 w-full flex-1 px-4 pr-8 transition-all duration-300 ${mainPaddingClass}`}
+          className={`mt-20 w-full flex-1 pl-4 pr-8 transition-all duration-300 ${mainPaddingClass}`}
         >
           {children}
         </main>
       </div>
-      <div className="flex lg:hidden">
+      <div className="flex md:hidden">
         <main className="w-full flex-1 transition-all duration-300">
           {children}
         </main>

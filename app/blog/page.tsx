@@ -7,7 +7,7 @@ const page = async () => {
   console.log(posts);
   return (
     <div className="w-full">
-      <div className="relative aspect-[2/1] w-full overflow-hidden bg-black lg:aspect-[10/1]">
+      <div className="relative aspect-[2/1] w-full overflow-hidden bg-black md:aspect-[10/1]">
         <img
           src="/assets/images/blog-bg-pattern.png"
           alt=""
@@ -23,7 +23,7 @@ const page = async () => {
                 Bugs, news, code and more bugs.
               </h2>
             </div>
-            <div className="hidden w-1/3 bg-secondary p-4 text-lg lg:flex">
+            <div className="hidden w-1/3 bg-secondary p-4 text-lg md:flex">
               <h3>
                 Welcome to the RottenBrains Developer Blog (Beta). Where you can
                 find all the news about the website, my perfect coding skills
@@ -33,16 +33,16 @@ const page = async () => {
           </div>
         </div>
       </div>
-      <div className="mx-auto flex w-full max-w-[1500px] flex-col bg-foreground/10 lg:flex-row">
-        <div className="p-4 lg:w-2/3">
+      <div className="mx-auto flex w-full max-w-[1500px] flex-col bg-foreground/10 md:flex-row">
+        <div className="p-4 md:w-2/3">
           <h4 className="mb-6 text-xl font-semibold">Latest Posts</h4>
-          <div className="flex w-full flex-col gap-4 lg:grid lg:grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
+          <div className="flex w-full flex-col gap-4 md:grid md:grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
             {posts &&
               posts.length > 0 &&
               posts.map((post) => <PostCardMain key={post.id} post={post} />)}
           </div>
         </div>
-        <div className="hidden w-1/3 p-4 lg:flex">
+        <div className="hidden w-1/3 p-4 md:flex">
           <h4 className="mb-6 text-xl font-semibold">More Stuff</h4>
         </div>
       </div>

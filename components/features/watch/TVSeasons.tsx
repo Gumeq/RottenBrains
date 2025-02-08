@@ -33,7 +33,7 @@ const TVShowDetails = async ({
     <div className="w-full">
       <div className="relative">
         <div className="gradient-edge absolute right-0 top-0 z-20 h-full w-[10%]" />
-        <div className="custom-scrollbar flex gap-2 overflow-x-auto px-2 py-2 text-sm lg:px-0">
+        <div className="custom-scrollbar flex gap-2 overflow-x-auto px-2 py-2 text-sm md:px-0">
           {filteredSeasons.map((season: any) => (
             <Link
               key={season.season_number}
@@ -50,7 +50,7 @@ const TVShowDetails = async ({
         </div>
       </div>
       <div className="mt-2 w-full">
-        <div className="flex w-full flex-col gap-8 px-4 lg:gap-4 lg:px-0">
+        <div className="flex w-full flex-col gap-8 px-4 md:gap-4 md:px-0">
           {episodes.map((episode: any) => (
             <Link
               key={episode.episode_number}

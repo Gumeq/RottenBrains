@@ -32,7 +32,7 @@ export default function PostModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm">
-      <div className="relative max-h-[70vh] w-full max-w-[95vw] overflow-hidden rounded-[16px] bg-background shadow-lg lg:aspect-[16/9] lg:max-h-[90vh] lg:w-[60vw]">
+      <div className="relative max-h-[70vh] w-full max-w-[95vw] overflow-hidden rounded-[16px] bg-background shadow-lg md:aspect-[16/9] md:max-h-[90vh] md:w-[60vw]">
         <button
           onClick={handleClose}
           className="absolute right-2 top-2 flex aspect-square h-8 items-center justify-center text-lg font-semibold"

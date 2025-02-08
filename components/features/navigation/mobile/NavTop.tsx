@@ -56,7 +56,7 @@ const NavTop = () => {
       {/* Top bar */}
       <div
         ref={topBarRef}
-        className="fixed left-0 top-0 z-50 flex h-12 w-full items-center justify-between bg-background px-4 lg:hidden"
+        className="fixed left-0 top-0 z-50 flex h-12 w-full items-center justify-between bg-background px-4 md:hidden"
         style={{
           transform: "translateY(0)",
           willChange: "transform",

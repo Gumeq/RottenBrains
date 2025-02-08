@@ -24,7 +24,7 @@ interface PostContentProps {
 
 const PostContent = ({ media, post, post_link }: PostContentProps) => {
   return (
-    <div className="flex flex-col px-2 lg:px-4">
+    <div className="flex flex-col px-2 md:px-4">
       <div className="flex flex-col gap-2 py-4">
         <div className="flex w-full flex-row gap-2">
           <img

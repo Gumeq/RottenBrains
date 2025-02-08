@@ -20,7 +20,7 @@ const WatchListCard: React.FC<WatchListCardProps> = ({
   return (
     <Link
       href={`/protected/watch-list/${label.toLowerCase()}`}
-      className="flex h-auto w-full flex-col items-center lg:w-[300px]"
+      className="flex h-auto w-full flex-col items-center md:w-[300px]"
     >
       {/* Bottom “shadow” layer */}
       <div

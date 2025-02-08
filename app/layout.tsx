@@ -16,6 +16,7 @@ import MainContent from "../components/common/MainContent";
 import { SidebarProvider } from "@/hooks/SidebarContext";
 import { createClient } from "@/lib/supabase/server";
 import TopLoader from "@/components/features/loaders/TopLoader";
+import OneTapComponent from "@/components/features/auth/GoogleOneTap";
 
 export const metadata = {
   title:
@@ -43,7 +44,7 @@ export default async function NotProtectedLayout({
   const themeCookieValue = cookieStore.get("theme")?.value;
 
   // Validate and assign theme
-  const themeCookie: Theme = themeCookieValue === "dark" ? "dark" : "light";
+  const themeCookie: Theme = themeCookieValue === "light" ? "light" : "dark";
 
   const supabase = await createClient();
   const {
@@ -69,13 +70,14 @@ export default async function NotProtectedLayout({
             <body className="custom-scrollbar w-full overflow-x-hidden bg-background text-foreground transition-all duration-300">
               <TopLoader />
               <header>
-                <div className="hidden lg:flex">
+                <div className="hidden md:flex">
                   <HomeNav></HomeNav>
                 </div>
               </header>
               <MainContent>{children}</MainContent>
               <footer></footer>
               <CookieConsent />
+              {/* <OneTapComponent /> */}
               <LegalConsent />
               <Toaster />
               <Analytics />

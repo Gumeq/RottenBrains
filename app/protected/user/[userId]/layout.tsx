@@ -32,9 +32,9 @@ const ProfileLayout = async ({ children, params }: Props) => {
   return (
     <>
       <MobileTopBarHome />
-      <div className="mx-auto mt-12 w-screen max-w-[100vw] lg:mt-0 lg:max-w-7xl lg:p-4">
+      <div className="mx-auto mt-12 w-screen max-w-[100vw] md:mt-0 md:max-w-7xl md:p-4">
         <div className="w-full">
-          <div className="aspect-[5/1] w-full overflow-hidden lg:rounded-[16px]">
+          <div className="aspect-[5/1] w-full overflow-hidden md:rounded-[16px]">
             <img
               src={user.backdrop_url}
               alt=""
@@ -42,20 +42,20 @@ const ProfileLayout = async ({ children, params }: Props) => {
             />
           </div>
           <div className="flex h-1/2 w-full flex-row gap-4">
-            <div className="-mt-[50px] ml-4 lg:-mt-[75px]">
+            <div className="-mt-[50px] ml-4 md:-mt-[75px]">
               <img
                 src={user.image_url}
                 alt="Profile"
-                className="overlay-hidden aspect-[1/1] w-[100px] min-w-[100px] rounded-full lg:w-[150px] lg:min-w-[150px]"
+                className="overlay-hidden aspect-[1/1] w-[100px] min-w-[100px] rounded-full md:w-[150px] md:min-w-[150px]"
               />
             </div>
             <div className="h-full w-full">
               <div className="flex flex-col pt-4">
-                <div className="flex w-full flex-row flex-wrap gap-2 lg:justify-between">
+                <div className="flex w-full flex-row flex-wrap gap-2 md:justify-between">
                   <p className="text-2xl font-semibold">{user.username}</p>
                   <FollowButton user_to_follow_id={user.id}></FollowButton>
                 </div>
-                <div className="flex w-full flex-col gap-2 lg:flex-row lg:items-center">
+                <div className="flex w-full flex-col gap-2 md:flex-row md:items-center">
                   <p className="lowercase">@{user.username}</p>
                   <FollowInfo user={user}></FollowInfo>
                   <p className="text-sm text-foreground/50">
@@ -65,7 +65,7 @@ const ProfileLayout = async ({ children, params }: Props) => {
               </div>
             </div>
           </div>
-          <div className="my-4 w-full lg:my-8">
+          <div className="my-4 w-full md:my-8">
             <NewTabs user_id={user.id.toString()}></NewTabs>
           </div>
           <div>{children}</div>

@@ -16,8 +16,8 @@ const PostModalFull = ({ post_media_data, user_id }: PostModalFullProps) => {
   const { post_data, media_data } = post_media_data ? post_media_data : {};
   return (
     <PostModal userId={user_id} isOpen={true}>
-      <div className="flex h-full w-full flex-col lg:flex-row lg:gap-2">
-        <div className="flex h-full flex-col bg-background lg:w-[60%]">
+      <div className="flex h-full w-full flex-col md:flex-row md:gap-2">
+        <div className="flex h-full flex-col bg-background md:w-[60%]">
           <div className="h-full w-full">
             <div className="flex flex-row items-center justify-between gap-4 px-4 py-2">
               <div className="flex flex-row items-center gap-2">
@@ -53,7 +53,7 @@ const PostModalFull = ({ post_media_data, user_id }: PostModalFullProps) => {
                 </p>
               </div>
             </div>
-            <div className="flex flex-col px-2 lg:px-4">
+            <div className="flex flex-col px-2 md:px-4">
               <div className="flex flex-col gap-2 py-4">
                 <div className="flex w-full flex-row gap-2">
                   <img
@@ -71,11 +71,11 @@ const PostModalFull = ({ post_media_data, user_id }: PostModalFullProps) => {
               </div>
             </div>
           </div>
-          <div className="h-full max-h-[150px] w-full overflow-y-auto px-2 lg:max-h-none lg:px-4 lg:pb-4">
+          <div className="h-full max-h-[150px] w-full overflow-y-auto px-2 md:max-h-none md:px-4 md:pb-4">
             <p className="">{post_data.post.review_user}</p>
           </div>
         </div>
-        <div className="mt-2 lg:mt-8 lg:w-[40%] lg:p-2">
+        <div className="mt-2 md:mt-8 md:w-[40%] md:p-2">
           <CommentSection
             post_data={post_data}
             current_user={post_data.current_user}

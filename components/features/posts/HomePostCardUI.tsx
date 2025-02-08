@@ -11,11 +11,10 @@ interface HomePostCardProps {
 
 const HomePostCardUI = ({ post_media_data, user_id }: HomePostCardProps) => {
   const { post_data, media_data } = post_media_data;
-  console.log(post_data);
   const genreIds = media_data?.genres?.map((genre: any) => genre.id) || [];
   const post_link = `/protected/user/${post_data.creator.id}?post_id=${post_data.post.id}`;
   return (
-    <div className="relative flex h-min flex-col rounded-[8px] border border-foreground/10 bg-white/10 lg:min-w-[320px] lg:max-w-[400px]">
+    <div className="post_border relative flex h-min flex-col rounded-[16px] bg-white/10 md:min-w-[320px] md:max-w-[400px]">
       <PostHeader
         creator={post_data.creator}
         post={post_data.post}

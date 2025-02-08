@@ -11,7 +11,7 @@ const page = async () => {
   }
 
   return (
-    <div className="my-4 mb-12 w-full px-4 lg:px-0">
+    <div className="my-4 mb-12 w-full px-4 md:px-0">
       <h1 className="px-4 text-lg font-semibold">History</h1>
       <div className="my-4 w-full border-b-2 border-foreground/5"></div>
       <WatchHistoryWithInfiniteScroll></WatchHistoryWithInfiniteScroll>

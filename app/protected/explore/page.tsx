@@ -5,6 +5,7 @@ import { getAverageColor } from "fast-average-color-node";
 import MediaCarouselNew from "@/components/features/explore/MediaCarouselNew";
 import Banner_90x728 from "@/components/features/ads/Banner_90x728";
 import { getCurrentUser } from "@/lib/supabase/serverQueries";
+import AdBanner from "@/components/features/ads/GoogleDisplayAd";
 
 const fetchMoviesWithColors = async (movies: any) => {
   const moviesWithColors = await Promise.all(
@@ -32,30 +33,58 @@ const page = async () => {
   return (
     <div className="flex w-full flex-col items-center">
       <MediaCarouselNew movies={moviesWithColors}></MediaCarouselNew>
-      {user && !user.premium && (
-        <div className="mt-4 hidden w-full items-center justify-center lg:flex">
-          <Banner_90x728></Banner_90x728>
+      {!user?.premium && (
+        <div className="mx-auto w-full max-w-[800px]">
+          <AdBanner
+            dataAdFormat="auto"
+            dataFullWidthResponsive={true}
+            dataAdSlot="4196406083"
+          />
         </div>
       )}
-      <div
-        className="z-10 mt-4 flex w-full flex-col gap-8 lg:px-4"
-        id="explore"
-      >
+      <div className="z-10 mt-4 flex w-full flex-col gap-8" id="explore">
         <div className="flex flex-col gap-4">
           <ExploreTab
             action="Now_in_cinemas"
             containerId="cinemasNow"
           ></ExploreTab>
         </div>
+        {!user?.premium && (
+          <div className="mx-auto w-full max-w-[800px]">
+            <AdBanner
+              dataAdFormat="auto"
+              dataFullWidthResponsive={true}
+              dataAdSlot="4196406083"
+            />
+          </div>
+        )}
         <div className="flex flex-col gap-4">
           <ExploreTab
             action="Popular_Today"
             containerId="popularToday"
           ></ExploreTab>
         </div>
+        {!user?.premium && (
+          <div className="mx-auto w-full max-w-[800px]">
+            <AdBanner
+              dataAdFormat="auto"
+              dataFullWidthResponsive={true}
+              dataAdSlot="4196406083"
+            />
+          </div>
+        )}
         <div className="flex flex-col gap-4">
           <ExploreTab action="Trending_TV" containerId="trendngTV"></ExploreTab>
         </div>
+        {!user?.premium && (
+          <div className="mx-auto w-full max-w-[800px]">
+            <AdBanner
+              dataAdFormat="auto"
+              dataFullWidthResponsive={true}
+              dataAdSlot="4196406083"
+            />
+          </div>
+        )}
         <div className="flex flex-col gap-4">
           <ExploreTab
             action="Trending_Movies"
@@ -63,7 +92,7 @@ const page = async () => {
           ></ExploreTab>
         </div>
       </div>
-      {/* <div className="mx-auto flex w-screen flex-col items-center lg:max-w-[90vw]">
+      {/* <div className="mx-auto flex w-screen flex-col items-center md:max-w-[90vw]">
         <h1 className="mt-16 text-4xl font-bold">Explore More!</h1>
         <GenreSelector></GenreSelector>
       </div> */}

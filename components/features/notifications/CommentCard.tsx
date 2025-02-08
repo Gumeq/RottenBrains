@@ -38,7 +38,7 @@ const CommentCard: FC<FollowCardProps> = ({ notification }) => {
         <p className="">{notification.comment.content}</p>
         <Link
           href={post_link}
-          className="flex flex-col gap-2 rounded-[16px] bg-foreground/10 p-4 lg:flex-row"
+          className="flex flex-col gap-2 rounded-[16px] bg-foreground/10 p-4 md:flex-row"
         >
           <div className="flex flex-col gap-2">
             <p className="text-lg">
@@ -48,7 +48,7 @@ const CommentCard: FC<FollowCardProps> = ({ notification }) => {
               "{notification.post.review_user}"
             </p>
           </div>
-          <div className="aspect-[16/9] max-w-[200px] flex-shrink-0 overflow-hidden rounded-[8px]">
+          <div className="aspect-[16/9] flex-shrink-0 overflow-hidden rounded-[8px] md:max-w-[200px]">
             <ImageWithFallback
               imageUrl={imageUrl}
               altText={notification.notification_id}

@@ -163,7 +163,7 @@ const SearchMovies = forwardRef<HTMLInputElement, any>(
           >
             <ComboboxOptions
               anchor="bottom"
-              className="z-50 w-screen gap-2 rounded-xl border border-white/5 bg-background p-2 empty:hidden lg:w-[var(--input-width)]"
+              className="z-50 w-screen gap-2 rounded-xl border border-white/5 bg-background p-2 empty:hidden md:w-[var(--input-width)]"
             >
               {renderOptions()}
             </ComboboxOptions>

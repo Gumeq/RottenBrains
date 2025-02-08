@@ -77,9 +77,9 @@ const MediaCardUI: React.FC<MediaCardProps> = ({
         : `/protected/watch/${media_type}/${media_id}/1/1`;
 
   return (
-    <div className="mb-2 flex w-full min-w-[75vw] max-w-[100vw] flex-col lg:w-full lg:min-w-[320px] lg:max-w-[400px]">
+    <div className="mb-2 flex w-full min-w-[75vw] max-w-[100vw] flex-col md:w-full md:min-w-[320px] md:max-w-[400px]">
       <Link
-        className={`relative w-full overflow-hidden lg:rounded-[8px] ${rounded === true ? "rounded-[8px]" : ""}`}
+        className={`relative w-full overflow-hidden md:rounded-[8px] ${rounded === true ? "rounded-[8px]" : ""}`}
         href={href}
       >
         <HoverImage
@@ -99,7 +99,7 @@ const MediaCardUI: React.FC<MediaCardProps> = ({
           />
         </HoverImage>
       </Link>
-      <div className="flex flex-col gap-2 lg:p-0">
+      <div className="flex flex-col gap-2 md:p-0">
         <div className="mt-2 flex flex-row justify-between">
           <h2 className="font-medium">
             {mediaTitle}

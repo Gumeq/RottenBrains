@@ -50,7 +50,7 @@ const AddComment: React.FC<any> = ({
   return (
     <form
       onSubmit={handleSubmit}
-      className="lg:text-s4 flex w-full flex-row items-center gap-2 border-t border-foreground/10 bg-background px-2"
+      className="md:text-s4 flex w-full flex-row items-center gap-2 border-t border-foreground/10 bg-background px-2"
     >
       <img
         src={user.image_url}
@@ -62,12 +62,12 @@ const AddComment: React.FC<any> = ({
         value={content}
         onChange={(e) => setContent(e.target.value)}
         required
-        className="w-full appearance-none bg-background py-4 text-foreground focus:outline-none lg:p-2"
+        className="w-full appearance-none bg-background py-4 text-foreground focus:outline-none md:p-2"
         placeholder="Add comment..."
       />
       <button
         type="submit"
-        className="bg-background font-medium text-foreground/50 hover:text-primary lg:px-2"
+        className="bg-background font-medium text-foreground/50 hover:text-primary md:px-2"
       >
         Post
       </button>

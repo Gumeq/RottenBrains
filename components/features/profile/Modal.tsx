@@ -12,7 +12,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
-      <div className="max-h-[80vh] w-full max-w-[95vw] overflow-y-auto rounded-lg bg-background shadow-lg drop-shadow-lg lg:max-h-[50vh] lg:max-w-[800px]">
+      <div className="max-h-[80vh] w-full max-w-[95vw] overflow-y-auto rounded-lg bg-background shadow-lg drop-shadow-lg md:max-h-[50vh] md:max-w-[800px]">
         <div className="flex items-center justify-between border-b border-foreground/20">
           <h2 className="p-4 text-xl font-bold">{title}</h2>
           <button onClick={onClose} className="p-4 text-xl font-semibold">

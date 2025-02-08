@@ -58,7 +58,7 @@ const ProfilePicture: React.FC = () => {
       <img
         src={(newImage as string) || image}
         alt="Profile"
-        className="overlay-hidden aspect-[1/1] w-[100px] min-w-[100px] rounded-full lg:w-[150px] lg:min-w-[150px]"
+        className="overlay-hidden aspect-[1/1] w-[100px] min-w-[100px] rounded-full md:w-[150px] md:min-w-[150px]"
       />
       {isEditing ? (
         <div className="flex flex-col items-center">

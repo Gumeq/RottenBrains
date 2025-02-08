@@ -94,6 +94,14 @@
   .dark .invert-on-dark {
     filter: invert(1);
   }
+
+  .dark .post_border {
+    @apply border-none;
+  }
+
+  .post_border {
+    @apply border border-foreground/20;
+  }
 }
 
 /* 
@@ -435,7 +443,7 @@
 }
 
 .bottombar {
-  @apply fixed bottom-0 left-0 right-0 z-50 flex items-center justify-center bg-background lg:hidden;
+  @apply fixed bottom-0 left-0 right-0 z-50 flex items-center justify-center bg-background md:hidden;
   height: calc(env(safe-area-inset-bottom) + 80px);
 }
 .bottombar-inner {
