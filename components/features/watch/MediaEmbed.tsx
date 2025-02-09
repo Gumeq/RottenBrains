@@ -108,18 +108,21 @@ const VideoEmbed = ({
             </div>
           </button>
         ) : (
-          <iframe
-            allowFullScreen
-            id="iframe"
-            loading="lazy"
-            src={link}
-            // src={`https://2anime.xyz/embed/fullmetal-alchemist-episode-14`}
-            className="relative z-50 aspect-[16/9] w-full overflow-hidden md:rounded-[16px]"
-            frameBorder="0"
-            marginHeight={0}
-            marginWidth={0}
-            scrolling="no"
-          ></iframe>
+          <div className="relative z-50 aspect-[16/9] w-full overflow-hidden md: rounded-[8px]"
+<iframe
+allowFullScreen
+id="iframe"
+loading="lazy"
+src={link}
+// src={`https://2anime.xyz/
+embed/fullmetal-alchemist-episode-14`}
+className="inline-block h-full w-screen md:w-full"
+frameBorder="0"
+marginHeight={0}
+marginWidth={0}
+scrolling="no"
+></iframe>
+</div>
         )}
       </div>
     </div>
