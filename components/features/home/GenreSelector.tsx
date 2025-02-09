@@ -85,8 +85,8 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({
     () => pathname.split("/").filter(Boolean),
     [pathname],
   );
-  const media_type = pathSegments[0] || null;
-  const genre_id = pathSegments[1] || null;
+  const media_type = pathSegments[1] || null;
+  const genre_id = pathSegments[2] || null;
 
   // Update selected category based on the URL
   useEffect(() => {
@@ -178,7 +178,7 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({
   // 6. CLICK HANDLERS
   // ---------------------------
   const handleGenreClick = (genreId: number, mediaType: "movie" | "tv") => {
-    router.push(`/${mediaType}/${genreId}`);
+    router.push(`/genre/${mediaType}/${genreId}`);
   };
 
   const handleRecommendedClick = () => {
