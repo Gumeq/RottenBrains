@@ -11,7 +11,10 @@ const page = async ({ params }: { params: Params }) => {
 
   return (
     <div className="flex w-full flex-col gap-2">
-      <GenreSelector></GenreSelector>
+      <GenreSelector
+        media_type={media_type}
+        genre_id={genre_id}
+      ></GenreSelector>
       <MobileTopBarHome />
       <div className="mt-4 w-full">
         <InfiniteScrollByGenre

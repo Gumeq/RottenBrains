@@ -32,7 +32,10 @@ export default function PostModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm">
-      <div className="relative max-h-[70vh] w-full max-w-[95vw] overflow-hidden rounded-[16px] bg-background shadow-lg md:aspect-[16/9] md:max-h-[90vh] md:w-[60vw]">
+      <dialog
+        className="relative max-h-[70vh] w-full max-w-[95vw] overflow-hidden rounded-[16px] bg-background text-foreground shadow-lg md:aspect-[16/9] md:max-h-[90vh] md:w-[60vw]"
+        open={isOpen}
+      >
         <button
           onClick={handleClose}
           className="absolute right-2 top-2 flex aspect-square h-8 items-center justify-center text-lg font-semibold"
@@ -40,7 +43,7 @@ export default function PostModal({
           <p>&times;</p>
         </button>
         <div className="h-full w-full">{children}</div>
-      </div>
+      </dialog>
     </div>
   );
 }

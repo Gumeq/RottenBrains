@@ -247,12 +247,13 @@ const CommentSection = ({ post_data, current_user }: any) => {
         {/* Mobile Comments Modal */}
         <AnimatePresence>
           {state.show_comments && (
-            <motion.div
+            <motion.dialog
               variants={cardVariants}
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="fixed left-0 z-50 flex h-full w-full flex-col rounded-[16px] bg-background"
+              open={state.show_comments}
+              className="fixed left-0 z-50 flex h-full w-full flex-col rounded-[16px] bg-background text-foreground"
               style={{
                 top: `${viewportDimensions.top}px`,
                 height: `${viewportDimensions.height}px`,
@@ -306,7 +307,7 @@ const CommentSection = ({ post_data, current_user }: any) => {
                   fetchReplies={fetchReplies}
                 />
               </div>
-            </motion.div>
+            </motion.dialog>
           )}
         </AnimatePresence>
       </div>

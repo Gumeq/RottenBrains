@@ -70,10 +70,6 @@ export default async function Page() {
       >
         <NavTop />
 
-        <Link className="h-32 w-32 bg-red-500" href={"/post/1"}>
-          POST
-        </Link>
-
         <ErrorBoundary
           fallback={<div>Could not load "Continue Watching".</div>}
         >
@@ -132,7 +128,7 @@ export default async function Page() {
           )}
         </ErrorBoundary>
 
-        <GenreSelector movie_genres={movie_genres} tv_genres={tv_genres} />
+        <GenreSelector />
 
         <InfiniteScrollHome
           user_id={user.id}

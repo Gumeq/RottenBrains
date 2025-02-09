@@ -32,17 +32,15 @@ interface FeedGenre {
 }
 
 type GenreSelectorProps = {
-  movie_genres?: any;
-  tv_genres?: any;
+  media_type?: string;
+  genre_id?: number;
 };
 
 const GenreSelector: React.FC<GenreSelectorProps> = ({
-  movie_genres,
-  tv_genres,
+  media_type,
+  genre_id,
 }) => {
   const { user } = useUser();
-
-  const pathname = usePathname();
   const router = useRouter();
 
   const [feedGenres, setFeedGenres] = useState<FeedGenre[]>(
@@ -77,16 +75,6 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({
     ...genre,
     media_type: "tv",
   }));
-
-  // ---------------------------
-  // 3. URL LOGIC
-  // ---------------------------
-  const pathSegments = useMemo(
-    () => pathname.split("/").filter(Boolean),
-    [pathname],
-  );
-  const media_type = pathSegments[1] || null;
-  const genre_id = pathSegments[2] || null;
 
   // Update selected category based on the URL
   useEffect(() => {

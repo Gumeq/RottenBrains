@@ -17,8 +17,8 @@
 @layer base {
   :root {
     /* --- Your original variables --- */
-    --background: 200 20% 96%; /* hsl(200, 20%, 96%) */
-    --foreground: 0 0% 7%; /* hsl(0, 0%, 6%) */
+    --background: 200 0% 90%; /* hsl(200, 20%, 96%) */
+    --foreground: 0 0% 20%; /* hsl(0, 0%, 6%) */
     --accent: 347 100% 40%;
     --primary: 0 55% 29%;
     --secondary: 0 72% 69%;
@@ -45,7 +45,7 @@
 
   .dark {
     /* --- Your original dark variables --- */
-    --background: 0 0% 7%; /* hsl(0, 0%, 6%) */
+    --background: 0 0% 5%; /* hsl(0, 0%, 6%) */
     --foreground: 200 20% 96%; /* hsl(200, 20%, 96%) */
     --accent: 347 100% 50%;
     --primary: 0 55% 71%;
