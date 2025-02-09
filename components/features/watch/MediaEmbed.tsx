@@ -55,7 +55,7 @@ const VideoEmbed = ({
     if (media_type === "movie") {
       return `${linkStart}${media_type}/${media_id}`;
     } else {
-      return `${linkStart}${media_type}/${media_id}/${season_number}/${episode_number}`;
+      return `${linkStart}${media_type}/${season_number}/${episode_number}`;
     }
   };
 
@@ -89,9 +89,6 @@ const VideoEmbed = ({
             className="relative aspect-[16/9] w-full overflow-hidden text-center md:rounded-[8px]"
             onClick={handleButtonClick}
           >
-            {/* <h1 className="absolute left-0 top-0 text-4xl font-bold">
-              {linkStart}
-            </h1> */}
             <ImageWithFallback
               imageUrl={imageUrl}
               altText={media.title || episode.name}
@@ -108,21 +105,19 @@ const VideoEmbed = ({
             </div>
           </button>
         ) : (
-          <div className="relative z-50 aspect-[16/9] w-full overflow-hidden md: rounded-[8px]"
-<iframe
-allowFullScreen
-id="iframe"
-loading="lazy"
-src={link}
-// src={`https://2anime.xyz/
-embed/fullmetal-alchemist-episode-14`}
-className="inline-block h-full w-screen md:w-full"
-frameBorder="0"
-marginHeight={0}
-marginWidth={0}
-scrolling="no"
-></iframe>
-</div>
+          <div className="relative z-50 aspect-[16/9] w-full overflow-hidden md:rounded-[8px]">
+            <iframe
+              allowFullScreen
+              id="iframe"
+              loading="lazy"
+              src={link}
+              className="inline-block h-full w-full"
+              frameBorder="0"
+              marginHeight={0}
+              marginWidth={0}
+              scrolling="no"
+            ></iframe>
+          </div>
         )}
       </div>
     </div>
