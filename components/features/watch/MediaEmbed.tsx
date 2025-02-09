@@ -63,7 +63,7 @@ const VideoEmbed = ({
 
   if (!media) {
     return (
-      <div className="relative aspect-[16/9] w-full overflow-hidden bg-foreground/10 text-center md:rounded-[8px]"></div>
+      <div className="relative aspect-[16/9] w-full overflow-hidden bg-foreground/10 text-center lg:rounded-[8px]"></div>
     );
   }
 
@@ -71,8 +71,8 @@ const VideoEmbed = ({
     media_type === "movie" ? media.backdrop_path : episode.still_path;
 
   return (
-    <div className="fixed left-0 top-0 z-50 flex w-screen flex-col border-foreground/20 bg-background md:relative md:w-full md:gap-2 md:border-none md:pb-0">
-      <div className="z-20 flex h-10 w-full flex-row items-center gap-4 bg-background px-2 md:hidden">
+    <div className="fixed left-0 top-0 z-50 flex w-screen flex-col border-foreground/20 bg-background lg:relative lg:w-full lg:gap-2 lg:border-none lg:pb-0">
+      <div className="z-20 flex h-10 w-full flex-row items-center gap-4 bg-background px-2 lg:hidden">
         <div className="flex h-full items-center px-2">
           <Link href={"/"} className="flex flex-row items-center gap-2">
             <img
@@ -86,7 +86,7 @@ const VideoEmbed = ({
       <div className="w-full">
         {!showVideo ? (
           <button
-            className="relative aspect-[16/9] w-full overflow-hidden text-center md:rounded-[8px]"
+            className="relative aspect-[16/9] w-full overflow-hidden text-center lg:rounded-[8px]"
             onClick={handleButtonClick}
           >
             <ImageWithFallback
@@ -105,7 +105,7 @@ const VideoEmbed = ({
             </div>
           </button>
         ) : (
-          <div className="relative z-50 aspect-[16/9] w-full overflow-hidden md:rounded-[8px]">
+          <div className="relative w-screen z-50 aspect-[16/9] lg:w-full overflow-hidden lg:rounded-[8px]">
             <iframe
               allowFullScreen
               id="iframe"
