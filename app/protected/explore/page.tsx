@@ -54,7 +54,7 @@ const page = async () => {
             <AdBanner
               dataAdFormat="auto"
               dataFullWidthResponsive={true}
-              dataAdSlot="4196406083"
+              dataAdSlot="7105818069"
             />
           </div>
         )}
@@ -69,7 +69,7 @@ const page = async () => {
             <AdBanner
               dataAdFormat="auto"
               dataFullWidthResponsive={true}
-              dataAdSlot="4196406083"
+              dataAdSlot="5808176129"
             />
           </div>
         )}

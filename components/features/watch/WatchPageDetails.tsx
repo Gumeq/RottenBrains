@@ -271,7 +271,7 @@ const WatchPageDetails: React.FC<WatchPageDetailsProps> = ({
             <AdBanner
               dataAdFormat="autorelaxed"
               dataFullWidthResponsive={true}
-              dataAdSlot="1497132697"
+              dataAdSlot="7121257793"
             />
           </div>
         )}
