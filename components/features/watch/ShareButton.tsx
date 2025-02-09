@@ -46,7 +46,7 @@ const ShareButton: React.FC = () => {
   return (
     <button
       onClick={sharePage}
-      className="z-10 flex flex-shrink-0 flex-row items-center gap-2 justify-self-end rounded-[4px] bg-foreground/10 px-4 py-1"
+      className="z-10 flex flex-shrink-0 flex-row items-center gap-2 justify-self-end rounded-full bg-foreground/10 px-4 py-1"
     >
       <img
         src="/assets/icons/share-outline.svg"

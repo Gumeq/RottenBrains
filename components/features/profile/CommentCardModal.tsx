@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { getCommentReplies } from "@/lib/supabase/clientQueries";
-import { timeAgo } from "@/lib/utils";
 import Link from "next/link";
 import AddComment from "./AddCommentModal";
 import { getRepliesByCommentId } from "@/lib/supabase/serverQueries";
+import { getRelativeTime } from "@/lib/utils";
 
 const CommentCard = ({
   comment,
@@ -48,7 +48,7 @@ const CommentCard = ({
             </p>
           </div>
           <div className="flex flex-row gap-2 text-xs text-foreground/50">
-            <p>{timeAgo(comment.created_at)}</p>
+            <p>{getRelativeTime(comment.created_at)}</p>
             <button onClick={handleReplyButton}>Reply</button>
           </div>
           <div>

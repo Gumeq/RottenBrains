@@ -18,6 +18,7 @@ import InfiniteScrollHome from "@/components/features/home/InfiniteScroll";
 import HorizontalScroll from "@/components/features/home/HorizontalScroll";
 import { ErrorBoundary } from "@/components/common/ErrorBoundry";
 import AdBanner from "@/components/features/ads/GoogleDisplayAd";
+import Link from "next/link";
 
 export default async function Page() {
   const user = await getCurrentUser();
@@ -68,6 +69,10 @@ export default async function Page() {
         id="main-content"
       >
         <NavTop />
+
+        <Link className="h-32 w-32 bg-red-500" href={"/post/1"}>
+          POST
+        </Link>
 
         <ErrorBoundary
           fallback={<div>Could not load "Continue Watching".</div>}

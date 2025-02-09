@@ -1,4 +1,4 @@
-import { getRelativeTime, timeAgo } from "@/lib/utils";
+import { getRelativeTime } from "@/lib/utils";
 import { addScaleCorrector } from "framer-motion";
 import Link from "next/link";
 import React, { FC } from "react";

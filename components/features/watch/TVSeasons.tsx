@@ -31,14 +31,14 @@ const TVShowDetails = async ({
 
   return (
     <div className="w-full">
-      <div className="relative">
+      <div className="small-screen-watch-top sticky z-30 bg-background">
         <div className="gradient-edge absolute right-0 top-0 z-20 h-full w-[10%]" />
-        <div className="custom-scrollbar flex gap-2 overflow-x-auto px-2 py-2 text-sm md:px-0">
+        <div className="custom-scrollbar 0 flex gap-2 overflow-x-auto px-2 py-2 text-sm md:px-0">
           {filteredSeasons.map((season: any) => (
             <Link
               key={season.season_number}
               href={`/protected/watch/tv/${tv_show_id}/${season.season_number}/1`}
-              className={`z-10 flex flex-row items-center gap-2 whitespace-nowrap rounded-[8px] bg-foreground/10 px-2 py-1 text-foreground drop-shadow-lg hover:scale-105 ${
+              className={`z-10 flex flex-row items-center gap-2 whitespace-nowrap rounded-full bg-foreground/10 px-4 py-1 text-foreground drop-shadow-lg hover:scale-105 ${
                 season.season_number === selectedSeason.season_number
                   ? "border-2 border-foreground/20"
                   : ""

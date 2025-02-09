@@ -3,9 +3,9 @@ import PostModal from "../profile/PostModal";
 import CommentSection from "../profile/CommentSection";
 import ImageWithFallback from "../media/ImageWithFallback";
 import Link from "next/link";
-import { timeAgo } from "@/lib/utils";
 import ProfilePicture from "@/components/ui/ProfilePicture";
 import { getImageUrlFromMediaDetails } from "@/lib/server/helperFunctions";
+import { getRelativeTime } from "@/lib/utils";
 
 interface PostModalFullProps {
   post_media_data: any;
@@ -31,7 +31,7 @@ const PostModalFull = ({ post_media_data, user_id }: PostModalFullProps) => {
                     </Link>
                   </p>
                   <p className="-mt-1 text-xs opacity-50">
-                    {timeAgo(post_data.post.created_at)}
+                    {getRelativeTime(post_data.post.created_at)}
                   </p>
                 </div>
               </div>

@@ -5,6 +5,7 @@ import MoreOptions from "@/components/features/media/MoreOptions";
 import { getWatchTime } from "@/lib/supabase/serverQueries";
 import {
   formatEpisodeCode,
+  getImageUrl,
   getRelativeTime,
   transformRuntime,
 } from "@/lib/utils";
@@ -76,10 +77,6 @@ const MediaCardSmall = async ({
   // Extract genre IDs
   const genreIds: bigint[] = media?.genres?.map((genre: any) => genre.id) || [];
 
-  const imageUrl =
-    images?.backdrops?.[0]?.file_path ||
-    (season_number && episode_number ? media.still_path : media.backdrop_path);
-
   const mediaTitle = title || name || "Unknown Title";
   const episodeCode =
     media_type === "tv" && season_number && episode_number
@@ -94,7 +91,7 @@ const MediaCardSmall = async ({
     <div className="flex w-full flex-col gap-2 hover:border-accent md:flex-row">
       <div
         className={`relative w-full flex-shrink-0 overflow-hidden md:w-1/2 ${
-          rounded ? "rounded-[4px]" : "md:rounded-[4px]"
+          rounded ? "rounded-[8px]" : "md:rounded-[8px]"
         }`}
       >
         <MediaCardOverlay
@@ -104,7 +101,7 @@ const MediaCardSmall = async ({
           transformRuntime={transformRuntime}
         />
         <ImageWithFallback
-          imageUrl={imageUrl}
+          imageUrl={getImageUrl(media, season_number, episode_number)}
           altText={mediaTitle}
           quality={"w1280"}
         />

@@ -3,7 +3,13 @@ import Link from "next/link";
 import MediaCardOverlay from "@/components/features/media/MediaCardOverlay";
 import HoverImage from "./TrailerDisplayOnHover";
 import MoreOptions from "./MoreOptions";
-import { formatDate, formatEpisodeCode, transformRuntime } from "@/lib/utils";
+import {
+  formatDate,
+  formatEpisodeCode,
+  getHrefFromMedia,
+  getImageUrl,
+  transformRuntime,
+} from "@/lib/utils";
 
 interface MediaCardProps {
   media: any;
@@ -33,10 +39,6 @@ const MediaCardUI: React.FC<MediaCardProps> = ({
   watch_time = watch_time || media.watch_time || 0;
 
   const genreIds: bigint[] = media?.genres?.map((genre: any) => genre.id) || [];
-
-  const imageUrl =
-    media?.images?.backdrops?.[0]?.file_path ||
-    (season_number && episode_number ? media.still_path : media.backdrop_path);
 
   const releaseDate =
     media.release_date || media.air_date || media.first_air_date;
@@ -69,21 +71,19 @@ const MediaCardUI: React.FC<MediaCardProps> = ({
       ? ` | ${formatEpisodeCode(season_number, episode_number)}`
       : "";
 
-  const href =
-    media_type === "movie"
-      ? `/protected/watch/${media_type}/${media_id}`
-      : season_number && episode_number
-        ? `/protected/watch/${media_type}/${media_id}/${season_number}/${episode_number}`
-        : `/protected/watch/${media_type}/${media_id}/1/1`;
-
   return (
     <div className="mb-2 flex w-full min-w-[75vw] max-w-[100vw] flex-col md:w-full md:min-w-[320px] md:max-w-[400px]">
       <Link
         className={`relative w-full overflow-hidden md:rounded-[8px] ${rounded === true ? "rounded-[8px]" : ""}`}
-        href={href}
+        href={getHrefFromMedia(
+          media_type || "movie",
+          media_id || 0,
+          season_number,
+          episode_number,
+        )}
       >
         <HoverImage
-          imageUrl={imageUrl}
+          imageUrl={getImageUrl(media, season_number, episode_number)}
           altText={mediaTitle}
           media_type={media_type || "movie"}
           media_id={media_id || 0}

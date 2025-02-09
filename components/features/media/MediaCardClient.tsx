@@ -8,7 +8,12 @@ import HoverImage from "./TrailerDisplayOnHover";
 import MoreOptions from "./MoreOptions";
 import HomeMediaCardSkeleton from "@/components/features/media/MediaCardSkeleton";
 import { getWatchTime } from "@/lib/supabase/clientQueries";
-import { formatDate, formatEpisodeCode, transformRuntime } from "@/lib/utils";
+import {
+  formatDate,
+  formatEpisodeCode,
+  getImageUrl,
+  transformRuntime,
+} from "@/lib/utils";
 
 interface MediaCardProps {
   media_type: string;
@@ -110,13 +115,6 @@ const MediaCardClient: React.FC<MediaCardProps> = React.memo(
     const genreIds: bigint[] =
       media?.genres?.map((genre: any) => genre.id) || [];
 
-    // Determine image URL
-    const imageUrl =
-      media?.images?.backdrops?.[0]?.file_path ||
-      (season_number && episode_number
-        ? media.still_path
-        : media.backdrop_path);
-
     // Calculate day differences
     const releaseDate =
       media.release_date || media.air_date || media.first_air_date;
@@ -165,7 +163,7 @@ const MediaCardClient: React.FC<MediaCardProps> = React.memo(
           href={href}
         >
           <HoverImage
-            imageUrl={imageUrl}
+            imageUrl={getImageUrl(media, season_number, episode_number)}
             altText={mediaTitle}
             media_type={media_type}
             media_id={media_id}

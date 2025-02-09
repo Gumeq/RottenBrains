@@ -1,6 +1,11 @@
 import { getWatchTime } from "@/lib/supabase/serverQueries";
 import { getMediaDetails } from "@/lib/tmdb";
-import { getRelativeTime, transformRuntime } from "@/lib/utils";
+import {
+  getHrefFromMedia,
+  getImageUrl,
+  getRelativeTime,
+  transformRuntime,
+} from "@/lib/utils";
 import Link from "next/link";
 
 const RecommendedCard = async ({ media_id, media_type, user_id }: any) => {
@@ -10,11 +15,7 @@ const RecommendedCard = async ({ media_id, media_type, user_id }: any) => {
     <div className="mb-4 flex w-full flex-col gap-2 hover:border-accent hover:bg-foreground/20 md:mb-2 md:flex-row md:p-2">
       <Link
         className="relative w-full flex-shrink-0 overflow-hidden md:w-1/2 md:rounded-[4px]"
-        href={
-          media_type === "movie"
-            ? `/protected/watch/${media_type}/${media_id}`
-            : `/protected/watch/${media_type}/${media_id}/1/1`
-        }
+        href={getHrefFromMedia(media_type, media_id)}
       >
         {watchTime > 0 && (
           <div
@@ -33,13 +34,7 @@ const RecommendedCard = async ({ media_id, media_type, user_id }: any) => {
           </div>
         </div>
         <img
-          src={
-            media.images &&
-            media.images.backdrops &&
-            media.images.backdrops.length > 0
-              ? `https://image.tmdb.org/t/p/w780${media.images.backdrops[0].file_path}`
-              : `https://image.tmdb.org/t/p/w780${media.backdrop_path}`
-          }
+          src={getImageUrl(media)}
           alt=""
           loading="lazy"
           className="aspect-[16/9] bg-foreground/10 md:rounded-[4px]"

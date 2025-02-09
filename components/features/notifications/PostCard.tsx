@@ -1,9 +1,9 @@
-import { getRelativeTime, timeAgo } from "@/lib/utils";
 import { addScaleCorrector } from "framer-motion";
 import Link from "next/link";
 import React, { FC } from "react";
 import FollowButton from "./FollowButton";
 import ImageWithFallback from "../media/ImageWithFallback";
+import { getRelativeTime } from "@/lib/utils";
 
 interface FollowCardProps {
   notification: any;

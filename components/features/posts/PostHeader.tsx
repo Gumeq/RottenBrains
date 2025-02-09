@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import ProfilePicture from "../../ui/ProfilePicture";
-import { timeAgo } from "@/lib/utils";
+import { getRelativeTime } from "@/lib/utils";
 
 interface Creator {
   id: number;
@@ -36,7 +36,9 @@ const PostHeader = ({ creator, post, user_id }: PostHeaderProps) => {
               {creator.username}
             </Link>
           </p>
-          <p className="-mt-1 text-xs opacity-50">{timeAgo(post.created_at)}</p>
+          <p className="-mt-1 text-xs opacity-50">
+            {getRelativeTime(post.created_at)}
+          </p>
         </div>
       </div>
       <div className="flex h-full flex-row items-center gap-2">

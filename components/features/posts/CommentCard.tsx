@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import AddComment from "./AddComment";
 import { getCommentReplies } from "@/lib/supabase/clientQueries";
-import { timeAgo } from "@/lib/utils";
+import { getRelativeTime } from "@/lib/utils";
 
 const CommentCard = ({ comment, post, user_id, fetchComments }: any) => {
   const [reply, setReply] = useState(false);
@@ -60,7 +60,7 @@ const CommentCard = ({ comment, post, user_id, fetchComments }: any) => {
             <p className="whitespace-pre-wrap text-sm">{comment.content}</p>
           </div>
           <div className="flex flex-row gap-2 text-xs text-foreground/50">
-            <p>{timeAgo(comment.created_at)}</p>
+            <p>{getRelativeTime(comment.created_at)}</p>
             <p className="">{comment.total_likes} likes</p>
             <button onClick={handleReplyButton}>Reply</button>
           </div>

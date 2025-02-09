@@ -397,6 +397,12 @@
   margin-top: calc((56.25vw + 38px));
 }
 
+@media (max-width: 1024px) {
+  .small-screen-watch-top {
+    top: calc(56.25vw + 42px);
+  }
+}
+
 .svgAnimation {
   width: 100px;
   height: 100px;

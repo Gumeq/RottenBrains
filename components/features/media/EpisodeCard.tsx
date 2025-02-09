@@ -2,6 +2,7 @@ import { getWatchTime } from "@/lib/supabase/serverQueries";
 import { getEpisodeDetails } from "@/lib/tmdb";
 import {
   formatEpisodeCode,
+  getImageUrl,
   getRelativeTime,
   transformRuntime,
 } from "@/lib/utils";
@@ -69,7 +70,7 @@ const EpisodeCard = async ({
           </div>
         </div>
         <img
-          src={`https://image.tmdb.org/t/p/w780${episode.still_path}`}
+          src={getImageUrl(episode)}
           alt={`Still from episode ${episode.name}`}
           width={780}
           height={440}

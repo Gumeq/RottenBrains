@@ -129,7 +129,6 @@ export default async function mediaPage({ params }: { params: Params }) {
           <div className="flex flex-col gap-2 md:mt-0 md:w-full md:max-w-[400px]">
             {nextEpisode && (
               <div className="flex flex-col gap-2 md:rounded-[8px] md:p-0">
-                <h3 className="px-2 font-semibold md:px-0">Next Episode</h3>
                 <Link
                   href={`/protected/watch/tv/${media.id}/${nextEpisode.season_number}/${nextEpisode.episode_number}`}
                   className="px-4 md:px-0"
@@ -155,7 +154,6 @@ export default async function mediaPage({ params }: { params: Params }) {
                 />
               </div>
             )}
-            <h3 className="px-2 font-semibold md:px-0">All Episodes</h3>
             {media_type === "tv" && season_number && (
               <TVShowDetails
                 tv_show_id={media_id}

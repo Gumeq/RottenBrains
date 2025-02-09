@@ -8,7 +8,13 @@ import HoverImage from "./TrailerDisplayOnHover";
 import MoreOptions from "./MoreOptions";
 import HomeMediaCardSkeleton from "@/components/features/media/MediaCardSkeleton";
 import { getWatchTime } from "@/lib/supabase/serverQueries";
-import { formatDate, formatEpisodeCode, transformRuntime } from "@/lib/utils";
+import {
+  formatDate,
+  formatEpisodeCode,
+  getHrefFromMedia,
+  getImageUrl,
+  transformRuntime,
+} from "@/lib/utils";
 
 interface MediaCardProps {
   media_type: string;
@@ -55,11 +61,6 @@ const MediaCardServer: React.FC<MediaCardProps> = async ({
   // Extract genre IDs
   const genreIds: bigint[] = media?.genres?.map((genre: any) => genre.id) || [];
 
-  // Determine image URL
-  const imageUrl =
-    media?.images?.backdrops?.[0]?.file_path ||
-    (season_number && episode_number ? media.still_path : media.backdrop_path);
-
   // Calculate day differences
   const releaseDate =
     media.release_date || media.air_date || media.first_air_date;
@@ -92,21 +93,19 @@ const MediaCardServer: React.FC<MediaCardProps> = async ({
       ? ` | ${formatEpisodeCode(season_number, episode_number)}`
       : "";
 
-  const href =
-    media_type === "movie"
-      ? `/protected/watch/${media_type}/${media_id}`
-      : season_number && episode_number
-        ? `/protected/watch/${media_type}/${media_id}/${season_number}/${episode_number}`
-        : `/protected/watch/${media_type}/${media_id}/1/1`;
-
   return (
     <div className="mb-2 flex w-full min-w-[75vw] max-w-[100vw] flex-col md:w-full md:min-w-[320px] md:max-w-[400px]">
       <Link
         className={`relative w-full overflow-hidden md:rounded-[8px] ${rounded === true ? "rounded-[8px]" : ""}`}
-        href={href}
+        href={getHrefFromMedia(
+          media_type,
+          media_id,
+          season_number,
+          episode_number,
+        )}
       >
         <HoverImage
-          imageUrl={imageUrl}
+          imageUrl={getImageUrl(media, season_number, episode_number)}
           altText={mediaTitle}
           media_type={media_type}
           media_id={media_id}

@@ -29,25 +29,6 @@ export function transformRuntime(minutes: number): string {
   }
 }
 
-export function getRelativeTime(dateString: string): string {
-  try {
-    if (!dateString) {
-      throw new Error("No date string provided.");
-    }
-
-    const date = parseISO(dateString);
-    if (!isValid(date)) {
-      throw new Error(`Invalid date: ${dateString}`);
-    }
-
-    return formatDistanceToNow(date, { addSuffix: true });
-  } catch (error: unknown) {
-    console.error("Error in getRelativeTime:", error);
-    // Return a fallback string, or you could re-throw the error if desired
-    return "Invalid date";
-  }
-}
-
 export const formatEpisodeCode = (
   seasonNumber: number,
   episodeNumber: number,
@@ -87,10 +68,48 @@ export function getGenreNameById(genreId: number): string {
   return genre.name;
 }
 
-export function timeAgo(dateString: string): string {
-  // If your dateString is in ISO format, you can use parseISO.
-  const date = parseISO(dateString);
+export function getRelativeTime(dateString: string): string {
+  try {
+    if (!dateString) {
+      throw new Error("No date string provided.");
+    }
 
-  // The addSuffix option adds "ago" for past dates and "in" for future dates.
-  return formatDistanceToNow(date, { addSuffix: true });
+    const date = parseISO(dateString);
+    if (!isValid(date)) {
+      throw new Error(`Invalid date: ${dateString}`);
+    }
+
+    return formatDistanceToNow(date, { addSuffix: true });
+  } catch (error: unknown) {
+    console.error("Error in getRelativeTime:", error);
+    // Return a fallback string, or you could re-throw the error if desired
+    return "Invalid date";
+  }
+}
+
+export function getImageUrl(
+  media: any,
+  season_number?: number,
+  episode_number?: number,
+) {
+  return (
+    media?.images?.backdrops?.[0]?.file_path ||
+    (season_number && episode_number ? media.still_path : media.backdrop_path)
+  );
+}
+
+export function getHrefFromMedia(
+  media_type?: string,
+  media_id?: number,
+  season_number?: number,
+  episode_number?: number,
+) {
+  if (!media_type || !media_id) {
+    return "";
+  }
+  return media_type === "movie"
+    ? `/protected/watch/${media_type}/${media_id}`
+    : season_number && episode_number
+      ? `/protected/watch/${media_type}/${media_id}/${season_number}/${episode_number}`
+      : `/protected/watch/${media_type}/${media_id}/1/1`;
 }
