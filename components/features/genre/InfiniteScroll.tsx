@@ -70,6 +70,7 @@ const InfiniteScrollByGenre: React.FC<InfiniteScrollByGenreProps> = ({
         {mediaItems && mediaItems.length > 0 ? (
           mediaItems.map((mediaItem, index) => {
             if (index === 2 || (index % 30 === 0 && index !== 0)) {
+              console.log(mediaItem);
               return (
                 <>
                   {!user?.premium && (

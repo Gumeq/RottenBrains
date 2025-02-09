@@ -149,6 +149,8 @@ const MediaCardClient: React.FC<MediaCardProps> = React.memo(
         ? ` | ${formatEpisodeCode(season_number, episode_number)}`
         : "";
 
+    console.log(media_type);
+    console.log(media_id);
     const href =
       media_type === "movie"
         ? `/protected/watch/${media_type}/${media_id}`

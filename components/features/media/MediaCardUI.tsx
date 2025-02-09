@@ -29,7 +29,7 @@ const MediaCardUI: React.FC<MediaCardProps> = ({
   season_number = season_number || media.season_number || undefined;
   episode_number = episode_number || media.episode_number || undefined;
   media_type = media_type || media.media_type || undefined;
-  media_id = media_id || media.media_id || undefined;
+  media_id = media_id || media.media_id || media.id || undefined;
   watch_time = watch_time || media.watch_time || 0;
 
   const genreIds: bigint[] = media?.genres?.map((genre: any) => genre.id) || [];
@@ -85,8 +85,8 @@ const MediaCardUI: React.FC<MediaCardProps> = ({
         <HoverImage
           imageUrl={imageUrl}
           altText={mediaTitle}
-          media_type={media.media_type}
-          media_id={media.media_id}
+          media_type={media_type || "movie"}
+          media_id={media_id || 0}
         >
           <MediaCardOverlay
             runtime={media.runtime}

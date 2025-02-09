@@ -45,13 +45,13 @@ const Sidebar = () => {
 
   return (
     <aside
-      className={`fixed left-0 top-0 z-30 h-full min-h-screen p-4 transition-all duration-300 ${
+      className={`fixed left-0 top-0 z-30 h-full min-h-screen transition-all duration-300 ${
         isSidebarOpen ? "w-64" : "w-24"
       }`}
     >
       {isSidebarOpen ? (
-        <ul className="flex h-full flex-col justify-start rounded-[24px] bg-foreground/10 p-2">
-          <div className="my-8 flex w-full flex-row items-center justify-between gap-8 px-4">
+        <ul className="flex h-full flex-col justify-start bg-foreground/10 p-2">
+          <div className="my-8 flex w-full flex-row items-center gap-4 px-4">
             <Link href={"/"} className="flex flex-row items-center gap-4">
               <img
                 src="/assets/images/logo_new_black.svg"
@@ -66,7 +66,7 @@ const Sidebar = () => {
             </Link>
             <button
               onClick={toggleSidebar}
-              className="absolute right-0 rounded-full bg-background p-1 hover:bg-foreground/20"
+              className="absolute -right-4 rounded-full bg-background p-1 hover:bg-foreground/20"
             >
               <img
                 src="/assets/icons/chevron-back.svg"
@@ -119,7 +119,7 @@ const Sidebar = () => {
           <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
         </ul>
       ) : (
-        <ul className="flex h-full flex-col justify-start rounded-[24px] bg-foreground/10 p-2">
+        <ul className="flex h-full flex-col justify-start bg-foreground/10 p-2">
           <div className="my-8 flex w-full flex-row items-center justify-center">
             <Link
               href={"/"}
@@ -133,7 +133,7 @@ const Sidebar = () => {
             </Link>
             <button
               onClick={toggleSidebar}
-              className="absolute -right-0 rounded-full bg-background p-1 hover:bg-foreground/20"
+              className="absolute -right-4 rounded-full bg-background p-1 hover:bg-foreground/20"
             >
               <img
                 src="/assets/icons/chevron-forward.svg"

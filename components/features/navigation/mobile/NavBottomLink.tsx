@@ -16,7 +16,12 @@ const NavBottomLink: FC<NavLinkProps> = ({
   label,
 }) => {
   const pathname = usePathname();
-  const isActive = pathname.includes(href.split("/").pop()!);
+  const isActive =
+    href === "/" && pathname === "/"
+      ? true
+      : href !== "/"
+        ? pathname.includes(href.split("/").pop()!)
+        : false;
 
   return (
     <Link
