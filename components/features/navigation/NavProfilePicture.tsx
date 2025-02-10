@@ -12,7 +12,7 @@ import Link from "next/link";
 import ThemeSwitch from "./NavThemeSwitch";
 import { useToast } from "../../ui/use-toast";
 import { signOut } from "@/lib/supabase/clientQueries";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 interface ProfilePictureNewProps {
   /**
@@ -28,6 +28,7 @@ const ProfilePictureNew: React.FC<ProfilePictureNewProps> = ({
 }) => {
   const { user } = useUser();
   const { toast } = useToast();
+  const router = useRouter();
 
   const [open, setOpen] = useState(false);
 
@@ -48,6 +49,7 @@ const ProfilePictureNew: React.FC<ProfilePictureNewProps> = ({
 
   const handleSignOut = async () => {
     await signOut();
+    router.refresh();
     toast({
       title: "Successfully signed out",
     });

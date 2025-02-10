@@ -112,12 +112,13 @@ const WatchPageDetails: React.FC<WatchPageDetailsProps> = ({
         {/* Overlay with detailed information */}
         <AnimatePresence>
           {showDetails && (
-            <motion.div
+            <motion.dialog
               variants={cardVariants}
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="small-screen-watch-margin-info fixed left-0 top-0 z-40 h-full w-full flex-col overflow-y-auto bg-background"
+              open={showDetails}
+              className="small-screen-watch-margin-info fixed left-0 top-0 z-40 h-full w-full flex-col overflow-y-auto bg-background text-foreground"
             >
               <div className="flex w-full flex-row items-center justify-between border-b border-foreground/20">
                 <h2 className="p-4 text-lg font-semibold">Description</h2>
@@ -184,7 +185,7 @@ const WatchPageDetails: React.FC<WatchPageDetailsProps> = ({
                   </div>
                 </Link>
               </div>
-            </motion.div>
+            </motion.dialog>
           )}
         </AnimatePresence>
       </div>
