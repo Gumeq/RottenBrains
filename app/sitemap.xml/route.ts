@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
   const tv = await getTrendingTV();
 
   // 2. Get your base url (e.g., from .env or a fallback)
-  const baseUrl = process.env.SITE_URL || "https://www.rotten-brains.com";
+  const baseUrl = process.env.SITE_URL || "https://rotten-brains.com";
 
   // 3. Build the XML sitemap
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>

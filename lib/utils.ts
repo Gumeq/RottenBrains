@@ -9,7 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatDate(inputDate: string) {
-  return format(new Date("2025-02-06"), "do MMMM yyyy");
+  return format(new Date(inputDate), "do MMMM yyyy");
 }
 
 export function transformRuntime(minutes: number): string {
@@ -19,8 +19,6 @@ export function transformRuntime(minutes: number): string {
 
   const formattedMinutes: string = remainingMinutes.toString().padStart(2, "0");
   const formattedSeconds: string = seconds.toString().padStart(2, "0");
-
-  // Conditionally include hours only if it's greater than 0
   if (hours > 0) {
     const formattedHours: string = hours.toString();
     return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;

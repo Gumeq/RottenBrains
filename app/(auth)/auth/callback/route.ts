@@ -21,7 +21,10 @@ export async function GET(request: Request) {
       const response = NextResponse.redirect(callbackUrl);
       // Forward cookies
       for (const { name, value } of cookieStore.getAll()) {
-        response.cookies.set(name, value, { path: "/" });
+        response.cookies.set(name, value, {
+          path: "/",
+          maxAge: 60 * 60 * 24 * 30,
+        });
       }
       return response;
     }
