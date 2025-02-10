@@ -31,7 +31,7 @@ export const getTrendingMovies = async () => {
 export const getPopular = async (page?: number) => {
   const page_string = page ? `&page=${page}` : "";
   return fetchFromApi(
-    `trending/all/day?language=en-US${page_string}`,
+    `trending/all/week?language=en-US${page_string}`,
     "images",
   );
 };
