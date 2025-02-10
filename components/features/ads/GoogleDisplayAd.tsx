@@ -44,7 +44,10 @@ export default function AdBanner({
   return (
     <>
       {/* The container for our ad. We will measure its size. */}
-      <div ref={adRef}>
+      <div
+        ref={adRef}
+        className="relative overflow-hidden rounded-[8px] border border-foreground/10"
+      >
         <ins
           className="adsbygoogle mx-auto"
           style={{ display: "block" }}

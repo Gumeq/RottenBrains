@@ -390,16 +390,16 @@
 
 @media (max-width: 1024px) {
   .small-screen-watch-margin {
-    margin-top: calc(56.25vw + 38px);
+    margin-top: calc(56.25vw + 30px);
   }
 }
 .small-screen-watch-margin-info {
-  margin-top: calc((56.25vw + 38px));
+  margin-top: calc((56.25vw + 30px));
 }
 
 @media (max-width: 1024px) {
   .small-screen-watch-top {
-    top: calc(56.25vw + 42px);
+    top: calc(56.25vw + 38px);
   }
 }
 

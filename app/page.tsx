@@ -66,13 +66,13 @@ export default async function Page() {
         <ErrorBoundary
           fallback={<div>Could not load "Continue Watching".</div>}
         >
-          <section className="mt-14 lg:mt-0">
-            <div className="lg:rounded-[16px] lg:bg-foreground/10">
-              <p className="hidden px-8 py-8 font-medium lg:flex lg:text-lg">
-                Continue Watching
-              </p>
-              {user ? (
-                continue_watching.length > 0 ? (
+          {user ? (
+            <section className="mt-14 lg:mt-0">
+              <div className="lg:rounded-[16px] lg:bg-foreground/10">
+                <p className="hidden px-8 py-8 font-medium lg:flex lg:text-lg">
+                  Continue Watching
+                </p>
+                {continue_watching.length > 0 ? (
                   <HorizontalScroll>
                     {continue_watching.map((media: any) => (
                       <div
@@ -87,14 +87,21 @@ export default async function Page() {
                   <div className="flex w-full items-center justify-center p-8">
                     You have no watch history yet. Start watching something!
                   </div>
-                )
-              ) : (
-                <div className="flex w-full items-center justify-center p-8">
-                  Log in to see your watch history
-                </div>
-              )}
+                )}
+              </div>
+            </section>
+          ) : (
+            <div className="col flex h-52 w-full flex-col items-center justify-center gap-4 rounded-[16px] bg-foreground/10">
+              <img
+                src="/assets/images/logo_new_black.svg"
+                alt=""
+                className="invert-on-dark aspect-square h-12 opacity-50"
+              />
+              <p className="text-foreground/50">
+                Log in to see your watch history
+              </p>
             </div>
-          </section>
+          )}
         </ErrorBoundary>
 
         {/* Ad banner for non-premium users */}
@@ -131,27 +138,28 @@ export default async function Page() {
                       </div>
                     ))
                   ) : (
-                    <div className="flex h-32 w-full items-center justify-center rounded-[16px] bg-foreground/10">
-                      No posts from friends you follow. Follow someone to see
-                      their posts!
+                    <div className="flex h-52 w-full flex-col items-center justify-center gap-4 rounded-[16px] bg-foreground/10">
+                      <img
+                        src="/assets/images/logo_new_black.svg"
+                        alt=""
+                        className="invert-on-dark aspect-square h-12 opacity-50"
+                      />
+                      <p className="text-foreground/50">
+                        Start following your friends to see posts.
+                      </p>
                     </div>
                   )
                 ) : (
-                  <div className="flex h-32 w-full items-center justify-center rounded-[16px] bg-foreground/10">
-                    Sign in to connect with friends and see their posts
-                  </div>
+                  <></>
                 )}
               </div>
             </div>
           </section>
         </ErrorBoundary>
 
-        {/* Genre Selector */}
         <GenreSelector />
 
-        {/* Infinite Scroll for media feed */}
         <InfiniteScrollHome
-          // If user is not logged in, user.id will be undefined
           user_id={user?.id}
           movie_genres={movie_genres}
           tv_genres={tv_genres}
