@@ -20,10 +20,9 @@ import OneTapComponent from "@/components/features/auth/GoogleOneTap";
 import GoogleAnalytics from "@/components/common/GoogleAnalytics";
 
 export const metadata = {
-  title:
-    "Rotten Brains | Stream Movies & TV Shows, Share Reviews, Connect with Friends",
+  title: "Rotten Brains | Stream movies and TV for free in HD quality.",
   description:
-    "Discover Rotten Brains – your ultimate destination to watch the latest movies and TV shows. Read and post reviews, share favorites with friends, and join a vibrant community of entertainment enthusiasts. Start streaming and sharing today!",
+    "Watch movies and tv shows in HD quality for free. Discover all new movies in 2025. Stream for free in the best HD quality possible | Rotten Brains",
   other: {
     script: [
       {

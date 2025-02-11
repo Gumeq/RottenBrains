@@ -31,8 +31,8 @@ export async function generateMetadata({ params }: any) {
   }
 
   return {
-    title: `Watch ${media.title || media.name} Online | Rotten Brains`,
-    description: `Stream ${media.title || media.name} now on Rotten Brains. ${
+    title: `Watch ${media.title || media.name} Online Free HD | Rotten Brains`,
+    description: `Stream ${media.title || media.name} now on Rotten Brains for free in HD. ${
       media.overview
     } Enjoy watching and sharing with friends today!`,
   };
