@@ -132,7 +132,7 @@ const page = () => {
           our data practices or this Cookie Policy:
         </p>
         <p>
-          <strong>contact@rotten-brains.to</strong>
+          <strong>rotten-brains-legal@proton.me</strong>
         </p>
 
         <h2 className="mt-4 text-lg font-semibold">10. Assent</h2>

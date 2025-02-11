@@ -208,7 +208,7 @@ const WatchPageDetails: React.FC<WatchPageDetailsProps> = ({
         <div className="flex flex-shrink-0 flex-row gap-2 overflow-x-auto text-sm">
           <Link
             href={`/protected/create-post/${media_type}/${media_id}`}
-            className="z-10 flex flex-row items-center gap-2 justify-self-end rounded-[4px] bg-foreground/10 px-4 py-1"
+            className="z-10 flex flex-row items-center gap-2 justify-self-end rounded-full bg-foreground/10 px-4 py-1"
           >
             <img
               src="/assets/icons/star-outline.svg"

@@ -42,11 +42,11 @@ const LegalConsent: React.FC = () => {
         content hosted by third-party sites, over which we have no control. We
         take intellectual property rights seriously. If you believe a third
         party is infringing on your copyright, please submit a DMCA report to
-        rottenbrains@proton.me, and we’ll take appropriate action. Premium
-        servers are just a scrape of other servers which are not hosted by us.
-        You can find more information in our{" "}
-        <Link href={"/protected/about"} className="text-accent">
-          about page
+        rotten-brains-legal@proton.me, and we’ll take appropriate action.
+        Premium servers are just a scrape of other servers which are not hosted
+        by us. You can find more information in our{" "}
+        <Link href={"/legal"} className="text-accent">
+          legal page
         </Link>
         .
       </p>
