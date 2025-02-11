@@ -146,11 +146,11 @@ export default async function mediaPage({ params }: { params: Params }) {
               </div>
             )}
             {!user?.premium && (
-              <div className="mx-auto w-full max-w-[400px] px-4">
+              <div className="mx-auto w-screen lg:w-full lg:max-w-[800px]">
                 <AdBanner
                   dataAdFormat="auto"
-                  dataFullWidthResponsive={false}
-                  dataAdSlot="9747421135"
+                  dataFullWidthResponsive={true}
+                  dataAdSlot="4196406083"
                 />
               </div>
             )}

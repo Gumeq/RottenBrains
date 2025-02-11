@@ -81,16 +81,16 @@ export default async function mediaPage({ params }: { params: Params }) {
               media_id={media.id}
             ></WatchPageDetails>
           </div>
+          {!user?.premium && (
+            <div className="mx-auto w-screen lg:w-full lg:max-w-[800px]">
+              <AdBanner
+                dataAdFormat="auto"
+                dataFullWidthResponsive={true}
+                dataAdSlot="4196406083"
+              />
+            </div>
+          )}
           <section className="custom-scrollbar flex flex-col gap-8 p-4 lg:w-1/4 lg:gap-4 lg:p-0">
-            {!user?.premium && (
-              <div className="mx-auto w-full max-w-[400px]">
-                <AdBanner
-                  dataAdFormat="auto"
-                  dataFullWidthResponsive={true}
-                  dataAdSlot="4196406083"
-                />
-              </div>
-            )}
             {recommendationMediaDetails.map((mediaDetail: any) => (
               <Link
                 href={

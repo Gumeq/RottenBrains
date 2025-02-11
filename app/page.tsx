@@ -106,7 +106,7 @@ export default async function Page() {
 
         {/* Ad banner for non-premium users */}
         {!user?.premium && (
-          <div className="mx-auto w-full max-w-[800px]">
+          <div className="mx-auto w-screen lg:w-full lg:max-w-[1200px]">
             <AdBanner
               dataAdFormat="auto"
               dataFullWidthResponsive={true}

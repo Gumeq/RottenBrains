@@ -1,12 +1,24 @@
 "use client";
 
-import { useTheme } from "@/hooks/ThemeContext";
+import { useTheme } from "next-themes";
 import React from "react";
 
 export default function NavThemeSwitch() {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
 
-  const getLabel = (currentTheme: string) => {
+  // Cycle through the themes: light → dark → system → light …
+  const toggleTheme = () => {
+    if (theme === "light") {
+      setTheme("dark");
+    } else if (theme === "dark") {
+      setTheme("system");
+    } else {
+      // This covers both when theme === "system" and any unexpected value.
+      setTheme("light");
+    }
+  };
+
+  const getLabel = (currentTheme?: string) => {
     if (currentTheme === "light") return "Light Theme";
     if (currentTheme === "dark") return "Dark Theme";
     if (currentTheme === "system") return "System Theme";
@@ -20,7 +32,6 @@ export default function NavThemeSwitch() {
       aria-label="Toggle theme"
     >
       <div className="flex items-center gap-2">
-        {/* Ensure you have an icon for system-mode.svg or handle it if not */}
         <img
           src={`/assets/icons/${theme}-mode.svg`}
           alt={`${theme} mode icon`}
