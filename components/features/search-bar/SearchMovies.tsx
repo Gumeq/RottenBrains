@@ -1,6 +1,6 @@
 "use client";
 
-import { searchMovies } from "@/lib/tmdb";
+import { searchMulti } from "@/lib/tmdb";
 import {
 	Combobox,
 	ComboboxButton,
@@ -49,7 +49,7 @@ const SearchMovies = forwardRef<HTMLInputElement, any>(
 				} else {
 					setLoading(true);
 					try {
-						const result = await searchMovies(query);
+						const result = await searchMulti(query);
 						setData(result);
 					} catch (err) {
 						console.error("Failed to fetch data", err);
