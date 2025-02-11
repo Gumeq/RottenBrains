@@ -43,8 +43,6 @@ const MediaCardUI: React.FC<MediaCardProps> = ({
   const releaseDate =
     media.release_date || media.air_date || media.first_air_date;
 
-  console.log(releaseDate);
-
   const dayDifference = releaseDate
     ? (new Date().getTime() - new Date(releaseDate).getTime()) /
       (1000 * 3600 * 24)

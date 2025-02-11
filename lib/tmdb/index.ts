@@ -6,11 +6,25 @@ export const discoverMovies = async () => {
   );
 };
 
-export const searchMovies = async (query: string) => {
-  return fetchFromApi(`search/multi?query=${encodeURIComponent(query)}`);
+export const searchMovies = async (query: string, page: number = 1) => {
+  return fetchFromApi(
+    `search/movie?query=${query}&include_adult=false&language=en-US&page=${page}`,
+  );
 };
 
-export const searchMulti = async (query: string, page: number) => {
+export const searchTv = async (query: string, page: number = 1) => {
+  return fetchFromApi(
+    `search/tv?query=${query}&include_adult=false&language=en-US&page=${page}`,
+  );
+};
+
+export const searchPerson = async (query: string, page: number = 1) => {
+  return fetchFromApi(
+    `search/person?query=${query}&include_adult=false&language=en-US&page=${page}`,
+  );
+};
+
+export const searchMulti = async (query: string, page: number = 1) => {
   return fetchFromApi(
     `search/multi?query=${query}&include_adult=false&language=en-US&page=${page}`,
   );

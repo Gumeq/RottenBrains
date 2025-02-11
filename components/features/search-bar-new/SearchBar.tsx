@@ -13,7 +13,7 @@ const SearchBar = forwardRef<HTMLInputElement, any>(
       <form action="" className="h-full" onSubmit={handleSearch}>
         <div className="max-w-screen h-full">
           <SearchMovies
-            ref={ref} // Forward the ref to SearchMovies
+            ref={ref}
             media={media}
             setMedia={setMedia}
             link={link}
