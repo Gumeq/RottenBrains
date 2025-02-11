@@ -72,7 +72,7 @@ const MediaCardUI: React.FC<MediaCardProps> = ({
       : "";
 
   return (
-    <div className="mb-2 flex w-full min-w-[75vw] max-w-[100vw] flex-col lg:w-full lg:min-w-[320px] lg:max-w-[400px]">
+    <article className="mb-2 flex w-full min-w-[75vw] max-w-[100vw] flex-col lg:w-full lg:min-w-[320px] lg:max-w-[400px]">
       <Link
         className={`relative w-full overflow-hidden lg:rounded-[8px] ${
           rounded === true ? "rounded-[8px]" : ""
@@ -133,7 +133,7 @@ const MediaCardUI: React.FC<MediaCardProps> = ({
         )}
         <p className="text-xs text-foreground/40">{formatDate(releaseDate)}</p>
       </div>
-    </div>
+    </article>
   );
 };
 

@@ -126,7 +126,7 @@ export default async function mediaPage({ params }: { params: Params }) {
               episode={episode}
             ></WatchPageDetails>
           </div>
-          <div className="flex flex-col gap-2 lg:mt-0 lg:w-1/4">
+          <section className="flex flex-col gap-2 lg:mt-0 lg:w-1/4">
             {nextEpisode && (
               <div className="flex flex-col gap-2 lg:rounded-[8px] lg:p-0">
                 <Link
@@ -161,7 +161,7 @@ export default async function mediaPage({ params }: { params: Params }) {
                 user_id={user?.id.toString()}
               />
             )}
-          </div>
+          </section>
         </div>
       </div>
     </>

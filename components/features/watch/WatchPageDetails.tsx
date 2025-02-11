@@ -70,7 +70,7 @@ const WatchPageDetails: React.FC<WatchPageDetailsProps> = ({
 
   return (
     <>
-      <div className="relative mx-auto flex w-full p-4 lg:hidden lg:p-0">
+      <section className="relative mx-auto flex w-full p-4 lg:hidden lg:p-0">
         {/* Initially displayed title and date */}
         <div className="flex flex-col gap-6">
           <div
@@ -188,8 +188,8 @@ const WatchPageDetails: React.FC<WatchPageDetailsProps> = ({
             </motion.dialog>
           )}
         </AnimatePresence>
-      </div>
-      <div className="mx-auto hidden w-full flex-col gap-4 rounded-[8px] p-4 lg:flex lg:p-0">
+      </section>
+      <section className="mx-auto hidden w-full flex-col gap-4 rounded-[8px] p-4 lg:flex lg:p-0">
         <div className="flex flex-col gap-1">
           <h2 className="font-semibold lg:text-lg">
             {episode && season_number && episode_number
@@ -276,7 +276,7 @@ const WatchPageDetails: React.FC<WatchPageDetailsProps> = ({
             />
           </div>
         )}
-      </div>
+      </section>
     </>
   );
 };

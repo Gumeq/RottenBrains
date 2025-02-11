@@ -81,7 +81,7 @@ export default async function mediaPage({ params }: { params: Params }) {
               media_id={media.id}
             ></WatchPageDetails>
           </div>
-          <div className="custom-scrollbar flex flex-col gap-8 p-4 lg:w-1/4 lg:gap-4 lg:p-0">
+          <section className="custom-scrollbar flex flex-col gap-8 p-4 lg:w-1/4 lg:gap-4 lg:p-0">
             {!user?.premium && (
               <div className="mx-auto w-full max-w-[400px]">
                 <AdBanner
@@ -110,7 +110,7 @@ export default async function mediaPage({ params }: { params: Params }) {
                 />
               </Link>
             ))}
-          </div>
+          </section>
         </div>
       </div>
     </>
