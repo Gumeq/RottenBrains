@@ -14,6 +14,7 @@ import { createClient } from "@/lib/supabase/server";
 import TopLoader from "@/components/features/loaders/TopLoader";
 import GoogleAnalytics from "@/components/common/GoogleAnalytics";
 import { ThemeProvider } from "next-themes";
+import IubendaScripts from "@/components/features/consent/IubendaConsent";
 
 export const metadata = {
   title: "Rotten Brains | Stream movies and TV for free in HD quality.",
@@ -65,10 +66,11 @@ export default async function NotProtectedLayout({
               </header>
               <MainContent>{children}</MainContent>
               <footer></footer>
-              <CookieConsent />
+              {/* <CookieConsent /> */}
               {/* <OneTapComponent /> */}
               <LegalConsent />
               <Toaster />
+              <IubendaScripts />
               {/* <Analytics />
 							<SpeedInsights /> */}
               <GoogleAnalytics gtag={"G-06SFYC5DWK"} />
