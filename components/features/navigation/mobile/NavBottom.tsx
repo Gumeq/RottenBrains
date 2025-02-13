@@ -18,7 +18,7 @@ import {
 } from "../../../ui/Icon";
 import NavLinkMobile from "./NavBottomLink";
 import NavSearchIconWithOverlay from "./NavSearchIconWithOverlay";
-import NavSearchIconNew from "./NavSearchIconNew";
+// import NavSearchIconNew from "./NavSearchIconNew";
 import AdBanner from "../../ads/GoogleDisplayAd";
 import NavAdMobile from "../../ads/NavAdMobile";
 
