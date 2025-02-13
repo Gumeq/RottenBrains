@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import ShareButton from "./ShareButton";
 import ImageWithFallback from "../media/ImageWithFallback";
+import NavAdMobile from "../ads/NavAdMobile";
+import { useUser } from "@/hooks/UserContext";
 
 type VideoEmbedProps = {
   media_type: string;
@@ -24,6 +26,7 @@ const VideoEmbed = ({
 }: VideoEmbedProps) => {
   const [linkStart, setLinkStart] = useState<string>("/api/testapi");
   const [showVideo, setShowVideo] = useState(false);
+  const { user } = useUser();
 
   // Retrieve the selected provider from local storage when the component mounts
   useEffect(() => {
@@ -71,7 +74,7 @@ const VideoEmbed = ({
     media_type === "movie" ? media.backdrop_path : episode.still_path;
 
   return (
-    <section className="fixed left-0 top-0 z-50 flex w-screen flex-col border-foreground/20 bg-background lg:relative lg:z-0 lg:w-full lg:gap-2 lg:border-none lg:pb-0">
+    <section className="fixed left-0 top-0 z-30 flex w-screen flex-col border-foreground/20 bg-background lg:relative lg:z-0 lg:w-full lg:gap-2 lg:border-none lg:pb-0">
       <div className="flex h-10 w-full flex-row items-center gap-4 bg-background px-2 lg:hidden">
         <div className="flex h-full items-center px-2">
           <Link href={"/"} className="flex flex-row items-center gap-2">
@@ -83,6 +86,11 @@ const VideoEmbed = ({
           </Link>
         </div>
       </div>
+      {!user?.premium && (
+        <div className="mx-auto h-[50px] w-screen bg-white lg:hidden">
+          <NavAdMobile dataAdSlot="8769026161" />
+        </div>
+      )}
       <div className="w-full">
         {!showVideo ? (
           <button

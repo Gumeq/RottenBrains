@@ -8,6 +8,7 @@ import HomeMediaCardUI from "@/components/features/media/MediaCardUI";
 import MediaCardClient from "../media/MediaCardClient";
 import AdBanner from "../ads/GoogleDisplayAd";
 import { useUser } from "@/hooks/UserContext";
+import FixedAd from "../ads/300x250Ad";
 
 interface InfiniteScrollHomeProps {
   user_id?: string;
@@ -77,23 +78,17 @@ const InfiniteScrollHome: React.FC<InfiniteScrollHomeProps> = ({
       <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-8 lg:gap-4">
         {mediaItems && mediaItems.length > 0 ? (
           mediaItems.map((mediaItem, index) => {
-            if (index === 2 || (index % 30 === 0 && index !== 0)) {
+            if (index === 6 || (index % 24 === 0 && index !== 0)) {
               return (
                 <>
                   {!user?.premium && (
                     <div className="h-full w-full">
-                      <AdBanner
-                        dataAdFormat="auto"
-                        dataFullWidthResponsive={true}
-                        dataAdSlot="4196406083"
-                      />
+                      <FixedAd dataAdSlot="6121238560" />
                     </div>
                   )}
-
-                  <MediaCardClient
+                  <HomeMediaCardUI
                     key={`${mediaItem.media_type}-${mediaItem.id}`}
-                    media_type={mediaItem.media_type}
-                    media_id={mediaItem.id}
+                    media={mediaItem}
                     user_id={user_id}
                     rounded
                   />
@@ -101,10 +96,9 @@ const InfiniteScrollHome: React.FC<InfiniteScrollHomeProps> = ({
               );
             }
             return (
-              <MediaCardClient
+              <HomeMediaCardUI
                 key={`${mediaItem.media_type}-${mediaItem.id}`}
-                media_type={mediaItem.media_type}
-                media_id={mediaItem.id}
+                media={mediaItem}
                 user_id={user_id}
                 rounded
               />

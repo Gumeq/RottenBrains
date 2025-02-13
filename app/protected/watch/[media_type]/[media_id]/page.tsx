@@ -8,6 +8,8 @@ import NativeAd from "@/components/features/ads/Native";
 import { fetchMediaData } from "@/lib/client/fetchMediaData";
 import { getCurrentUser } from "@/lib/supabase/serverQueries";
 import AdBanner from "@/components/features/ads/GoogleDisplayAd";
+import NavAdMobile from "@/components/features/ads/NavAdMobile";
+import FixedAd from "@/components/features/ads/300x250Ad";
 
 export async function generateMetadata({ params }: any) {
   const media_id = parseInt(params.media_id, 10);
@@ -67,6 +69,11 @@ export default async function mediaPage({ params }: { params: Params }) {
           media_duration={media.runtime || 24}
         />
       )}
+      {!user?.premium && (
+        <div className="fixed bottom-0 z-30 mx-auto h-[50px] w-screen bg-white lg:hidden">
+          <NavAdMobile dataAdSlot="8769026161" />
+        </div>
+      )}
       <div className="relative mb-16 w-full">
         <div className="small-screen-watch-margin mx-auto flex w-full flex-col lg:flex-row lg:gap-4">
           <div className="flex flex-col lg:w-3/4 lg:gap-4">
@@ -81,14 +88,19 @@ export default async function mediaPage({ params }: { params: Params }) {
               media_id={media.id}
             ></WatchPageDetails>
           </div>
+          {!user?.premium && (
+            <div className="mx-auto w-screen lg:hidden">
+              <AdBanner
+                dataAdFormat="auto"
+                dataFullWidthResponsive={true}
+                dataAdSlot="4196406083"
+              />
+            </div>
+          )}
           <section className="custom-scrollbar flex flex-col gap-8 p-4 lg:w-1/4 lg:gap-4 lg:p-0">
             {!user?.premium && (
-              <div className="mx-auto w-screen lg:w-full lg:max-w-[400px]">
-                <AdBanner
-                  dataAdFormat="auto"
-                  dataFullWidthResponsive={true}
-                  dataAdSlot="4196406083"
-                />
+              <div className="hidden h-full w-full lg:flex">
+                <FixedAd dataAdSlot="6121238560" />
               </div>
             )}
             {recommendationMediaDetails.map((mediaDetail: any) => (
@@ -110,7 +122,21 @@ export default async function mediaPage({ params }: { params: Params }) {
                 />
               </Link>
             ))}
+            {!user?.premium && (
+              <div className="hidden h-full w-full lg:flex">
+                <FixedAd dataAdSlot="6121238560" />
+              </div>
+            )}
           </section>
+          {!user?.premium && (
+            <div className="mx-auto w-screen lg:hidden">
+              <AdBanner
+                dataAdFormat="auto"
+                dataFullWidthResponsive={true}
+                dataAdSlot="4196406083"
+              />
+            </div>
+          )}
         </div>
       </div>
     </>

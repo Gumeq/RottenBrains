@@ -389,17 +389,30 @@
 }
 
 @media (max-width: 1024px) {
-  .small-screen-watch-margin {
+  .small-screen-watch-margin-premium {
     margin-top: calc(56.25vw + 38px);
   }
 }
-.small-screen-watch-margin-info {
+@media (max-width: 1024px) {
+  .small-screen-watch-margin {
+    margin-top: calc(56.25vw + 38px + 50px);
+  }
+}
+.small-screen-watch-margin-info-premium {
   margin-top: calc((56.25vw + 38px));
+}
+.small-screen-watch-margin-info {
+  margin-top: calc((56.25vw + 38px + 50px));
 }
 
 @media (max-width: 1024px) {
-  .small-screen-watch-top {
+  .small-screen-watch-top-premium {
     top: calc(56.25vw + 38px);
+  }
+}
+@media (max-width: 1024px) {
+  .small-screen-watch-top {
+    top: calc(56.25vw + 38px + 50px);
   }
 }
 

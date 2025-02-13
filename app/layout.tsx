@@ -56,7 +56,7 @@ export default async function NotProtectedLayout({
     <html lang="en" suppressHydrationWarning>
       <UserProvider initialUser={initialUser}>
         <SidebarProvider>
-          <body className="custom-scrollbar w-full overflow-x-hidden bg-background text-foreground transition-all duration-300">
+          <body className="custom-scrollbar max-h-[100dvh] w-full overflow-x-hidden bg-background text-foreground transition-all duration-300">
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
               <TopLoader />
               <header>

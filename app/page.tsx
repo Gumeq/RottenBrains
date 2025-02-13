@@ -91,7 +91,7 @@ export default async function Page() {
               </div>
             </section>
           ) : (
-            <div className="col flex h-52 w-full flex-col items-center justify-center gap-4 rounded-[16px] bg-foreground/10">
+            <div className="col mt-16 flex h-52 w-full flex-col items-center justify-center gap-4 bg-foreground/10 lg:mt-0 lg:rounded-[16px]">
               <img
                 src="/assets/images/logo_new_black.svg"
                 alt=""
@@ -103,18 +103,6 @@ export default async function Page() {
             </div>
           )}
         </ErrorBoundary>
-
-        {/* Ad banner for non-premium users */}
-        {!user?.premium && (
-          <div className="mx-auto w-screen lg:w-full lg:max-w-[1200px]">
-            <AdBanner
-              dataAdFormat="auto"
-              dataFullWidthResponsive={true}
-              dataAdSlot="4196406083"
-            />
-          </div>
-        )}
-
         {/* Followed Posts Section */}
         <ErrorBoundary fallback={<div>Could not load posts.</div>}>
           <section>

@@ -10,6 +10,8 @@ import { fetchMediaData } from "@/lib/client/fetchMediaData";
 import { getCurrentUser } from "@/lib/supabase/serverQueries";
 import TVShowDetails from "@/components/features/watch/TVSeasons";
 import AdBanner from "@/components/features/ads/GoogleDisplayAd";
+import NavAdMobile from "@/components/features/ads/NavAdMobile";
+import FixedAd from "@/components/features/ads/300x250Ad";
 type Params = Promise<{
   media_id: number;
   season_number: number;
@@ -106,8 +108,15 @@ export default async function mediaPage({ params }: { params: Params }) {
           media_duration={episode.runtime || 100}
         />
       )}
+      {!user?.premium && (
+        <div className="fixed bottom-0 z-30 mx-auto h-[50px] w-screen bg-white lg:hidden">
+          <NavAdMobile dataAdSlot="8769026161" />
+        </div>
+      )}
       <div className="relative mb-16 w-full">
-        <div className="small-screen-watch-margin mx-auto flex w-full flex-col lg:flex-row lg:gap-4">
+        <div
+          className={`${user?.premium ? "small-screen-watch-margin-premium" : "small-screen-watch-margin"} mx-auto flex w-full flex-col lg:flex-row lg:gap-4`}
+        >
           <div className="flex flex-col lg:w-3/4 lg:gap-4">
             <VideoEmbed
               media_type={media_type}
@@ -146,7 +155,12 @@ export default async function mediaPage({ params }: { params: Params }) {
               </div>
             )}
             {!user?.premium && (
-              <div className="mx-auto w-screen lg:w-full lg:max-w-[800px]">
+              <div className="hidden h-full w-full lg:flex">
+                <FixedAd dataAdSlot="6121238560" />
+              </div>
+            )}
+            {!user?.premium && (
+              <div className="mx-auto w-screen lg:hidden">
                 <AdBanner
                   dataAdFormat="auto"
                   dataFullWidthResponsive={true}
@@ -159,7 +173,22 @@ export default async function mediaPage({ params }: { params: Params }) {
                 tv_show_id={media_id}
                 season_number={season_number}
                 user_id={user?.id.toString()}
+                is_premium={user?.premium}
               />
+            )}
+            {!user?.premium && (
+              <div className="hidden h-full w-full lg:flex">
+                <FixedAd dataAdSlot="6121238560" />
+              </div>
+            )}
+            {!user?.premium && (
+              <div className="mx-auto w-screen lg:hidden">
+                <AdBanner
+                  dataAdFormat="auto"
+                  dataFullWidthResponsive={true}
+                  dataAdSlot="4196406083"
+                />
+              </div>
             )}
           </section>
         </div>

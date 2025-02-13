@@ -6,6 +6,7 @@ import { useUser } from "@/hooks/UserContext";
 import MenuButtonWithSidebar from "./NavMenuSidebarButton";
 import ProfilePictureNew from "@/components/features/navigation/NavProfilePicture";
 import NotificationButton from "../../notifications/NotificationButton";
+import NavAdMobile from "../../ads/NavAdMobile";
 
 const NavTop = () => {
   const { user } = useUser();
@@ -47,44 +48,51 @@ const NavTop = () => {
 
   return (
     <div
+      className="fixed left-0 top-0 z-30 flex w-full flex-col"
       ref={topBarRef}
-      className="fixed left-0 top-0 z-50 flex h-12 w-full items-center justify-between bg-background px-4 transition-transform duration-100 ease-out lg:hidden"
       style={{ transform: "translateY(0)", willChange: "transform" }}
     >
-      {/* Left side */}
-      <div className="flex flex-row gap-4">
-        <MenuButtonWithSidebar />
-        <Link href="/" className="flex flex-row items-center gap-1">
-          <img
-            src="/assets/images/logo_new_black.svg"
-            alt="text-logo"
-            className="invert-on-dark h-4 w-auto"
-          />
-          {user && user.premium ? (
-            <p className="text-lg font-black">Premium</p>
-          ) : (
-            <p className="text-lg font-black">Rotten Brains</p>
-          )}
-        </Link>
-      </div>
-      {/* Right side */}
-      {user ? (
-        <div className="flex flex-row items-center gap-4">
-          <NotificationButton user_id={user.id} />
-          <ProfilePictureNew />
+      <div className="flex h-12 w-full items-center justify-between bg-background px-4 transition-transform duration-100 ease-out lg:hidden">
+        {/* Left side */}
+        <div className="flex flex-row gap-4">
+          <MenuButtonWithSidebar />
+          <Link href="/" className="flex flex-row items-center gap-1">
+            <img
+              src="/assets/images/logo_new_black.svg"
+              alt="text-logo"
+              className="invert-on-dark h-4 w-auto"
+            />
+            {user && user.premium ? (
+              <p className="text-lg font-black">Premium</p>
+            ) : (
+              <p className="text-lg font-black">Rotten Brains</p>
+            )}
+          </Link>
         </div>
-      ) : (
-        <Link
-          href="/login"
-          className="flex flex-row items-center gap-2 rounded-lg bg-foreground/10 px-2 py-1"
-        >
-          <img
-            src="/assets/icons/account-circle-outline.svg"
-            className="invert-on-dark h-5 w-5"
-            alt="Sign in"
-          />
-          <p>Sign in</p>
-        </Link>
+        {/* Right side */}
+        {user ? (
+          <div className="flex flex-row items-center gap-4">
+            <NotificationButton user_id={user.id} />
+            <ProfilePictureNew />
+          </div>
+        ) : (
+          <Link
+            href="/login"
+            className="flex flex-row items-center gap-2 rounded-full bg-foreground/10 px-4 py-1"
+          >
+            <img
+              src="/assets/icons/account-circle-outline.svg"
+              className="invert-on-dark h-5 w-5"
+              alt="Sign in"
+            />
+            <p>Sign in</p>
+          </Link>
+        )}
+      </div>
+      {!user?.premium && (
+        <div className="mx-auto h-[50px] w-screen bg-white lg:hidden">
+          <NavAdMobile dataAdSlot="8769026161" />
+        </div>
       )}
     </div>
   );

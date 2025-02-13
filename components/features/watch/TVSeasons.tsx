@@ -6,12 +6,14 @@ type TVShowDetailsProps = {
   tv_show_id: number;
   season_number: number;
   user_id: string;
+  is_premium: boolean;
 };
 
 const TVShowDetails = async ({
   tv_show_id,
   season_number,
   user_id,
+  is_premium = false,
 }: TVShowDetailsProps) => {
   const tvShowData = await getTVDetails(tv_show_id);
   const filteredSeasons = tvShowData.seasons.filter(
@@ -31,7 +33,9 @@ const TVShowDetails = async ({
 
   return (
     <div className="w-full">
-      <div className="small-screen-watch-top sticky z-30 bg-background lg:z-auto">
+      <div
+        className={`${is_premium ? "small-screen-watch-top-premium" : "small-screen-watch-top"} sticky z-20 bg-background lg:z-auto`}
+      >
         <div className="gradient-edge absolute right-0 top-0 z-20 h-full w-[10%]" />
         <div className="custom-scrollbar 0 flex gap-2 overflow-x-auto px-2 py-2 text-sm lg:px-0">
           {filteredSeasons.map((season: any) => (

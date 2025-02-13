@@ -110,6 +110,29 @@ const CommentSection = ({ post_data, current_user }: any) => {
     };
   }, [state.show_comments]);
 
+  useEffect(() => {
+    if (state.show_comments) {
+      document.documentElement.style.overflow = "hidden"; // Prevent scrolling
+      document.documentElement.style.position = "fixed"; // Keep position fixed
+      document.documentElement.style.width = "100%"; // Ensure full width
+      document.body.style.overflow = "hidden"; // Prevent scrolling
+      document.body.style.position = "fixed"; // Prevent body scroll
+      document.body.style.width = "100%";
+    } else {
+      document.documentElement.style.overflow = "";
+      document.documentElement.style.position = "";
+      document.body.style.overflow = "";
+      document.body.style.position = "";
+    }
+
+    return () => {
+      document.documentElement.style.overflow = "";
+      document.documentElement.style.position = "";
+      document.body.style.overflow = "";
+      document.body.style.position = "";
+    };
+  }, [state.show_comments]);
+
   // This function is used for the like button
   const handleLike = useCallback(async () => {
     if (user_id) {
@@ -233,7 +256,6 @@ const CommentSection = ({ post_data, current_user }: any) => {
             <p className="font-bold">{state.commentCount}</p>
           </div>
         </div>
-
         {/* Desktop comment input */}
         <div className="hidden w-full lg:flex">
           <AddComment
@@ -243,17 +265,15 @@ const CommentSection = ({ post_data, current_user }: any) => {
             fetchReplies={fetchReplies}
           />
         </div>
-
         {/* Mobile Comments Modal */}
         <AnimatePresence>
           {state.show_comments && (
-            <motion.dialog
+            <motion.div
               variants={cardVariants}
               initial="hidden"
               animate="visible"
               exit="exit"
-              open={state.show_comments}
-              className="fixed left-0 z-50 flex h-full w-full flex-col rounded-[16px] bg-background text-foreground"
+              className="fixed left-0 z-50 flex w-full flex-col rounded-[16px] bg-background text-foreground"
               style={{
                 top: `${viewportDimensions.top}px`,
                 height: `${viewportDimensions.height}px`,
@@ -307,7 +327,7 @@ const CommentSection = ({ post_data, current_user }: any) => {
                   fetchReplies={fetchReplies}
                 />
               </div>
-            </motion.dialog>
+            </motion.div>
           )}
         </AnimatePresence>
       </div>
