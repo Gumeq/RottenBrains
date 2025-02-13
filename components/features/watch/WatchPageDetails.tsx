@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { formatEpisodeCode, getRelativeTime } from "@/lib/utils";
 import AdBanner from "../ads/GoogleDisplayAd";
 import { useUser } from "@/hooks/UserContext";
+import ProviderDropdown from "./ProviderDropdown";
 
 const cardVariants = {
   hidden: { y: "100%" }, // Start off-screen at the bottom
@@ -206,6 +207,7 @@ const WatchPageDetails: React.FC<WatchPageDetailsProps> = ({
         </div>
 
         <div className="flex flex-shrink-0 flex-row gap-2 overflow-x-auto text-sm">
+          <ProviderDropdown></ProviderDropdown>
           <Link
             href={`/protected/create-post/${media_type}/${media_id}`}
             className="z-10 flex flex-row items-center gap-2 justify-self-end rounded-full bg-foreground/10 px-4 py-1"

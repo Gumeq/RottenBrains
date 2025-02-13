@@ -70,7 +70,7 @@ export default async function NotProtectedLayout({
               {/* <OneTapComponent /> */}
               <LegalConsent />
               <Toaster />
-              <IubendaScripts />
+              {/* <IubendaScripts /> */}
               {/* <Analytics />
 							<SpeedInsights /> */}
               <GoogleAnalytics gtag={"G-06SFYC5DWK"} />

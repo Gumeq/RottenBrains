@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import ShareButton from "./ShareButton";
 import ImageWithFallback from "../media/ImageWithFallback";
 import NavAdMobile from "../ads/NavAdMobile";
 import { useUser } from "@/hooks/UserContext";
+import { iframeLinks } from "@/lib/constants/links";
 
 type VideoEmbedProps = {
   media_type: string;
@@ -24,91 +24,103 @@ const VideoEmbed = ({
   media,
   episode,
 }: VideoEmbedProps) => {
-  const [linkStart, setLinkStart] = useState<string>("/api/testapi");
+  const [provider, setProvider] = useState<string>(iframeLinks[0].name);
   const [showVideo, setShowVideo] = useState(false);
   const { user } = useUser();
 
-  // Retrieve the selected provider from local storage when the component mounts
+  // Function to check if a provider name is valid
+  const isValidProvider = (providerName: string | null) => {
+    return (
+      providerName && iframeLinks.some((link) => link.name === providerName)
+    );
+  };
+
+  // Read provider from local storage on mount
   useEffect(() => {
     const storedProvider = localStorage.getItem("video_provider");
-    if (storedProvider) {
-      setLinkStart(storedProvider);
+    if (isValidProvider(storedProvider)) {
+      setProvider(storedProvider as string);
     }
+
+    // Listen for storage changes (e.g., from another tab)
+    const handleStorage = (event: StorageEvent) => {
+      if (event.key === "video_provider") {
+        // If the provider is valid, update state; else revert to default
+        if (isValidProvider(event.newValue)) {
+          setProvider(event.newValue as string);
+        } else {
+          setProvider(iframeLinks[0].name);
+        }
+      }
+    };
+
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
   }, []);
 
-  const handleButtonClick = () => {
-    setShowVideo(true);
-  };
+  // Get the selected provider info
+  const selectedProvider =
+    iframeLinks.find((link) => link.name === provider) || iframeLinks[0];
 
-  const buildLink = () => {
-    // If the link starts with "https://www.2embed.cc/embed"
-    if (linkStart.startsWith("https://www.2embed.cc/embed")) {
-      return `${linkStart}${media_type}/${media_id}&s=${season_number}&e=${episode_number}`;
-    }
+  // Build the iframe URL
+  const iframeSrc = selectedProvider.template({
+    media_type,
+    media_id,
+    season_number: season_number?.toString(),
+    episode_number: episode_number?.toString(),
+  });
 
-    // Else if the link starts with "/api/testapi"
-    if (linkStart.startsWith("/api/testapi")) {
-      const seasonEpisodeString = `&season=${season_number}&episode=${episode_number}`;
-      return `${linkStart}?video_id=${media_id}&tmdb=1${
-        media_type === "tv" ? seasonEpisodeString : ""
-      }`;
-    }
-
-    // Otherwise
-    if (media_type === "movie") {
-      return `${linkStart}${media_type}/${media_id}`;
-    } else {
-      return `${linkStart}${media_type}/${season_number}/${episode_number}`;
-    }
-  };
-
-  const link = buildLink();
-
+  // Return a placeholder if there's no media
   if (!media) {
     return (
-      <div className="relative aspect-[16/9] w-full overflow-hidden bg-foreground/10 text-center lg:rounded-[8px]"></div>
+      <div className="relative aspect-[16/9] w-full overflow-hidden bg-foreground/10 text-center lg:rounded-[8px]" />
     );
   }
 
+  // Determine the correct image URL for the thumbnail
   const imageUrl =
-    media_type === "movie" ? media.backdrop_path : episode.still_path;
+    media_type === "movie" ? media.backdrop_path : episode?.still_path;
+  const titleOrName = media?.title || episode?.name || "Thumbnail";
 
   return (
-    <section className="fixed left-0 top-0 z-30 flex w-screen flex-col border-foreground/20 bg-background lg:relative lg:z-0 lg:w-full lg:gap-2 lg:border-none lg:pb-0">
-      <div className="flex h-10 w-full flex-row items-center gap-4 bg-background px-2 lg:hidden">
-        <div className="flex h-full items-center px-2">
-          <Link href={"/"} className="flex flex-row items-center gap-2">
-            <img
-              src="/assets/images/logo_text_new.svg"
-              alt="RottenBrains Logo"
-              className="invert-on-dark h-3 w-auto"
-            />
-          </Link>
-        </div>
+    <section className="fixed left-0 top-0 z-30 w-screen flex-col bg-background lg:relative lg:z-0 lg:w-full lg:pb-0">
+      {/* Mobile top bar */}
+      <div className="flex h-10 w-full items-center gap-4 bg-background px-2 lg:hidden">
+        <Link href="/" className="px-2">
+          <img
+            src="/assets/images/logo_text_new.svg"
+            alt="RottenBrains Logo"
+            className="invert-on-dark h-3 w-auto"
+          />
+        </Link>
       </div>
+
+      {/* Optional Ad */}
       {!user?.premium && (
         <div className="mx-auto h-[50px] w-screen bg-white lg:hidden">
           <NavAdMobile dataAdSlot="8769026161" />
         </div>
       )}
+
+      {/* Thumbnail or Iframe */}
       <div className="w-full">
         {!showVideo ? (
           <button
-            className="relative aspect-[16/9] w-full overflow-hidden text-center lg:rounded-[8px]"
-            onClick={handleButtonClick}
+            onClick={() => setShowVideo(true)}
+            className="relative aspect-[16/9] w-full overflow-hidden lg:rounded-[8px]"
           >
             <ImageWithFallback
               imageUrl={imageUrl}
-              altText={media.title || episode.name}
-              quality={"original"}
+              altText={titleOrName}
+              quality="original"
             />
-            <div className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 transform items-center justify-center rounded-full bg-black/60 text-lg font-semibold text-white transition-colors duration-300 hover:bg-accent/80">
+            <div className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 transform items-center justify-center rounded-full bg-black/60">
               <img
                 src="/assets/icons/play-solid.svg"
                 alt="Play"
-                width={20}
-                height={20}
-                className="min-h-[24px] min-w-[24px] invert"
+                width={24}
+                height={24}
+                className="invert"
               />
             </div>
           </button>
@@ -116,15 +128,12 @@ const VideoEmbed = ({
           <div className="relative aspect-[16/9] w-screen overflow-hidden lg:w-full lg:rounded-[8px]">
             <iframe
               allowFullScreen
-              id="iframe"
               loading="lazy"
-              src={link}
+              src={iframeSrc}
               className="inline-block h-full w-full"
               frameBorder="0"
-              marginHeight={0}
-              marginWidth={0}
               scrolling="no"
-            ></iframe>
+            />
           </div>
         )}
       </div>
