@@ -115,7 +115,11 @@ const Sidebar = () => {
           <NavLink href="/legal" icon={LegalIcon} label="Legal" />
           <NavLink href="/help" icon={HelpIcon} label="Help" />
           <NavLink href="/cookie-policy" icon={CookiesIcon} label="Cookies" />
-          <NavLink href="/feedback" icon={FeedbackIcon} label="Feedback" />
+          <NavLink
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdg0X5LLOozhWX5ZIu1y2shBfYuUFExE_guAts7KCzvVNNwWw/viewform?pli=1"
+            icon={FeedbackIcon}
+            label="Feedback"
+          />
         </ul>
       ) : (
         <ul className="flex h-full flex-col justify-start rounded-[8px] bg-foreground/10 p-2">

@@ -18,7 +18,7 @@ const UserSearchCard = ({ media: user, onClick }: SearchCardProps) => {
         <div className="aspect-square h-full flex-shrink-0 rounded-full bg-foreground/20"></div>
       )}
       <div className="flex h-full w-full flex-col">
-        <p className="truncate font-medium">{user.name}</p>
+        <p className="line-clamp-1 font-medium">{user.name}</p>
         <p className="text-sm text-foreground/50">@{user.username}</p>
       </div>
     </div>

@@ -21,6 +21,7 @@ import NavSearchIconWithOverlay from "./NavSearchIconWithOverlay";
 // import NavSearchIconNew from "./NavSearchIconNew";
 import AdBanner from "../../ads/GoogleDisplayAd";
 import NavAdMobile from "../../ads/NavAdMobile";
+import NavSearchIconNew from "./NavSearchIconNew";
 
 const NavBottom = () => {
   const { user } = useUser();
@@ -51,8 +52,8 @@ const NavBottom = () => {
             icon={ExploreIcon}
             label={"Explore"}
           ></NavLinkMobile>
-          <NavSearchIconWithOverlay />
-          {/* <NavSearchIconNew></NavSearchIconNew> */}
+          {/* <NavSearchIconWithOverlay /> */}
+          <NavSearchIconNew></NavSearchIconNew>
           <NavLinkMobile
             href={"/protected/create-post"}
             icon={PlusIcon}

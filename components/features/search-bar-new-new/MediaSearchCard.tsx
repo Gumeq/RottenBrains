@@ -11,23 +11,23 @@ const MediaSearchCard = ({ media, onClick }: SearchCardProps) => {
   return (
     <div
       onClick={onClick}
-      className={`flex h-32 w-full cursor-pointer flex-row gap-4 p-4 hover:bg-foreground/10`}
+      className={`flex h-auto w-full cursor-pointer flex-row gap-4 p-4 hover:bg-foreground/10 lg:h-32`}
     >
       {media.poster_path && media.poster_path !== "" ? (
         <img
           src={`https://image.tmdb.org/t/p/w200${media.poster_path}`}
           alt=""
-          className="aspect-square h-full flex-shrink-0 overflow-hidden rounded-[8px] object-cover object-center"
+          className="aspect-square h-24 flex-shrink-0 overflow-hidden rounded-[8px] object-cover object-center lg:h-full"
         />
       ) : (
         <div className="aspect-square h-full flex-shrink-0 rounded-[8px] bg-foreground/20"></div>
       )}
-      <div className="flex h-full w-full flex-col justify-between">
-        <p className="truncate font-medium">{media.title || media.name}</p>
+      <div className="flex h-full w-full flex-col justify-between gap-2 lg:gap-0">
+        <p className="line-clamp-1 font-medium">{media.title || media.name}</p>
         <p className="line-clamp-1 text-sm text-foreground/50">
           {media.overview}
         </p>
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row flex-wrap gap-2">
           {media.genre_ids.map((id: number) => {
             const genre_name = getGenreNameById(id);
             return (

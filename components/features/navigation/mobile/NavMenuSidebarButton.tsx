@@ -93,13 +93,6 @@ const NavMenuSidebarButton: React.FC = () => {
               label="Donations"
             />
             <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
-            <NavLinkMobile
-              href="/blog"
-              icon={DevBlogIcon}
-              label="Developer Blog"
-            />
-            <NavLinkMobile href="/github" icon={GithubIcon} label="Github" />
-            <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
             <NavLinkMobile href="/info" icon={InfoIcon} label="Info" />
             <NavLinkMobile href="/legal" icon={LegalIcon} label="Legal" />
             <NavLinkMobile href="/help" icon={HelpIcon} label="Help" />
@@ -109,7 +102,7 @@ const NavMenuSidebarButton: React.FC = () => {
               label="Cookies"
             />
             <NavLinkMobile
-              href="/feedback"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSdg0X5LLOozhWX5ZIu1y2shBfYuUFExE_guAts7KCzvVNNwWw/viewform?pli=1"
               icon={FeedbackIcon}
               label="Feedback"
             />

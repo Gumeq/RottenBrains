@@ -5,8 +5,6 @@ import { getPopular } from "@/lib/tmdb";
 import { fetchInfiniteScrollHome } from "@/lib/server/fetchInfiniteScrollHome";
 import HomeMediaCardSkeleton from "@/components/features/media/MediaCardSkeleton";
 import HomeMediaCardUI from "@/components/features/media/MediaCardUI";
-import MediaCardClient from "../media/MediaCardClient";
-import AdBanner from "../ads/GoogleDisplayAd";
 import { useUser } from "@/hooks/UserContext";
 import FixedAd from "../ads/300x250Ad";
 
@@ -82,7 +80,7 @@ const InfiniteScrollHome: React.FC<InfiniteScrollHomeProps> = ({
               return (
                 <>
                   {!user?.premium && (
-                    <div className="h-full w-full">
+                    <div className="h-full w-screen lg:w-full">
                       <FixedAd dataAdSlot="6121238560" />
                     </div>
                   )}

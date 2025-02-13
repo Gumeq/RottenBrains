@@ -60,8 +60,8 @@ export default function AdBanner({
 
       {/* Fallback content, displayed only if we detect no ad loaded */}
       {adBlocked && (
-        <div className="h-full w-full bg-red-500">
-          <p>Looks like the ad is not visible. Fallback content here.</p>
+        <div className="flex h-full w-full items-center justify-center bg-accent text-center">
+          <p>Disable ad block to support us </p>
         </div>
       )}
     </>
