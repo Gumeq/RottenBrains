@@ -15,6 +15,7 @@ import TopLoader from "@/components/features/loaders/TopLoader";
 import GoogleAnalytics from "@/components/common/GoogleAnalytics";
 import { ThemeProvider } from "next-themes";
 import IubendaScripts from "@/components/features/consent/IubendaConsent";
+import MetaClckd from "@/components/common/MetaClckd";
 
 export const metadata = {
   title: "Rotten Brains | Stream movies and TV for free in HD quality.",
@@ -68,13 +69,14 @@ export default async function NotProtectedLayout({
               <footer></footer>
               {/* <CookieConsent /> */}
               {/* <OneTapComponent /> */}
+              <MetaClckd />
               <LegalConsent />
               <Toaster />
-              <IubendaScripts />
+              {/* <IubendaScripts /> */}
               {/* <Analytics />
 							<SpeedInsights /> */}
               <GoogleAnalytics gtag={"G-06SFYC5DWK"} />
-              <GoogleAdsense pId="4557341861686356" />
+              {/* <GoogleAdsense pId="4557341861686356" /> */}
             </ThemeProvider>
           </body>
         </SidebarProvider>
