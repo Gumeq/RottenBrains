@@ -11,20 +11,26 @@ interface IframeLink {
 export const iframeLinks: IframeLink[] = [
   {
     name: "VidSrc.net",
-    template: ({ media_type, media_id }) => {
-      return `https://vidsrc.net/embed/${media_type}/${media_id}`;
+    template: ({ media_type, media_id, season_number, episode_number }) => {
+      const seasonSegment = season_number ? `/${season_number}` : "";
+      const episodeSegment = episode_number ? `/${episode_number}` : "";
+      return `https://vidsrc.net/embed/${media_type}/${media_id}${seasonSegment}${episodeSegment}`;
     },
   },
   {
     name: "VidSrc.pro",
-    template: ({ media_type, media_id }) => {
-      return `https://vidsrc.pro/embed/${media_type}/${media_id}`;
+    template: ({ media_type, media_id, season_number, episode_number }) => {
+      const seasonSegment = season_number ? `/${season_number}` : "";
+      const episodeSegment = episode_number ? `/${episode_number}` : "";
+      return `https://vidsrc.pro/embed/${media_type}/${media_id}${seasonSegment}${episodeSegment}`;
     },
   },
   {
     name: "VidSrc.cc",
-    template: ({ media_type, media_id }) => {
-      return `https://vidsrc.cc/v2/embed/${media_type}/${media_id}`;
+    template: ({ media_type, media_id, season_number, episode_number }) => {
+      const seasonSegment = season_number ? `/${season_number}` : "";
+      const episodeSegment = episode_number ? `/${episode_number}` : "";
+      return `https://vidsrc.cc/v2/embed/${media_type}/${media_id}${seasonSegment}${episodeSegment}`;
     },
   },
   {

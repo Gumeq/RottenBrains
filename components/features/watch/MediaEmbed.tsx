@@ -70,6 +70,8 @@ const VideoEmbed = ({
     episode_number: episode_number?.toString(),
   });
 
+  console.log(iframeSrc);
+
   // Return a placeholder if there's no media
   if (!media) {
     return (
