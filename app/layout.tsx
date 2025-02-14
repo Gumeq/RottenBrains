@@ -54,46 +54,52 @@ export default async function NotProtectedLayout({
   }
 
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <meta
-          httpEquiv="Delegate-CH"
-          content="Sec-CH-UA https://s.magsrv.com; 
-                   Sec-CH-UA-Mobile https://s.magsrv.com; 
-                   Sec-CH-UA-Arch https://s.magsrv.com; 
-                   Sec-CH-UA-Model https://s.magsrv.com; 
-                   Sec-CH-UA-Platform https://s.magsrv.com; 
-                   Sec-CH-UA-Platform-Version https://s.magsrv.com; 
-                   Sec-CH-UA-Bitness https://s.magsrv.com; 
-                   Sec-CH-UA-Full-Version-List https://s.magsrv.com; 
-                   Sec-CH-UA-Full-Version https://s.magsrv.com;"
-        />
-      </head>
-      <UserProvider initialUser={initialUser}>
-        <SidebarProvider>
-          <body className="custom-scrollbar max-h-[100dvh] w-full overflow-x-hidden bg-background text-foreground transition-all duration-300">
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <TopLoader />
-              <header>
-                <div className="hidden lg:flex">
-                  <HomeNav></HomeNav>
-                </div>
-              </header>
-              <MainContent>{children}</MainContent>
-              <footer></footer>
-              {/* <CookieConsent /> */}
-              {/* <OneTapComponent /> */}
-              <LegalConsent />
-              <Toaster />
-              {/* <IubendaScripts /> */}
-              {/* <Analytics />
-							<SpeedInsights /> */}
-              <GoogleAnalytics gtag={"G-06SFYC5DWK"} />
-              {/* <GoogleAdsense pId="4557341861686356" /> */}
-            </ThemeProvider>
-          </body>
-        </SidebarProvider>
-      </UserProvider>
+    <html>
+      <body>404 error</body>
     </html>
   );
+
+  // return (
+  //   <html lang="en" suppressHydrationWarning>
+  //     <head>
+  //       <meta
+  //         httpEquiv="Delegate-CH"
+  //         content="Sec-CH-UA https://s.magsrv.com;
+  //                  Sec-CH-UA-Mobile https://s.magsrv.com;
+  //                  Sec-CH-UA-Arch https://s.magsrv.com;
+  //                  Sec-CH-UA-Model https://s.magsrv.com;
+  //                  Sec-CH-UA-Platform https://s.magsrv.com;
+  //                  Sec-CH-UA-Platform-Version https://s.magsrv.com;
+  //                  Sec-CH-UA-Bitness https://s.magsrv.com;
+  //                  Sec-CH-UA-Full-Version-List https://s.magsrv.com;
+  //                  Sec-CH-UA-Full-Version https://s.magsrv.com;"
+  //       />
+  //     </head>
+  //     <UserProvider initialUser={initialUser}>
+  //       <SidebarProvider>
+  //         <body className="custom-scrollbar max-h-[100dvh] w-full overflow-x-hidden bg-background text-foreground transition-all duration-300">
+  //           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+  //             <TopLoader />
+  //             <header>
+  //               <div className="hidden lg:flex">
+  //                 <HomeNav></HomeNav>
+  //               </div>
+  //             </header>
+  //             <MainContent>{children}</MainContent>
+  //             <footer></footer>
+  //             {/* <CookieConsent /> */}
+  //             {/* <OneTapComponent /> */}
+  //             <LegalConsent />
+  //             <Toaster />
+  //             {/* <IubendaScripts /> */}
+  //             {/* <Analytics />
+  // 						<SpeedInsights /> */}
+  //             <GoogleAnalytics gtag={"G-06SFYC5DWK"} />
+  //             {/* <GoogleAdsense pId="4557341861686356" /> */}
+  //           </ThemeProvider>
+  //         </body>
+  //       </SidebarProvider>
+  //     </UserProvider>
+  //   </html>
+  // );
 }
