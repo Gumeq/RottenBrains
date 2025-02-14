@@ -10,6 +10,7 @@ import MobileBannerExo from "@/components/features/ads/MobileBannerExo";
 import { Fullscreen } from "lucide-react";
 import MobileBannerExo42 from "@/components/features/ads/Notification";
 import MobileBannerExoAlt from "@/components/features/ads/Message";
+import VideoAd from "@/components/features/ads/Video";
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
       <MobileBannerExo></MobileBannerExo>
       <MobileBannerExo42></MobileBannerExo42>
       <MobileBannerExoAlt></MobileBannerExoAlt>
+      <VideoAd></VideoAd>
       {/* <Fullscreen></Fullscreen> */}
       {/* <MonetagAd></MonetagAd> */}
       {/* <PopunderAd></PopunderAd> */}

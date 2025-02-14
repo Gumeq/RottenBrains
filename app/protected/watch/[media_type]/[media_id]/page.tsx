@@ -14,6 +14,7 @@ import MobileBannerExo42 from "@/components/features/ads/Notification";
 import MobileBannerExoAlt from "@/components/features/ads/Message";
 import MobileBannerExo from "@/components/features/ads/MobileBannerExo";
 import MobileBannerPem from "@/components/features/ads/Fullscreen";
+import VideoAd from "@/components/features/ads/Video";
 
 export async function generateMetadata({ params }: any) {
   const media_id = parseInt(params.media_id, 10);
@@ -102,7 +103,7 @@ export default async function mediaPage({ params }: { params: Params }) {
           <section className="custom-scrollbar flex flex-col gap-8 p-4 lg:w-1/4 lg:gap-4 lg:p-0">
             {!user?.premium && (
               <div className="mx-auto w-full">
-                <MobileBannerExo></MobileBannerExo>
+                <VideoAd></VideoAd>
               </div>
             )}
             {recommendationMediaDetails.map((mediaDetail: any) => (

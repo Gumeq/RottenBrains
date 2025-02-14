@@ -16,6 +16,7 @@ import MobileBannerExo from "@/components/features/ads/MobileBannerExo";
 import MobileBannerExo42 from "@/components/features/ads/Notification";
 import MobileBannerExoAlt from "@/components/features/ads/Message";
 import MobileBannerPem from "@/components/features/ads/Fullscreen";
+import VideoAd from "@/components/features/ads/Video";
 type Params = Promise<{
   media_id: number;
   season_number: number;
@@ -141,6 +142,11 @@ export default async function mediaPage({ params }: { params: Params }) {
               episode={episode}
             ></WatchPageDetails>
           </div>
+          {!user?.premium && (
+            <div className="mx-auto w-full">
+              <VideoAd></VideoAd>
+            </div>
+          )}
           <section className="flex flex-col gap-2 lg:mt-0 lg:w-1/4">
             {nextEpisode && (
               <div className="flex flex-col gap-2 lg:rounded-[8px] lg:p-0">
@@ -160,20 +166,6 @@ export default async function mediaPage({ params }: { params: Params }) {
                 </Link>
               </div>
             )}
-            {!user?.premium && (
-              <div className="hidden h-full w-full lg:flex">
-                <FixedAd dataAdSlot="6121238560" />
-              </div>
-            )}
-            {!user?.premium && (
-              <div className="mx-auto w-screen lg:hidden">
-                <AdBanner
-                  dataAdFormat="auto"
-                  dataFullWidthResponsive={true}
-                  dataAdSlot="4196406083"
-                />
-              </div>
-            )}
             {media_type === "tv" && season_number && (
               <TVShowDetails
                 tv_show_id={media_id}
@@ -181,16 +173,6 @@ export default async function mediaPage({ params }: { params: Params }) {
                 user_id={user?.id.toString()}
                 is_premium={user?.premium}
               />
-            )}
-            {!user?.premium && (
-              <div className="hidden h-full w-full lg:flex">
-                <FixedAd dataAdSlot="6121238560" />
-              </div>
-            )}
-            {!user?.premium && (
-              <div className="mx-auto w-screen lg:hidden">
-                <MobileBannerExo></MobileBannerExo>
-              </div>
             )}
           </section>
         </div>
