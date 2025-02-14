@@ -7,6 +7,7 @@ import HomeMediaCardSkeleton from "@/components/features/media/MediaCardSkeleton
 import HomeMediaCardUI from "@/components/features/media/MediaCardUI";
 import { useUser } from "@/hooks/UserContext";
 import FixedAd from "../ads/300x250Ad";
+import MobileBannerExo from "../ads/MobileBannerExo";
 
 interface InfiniteScrollHomeProps {
   user_id?: string;
@@ -80,8 +81,8 @@ const InfiniteScrollHome: React.FC<InfiniteScrollHomeProps> = ({
               return (
                 <>
                   {!user?.premium && (
-                    <div className="h-full w-screen lg:w-full">
-                      <FixedAd dataAdSlot="6121238560" />
+                    <div className="mx-auto w-full">
+                      <MobileBannerExo></MobileBannerExo>
                     </div>
                   )}
                   <HomeMediaCardUI

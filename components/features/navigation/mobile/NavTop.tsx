@@ -89,11 +89,6 @@ const NavTop = () => {
           </Link>
         )}
       </div>
-      {!user?.premium && (
-        <div className="mx-auto h-[50px] w-screen bg-white lg:hidden">
-          <NavAdMobile dataAdSlot="8769026161" />
-        </div>
-      )}
     </div>
   );
 };

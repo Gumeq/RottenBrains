@@ -35,11 +35,6 @@ const NavBottom = () => {
   return (
     <>
       <nav className="fixed bottom-0 left-0 right-0 z-30 flex flex-col bg-background">
-        {!user?.premium && (
-          <div className="mx-auto h-[50px] w-screen bg-white lg:w-full">
-            <NavAdMobile dataAdSlot="8769026161" />
-          </div>
-        )}
         <ul className="relative flex h-16 w-full flex-row items-center justify-between bg-foreground/10 p-2">
           {/* Home Link */}
           <NavLinkMobile

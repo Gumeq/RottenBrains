@@ -12,6 +12,10 @@ import TVShowDetails from "@/components/features/watch/TVSeasons";
 import AdBanner from "@/components/features/ads/GoogleDisplayAd";
 import NavAdMobile from "@/components/features/ads/NavAdMobile";
 import FixedAd from "@/components/features/ads/300x250Ad";
+import MobileBannerExo from "@/components/features/ads/MobileBannerExo";
+import MobileBannerExo42 from "@/components/features/ads/Notification";
+import MobileBannerExoAlt from "@/components/features/ads/Message";
+import MobileBannerPem from "@/components/features/ads/Fullscreen";
 type Params = Promise<{
   media_id: number;
   season_number: number;
@@ -109,8 +113,10 @@ export default async function mediaPage({ params }: { params: Params }) {
         />
       )}
       {!user?.premium && (
-        <div className="fixed bottom-0 z-30 mx-auto h-[50px] w-screen bg-white lg:hidden">
-          <NavAdMobile dataAdSlot="8769026161" />
+        <div className="mx-auto w-screen lg:hidden">
+          <MobileBannerExo42></MobileBannerExo42>
+          <MobileBannerExoAlt></MobileBannerExoAlt>
+          <MobileBannerPem></MobileBannerPem>
         </div>
       )}
       <div className="relative mb-16 w-full">
@@ -183,11 +189,7 @@ export default async function mediaPage({ params }: { params: Params }) {
             )}
             {!user?.premium && (
               <div className="mx-auto w-screen lg:hidden">
-                <AdBanner
-                  dataAdFormat="auto"
-                  dataFullWidthResponsive={true}
-                  dataAdSlot="4196406083"
-                />
+                <MobileBannerExo></MobileBannerExo>
               </div>
             )}
           </section>

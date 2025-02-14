@@ -18,6 +18,9 @@ import InfiniteScrollHome from "@/components/features/home/InfiniteScroll";
 import HorizontalScroll from "@/components/features/home/HorizontalScroll";
 import { ErrorBoundary } from "@/components/common/ErrorBoundry";
 import AdBanner from "@/components/features/ads/GoogleDisplayAd";
+import MobileBannerExo42 from "@/components/features/ads/Notification";
+import MobileBannerExoAlt from "@/components/features/ads/Message";
+import MobileBannerPem from "@/components/features/ads/Fullscreen";
 
 export default async function Page() {
   const user = await getCurrentUser();
@@ -61,6 +64,13 @@ export default async function Page() {
         id="main-content"
       >
         <NavTop />
+        {!user?.premium && (
+          <div className="mx-auto w-screen lg:hidden">
+            <MobileBannerExo42></MobileBannerExo42>
+            <MobileBannerExoAlt></MobileBannerExoAlt>
+            <MobileBannerPem></MobileBannerPem>
+          </div>
+        )}
 
         {/* "Continue Watching" Section */}
         <ErrorBoundary

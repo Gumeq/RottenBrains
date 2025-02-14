@@ -9,6 +9,7 @@ import { formatEpisodeCode, getRelativeTime } from "@/lib/utils";
 import AdBanner from "../ads/GoogleDisplayAd";
 import { useUser } from "@/hooks/UserContext";
 import ProviderDropdown from "./ProviderDropdown";
+import MobileBannerExo from "../ads/MobileBannerExo";
 
 const cardVariants = {
   hidden: { y: "100%" }, // Start off-screen at the bottom
@@ -271,11 +272,7 @@ const WatchPageDetails: React.FC<WatchPageDetailsProps> = ({
         </Link>
         {!user?.premium && (
           <div className="mx-auto w-full">
-            <AdBanner
-              dataAdFormat="autorelaxed"
-              dataFullWidthResponsive={true}
-              dataAdSlot="7121257793"
-            />
+            <MobileBannerExo></MobileBannerExo>
           </div>
         )}
       </section>
