@@ -95,6 +95,7 @@ const WatchPageDetails: React.FC<WatchPageDetailsProps> = ({
             </p>
           </div>
           <div className="flex flex-shrink-0 flex-row gap-2 overflow-x-auto pb-2 text-sm">
+            <ProviderDropdown></ProviderDropdown>
             <Link
               href={`/protected/create-post/${media_type}/${media_id}`}
               className="flex flex-shrink-0 flex-row items-center gap-2 justify-self-end rounded-full bg-foreground/10 px-4 py-1"

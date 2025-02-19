@@ -64,15 +64,6 @@ export default async function Page() {
         id="main-content"
       >
         <NavTop />
-        {!user?.premium && (
-          <div className="mx-auto w-screen lg:hidden">
-            <MobileBannerExo42></MobileBannerExo42>
-            <MobileBannerExoAlt></MobileBannerExoAlt>
-            <MobileBannerPem></MobileBannerPem>
-          </div>
-        )}
-
-        {/* "Continue Watching" Section */}
         <ErrorBoundary
           fallback={<div>Could not load "Continue Watching".</div>}
         >

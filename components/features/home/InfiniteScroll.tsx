@@ -80,11 +80,6 @@ const InfiniteScrollHome: React.FC<InfiniteScrollHomeProps> = ({
             if (index === 6 || (index % 24 === 0 && index !== 0)) {
               return (
                 <>
-                  {!user?.premium && (
-                    <div className="mx-auto w-full">
-                      <MobileBannerExo></MobileBannerExo>
-                    </div>
-                  )}
                   <HomeMediaCardUI
                     key={`${mediaItem.media_type}-${mediaItem.id}`}
                     media={mediaItem}

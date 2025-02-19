@@ -209,11 +209,6 @@ export default function SearchModal({ isOpen, onClose }: ModalProps) {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            {!user?.premium && (
-              <div className="mx-auto h-[50px] w-screen bg-white lg:w-full">
-                <NavAdMobile dataAdSlot="8769026161" />
-              </div>
-            )}
             <div className="h-full w-full overflow-y-auto">
               {searchResults.length > 0 ? (
                 <>

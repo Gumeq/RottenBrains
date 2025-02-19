@@ -113,13 +113,6 @@ export default async function mediaPage({ params }: { params: Params }) {
           media_duration={episode.runtime || 100}
         />
       )}
-      {!user?.premium && (
-        <div className="mx-auto w-screen lg:hidden">
-          <MobileBannerExo42></MobileBannerExo42>
-          <MobileBannerExoAlt></MobileBannerExoAlt>
-          <MobileBannerPem></MobileBannerPem>
-        </div>
-      )}
       <div className="relative mb-16 w-full">
         <div
           className={`${user?.premium ? "small-screen-watch-margin-premium" : "small-screen-watch-margin"} mx-auto flex w-full flex-col lg:flex-row lg:gap-4`}
@@ -142,11 +135,6 @@ export default async function mediaPage({ params }: { params: Params }) {
               episode={episode}
             ></WatchPageDetails>
           </div>
-          {!user?.premium && (
-            <div className="mx-auto w-full">
-              <VideoAd></VideoAd>
-            </div>
-          )}
           <section className="flex flex-col gap-2 lg:mt-0 lg:w-1/4">
             {nextEpisode && (
               <div className="flex flex-col gap-2 lg:rounded-[8px] lg:p-0">

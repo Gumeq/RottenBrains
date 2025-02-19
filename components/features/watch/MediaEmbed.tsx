@@ -96,15 +96,6 @@ const VideoEmbed = ({
           />
         </Link>
       </div>
-
-      {/* Optional Ad */}
-      {!user?.premium && (
-        <div className="mx-auto h-[50px] w-screen bg-white lg:hidden">
-          <NavAdMobile dataAdSlot="8769026161" />
-        </div>
-      )}
-
-      {/* Thumbnail or Iframe */}
       <div className="w-full">
         {!showVideo ? (
           <button

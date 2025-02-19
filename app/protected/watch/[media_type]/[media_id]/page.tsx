@@ -74,13 +74,6 @@ export default async function mediaPage({ params }: { params: Params }) {
           media_duration={media.runtime || 24}
         />
       )}
-      {!user?.premium && (
-        <div className="mx-auto w-screen lg:hidden">
-          <MobileBannerExo42></MobileBannerExo42>
-          <MobileBannerExoAlt></MobileBannerExoAlt>
-          <MobileBannerPem></MobileBannerPem>
-        </div>
-      )}
       <div className="relative mb-16 w-full">
         <div className="small-screen-watch-margin mx-auto flex w-full flex-col lg:flex-row lg:gap-4">
           <div className="flex flex-col lg:w-3/4 lg:gap-4">
@@ -95,17 +88,7 @@ export default async function mediaPage({ params }: { params: Params }) {
               media_id={media.id}
             ></WatchPageDetails>
           </div>
-          {!user?.premium && (
-            <div className="mx-auto w-full">
-              <MobileBannerExo></MobileBannerExo>
-            </div>
-          )}
           <section className="custom-scrollbar flex flex-col gap-8 p-4 lg:w-1/4 lg:gap-4 lg:p-0">
-            {!user?.premium && (
-              <div className="mx-auto w-full">
-                <VideoAd></VideoAd>
-              </div>
-            )}
             {recommendationMediaDetails.map((mediaDetail: any) => (
               <Link
                 href={
@@ -125,17 +108,7 @@ export default async function mediaPage({ params }: { params: Params }) {
                 />
               </Link>
             ))}
-            {!user?.premium && (
-              <div className="mx-auto w-full">
-                <MobileBannerExo></MobileBannerExo>
-              </div>
-            )}
           </section>
-          {!user?.premium && (
-            <div className="mx-auto w-full">
-              <MobileBannerExo></MobileBannerExo>
-            </div>
-          )}
         </div>
       </div>
     </>
