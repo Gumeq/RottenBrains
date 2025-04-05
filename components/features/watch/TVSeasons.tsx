@@ -1,6 +1,7 @@
 import { getSeasonDetails, getTVDetails } from "@/lib/tmdb";
 import Link from "next/link";
 import MediaCardSmall from "../media/MediaCardSmall";
+import MediaCardServer from "../media/MediaCardServer";
 
 type TVShowDetailsProps = {
   tv_show_id: number;
@@ -54,20 +55,19 @@ const TVShowDetails = async ({
         </div>
       </div>
       <div className="mt-2 w-full">
-        <div className="flex w-full flex-col gap-8 px-4 lg:gap-4 lg:px-0">
+        <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-8 lg:gap-4">
           {episodes.map((episode: any) => (
             <Link
               key={episode.episode_number}
               href={`/protected/watch/tv/${tv_show_id}/${selectedSeason.season_number}/${episode.episode_number}`}
               className="w-full"
             >
-              <MediaCardSmall
+              <MediaCardServer
                 media_type={"tv"}
                 media_id={tv_show_id}
                 user_id={user_id}
                 season_number={selectedSeason.season_number}
                 episode_number={episode.episode_number}
-                media={episode}
                 rounded={true}
               />
             </Link>

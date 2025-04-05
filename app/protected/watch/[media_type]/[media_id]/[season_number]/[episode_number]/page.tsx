@@ -17,6 +17,7 @@ import MobileBannerExo42 from "@/components/features/ads/Notification";
 import MobileBannerExoAlt from "@/components/features/ads/Message";
 import MobileBannerPem from "@/components/features/ads/Fullscreen";
 import VideoAd from "@/components/features/ads/Video";
+import MediaCardServer from "@/components/features/media/MediaCardServer";
 type Params = Promise<{
   media_id: number;
   season_number: number;
@@ -113,11 +114,11 @@ export default async function mediaPage({ params }: { params: Params }) {
           media_duration={episode.runtime || 100}
         />
       )}
-      <div className="relative mb-16 w-full">
+      <div className="relative mx-auto mb-16 w-full max-w-7xl">
         <div
-          className={`${user?.premium ? "small-screen-watch-margin-premium" : "small-screen-watch-margin"} mx-auto flex w-full flex-col lg:flex-row lg:gap-4`}
+          className={`small-screen-watch-margin mx-auto flex w-full flex-col lg:gap-4`}
         >
-          <div className="flex flex-col lg:w-3/4 lg:gap-4">
+          <div className="flex flex-col lg:w-full lg:gap-4">
             <VideoEmbed
               media_type={media_type}
               media_id={media_id}
@@ -135,20 +136,19 @@ export default async function mediaPage({ params }: { params: Params }) {
               episode={episode}
             ></WatchPageDetails>
           </div>
-          <section className="flex flex-col gap-2 lg:mt-0 lg:w-1/4">
+          <section className="flex flex-col gap-2 lg:mt-0">
             {nextEpisode && (
               <div className="flex flex-col gap-2 lg:rounded-[8px] lg:p-0">
                 <Link
                   href={`/protected/watch/tv/${media.id}/${nextEpisode.season_number}/${nextEpisode.episode_number}`}
                   className="px-4 lg:px-0"
                 >
-                  <MediaCardSmall
+                  <MediaCardServer
                     media_type={"tv"}
                     media_id={media.id}
                     season_number={nextEpisode.season_number}
                     episode_number={nextEpisode.episode_number}
                     user_id={user?.id.toString()}
-                    media={nextEpisode}
                     rounded={true}
                   />
                 </Link>

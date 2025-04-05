@@ -122,7 +122,7 @@ const WatchPageDetails: React.FC<WatchPageDetailsProps> = ({
               animate="visible"
               exit="exit"
               open={showDetails}
-              className={`${user?.premium ? "small-screen-watch-margin-info-premium" : "small-screen-watch-margin-info"} fixed left-0 top-0 z-40 h-full w-full flex-col overflow-y-auto bg-background text-foreground`}
+              className={`small-screen-watch-margin-info-premium fixed left-0 top-0 z-40 h-full w-full flex-col overflow-y-auto bg-background text-foreground`}
             >
               <div className="flex w-full flex-row items-center justify-between border-b border-foreground/20">
                 <h2 className="p-4 text-lg font-semibold">Description</h2>

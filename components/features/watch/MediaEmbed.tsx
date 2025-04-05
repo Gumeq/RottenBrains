@@ -96,29 +96,13 @@ const VideoEmbed = ({
           />
         </Link>
       </div>
-      <div className="w-full">
-        {!showVideo ? (
-          <button
-            onClick={() => setShowVideo(true)}
-            className="relative aspect-[16/9] w-full overflow-hidden lg:rounded-[8px]"
-          >
-            <ImageWithFallback
-              imageUrl={imageUrl}
-              altText={titleOrName}
-              quality="original"
-            />
-            <div className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 transform items-center justify-center rounded-full bg-black/60">
-              <img
-                src="/assets/icons/play-solid.svg"
-                alt="Play"
-                width={24}
-                height={24}
-                className="invert"
-              />
-            </div>
-          </button>
+      <div className="w-screen lg:w-full">
+        {!user?.premium ? (
+          <div className="z-30 aspect-[16/9] w-full flex-col overflow-hidden bg-background lg:rounded-[8px] lg:pb-0">
+            <div className="h-full w-full bg-foreground/10"></div>
+          </div>
         ) : (
-          <div className="relative aspect-[16/9] w-screen overflow-hidden lg:w-full lg:rounded-[8px]">
+          <div className="relative aspect-[16/9] w-full overflow-hidden lg:w-full lg:rounded-[8px]">
             <iframe
               allowFullScreen
               loading="lazy"

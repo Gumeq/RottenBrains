@@ -12,7 +12,7 @@ interface Creator {
 }
 
 interface Post {
-  post_id: string;
+  id: string;
   creatorid: number;
   created_at: string;
 }
@@ -43,7 +43,7 @@ const PostHeader = ({ creator, post, user_id }: PostHeaderProps) => {
       </div>
       <div className="flex h-full flex-row items-center gap-2">
         {creator.id.toString() === user_id && (
-          <Link href={`/protected/edit-post/${post.post_id}`}>
+          <Link href={`/protected/edit-post/${post.id}`}>
             <img
               src="/assets/icons/ellipsis-solid.svg"
               alt=""
