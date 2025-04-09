@@ -17,7 +17,7 @@
 @layer base {
   :root {
     /* --- Your original variables --- */
-    --background: 200 0% 90%; /* hsl(200, 20%, 96%) */
+    --background: 200 0% 100%; /* hsl(200, 20%, 96%) */
     --foreground: 0 0% 20%; /* hsl(0, 0%, 6%) */
     --accent: 347 100% 40%;
     --primary: 0 55% 29%;

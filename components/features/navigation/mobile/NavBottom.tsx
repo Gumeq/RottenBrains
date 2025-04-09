@@ -34,8 +34,8 @@ const NavBottom = () => {
 
   return (
     <>
-      <nav className="fixed bottom-0 left-0 right-0 z-30 flex flex-col bg-background">
-        <ul className="relative flex h-16 w-full flex-row items-center justify-between bg-foreground/10 p-2">
+      <nav className="fixed bottom-0 left-0 right-0 z-30 flex flex-col border-t bg-background/90 backdrop-blur-lg">
+        <ul className="relative flex h-16 w-full flex-row items-center justify-between p-2">
           {/* Home Link */}
           <NavLinkMobile
             href={"/"}
