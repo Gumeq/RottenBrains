@@ -8,8 +8,25 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatDate(inputDate: string) {
-  return format(new Date(inputDate), "do MMMM yyyy");
+export function formatDate(inputDate: string): string {
+  try {
+    // Parse the input into a Date object
+    const date = parseISO(inputDate);
+
+    // Validate the parsed date
+    if (!isValid(date)) {
+      throw new Error(`Invalid date: ${inputDate}`);
+    }
+
+    // Format and return
+    return format(date, "do MMMM yyyy");
+  } catch (error) {
+    // Log the error for debugging
+    console.error("Error formatting date:", error);
+
+    // Return a user-friendly fallback
+    return "Invalid date";
+  }
 }
 
 export function transformRuntime(minutes: number): string {

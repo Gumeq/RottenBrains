@@ -54,7 +54,7 @@ const TVShowDetails = async ({
           ))}
         </div>
       </div>
-      <div className="mt-2 w-full">
+      <div className="mt-2 w-full px-4">
         <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-8 lg:gap-4">
           {episodes.map((episode: any) => (
             <Link
