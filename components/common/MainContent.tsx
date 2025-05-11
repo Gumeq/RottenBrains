@@ -15,6 +15,14 @@ const MainContent = ({ children }: { children: React.ReactNode }) => {
     setMounted(true);
   }, []);
 
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js").then(() => {
+        console.log("SW registered");
+      });
+    }
+  }, []);
+
   // Use a default value until the component is mounted.
   // Assume that on the server isSidebarOpen is false.
   const mainPaddingClass = mounted
