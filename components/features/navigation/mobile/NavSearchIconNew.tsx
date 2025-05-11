@@ -11,12 +11,12 @@ export default function NavSearchIconNew() {
       <button
         onClick={() => setIsOpen(true)}
         aria-label="Open Search"
-        className="flex flex-1 flex-col items-center justify-center gap-1 opacity-80"
+        className="flex flex-1 flex-col items-center justify-center opacity-80"
       >
         <div
-          className={`flex w-full flex-col items-center justify-center rounded-full`}
+          className={`flex w-full flex-col items-center justify-center rounded-full p-1`}
         >
-          <SearchIcon className="fill-current" width={28} height={28} />
+          <SearchIcon className="fill-current" width={24} height={24} />
         </div>
         <p className="text-xs">Search</p>
       </button>

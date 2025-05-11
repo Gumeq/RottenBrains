@@ -25,7 +25,7 @@ const NavSearchIconWithOverlay: React.FC = () => {
         <div
           className={`flex w-full flex-col items-center justify-center rounded-full`}
         >
-          <SearchIcon className="fill-current" width={28} height={28} />
+          <SearchIcon className="fill-current" width={20} height={20} />
         </div>
         <p className="text-xs">Search</p>
       </button>

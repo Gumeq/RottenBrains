@@ -78,7 +78,7 @@ const MoreOptions = ({
         <img
           src="/assets/icons/more-vert.svg"
           alt=""
-          className="invert-on-dark h-[24px] w-[24px]"
+          className="invert-on-dark h-[20px] w-[20px]"
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent

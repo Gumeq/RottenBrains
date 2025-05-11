@@ -19,6 +19,7 @@ interface MediaCardProps {
   episode_number?: number;
   watch_time?: number;
   user_id?: string;
+  quality?: string;
   rounded?: boolean;
 }
 
@@ -29,6 +30,7 @@ const MediaCardUI: React.FC<MediaCardProps> = ({
   season_number,
   episode_number,
   watch_time,
+  quality,
   user_id,
   rounded,
 }) => {
@@ -72,7 +74,7 @@ const MediaCardUI: React.FC<MediaCardProps> = ({
       : "";
 
   return (
-    <article className="mb-2 flex w-full min-w-[75vw] max-w-[100vw] flex-col lg:w-full lg:min-w-[320px] lg:max-w-[400px]">
+    <article className="flex w-full min-w-[75vw] max-w-[100vw] flex-col lg:w-full lg:min-w-[320px] lg:max-w-[400px]">
       <Link
         className={`relative w-full overflow-hidden lg:rounded-[8px] ${
           rounded === true ? "rounded-[8px]" : ""
@@ -95,15 +97,16 @@ const MediaCardUI: React.FC<MediaCardProps> = ({
             voteAverage={media.vote_average}
             isNew={isNew}
             isSoon={isSoon}
+            quality={quality}
             isNewEpisodes={isNewEpisodes}
             watchTime={watch_time}
             transformRuntime={transformRuntime}
           />
         </HoverImage>
       </Link>
-      <div className="flex flex-col gap-2 lg:p-0">
+      <div className="flex flex-col lg:p-0">
         <div className="mt-2 flex flex-row justify-between">
-          <h2 className="font-medium">
+          <h2 className="text-sm font-semibold">
             {mediaTitle}
             {formattedEpisodeCode}
           </h2>
@@ -118,20 +121,30 @@ const MediaCardUI: React.FC<MediaCardProps> = ({
             <></>
           )}
         </div>
-        {media.genres && (
-          <div className="flex flex-row items-center gap-2 text-xs text-foreground/70">
-            {media.genres.slice(0, 3).map((genre: any) => (
-              <Link
-                href={`/${media_type}/${genre.id}`}
-                key={genre.id}
-                className="rounded-[4px] bg-foreground/10 px-3 py-1"
-              >
-                {genre.name}
-              </Link>
-            ))}
-          </div>
-        )}
-        <p className="text-xs text-foreground/40">{formatDate(releaseDate)}</p>
+        <div className="mt-1 flex flex-row items-center gap-1">
+          <span
+            key={media_type}
+            className="rounded-[4px] bg-foreground/10 px-2 py-[2px] text-xs font-medium text-foreground/70"
+          >
+            {media_type === "movie"
+              ? "Movie"
+              : episode_number
+                ? "Episode"
+                : "TV Show"}
+          </span>
+          {media.genres?.slice(0, 2).map((genre: any) => (
+            <Link
+              href={`/${media_type}/${genre.id}`}
+              key={genre.id}
+              className="rounded-[4px] bg-foreground/10 px-2 py-[2px] text-xs font-medium text-foreground/70"
+            >
+              {genre.name}
+            </Link>
+          ))}
+        </div>
+        <p className="mt-2 text-xs text-foreground/50">
+          {formatDate(releaseDate)}
+        </p>
       </div>
     </article>
   );

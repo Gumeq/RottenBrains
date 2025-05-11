@@ -25,18 +25,18 @@ interface PostHeaderProps {
 
 const PostHeader = ({ creator, post, user_id }: PostHeaderProps) => {
   return (
-    <div className="flex flex-row items-center justify-between gap-4 px-4 py-2">
+    <div className="flex flex-row items-center justify-between gap-4 px-2 py-2">
       <div className="flex flex-row items-center gap-2">
         <span className="min-h-[32px] min-w-[32px]">
           <ProfilePicture user={creator} />
         </span>
         <div className="flex flex-col">
-          <p className="line-clamp-1 font-bold text-accent/80">
+          <p className="line-clamp-1 text-sm font-bold text-accent/80">
             <Link href={`/protected/user/${creator.id}`}>
               {creator.username}
             </Link>
           </p>
-          <p className="-mt-1 text-xs opacity-50">
+          <p className="-mt-1 text-[10px] opacity-50">
             {getRelativeTime(post.created_at)}
           </p>
         </div>

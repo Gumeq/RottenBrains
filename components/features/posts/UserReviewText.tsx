@@ -16,11 +16,11 @@ const UserReviewText = ({
   return (
     <Link
       href={post_link || "/"}
-      className="flex min-h-[50px] flex-col gap-2 text-sm"
+      className="flex min-h-[70px] flex-col gap-2 text-sm"
     >
       <p
         className={classNames(
-          "line-clamp-1 overflow-hidden text-foreground/80",
+          "line-clamp-2 overflow-hidden text-foreground/70",
         )}
       >
         {post_review}

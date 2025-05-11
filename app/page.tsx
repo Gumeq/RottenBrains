@@ -69,27 +69,25 @@ export default async function Page() {
         >
           {user ? (
             <section className="mt-14 lg:mt-0">
-              <div className="lg:rounded-[16px] lg:bg-foreground/10">
-                <p className="hidden px-8 py-8 font-medium lg:flex lg:text-lg">
-                  Continue Watching
-                </p>
-                {continue_watching.length > 0 ? (
-                  <HorizontalScroll>
-                    {continue_watching.map((media: any) => (
-                      <div
-                        key={media.id}
-                        className="snap-start scroll-ml-4 lg:scroll-ml-8"
-                      >
-                        <MediaCardUI media={media} user_id={user.id} rounded />
-                      </div>
-                    ))}
-                  </HorizontalScroll>
-                ) : (
-                  <div className="flex w-full items-center justify-center p-8">
-                    You have no watch history yet. Start watching something!
-                  </div>
-                )}
-              </div>
+              <p className="mb-4 hidden font-medium lg:flex lg:text-lg">
+                Continue Watching
+              </p>
+              {continue_watching.length > 0 ? (
+                <HorizontalScroll>
+                  {continue_watching.map((media: any) => (
+                    <div
+                      key={media.id}
+                      className="snap-start scroll-ml-4 lg:scroll-ml-8"
+                    >
+                      <MediaCardUI media={media} user_id={user.id} rounded />
+                    </div>
+                  ))}
+                </HorizontalScroll>
+              ) : (
+                <div className="flex w-full items-center justify-center p-8">
+                  You have no watch history yet. Start watching something!
+                </div>
+              )}
             </section>
           ) : (
             <div className="col mt-16 flex h-52 w-full flex-col items-center justify-center gap-4 bg-foreground/10 lg:mt-0 lg:rounded-[16px]">
