@@ -45,7 +45,7 @@ const Sidebar = () => {
 
   return (
     <aside
-      className={`fixed left-0 top-0 z-30 h-full min-h-screen bg-background p-4 transition-all duration-300 ${
+      className={`fixed left-0 top-0 z-30 hidden h-full min-h-screen bg-background p-4 transition-all duration-300 lg:flex ${
         isSidebarOpen ? "w-64" : "w-24"
       }`}
     >

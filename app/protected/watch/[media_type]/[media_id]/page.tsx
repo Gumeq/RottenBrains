@@ -15,6 +15,7 @@ import MobileBannerExoAlt from "@/components/features/ads/Message";
 import MobileBannerExo from "@/components/features/ads/MobileBannerExo";
 import MobileBannerPem from "@/components/features/ads/Fullscreen";
 import VideoAd from "@/components/features/ads/Video";
+import VideoContextSetter from "@/hooks/VideoContextSetter";
 
 export async function generateMetadata({ params }: any) {
   const media_id = parseInt(params.media_id, 10);
@@ -66,6 +67,7 @@ export default async function mediaPage({ params }: { params: Params }) {
 
   return (
     <>
+      <VideoContextSetter media_type={media_type} media_id={media_id} />
       {user && (
         <WatchDuration
           media_type={media_type}
@@ -77,15 +79,11 @@ export default async function mediaPage({ params }: { params: Params }) {
       <div className="relative mb-16 w-full">
         <div className="small-screen-watch-margin mx-auto flex w-full flex-col lg:flex-row lg:gap-4">
           <div className="flex flex-col lg:w-3/4 lg:gap-4">
-            <VideoEmbed
-              media_type={media_type}
-              media_id={media_id}
-              media={media}
-            />
+            <VideoEmbed />
             <WatchPageDetails
               media={media}
               media_type="movie"
-              media_id={media.id}
+              media_id={media_id}
             ></WatchPageDetails>
           </div>
           <section className="custom-scrollbar flex flex-col gap-8 p-4 lg:w-1/4 lg:gap-4 lg:p-0">

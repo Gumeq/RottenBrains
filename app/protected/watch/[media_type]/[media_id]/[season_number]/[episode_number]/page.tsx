@@ -18,6 +18,7 @@ import MobileBannerExoAlt from "@/components/features/ads/Message";
 import MobileBannerPem from "@/components/features/ads/Fullscreen";
 import VideoAd from "@/components/features/ads/Video";
 import MediaCardServer from "@/components/features/media/MediaCardServer";
+import VideoContextSetter from "@/hooks/VideoContextSetter";
 type Params = Promise<{
   media_id: number;
   season_number: number;
@@ -104,6 +105,12 @@ export default async function mediaPage({ params }: { params: Params }) {
 
   return (
     <>
+      <VideoContextSetter
+        media_type={media_type}
+        media_id={media_id}
+        season_number={season_number}
+        episode_number={episode_number}
+      />
       {user && (
         <WatchDuration
           media_type={media_type}
@@ -119,14 +126,7 @@ export default async function mediaPage({ params }: { params: Params }) {
           className={`small-screen-watch-margin mx-auto flex w-full flex-col lg:gap-4`}
         >
           <div className="flex flex-col lg:w-full lg:gap-4">
-            <VideoEmbed
-              media_type={media_type}
-              media_id={media_id}
-              season_number={season_number}
-              episode_number={episode_number}
-              media={media}
-              episode={episode}
-            />
+            <VideoEmbed />
             <WatchPageDetails
               media={media}
               media_type="tv"

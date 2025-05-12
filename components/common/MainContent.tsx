@@ -5,13 +5,13 @@ import Sidebar from "../features/navigation/desktop/Sidebar";
 import { useSidebar } from "@/hooks/SidebarContext";
 import NavBottom from "../features/navigation/mobile/NavBottom";
 import TopLoader from "../features/loaders/TopLoader";
+import VideoShell from "@/hooks/VideoShell";
 
 const MainContent = ({ children }: { children: React.ReactNode }) => {
-  const { isSidebarOpen } = useSidebar(); // client-only context
+  const { isSidebarOpen } = useSidebar();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Set mounted to true only on the client
     setMounted(true);
   }, []);
 
@@ -23,30 +23,30 @@ const MainContent = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
-  // Use a default value until the component is mounted.
-  // Assume that on the server isSidebarOpen is false.
-  const mainPaddingClass = mounted
+  // Only care about sidebar state on desktop (lg+)
+  const desktopPadding = mounted
     ? isSidebarOpen
-      ? "ml-64 max-w-[calc(100vw-256px)]"
-      : "ml-24 max-w-[calc(100vw-96px)]"
-    : "ml-24 max-w-[calc(100vw-96px)]";
+      ? "lg:ml-64 lg:max-w-[calc(100vw-256px)]"
+      : "lg:ml-24 lg:max-w-[calc(100vw-96px)]"
+    : "lg:ml-24 lg:max-w-[calc(100vw-96px)]";
 
   return (
     <>
-      <div className="hidden lg:flex">
-        <Sidebar />
-        <main
-          className={`mt-20 w-full flex-1 pl-4 pr-8 transition-all duration-300 ${mainPaddingClass}`}
-        >
-          {children}
-        </main>
-      </div>
-      <div className="flex lg:hidden">
-        <main className="mb-52 w-full flex-1 transition-all duration-300">
-          {children}
-        </main>
-        <NavBottom />
-      </div>
+      {/* desktop sidebar, hidden on mobile */}
+      <Sidebar />
+
+      {/* single main wrapper */}
+      <main
+        className={`mb-52 w-full flex-1 lg:mb-0 lg:mt-20 lg:pl-4 lg:pr-8 ${desktopPadding} `}
+      >
+        {children}
+      </main>
+
+      {/* mobile nav, hidden on desktop */}
+      <NavBottom />
+
+      {/* always-mounted shell */}
+      <VideoShell />
     </>
   );
 };

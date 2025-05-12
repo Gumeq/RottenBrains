@@ -1,5 +1,3 @@
-"use client";
-import { useUser } from "@/hooks/UserContext";
 import { usePathname } from "next/navigation";
 
 import {
@@ -24,7 +22,6 @@ import NavAdMobile from "../../ads/NavAdMobile";
 import NavSearchIconNew from "./NavSearchIconNew";
 
 const NavBottom = () => {
-  const { user } = useUser();
   const pathname = usePathname();
 
   // Hide the bottom bar on specific routes
@@ -34,7 +31,7 @@ const NavBottom = () => {
 
   return (
     <>
-      <nav className="fixed bottom-0 left-0 right-0 z-30 flex flex-col border-t bg-background/90 backdrop-blur-lg">
+      <nav className="fixed bottom-0 left-0 right-0 z-30 flex w-full flex-col border-t bg-background/90 backdrop-blur-lg lg:hidden">
         <ul className="relative flex h-14 w-full flex-row items-center justify-between px-4">
           {/* Home Link */}
           <NavLinkMobile
