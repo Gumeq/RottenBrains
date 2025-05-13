@@ -25,6 +25,8 @@ export default function VideoShell() {
 
   const { setState } = useVideo();
 
+  console.log(navigator);
+
   // watch localStorage like before…
   useEffect(() => {
     const valid = (n: string | null) =>
@@ -51,7 +53,17 @@ export default function VideoShell() {
     const root = document.getElementById(targetId);
     if (!root) return; // <-- bail out if it’s not in the DOM yet
 
-    if (mode === "mini") {
+    if (!media_id || !media_type) {
+      Object.assign(root.style, {
+        display: "none",
+      });
+    } else {
+      Object.assign(root.style, {
+        display: "block",
+      });
+    }
+
+    if (mode === "mini" && media_id && media_type) {
       root.style.cssText = ""; // let your CSS utility classes take over
     } else {
       const placeholder = document.getElementById("video-inline-placeholder");
@@ -60,6 +72,7 @@ export default function VideoShell() {
       const rect = placeholder.getBoundingClientRect();
       console.log("rect", rect);
       Object.assign(root.style, {
+        display: "block",
         position: `${isMobile ? "fixed" : "absolute"}`,
         top: `${rect.top}px`,
         left: `${rect.left}px`,
@@ -67,7 +80,7 @@ export default function VideoShell() {
         height: `${rect.height}px`,
       });
     }
-  }, [mode]);
+  }, [mode, state]);
 
   // bail early
   if (!media_id || !media_type) return null;
@@ -97,7 +110,7 @@ export default function VideoShell() {
   const container = document.getElementById(targetId);
   if (!container) return null;
   return ReactDOM.createPortal(
-    <div className="relative h-full w-full">
+    <div className="group relative h-full w-full">
       <iframe
         src={src}
         allowFullScreen

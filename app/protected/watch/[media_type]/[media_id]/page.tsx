@@ -16,6 +16,7 @@ import MobileBannerExo from "@/components/features/ads/MobileBannerExo";
 import MobileBannerPem from "@/components/features/ads/Fullscreen";
 import VideoAd from "@/components/features/ads/Video";
 import VideoContextSetter from "@/hooks/VideoContextSetter";
+import MediaCardServer from "@/components/features/media/MediaCardServer";
 
 export async function generateMetadata({ params }: any) {
   const media_id = parseInt(params.media_id, 10);
@@ -76,9 +77,9 @@ export default async function mediaPage({ params }: { params: Params }) {
           media_duration={media.runtime || 24}
         />
       )}
-      <div className="relative mb-16 w-full">
-        <div className="small-screen-watch-margin mx-auto flex w-full flex-col lg:flex-row lg:gap-4">
-          <div className="flex flex-col lg:w-3/4 lg:gap-4">
+      <div className="relative mx-auto mb-16 w-full max-w-7xl">
+        <div className="small-screen-watch-margin mx-auto flex w-full flex-col lg:gap-4">
+          <div className="flex flex-col lg:w-full lg:gap-4">
             <VideoEmbed />
             <WatchPageDetails
               media={media}
@@ -86,25 +87,14 @@ export default async function mediaPage({ params }: { params: Params }) {
               media_id={media_id}
             ></WatchPageDetails>
           </div>
-          <section className="custom-scrollbar flex flex-col gap-8 p-4 lg:w-1/4 lg:gap-4 lg:p-0">
+          <section className="grid w-full grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-8 px-4 lg:gap-4 lg:px-0">
             {recommendationMediaDetails.map((mediaDetail: any) => (
-              <Link
-                href={
-                  mediaDetail.title
-                    ? `/protected/watch/${mediaDetail.media_type}/${mediaDetail.id}`
-                    : `/protected/watch/${mediaDetail.media_type}/${mediaDetail.id}/1/1`
-                }
-                className="w-full"
-                key={mediaDetail.id}
-              >
-                <MediaCardSmall
-                  media_type={mediaDetail.media_type || "movie"}
-                  media_id={mediaDetail.id}
-                  user_id={user?.id.toString()}
-                  media={mediaDetail}
-                  rounded
-                />
-              </Link>
+              <MediaCardServer
+                media_type={mediaDetail.media_type || "movie"}
+                media_id={mediaDetail.id}
+                user_id={user?.id}
+                rounded={true}
+              />
             ))}
           </section>
         </div>

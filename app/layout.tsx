@@ -72,7 +72,7 @@ export default async function NotProtectedLayout({
                 <MainContent>{children}</MainContent>
                 <div
                   id="player-root"
-                  className="fixed bottom-16 right-2 z-50 aspect-[16/9] w-[80vw] transition-all duration-200 lg:bottom-2 lg:z-20 lg:h-64 lg:w-auto"
+                  className="fixed bottom-16 right-2 z-50 aspect-[16/9] w-[80vw] overflow-hidden bg-background transition-all duration-200 lg:bottom-2 lg:z-20 lg:h-64 lg:w-auto lg:rounded-[8px]"
                 />
                 <footer></footer>
                 {/* <CookieConsent /> */}

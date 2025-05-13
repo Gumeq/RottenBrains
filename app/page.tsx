@@ -21,6 +21,7 @@ import AdBanner from "@/components/features/ads/GoogleDisplayAd";
 import MobileBannerExo42 from "@/components/features/ads/Notification";
 import MobileBannerExoAlt from "@/components/features/ads/Message";
 import MobileBannerPem from "@/components/features/ads/Fullscreen";
+import VideoContextSetter from "@/hooks/VideoContextSetter";
 
 export default async function Page() {
   const user = await getCurrentUser();
@@ -57,6 +58,8 @@ export default async function Page() {
       tvGenresResult.status === "fulfilled" ? tvGenresResult.value : [];
   }
 
+  console.log(continue_watching[0]);
+
   return (
     <MobileVideoProvider>
       <div
@@ -73,16 +76,24 @@ export default async function Page() {
                 Continue Watching
               </p>
               {continue_watching.length > 0 ? (
-                <HorizontalScroll>
-                  {continue_watching.map((media: any) => (
-                    <div
-                      key={media.id}
-                      className="snap-start scroll-ml-4 lg:scroll-ml-8"
-                    >
-                      <MediaCardUI media={media} user_id={user.id} rounded />
-                    </div>
-                  ))}
-                </HorizontalScroll>
+                <>
+                  {/* <VideoContextSetter
+                    media_type={continue_watching[0].media_type}
+                    media_id={continue_watching[0].media_id}
+                    episode_number={continue_watching[0].episode_number}
+                    season_number={continue_watching[0].season_number}
+                  /> */}
+                  <HorizontalScroll>
+                    {continue_watching.map((media: any) => (
+                      <div
+                        key={media.id}
+                        className="snap-start scroll-ml-4 lg:scroll-ml-8"
+                      >
+                        <MediaCardUI media={media} user_id={user.id} rounded />
+                      </div>
+                    ))}
+                  </HorizontalScroll>
+                </>
               ) : (
                 <div className="flex w-full items-center justify-center p-8">
                   You have no watch history yet. Start watching something!
