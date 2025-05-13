@@ -18,15 +18,6 @@ export const metadata = {
   title: "Rotten Brains | Stream movies and TV for free in HD quality.",
   description:
     "Watch movies and tv shows in HD quality for free. Discover all new movies in 2025. Stream for free in the best HD quality possible | Rotten Brains",
-  other: {
-    script: [
-      {
-        src: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4557341861686356",
-        async: true,
-        crossOrigin: "anonymous",
-      },
-    ],
-  },
 };
 
 export default async function NotProtectedLayout({
@@ -72,7 +63,7 @@ export default async function NotProtectedLayout({
                 <MainContent>{children}</MainContent>
                 <div
                   id="player-root"
-                  className="fixed bottom-16 right-2 z-50 aspect-[16/9] w-[80vw] overflow-hidden bg-background transition-all duration-200 lg:bottom-2 lg:z-20 lg:h-64 lg:w-auto lg:rounded-[8px]"
+                  className="fixed bottom-16 right-2 z-50 aspect-[16/9] w-[60vw] overflow-hidden bg-background transition-all duration-200 lg:bottom-2 lg:z-20 lg:h-64 lg:w-auto lg:rounded-[8px]"
                 />
                 <footer></footer>
                 {/* <CookieConsent /> */}

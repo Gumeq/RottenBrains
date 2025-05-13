@@ -121,7 +121,7 @@ export default function VideoShell() {
       {mode === "mini" && (
         <button
           onClick={() => setState((s) => ({ ...s, media_id: undefined }))}
-          className="absolute left-0 top-0 z-50 flex aspect-square h-12 items-center justify-center rounded-[4px] bg-black/50"
+          className="absolute left-0 top-0 z-50 flex aspect-square h-12 items-center justify-center"
         >
           <p className="text-2xl text-white">x</p>
         </button>
@@ -134,7 +134,7 @@ export default function VideoShell() {
             season_number,
             episode_number,
           )}
-          className="absolute right-0 top-0 flex aspect-square h-12 items-center justify-center bg-black/50"
+          className="absolute right-0 top-0 flex aspect-square h-12 items-center justify-center"
         >
           <img src="/assets/icons/link.svg" alt="" className="invert" />
         </Link>
