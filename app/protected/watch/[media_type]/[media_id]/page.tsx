@@ -78,8 +78,8 @@ export default async function mediaPage({ params }: { params: Params }) {
         />
       )}
       <div className="relative mx-auto mb-16 w-full max-w-7xl">
-        <div className="small-screen-watch-margin mx-auto flex w-full flex-col lg:gap-4">
-          <div className="flex flex-col lg:w-full lg:gap-4">
+        <div className="small-screen-watch-margin mx-auto flex w-full flex-col md:gap-4">
+          <div className="flex flex-col md:w-full md:gap-4">
             <VideoEmbed />
             <WatchPageDetails
               media={media}
@@ -87,7 +87,7 @@ export default async function mediaPage({ params }: { params: Params }) {
               media_id={media_id}
             ></WatchPageDetails>
           </div>
-          <section className="grid w-full grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-8 px-4 lg:gap-4 lg:px-0">
+          <section className="grid w-full grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-8 px-4 md:gap-4 md:px-0">
             {recommendationMediaDetails.map((mediaDetail: any) => (
               <MediaCardServer
                 media_type={mediaDetail.media_type || "movie"}

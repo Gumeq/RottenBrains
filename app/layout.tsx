@@ -56,14 +56,14 @@ export default async function NotProtectedLayout({
               <VideoProvider>
                 <TopLoader />
                 <header>
-                  <div className="hidden lg:flex">
+                  <div className="hidden md:flex">
                     <HomeNav></HomeNav>
                   </div>
                 </header>
                 <MainContent>{children}</MainContent>
                 <div
                   id="player-root"
-                  className="fixed bottom-16 right-2 z-50 aspect-[16/9] w-[60vw] overflow-hidden bg-background transition-all duration-200 lg:bottom-2 lg:z-20 lg:h-64 lg:w-auto lg:rounded-[8px]"
+                  className="fixed bottom-16 right-2 z-50 aspect-[16/9] w-[60vw] overflow-hidden bg-background transition-all duration-200 md:bottom-2 md:z-20 md:h-64 md:w-auto md:rounded-[8px]"
                 />
                 <footer></footer>
                 {/* <CookieConsent /> */}

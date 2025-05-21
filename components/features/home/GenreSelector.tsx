@@ -236,7 +236,7 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({
   // ---------------------------
 
   return (
-    <div className="hidden-scrollbar top-20 -mb-4 flex h-12 flex-row items-center gap-2 overflow-x-auto bg-background px-2 py-2 text-sm transition-all duration-300 lg:sticky lg:z-10 lg:h-14 lg:px-0 lg:pb-4">
+    <div className="hidden-scrollbar top-20 -mb-4 flex h-12 flex-row items-center gap-2 overflow-x-auto bg-background px-2 py-2 text-sm transition-all duration-300 md:sticky md:z-10 md:h-14 md:px-0 md:pb-4">
       {/* Category buttons */}
       {user ? (
         <button

@@ -140,11 +140,11 @@
 }
 
 .topbar {
-  @apply sticky top-0 z-50 w-full bg-foreground/10 lg:hidden;
+  @apply sticky top-0 z-50 w-full bg-foreground/10 md:hidden;
 }
 
 .bottom-bar {
-  @apply flex-between bottom-0 z-50 w-screen bg-background p-1 px-4 lg:hidden;
+  @apply flex-between bottom-0 z-50 w-screen bg-background p-1 px-4 md:hidden;
 }
 
 /* Dark-themed scrollbar with transparent background */
@@ -462,7 +462,7 @@
 }
 
 .bottombar {
-  @apply fixed bottom-0 left-0 right-0 z-50 flex items-center justify-center bg-background lg:hidden;
+  @apply fixed bottom-0 left-0 right-0 z-50 flex items-center justify-center bg-background md:hidden;
   height: calc(env(safe-area-inset-bottom) + 80px);
 }
 .bottombar-inner {

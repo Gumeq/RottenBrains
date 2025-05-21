@@ -26,9 +26,9 @@ const MainContent = ({ children }: { children: React.ReactNode }) => {
   // Only care about sidebar state on desktop (lg+)
   const desktopPadding = mounted
     ? isSidebarOpen
-      ? "lg:ml-64 lg:max-w-[calc(100vw-256px)]"
-      : "lg:ml-24 lg:max-w-[calc(100vw-96px)]"
-    : "lg:ml-24 lg:max-w-[calc(100vw-96px)]";
+      ? "md:ml-64 md:max-w-[calc(100vw-256px)]"
+      : "md:ml-24 md:max-w-[calc(100vw-96px)]"
+    : "md:ml-24 md:max-w-[calc(100vw-96px)]";
 
   return (
     <>
@@ -37,7 +37,7 @@ const MainContent = ({ children }: { children: React.ReactNode }) => {
 
       {/* single main wrapper */}
       <main
-        className={`mb-52 w-full flex-1 lg:mb-0 lg:mt-20 lg:pl-4 lg:pr-8 ${desktopPadding} `}
+        className={`mb-52 w-full flex-1 md:mb-0 md:mt-20 md:pl-4 md:pr-8 ${desktopPadding} `}
       >
         {children}
       </main>

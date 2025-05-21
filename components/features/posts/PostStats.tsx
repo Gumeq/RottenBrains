@@ -130,7 +130,7 @@ const PostStats = ({ post, user_id, current_user, post_link }: any) => {
           </Link>
           {state.isOpen && (
             <div className="fixed inset-0 z-50 flex justify-center bg-black bg-opacity-50">
-              <div className="relative max-h-[90%] w-screen rounded-lg bg-background p-4 pt-16 shadow-lg lg:h-auto lg:max-h-[80%] lg:max-w-4xl">
+              <div className="relative max-h-[90%] w-screen rounded-lg bg-background p-4 pt-16 shadow-lg md:h-auto md:max-h-[80%] md:max-w-4xl">
                 <button
                   onClick={togglePopup}
                   className="absolute right-2 top-2 rounded-md bg-accent px-4 py-2 text-white"

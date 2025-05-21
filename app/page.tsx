@@ -63,7 +63,7 @@ export default async function Page() {
   return (
     <MobileVideoProvider>
       <div
-        className="flex w-full flex-col gap-8 lg:w-auto lg:py-0"
+        className="flex w-full flex-col gap-8 md:w-auto md:py-0"
         id="main-content"
       >
         <NavTop />
@@ -71,8 +71,8 @@ export default async function Page() {
           fallback={<div>Could not load "Continue Watching".</div>}
         >
           {user ? (
-            <section className="mt-14 lg:mt-0">
-              <p className="mb-4 hidden font-medium lg:flex lg:text-lg">
+            <section className="mt-14 md:mt-0">
+              <p className="mb-4 hidden font-medium md:flex md:text-lg">
                 Continue Watching
               </p>
               {continue_watching.length > 0 ? (
@@ -87,7 +87,7 @@ export default async function Page() {
                     {continue_watching.map((media: any) => (
                       <div
                         key={media.id}
-                        className="snap-start scroll-ml-4 lg:scroll-ml-8"
+                        className="snap-start scroll-ml-4 md:scroll-ml-8"
                       >
                         <MediaCardUI media={media} user_id={user.id} rounded />
                       </div>
@@ -101,7 +101,7 @@ export default async function Page() {
               )}
             </section>
           ) : (
-            <div className="col mt-16 flex h-52 w-full flex-col items-center justify-center gap-4 bg-foreground/10 lg:mt-0 lg:rounded-[16px]">
+            <div className="col mt-16 flex h-52 w-full flex-col items-center justify-center gap-4 bg-foreground/10 md:mt-0 md:rounded-[16px]">
               <img
                 src="/assets/images/logo_new_black.svg"
                 alt=""
@@ -119,7 +119,7 @@ export default async function Page() {
             <div className="relative">
               <div className="gradient-edge absolute right-0 top-0 z-20 h-full w-[5%]" />
               <div
-                className="hidden-scrollbar flex snap-x snap-mandatory flex-row gap-4 overflow-x-auto px-4 lg:px-0 lg:pr-4"
+                className="hidden-scrollbar flex snap-x snap-mandatory flex-row gap-4 overflow-x-auto px-4 md:px-0 md:pr-4"
                 id="rotten-posts-one"
               >
                 {user ? (
@@ -127,7 +127,7 @@ export default async function Page() {
                     followedPosts.map((post: any) => (
                       <div
                         key={post.id}
-                        className="flex w-[80vw] flex-shrink-0 snap-start scroll-ml-4 lg:w-fit"
+                        className="flex w-[80vw] flex-shrink-0 snap-start scroll-ml-4 md:w-fit"
                       >
                         <HomePostCardUI
                           post_media_data={post}

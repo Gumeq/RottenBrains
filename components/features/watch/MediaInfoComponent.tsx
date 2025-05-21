@@ -3,53 +3,53 @@ import React from "react";
 import Link from "next/link";
 
 type MediaInfoProps = {
-	media_type: string;
-	media_id: number;
-	season_number?: number;
+  media_type: string;
+  media_id: number;
+  season_number?: number;
 };
 
 const MediaInfoComponent = async ({
-	media_type,
-	media_id,
-	season_number,
+  media_type,
+  media_id,
+  season_number,
 }: MediaInfoProps) => {
-	let mediaData;
-	try {
-		mediaData = await getMediaDetails(media_type, media_id);
-	} catch (error) {
-		console.error("Error fetching media data:", error);
-		mediaData = null;
-	}
-	const media = mediaData;
-	if (!media) {
-		return <h1>No Media Found</h1>;
-	}
-	return (
-		<div>
-			<div className="flex w-full flex-col items-center gap-2 rounded-xl lg:flex-row lg:gap-0">
-				<Link href={`/protected/media/${media_type}/${media_id}`}>
-					<div className="min-h-[450px] min-w-[300px] overflow-hidden rounded-[8px] drop-shadow-2xl">
-						<div className="absolute m-2 flex flex-row items-center justify-center gap-2 rounded-[6px] bg-background/50 p-2 text-lg font-bold backdrop-blur">
-							<img
-								src="/assets/icons/star-solid.svg"
-								alt=""
-								width={20}
-								height={20}
-								className="invert-on-dark"
-								loading="lazy"
-							/>
-							<p>{media.vote_average.toFixed(1)}</p>
-						</div>
-						<img
-							src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
-							alt=""
-							width="300"
-							height="450"
-						/>
-					</div>
-				</Link>
+  let mediaData;
+  try {
+    mediaData = await getMediaDetails(media_type, media_id);
+  } catch (error) {
+    console.error("Error fetching media data:", error);
+    mediaData = null;
+  }
+  const media = mediaData;
+  if (!media) {
+    return <h1>No Media Found</h1>;
+  }
+  return (
+    <div>
+      <div className="flex w-full flex-col items-center gap-2 rounded-xl md:flex-row md:gap-0">
+        <Link href={`/protected/media/${media_type}/${media_id}`}>
+          <div className="min-h-[450px] min-w-[300px] overflow-hidden rounded-[8px] drop-shadow-2xl">
+            <div className="absolute m-2 flex flex-row items-center justify-center gap-2 rounded-[6px] bg-background/50 p-2 text-lg font-bold backdrop-blur">
+              <img
+                src="/assets/icons/star-solid.svg"
+                alt=""
+                width={20}
+                height={20}
+                className="invert-on-dark"
+                loading="lazy"
+              />
+              <p>{media.vote_average.toFixed(1)}</p>
+            </div>
+            <img
+              src={`https://image.tmdb.org/t/p/w500${media.poster_path}`}
+              alt=""
+              width="300"
+              height="450"
+            />
+          </div>
+        </Link>
 
-				{/* <div className="w-full lg:h-5/6 bg-foreground/10 lg:rounded-r-[8px] relative">
+        {/* <div className="w-full md:h-5/6 bg-foreground/10 md:rounded-r-[8px] relative">
 					<div className="flex flex-col p-8 text-foreground/70 gap-2 w-full ">
 						<Link
 							href={`/protected/media/${media_type}/${media_id}`}
@@ -117,9 +117,9 @@ const MediaInfoComponent = async ({
 						</div>
 					</div>
 				</div> */}
-			</div>
-		</div>
-	);
+      </div>
+    </div>
+  );
 };
 
 export default MediaInfoComponent;

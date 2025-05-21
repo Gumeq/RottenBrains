@@ -1,5 +1,5 @@
+import { fetchMediaData } from "../server/fetchMediaData";
 import { getUserPosts, getUserPostsType } from "../supabase/clientQueries";
-import { fetchMediaData } from "./fetchMediaData";
 
 export async function fetchPostsDataForUser(
   user_id: string,
@@ -9,9 +9,10 @@ export async function fetchPostsDataForUser(
   const posts = await getUserPosts(user_id, page, current_user_id);
   const posts_media_data = await Promise.all(
     posts.map(async (post: any) => {
+      console.log(post.post.media_id);
       const media_data = await fetchMediaData(
-        post.post.media_type,
         post.post.media_id,
+        post.post.media_type,
       );
       return { post_data: post, media_data: media_data };
     }),

@@ -81,7 +81,7 @@ module.exports = {
 
       // 3) Border radius from shadcn’s config:
       borderRadius: {
-        lg: "var(--radius)",
+        md: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },

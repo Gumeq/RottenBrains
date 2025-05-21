@@ -25,8 +25,6 @@ export default function VideoShell() {
 
   const { setState } = useVideo();
 
-  console.log(navigator);
-
   // watch localStorage like before…
   useEffect(() => {
     const valid = (n: string | null) =>

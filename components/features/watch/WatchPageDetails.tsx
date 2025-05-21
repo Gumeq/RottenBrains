@@ -73,7 +73,7 @@ const WatchPageDetails: React.FC<WatchPageDetailsProps> = ({
 
   return (
     <>
-      <section className="relative mx-auto flex w-full p-4 lg:hidden lg:p-0">
+      <section className="relative mx-auto flex w-full p-4 md:hidden md:p-0">
         {/* Initially displayed title and date */}
         <div className="flex flex-col gap-6">
           <div
@@ -193,9 +193,9 @@ const WatchPageDetails: React.FC<WatchPageDetailsProps> = ({
           )}
         </AnimatePresence>
       </section>
-      <section className="mx-auto hidden w-full flex-col gap-4 rounded-[8px] p-4 lg:flex lg:p-0">
+      <section className="mx-auto hidden w-full flex-col gap-4 rounded-[8px] p-4 md:flex md:p-0">
         <div className="flex flex-col gap-1">
-          <h2 className="font-semibold lg:text-lg">
+          <h2 className="font-semibold md:text-lg">
             {episode && season_number && episode_number
               ? `${episode.name} | ${
                   formatEpisodeCode

@@ -63,7 +63,7 @@ const InfiniteScrollByGenre: React.FC<InfiniteScrollByGenreProps> = ({
 
   return (
     <div
-      className="flex w-full flex-col justify-center gap-4 p-4 lg:p-0"
+      className="flex w-full flex-col justify-center gap-4 p-4 md:p-0"
       ref={targetRef}
     >
       <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-4">

@@ -32,7 +32,7 @@ const Navbar = ({ children }: any) => {
         isSidebarOpen
           ? "left-64 w-[calc(100vw-256px)]"
           : "left-24 w-[calc(100vw-96px)]"
-      } justify-center bg-background lg:flex`}
+      } justify-center bg-background md:flex`}
     >
       <div className="flex w-full flex-col items-center">
         {/* This container holds all elements in a row */}

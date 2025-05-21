@@ -52,7 +52,7 @@ const NavTop = () => {
       ref={topBarRef}
       style={{ transform: "translateY(0)", willChange: "transform" }}
     >
-      <div className="flex h-12 w-full items-center justify-between bg-background px-4 transition-transform duration-100 ease-out lg:hidden">
+      <div className="flex h-12 w-full items-center justify-between bg-background px-4 transition-transform duration-100 ease-out md:hidden">
         {/* Left side */}
         <div className="flex flex-row gap-4">
           <MenuButtonWithSidebar />

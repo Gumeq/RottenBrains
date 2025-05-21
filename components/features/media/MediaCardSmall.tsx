@@ -88,10 +88,10 @@ const MediaCardSmall = async ({
   );
 
   return (
-    <article className="flex w-full flex-col gap-2 hover:border-accent lg:flex-row">
+    <article className="flex w-full flex-col gap-2 hover:border-accent md:flex-row">
       <div
-        className={`relative w-full flex-shrink-0 overflow-hidden lg:w-1/2 ${
-          rounded ? "rounded-[8px]" : "lg:rounded-[8px]"
+        className={`relative w-full flex-shrink-0 overflow-hidden md:w-1/2 ${
+          rounded ? "rounded-[8px]" : "md:rounded-[8px]"
         }`}
       >
         <MediaCardOverlay
@@ -106,9 +106,9 @@ const MediaCardSmall = async ({
           quality={"w1280"}
         />
       </div>
-      <div className="flex flex-col gap-1 lg:w-full lg:px-0">
+      <div className="flex flex-col gap-1 md:w-full md:px-0">
         <div className="flex flex-row items-center justify-between">
-          <h3 className="flex items-center space-x-2 font-medium lg:text-sm">
+          <h3 className="flex items-center space-x-2 font-medium md:text-sm">
             {mediaTitle}
             {episodeCode}
           </h3>

@@ -14,7 +14,7 @@ const HomePostCardUI = ({ post_media_data, user_id }: HomePostCardProps) => {
   const genreIds = media_data?.genres?.map((genre: any) => genre.id) || [];
   const post_link = `/protected/user/${post_data.creator.id}?post_id=${post_data.post.id}`;
   return (
-    <div className="post_border relative flex h-min flex-col rounded-[8px] bg-white/10 lg:min-w-[250px] lg:max-w-[300px]">
+    <div className="post_border relative flex h-min flex-col rounded-[8px] bg-white/10 md:min-w-[250px] md:max-w-[300px]">
       <PostHeader
         creator={post_data.creator}
         post={post_data.post}

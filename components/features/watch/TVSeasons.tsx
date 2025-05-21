@@ -35,10 +35,10 @@ const TVShowDetails = async ({
   return (
     <div className="w-full">
       <div
-        className={`${is_premium ? "small-screen-watch-top-premium" : "small-screen-watch-top"} sticky z-20 bg-background lg:z-auto`}
+        className={`${is_premium ? "small-screen-watch-top-premium" : "small-screen-watch-top"} sticky z-20 bg-background md:z-auto`}
       >
         <div className="gradient-edge absolute right-0 top-0 z-20 h-full w-[10%]" />
-        <div className="custom-scrollbar 0 flex gap-2 overflow-x-auto px-2 py-2 text-sm lg:px-0">
+        <div className="custom-scrollbar 0 flex gap-2 overflow-x-auto px-2 py-2 text-sm md:px-0">
           {filteredSeasons.map((season: any) => (
             <Link
               key={season.season_number}
@@ -54,8 +54,8 @@ const TVShowDetails = async ({
           ))}
         </div>
       </div>
-      <div className="mt-2 w-full px-4 lg:px-0">
-        <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-8 lg:gap-4">
+      <div className="mt-2 w-full px-4 md:px-0">
+        <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-8 md:gap-4">
           {episodes.map((episode: any) => (
             <MediaCardServer
               media_type={"tv"}

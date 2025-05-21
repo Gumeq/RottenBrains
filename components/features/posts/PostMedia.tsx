@@ -15,6 +15,7 @@ interface PostMediaProps {
 }
 
 const PostMedia = ({ media, post, quality }: PostMediaProps) => {
+  console.log(media);
   return (
     <div className="relative w-full">
       <Link

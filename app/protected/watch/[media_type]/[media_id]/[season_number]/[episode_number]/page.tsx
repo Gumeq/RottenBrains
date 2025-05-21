@@ -123,9 +123,9 @@ export default async function mediaPage({ params }: { params: Params }) {
       )}
       <div className="relative mx-auto mb-16 w-full max-w-7xl">
         <div
-          className={`small-screen-watch-margin mx-auto flex w-full flex-col lg:gap-4`}
+          className={`small-screen-watch-margin mx-auto flex w-full flex-col md:gap-4`}
         >
-          <div className="flex flex-col lg:w-full lg:gap-4">
+          <div className="flex flex-col md:w-full md:gap-4">
             <VideoEmbed />
             <WatchPageDetails
               media={media}
@@ -136,12 +136,12 @@ export default async function mediaPage({ params }: { params: Params }) {
               episode={episode}
             ></WatchPageDetails>
           </div>
-          <section className="flex flex-col gap-2 lg:mt-0">
+          <section className="flex flex-col gap-2 md:mt-0">
             {nextEpisode && (
-              <div className="flex flex-col gap-2 lg:rounded-[8px] lg:p-0">
+              <div className="flex flex-col gap-2 md:rounded-[8px] md:p-0">
                 <Link
                   href={`/protected/watch/tv/${media.id}/${nextEpisode.season_number}/${nextEpisode.episode_number}`}
-                  className="px-4 lg:px-0"
+                  className="px-4 md:px-0"
                 >
                   <MediaCardServer
                     media_type={"tv"}

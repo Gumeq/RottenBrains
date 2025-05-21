@@ -241,7 +241,7 @@ const NotificationButton: FC<NotificationButtonProps> = ({ user_id }) => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent
-        className="mx-2 max-h-[70vh] w-screen max-w-[95vw] overflow-y-auto rounded-[8px] border-none bg-background p-0 drop-shadow-lg lg:mt-4 lg:max-h-[50vh] lg:w-[600px]"
+        className="mx-2 max-h-[70vh] w-screen max-w-[95vw] overflow-y-auto rounded-[8px] border-none bg-background p-0 drop-shadow-lg md:mt-4 md:max-h-[50vh] md:w-[600px]"
         align="end"
       >
         <div className="flex h-full w-full flex-col bg-foreground/10 pb-4">

@@ -68,7 +68,7 @@ export default function HorizontalScroll({
         <button
           type="button"
           onClick={handleScrollLeft}
-          className="absolute left-4 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-black/80 p-2 text-white hover:bg-black/80 focus:outline-none lg:flex"
+          className="absolute left-4 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-black/80 p-2 text-white hover:bg-black/80 focus:outline-none md:flex"
         >
           <img
             src="/assets/icons/caret-left-solid.svg"
@@ -81,7 +81,7 @@ export default function HorizontalScroll({
       {/* The scrollable container */}
       <div
         ref={containerRef}
-        className="hidden-scrollbar flex snap-x snap-mandatory flex-row gap-4 overflow-x-auto px-4 lg:p-0"
+        className="hidden-scrollbar flex snap-x snap-mandatory flex-row gap-4 overflow-x-auto px-4 md:p-0"
         /* ^ optionally hide the scrollbar if you want
            Tailwind (or custom) might have .scrollbar-hide 
            or just override via CSS */
@@ -95,7 +95,7 @@ export default function HorizontalScroll({
         <button
           type="button"
           onClick={handleScrollRight}
-          className="absolute right-4 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-black/80 p-2 text-white hover:bg-black/80 focus:outline-none lg:flex"
+          className="absolute right-4 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-black/80 p-2 text-white hover:bg-black/80 focus:outline-none md:flex"
         >
           <img
             src="/assets/icons/caret-right-solid.svg"
