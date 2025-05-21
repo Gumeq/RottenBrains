@@ -74,7 +74,7 @@ const MediaCardUI: React.FC<MediaCardProps> = ({
       : "";
 
   return (
-    <article className="flex w-full min-w-[75vw] max-w-[100vw] flex-col md:w-full md:min-w-[320px] md:max-w-[400px]">
+    <article className="flex w-full min-w-[70vw] max-w-[100vw] flex-col md:w-full md:min-w-[300px] md:max-w-[350px]">
       <Link
         className={`relative w-full overflow-hidden md:rounded-[8px] ${
           rounded === true ? "rounded-[8px]" : ""
@@ -94,6 +94,7 @@ const MediaCardUI: React.FC<MediaCardProps> = ({
         >
           <MediaCardOverlay
             runtime={media.runtime}
+            number_of_episodes={media.number_of_episodes}
             voteAverage={media.vote_average}
             isNew={isNew}
             isSoon={isSoon}
@@ -142,7 +143,7 @@ const MediaCardUI: React.FC<MediaCardProps> = ({
             </Link>
           ))}
         </div>
-        <p className="mt-2 text-xs text-foreground/50">
+        <p className="mt-2 text-[10px] text-foreground/70">
           {formatDate(releaseDate)}
         </p>
       </div>

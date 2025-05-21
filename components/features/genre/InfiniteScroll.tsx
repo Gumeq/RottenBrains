@@ -66,7 +66,7 @@ const InfiniteScrollByGenre: React.FC<InfiniteScrollByGenreProps> = ({
       className="flex w-full flex-col justify-center gap-4 p-4 md:p-0"
       ref={targetRef}
     >
-      <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-4">
+      <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4">
         {mediaItems && mediaItems.length > 0 ? (
           mediaItems.map((mediaItem, index) => {
             if (index === 2 || (index % 30 === 0 && index !== 0)) {

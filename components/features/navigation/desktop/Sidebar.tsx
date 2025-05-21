@@ -45,12 +45,12 @@ const Sidebar = () => {
 
   return (
     <aside
-      className={`fixed left-0 top-0 z-30 hidden h-full min-h-screen bg-background p-4 transition-all duration-300 md:flex ${
-        isSidebarOpen ? "w-64" : "w-24"
+      className={`fixed left-0 top-0 z-30 hidden h-full min-h-screen bg-background px-2 transition-all duration-300 md:flex ${
+        isSidebarOpen ? "w-52" : "w-24"
       }`}
     >
       {isSidebarOpen ? (
-        <ul className="flex h-full flex-col justify-start rounded-[8px] bg-foreground/10 p-2 pb-8">
+        <ul className="flex h-full w-full flex-col justify-start">
           <div className="my-8 flex w-full flex-row items-center gap-4 px-4">
             <Link href={"/"} className="flex flex-row items-center gap-4">
               <img
@@ -64,7 +64,7 @@ const Sidebar = () => {
                 <p className="text-lg font-black">Rotten Brains</p>
               )}
             </Link>
-            <button
+            {/* <button
               onClick={toggleSidebar}
               className="absolute -right-0 rounded-full bg-background p-1 hover:bg-foreground/20"
             >
@@ -75,7 +75,7 @@ const Sidebar = () => {
                 height={24}
                 className="invert-on-dark"
               />
-            </button>
+            </button> */}
           </div>
           <NavLink
             href="/"

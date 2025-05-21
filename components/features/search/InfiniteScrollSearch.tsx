@@ -88,7 +88,7 @@ const InfiniteScrollSearch = ({ query }: { query: string }) => {
     >
       <div className="mb-8">
         {mediaItems.length > 0 ? (
-          <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-4">
+          <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4">
             {mediaItems.map((mediaItem) => (
               <MediaCardClient
                 key={`${mediaItem.media_type}-${mediaItem.id}`}

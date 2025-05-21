@@ -10,12 +10,14 @@ interface MediaCardOverlayProps {
   isSoon?: boolean; // Whether the media is coming soon
   isNewEpisodes?: boolean; // Whether there are new episodes
   watchTime?: number | null; // Watch time percentage for the progress bar
+  number_of_episodes?: number;
   transformRuntime: (runtime: number) => string; // Function to transform runtime
 }
 
 const MediaCardOverlay: FC<MediaCardOverlayProps> = ({
   runtime,
   voteAverage,
+  number_of_episodes,
   quality,
   isNew,
   isSoon,
@@ -26,11 +28,14 @@ const MediaCardOverlay: FC<MediaCardOverlayProps> = ({
   return (
     <>
       {/* Bottom right media info */}
-      <div className="absolute bottom-0 right-0 m-2 flex flex-row-reverse gap-2">
+      <div className="absolute bottom-2 right-2 flex flex-row-reverse gap-2">
         {runtime && <MediaInfoText text={transformRuntime(runtime)} />}
-        {typeof voteAverage === "number" && (
-          <MediaInfoText text={voteAverage.toFixed(1)} />
+        {number_of_episodes && (
+          <MediaInfoText text={`${number_of_episodes} Episodes`} />
         )}
+        {/* {typeof voteAverage === "number" && (
+          <MediaInfoText text={voteAverage.toFixed(1)} />
+        )} */}
         {quality && <MediaInfoText text={quality} />}
       </div>
       {/* Top left tags */}

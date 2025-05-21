@@ -58,22 +58,17 @@ const NavTop = () => {
           <MenuButtonWithSidebar />
           <Link href="/" className="flex flex-row items-center gap-1">
             <img
-              src="/assets/images/logo_new_black.svg"
+              src="/assets/images/logo_text_new.svg"
               alt="text-logo"
               className="invert-on-dark h-4 w-auto"
             />
-            {user && user.premium ? (
-              <p className="text-lg font-black">Premium</p>
-            ) : (
-              <p className="text-lg font-black">Rotten Brains</p>
-            )}
           </Link>
         </div>
         {/* Right side */}
         {user ? (
           <div className="flex flex-row items-center gap-4">
             <NotificationButton user_id={user.id} />
-            <ProfilePictureNew />
+            {/* <ProfilePictureNew /> */}
           </div>
         ) : (
           <Link

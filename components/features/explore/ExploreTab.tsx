@@ -28,7 +28,7 @@ export async function ExploreTab({
         <div className="rounded-full bg-foreground/10 px-6 py-2">View all</div>
       </div>
 
-      <div className="hidden-scrollbar flex w-full snap-x snap-mandatory grid-cols-[repeat(auto-fit,minmax(320px,1fr))] flex-row gap-4 overflow-x-auto px-4 md:grid md:px-0">
+      <div className="hidden-scrollbar flex w-full snap-x snap-mandatory grid-cols-[repeat(auto-fit,minmax(300px,1fr))] flex-row gap-4 overflow-x-auto px-4 md:grid md:px-0">
         {exploreData &&
           exploreData.results.slice(0, 12).map((media: any) => {
             if (!media.media_type && media.title) {

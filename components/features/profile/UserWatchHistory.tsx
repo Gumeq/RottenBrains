@@ -64,7 +64,7 @@ const UserWatchHistory: React.FC<UserWatchHistoryProps> = ({
   return (
     <>
       <div className="w-full">
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-8 px-4 md:gap-4 md:px-0">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-8 px-4 md:gap-4 md:px-0">
           <>
             {watchHistory.map((item) => (
               <MediaCardClient

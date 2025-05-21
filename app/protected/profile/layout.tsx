@@ -55,7 +55,7 @@ const ProfileLayout = async ({ children }: { children: React.ReactNode }) => {
               </div>
             </div>
           </div>
-          <div className="my-4 w-full md:my-8">
+          <div className="w-full md:my-8">
             <NewTabs />
           </div>
           <div className="max-w-screen w-full">{children}</div>

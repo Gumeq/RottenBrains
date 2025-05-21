@@ -26,7 +26,7 @@ const MainContent = ({ children }: { children: React.ReactNode }) => {
   // Only care about sidebar state on desktop (lg+)
   const desktopPadding = mounted
     ? isSidebarOpen
-      ? "md:ml-64 md:max-w-[calc(100vw-256px)]"
+      ? "md:ml-52 md:max-w-[calc(100vw-208px)]"
       : "md:ml-24 md:max-w-[calc(100vw-96px)]"
     : "md:ml-24 md:max-w-[calc(100vw-96px)]";
 

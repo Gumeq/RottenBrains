@@ -138,7 +138,7 @@ export default async function mediaPage({ params }: { params: Params }) {
 
   return (
     <div className="relative md:w-full">
-      <div className="fixed z-20 flex h-10 w-full flex-row items-center gap-4 bg-background px-4 backdrop-blur-xl md:hidden">
+      <div className="fixed top-0 z-20 flex h-10 w-full flex-row items-center gap-4 bg-background px-4 backdrop-blur-xl md:hidden">
         <GoBackArrow />
         <p className="truncate">{media.title || media.name}</p>
       </div>

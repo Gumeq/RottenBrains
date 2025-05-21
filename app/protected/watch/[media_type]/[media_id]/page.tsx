@@ -87,7 +87,7 @@ export default async function mediaPage({ params }: { params: Params }) {
               media_id={media_id}
             ></WatchPageDetails>
           </div>
-          <section className="grid w-full grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-8 px-4 md:gap-4 md:px-0">
+          <section className="grid w-full grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-8 px-4 md:gap-4 md:px-0">
             {recommendationMediaDetails.map((mediaDetail: any) => (
               <MediaCardServer
                 media_type={mediaDetail.media_type || "movie"}

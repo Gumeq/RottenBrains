@@ -20,6 +20,7 @@ import NavSearchIconWithOverlay from "./NavSearchIconWithOverlay";
 import AdBanner from "../../ads/GoogleDisplayAd";
 import NavAdMobile from "../../ads/NavAdMobile";
 import NavSearchIconNew from "./NavSearchIconNew";
+import UserIconNavBottom from "./UserIconNavBottom";
 
 const NavBottom = () => {
   const pathname = usePathname();
@@ -51,11 +52,12 @@ const NavBottom = () => {
             icon={PlusIcon}
             label={"Create"}
           ></NavLinkMobile>
-          <NavLinkMobile
+          {/* <NavLinkMobile
             href={"/protected/watch-list"}
             icon={WatchListIcon}
             label={"Library"}
-          ></NavLinkMobile>
+          ></NavLinkMobile> */}
+          <UserIconNavBottom></UserIconNavBottom>
         </ul>
       </nav>
     </>

@@ -88,7 +88,7 @@ const WatchListInfiniteScroll: React.FC<WatchListInfiniteScrollProps> = ({
   return (
     <div className="w-full">
       {/* Card Grid */}
-      <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-4">
+      <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4">
         {mediaItems && mediaItems.length > 0 ? (
           mediaItems.map((mediaItem) => (
             <div

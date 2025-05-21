@@ -6,7 +6,7 @@ interface MediaInfoTextProps {
 
 const MediaInfoText: FC<MediaInfoTextProps> = ({ text }) => {
   return (
-    <div className="rounded-[4px] bg-black/80 p-1 text-xs text-white">
+    <div className="rounded-[4px] bg-black/80 px-1 text-xs text-white">
       {text}
     </div>
   );

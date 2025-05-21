@@ -30,7 +30,7 @@ const Navbar = ({ children }: any) => {
     <nav
       className={`fixed top-0 z-30 hidden h-20 px-4 py-4 transition-all duration-300 ${
         isSidebarOpen
-          ? "left-64 w-[calc(100vw-256px)]"
+          ? "left-52 w-[calc(100vw-208px)]"
           : "left-24 w-[calc(100vw-96px)]"
       } justify-center bg-background md:flex`}
     >

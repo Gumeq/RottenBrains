@@ -74,7 +74,7 @@ const Banner_320x50: React.FC<AdComponentProps> = ({
   if (adBlocked) {
     return (
       <div className="flex flex-col items-center justify-center gap-6">
-        <div className="flex h-[50px] w-[320px] items-center justify-center border-[4px] border-foreground/60 p-4 text-center font-medium text-foreground">
+        <div className="flex h-[50px] w-[300px] items-center justify-center border-[4px] border-foreground/60 p-4 text-center font-medium text-foreground">
           Ads help keep Rotten-Brains free. Please disable your ad blocker.
         </div>
       </div>
@@ -84,7 +84,7 @@ const Banner_320x50: React.FC<AdComponentProps> = ({
   return (
     <div
       id="ad-container-banner"
-      className="h-[50px] w-[320px] overflow-hidden bg-foreground/10"
+      className="h-[50px] w-[300px] overflow-hidden bg-foreground/10"
     />
   );
 };

@@ -7,14 +7,21 @@ import PostFooter from "./PostFooter";
 interface HomePostCardProps {
   post_media_data: any;
   user_id?: string;
+  rounded?: boolean;
 }
 
-const HomePostCardUI = ({ post_media_data, user_id }: HomePostCardProps) => {
+const HomePostCardUI = ({
+  post_media_data,
+  user_id,
+  rounded = true,
+}: HomePostCardProps) => {
   const { post_data, media_data } = post_media_data;
   const genreIds = media_data?.genres?.map((genre: any) => genre.id) || [];
   const post_link = `/protected/user/${post_data.creator.id}?post_id=${post_data.post.id}`;
   return (
-    <div className="post_border relative flex h-min flex-col rounded-[8px] bg-white/10 md:min-w-[250px] md:max-w-[300px]">
+    <div
+      className={`relative flex h-min flex-col ${rounded ? "post_border rounded-[8px]" : ""} bg-white/10 md:min-w-[250px] md:max-w-[300px]`}
+    >
       <PostHeader
         creator={post_data.creator}
         post={post_data.post}
