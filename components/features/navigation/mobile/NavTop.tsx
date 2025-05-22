@@ -55,7 +55,7 @@ const NavTop = () => {
       <div className="flex h-12 w-full items-center justify-between bg-background px-4 transition-transform duration-100 ease-out md:hidden">
         {/* Left side */}
         <div className="flex flex-row gap-4">
-          <MenuButtonWithSidebar />
+          {/* <MenuButtonWithSidebar /> */}
           <Link href="/" className="flex flex-row items-center gap-1">
             <img
               src="/assets/images/logo_text_new.svg"
