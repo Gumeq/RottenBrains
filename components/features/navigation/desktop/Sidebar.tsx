@@ -54,15 +54,10 @@ const Sidebar = () => {
           <div className="my-8 flex w-full flex-row items-center gap-4 px-4">
             <Link href={"/"} className="flex flex-row items-center gap-4">
               <img
-                src="/assets/images/logo_new_black.svg"
+                src="/assets/images/logo_text_new.svg"
                 alt="text-logo"
-                className="invert-on-dark h-6 w-auto"
+                className="invert-on-dark h-4 w-auto"
               />
-              {user && user.premium ? (
-                <p className="text-lg font-black">Premium</p>
-              ) : (
-                <p className="text-lg font-black">Rotten Brains</p>
-              )}
             </Link>
             {/* <button
               onClick={toggleSidebar}
@@ -104,9 +99,9 @@ const Sidebar = () => {
             icon={HistoryIcon}
             label="History"
           />
-          <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
-          <NavLink href="/premium" icon={PremiumIcon} label="Premium" />
-          <NavLink href="/donations" icon={DonationsIcon} label="Donations" />
+          {/* <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div> */}
+          {/* <NavLink href="/premium" icon={PremiumIcon} label="Premium" />
+          <NavLink href="/donations" icon={DonationsIcon} label="Donations" /> */}
           {/* <div className="mx-auto my-2 h-[1px] w-[90%] bg-foreground/20"></div>
           <NavLink href="/blog" icon={DevBlogIcon} label="Developer Blog" />
           <NavLink href="/github" icon={GithubIcon} label="Github" /> */}
