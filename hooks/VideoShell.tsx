@@ -7,6 +7,7 @@ import { iframeLinks } from "@/lib/constants/links";
 import useIsMobile from "@/hooks/useIsMobile";
 import { getHrefFromMedia } from "@/lib/utils";
 import Link from "next/link";
+import { useUser } from "./UserContext";
 
 export default function VideoShell() {
   // — all hooks at top
@@ -22,6 +23,8 @@ export default function VideoShell() {
 
   const isMobile = useIsMobile(); // ← new
   const [provider, setProvider] = useState(ctxProvider);
+
+  const { user } = useUser();
 
   const { setState } = useVideo();
 
@@ -109,13 +112,24 @@ export default function VideoShell() {
   if (!container) return null;
   return ReactDOM.createPortal(
     <div className="group relative h-full w-full">
-      <iframe
-        src={src}
-        allowFullScreen
-        loading="lazy"
-        frameBorder="0"
-        style={{ width: "100%", height: "100%" }}
-      />
+      {!user?.premium ? (
+        <>
+          <div className="flex h-full w-full items-center justify-center bg-black">
+            You need to be a premium user to watch videos.
+          </div>
+        </>
+      ) : (
+        <>
+          <iframe
+            src={src}
+            allowFullScreen
+            loading="lazy"
+            frameBorder="0"
+            style={{ width: "100%", height: "100%" }}
+          />
+        </>
+      )}
+
       {mode === "mini" && (
         <button
           onClick={() => setState((s) => ({ ...s, media_id: undefined }))}
