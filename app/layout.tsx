@@ -13,6 +13,8 @@ import { createClient } from "@/lib/supabase/server";
 import TopLoader from "@/components/features/loaders/TopLoader";
 import { ThemeProvider } from "next-themes";
 import VideoProvider from "@/hooks/VideoProvider";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata = {
   title: "Rotten Brains | Stream movies and TV for free in HD quality.",
@@ -71,8 +73,8 @@ export default async function NotProtectedLayout({
                 {/* <LegalConsent /> */}
                 <Toaster />
                 {/* <IubendaScripts /> */}
-                {/* <Analytics />
-  						<SpeedInsights /> */}
+                <Analytics />
+                <SpeedInsights />
                 {/* <GoogleAnalytics gtag={"G-06SFYC5DWK"} /> */}
                 {/* <GoogleAdsense pId="4557341861686356" /> */}
               </VideoProvider>

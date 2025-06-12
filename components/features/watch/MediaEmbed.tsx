@@ -13,10 +13,10 @@ const VideoEmbed = ({}) => {
           />
         </Link>
       </div>
-      <div className="w-screen md:w-full">
+      <div className="w-screen bg-black md:w-full">
         <div
           id="video-inline-placeholder"
-          className="relative aspect-[16/9] w-full overflow-hidden bg-foreground/10 md:rounded-[8px]"
+          className="relative aspect-[16/9] w-full overflow-hidden bg-black bg-foreground/10 md:rounded-[8px]"
         />
       </div>
     </section>
